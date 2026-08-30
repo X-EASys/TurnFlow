@@ -9,6 +9,10 @@ INDEX = ROOT / "index.html"
 CSS = ROOT / "styles.css"
 WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
 README = ROOT / "README.md"
+PAPER_TITLE = (
+    "TurnFlow: Closed-Loop Evaluation of Multi-Turn LLM User Simulators "
+    "for Responsible Chatbots"
+)
 
 
 class ElementProbe(HTMLParser):
@@ -71,11 +75,19 @@ class SiteContractTests(unittest.TestCase):
 
     def test_document_metadata(self):
         html = INDEX.read_text(encoding="utf-8")
+        elements = parse_elements(html)
         self.assertRegex(html, r'<html\s+lang="en"')
         self.assertIn('<meta charset="utf-8">', html)
         self.assertIn('name="viewport"', html)
-        self.assertIn("<title>TurnFlow</title>", html)
-        self.assertIn('name="description"', html)
+        self.assertIn(f"<title>{PAPER_TITLE}</title>", html)
+
+        descriptions = [
+            attrs.get("content")
+            for tag, attrs in elements
+            if tag == "meta" and attrs.get("name") == "description"
+        ]
+        self.assertEqual(len(descriptions), 1)
+        self.assertIn(PAPER_TITLE, descriptions[0])
 
     def test_semantic_landmarks_and_release_sections(self):
         html = INDEX.read_text(encoding="utf-8")
@@ -88,7 +100,7 @@ class SiteContractTests(unittest.TestCase):
 
     def test_academic_hero_is_minimal(self):
         html = INDEX.read_text(encoding="utf-8")
-        self.assertIn('id="page-title">TurnFlow</h1>', html)
+        self.assertIn(f'id="page-title">{PAPER_TITLE}</h1>', html)
         self.assertIn('class="project-type">Research project</p>', html)
         self.assertIn("Coming soon", html)
         self.assertNotIn("hero-mark", html)
