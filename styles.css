@@ -4,7 +4,7 @@
   --ink: #2a2a2d;
   --muted: #67676c;
   --line: #e8e8e8;
-  --accent: #1688db;
+  --accent: #0c6fae;
   --button: #303034;
   --button-hover: #171719;
   --shell: min(1160px, calc(100% - 48px));
@@ -25,9 +25,7 @@ body {
   display: grid;
   grid-template-rows: 1fr auto;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at 50% -20%, rgb(22 136 219 / 7%), transparent 38rem),
-    var(--paper);
+  background: var(--paper);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.55;
@@ -95,11 +93,13 @@ p {
 }
 
 h1 {
+  max-width: 18ch;
   margin: 0;
   font-size: clamp(3.25rem, 11vw, 7.5rem);
   font-weight: 730;
   letter-spacing: -0.065em;
   line-height: 0.92;
+  text-wrap: balance;
 }
 
 .project-status {
@@ -144,22 +144,15 @@ h1 {
   padding: 11px 22px;
   border-radius: 999px;
   background: var(--button);
-  box-shadow: 0 8px 24px rgb(32 32 35 / 12%);
   color: white;
   font-size: 0.96rem;
   font-weight: 620;
   text-decoration: none;
-  transition: background-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  transition: background-color 160ms ease;
 }
 
 .resource-link:hover {
   background: var(--button-hover);
-  box-shadow: 0 10px 28px rgb(32 32 35 / 18%);
-  transform: translateY(-2px);
-}
-
-.resource-link:active {
-  transform: translateY(0);
 }
 
 .resource-link svg {

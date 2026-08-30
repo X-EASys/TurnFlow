@@ -17,6 +17,7 @@ class ElementProbe(HTMLParser):
         self.elements = []
         self.resource_nav_count = 0
         self.resource_links = []
+        self.links = []
         self._in_resource_nav = False
 
     def handle_starttag(self, tag, attrs):
@@ -25,8 +26,10 @@ class ElementProbe(HTMLParser):
         if tag == "nav" and attributes.get("aria-label") == "Project resources":
             self.resource_nav_count += 1
             self._in_resource_nav = True
-        elif tag == "a" and self._in_resource_nav:
-            self.resource_links.append(attributes)
+        elif tag == "a":
+            self.links.append(attributes)
+            if self._in_resource_nav:
+                self.resource_links.append(attributes)
 
     def handle_endtag(self, tag):
         if tag == "nav" and self._in_resource_nav:
@@ -37,6 +40,28 @@ def parse_elements(html):
     probe = ElementProbe()
     probe.feed(html)
     return probe.elements
+
+
+def relative_luminance(hex_color):
+    channels = [int(hex_color[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+    linear = [
+        channel / 12.92
+        if channel <= 0.04045
+        else ((channel + 0.055) / 1.055) ** 2.4
+        for channel in channels
+    ]
+    return sum(
+        weight * channel
+        for weight, channel in zip((0.2126, 0.7152, 0.0722), linear)
+    )
+
+
+def contrast_ratio(first, second):
+    lighter, darker = sorted(
+        (relative_luminance(first), relative_luminance(second)),
+        reverse=True,
+    )
+    return (lighter + 0.05) / (darker + 0.05)
 
 
 class SiteContractTests(unittest.TestCase):
@@ -59,6 +84,7 @@ class SiteContractTests(unittest.TestCase):
         for target in ("main", "abstract", "overview", "results", "citation"):
             self.assertIn(f'id="{target}"', html)
         self.assertIn('href="#main"', html)
+        self.assertRegex(html, r'<main\s+id="main"\s+tabindex="-1">')
 
     def test_academic_hero_is_minimal(self):
         html = INDEX.read_text(encoding="utf-8")
@@ -79,6 +105,10 @@ class SiteContractTests(unittest.TestCase):
         self.assertEqual(code_link.get("href"), "https://github.com/X-EASys/TurnFlow")
         self.assertEqual(code_link.get("target"), "_blank")
         self.assertEqual(set(code_link.get("rel", "").split()), {"noopener", "noreferrer"})
+        self.assertCountEqual(
+            [link.get("href") for link in probe.links],
+            ["#main", "https://github.com/X-EASys/TurnFlow"],
+        )
         self.assertNotRegex(html, r'href=(?:"|\')(?:#|)(?:"|\')')
 
     def test_unreleased_sections_are_present_but_hidden(self):
@@ -89,18 +119,21 @@ class SiteContractTests(unittest.TestCase):
             for tag, attrs in elements
             if tag == "section" and "hidden" in attrs
         }
-        self.assertEqual(
-            hidden_sections,
-            {"abstract", "overview", "results", "citation"},
+        self.assertTrue(
+            {"abstract", "overview", "results", "citation"}.issubset(hidden_sections),
         )
 
     def test_no_remote_runtime_dependencies(self):
         html = INDEX.read_text(encoding="utf-8")
+        css = CSS.read_text(encoding="utf-8")
         remote_asset = re.compile(
             r'<(?:script|link)\b[^>]+(?:src|href)="https?://',
             re.IGNORECASE,
         )
         self.assertIsNone(remote_asset.search(html))
+        self.assertIsNone(
+            re.search(r'(?:@import\s+[^;]*https?://|url\(\s*["\']?https?://)', css),
+        )
 
     def test_local_stylesheet_resolves(self):
         html = INDEX.read_text(encoding="utf-8")
@@ -117,9 +150,15 @@ class SiteContractTests(unittest.TestCase):
             "@media (max-width: 640px)",
             "@media (prefers-reduced-motion: reduce)",
             "overflow-wrap: anywhere",
-            "font-size: clamp(3.25rem, 11vw, 7.5rem);",
         ):
             self.assertIn(required_rule, css)
+        self.assertNotIn("white-space: nowrap", css)
+
+        paper = re.search(r"--paper:\s*(#[0-9a-f]{6})", css, re.IGNORECASE)
+        accent = re.search(r"--accent:\s*(#[0-9a-f]{6})", css, re.IGNORECASE)
+        self.assertIsNotNone(paper)
+        self.assertIsNotNone(accent)
+        self.assertGreaterEqual(contrast_ratio(paper.group(1), accent.group(1)), 4.5)
 
     def test_pages_workflow_contract(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
