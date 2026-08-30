@@ -3,57 +3,72 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="TurnFlow project page.">
-    <meta name="theme-color" content="#f4f7f3">
+    <meta
+      name="description"
+      content="TurnFlow research project page. Paper, code, and resources will be released here."
+    >
+    <meta name="theme-color" content="#ffffff">
     <title>TurnFlow</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <nav class="nav shell" aria-label="Primary navigation">
-        <a class="brand" href="./" aria-label="TurnFlow home">
-          Turn<span class="brand-accent">Flow</span>
-        </a>
-        <ul class="nav-list">
-          <li><a href="#overview">Overview</a></li>
-          <li><a href="#resources">Resources</a></li>
-          <li><a href="#citation">Citation</a></li>
-        </ul>
-      </nav>
-    </header>
-
     <main id="main">
-      <section class="hero shell" aria-labelledby="page-title">
-        <div class="hero-copy">
-          <p class="eyebrow">Research project</p>
-          <h1 id="page-title">TurnFlow</h1>
-          <p class="status"><span class="status-dot" aria-hidden="true"></span>Coming soon</p>
-        </div>
-        <div class="hero-mark" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-      </section>
+      <header class="project-header shell" aria-labelledby="page-title">
+        <p class="project-type">Research project</p>
+        <h1 id="page-title">TurnFlow</h1>
 
-      <div class="sections shell">
-        <section id="overview" class="section-card" aria-labelledby="overview-title">
+        <!-- Add authors, affiliations, and contribution notes here after release metadata is final. -->
+
+        <p class="project-status">
+          <span class="status-dot" aria-hidden="true"></span>
+          Coming soon
+        </p>
+        <p class="release-note">
+          Paper details, authors, abstract, and citation will be published here.
+        </p>
+
+        <nav class="resource-links" aria-label="Project resources">
+          <a
+            class="resource-link"
+            href="https://github.com/X-EASys/TurnFlow"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.57 9.57 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/>
+            </svg>
+            Code
+          </a>
+        </nav>
+      </header>
+
+      <div class="project-content shell">
+        <section id="abstract" class="content-section" aria-labelledby="abstract-title" hidden>
+          <h2 id="abstract-title">Abstract</h2>
+          <!-- Add the final abstract here. -->
+        </section>
+
+        <section id="overview" class="content-section" aria-labelledby="overview-title" hidden>
           <h2 id="overview-title">Overview</h2>
-          <div class="section-space" aria-hidden="true"></div>
+          <!-- Add the project overview figure and caption here. -->
         </section>
-        <section id="resources" class="section-card" aria-labelledby="resources-title">
-          <h2 id="resources-title">Resources</h2>
-          <div class="section-space" aria-hidden="true"></div>
+
+        <section id="results" class="content-section" aria-labelledby="results-title" hidden>
+          <h2 id="results-title">Results</h2>
+          <!-- Add results, examples, or a leaderboard here. -->
         </section>
-        <section id="citation" class="section-card" aria-labelledby="citation-title">
+
+        <section id="citation" class="content-section" aria-labelledby="citation-title" hidden>
           <h2 id="citation-title">Citation</h2>
-          <div class="section-space" aria-hidden="true"></div>
+          <!-- Add the official BibTeX entry and copy control here. -->
         </section>
       </div>
     </main>
 
     <footer class="site-footer">
-      <div class="shell"><p>TurnFlow</p></div>
+      <p>TurnFlow</p>
     </footer>
   </body>
 </html>

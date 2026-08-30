@@ -1,5 +1,6 @@
 import re
 import unittest
+from html.parser import HTMLParser
 from pathlib import Path
 
 
@@ -8,6 +9,34 @@ INDEX = ROOT / "index.html"
 CSS = ROOT / "styles.css"
 WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
 README = ROOT / "README.md"
+
+
+class ElementProbe(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.elements = []
+        self.resource_nav_count = 0
+        self.resource_links = []
+        self._in_resource_nav = False
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        self.elements.append((tag, attributes))
+        if tag == "nav" and attributes.get("aria-label") == "Project resources":
+            self.resource_nav_count += 1
+            self._in_resource_nav = True
+        elif tag == "a" and self._in_resource_nav:
+            self.resource_links.append(attributes)
+
+    def handle_endtag(self, tag):
+        if tag == "nav" and self._in_resource_nav:
+            self._in_resource_nav = False
+
+
+def parse_elements(html):
+    probe = ElementProbe()
+    probe.feed(html)
+    return probe.elements
 
 
 class SiteContractTests(unittest.TestCase):
@@ -23,19 +52,47 @@ class SiteContractTests(unittest.TestCase):
         self.assertIn("<title>TurnFlow</title>", html)
         self.assertIn('name="description"', html)
 
-    def test_semantic_landmarks_and_stable_anchors(self):
+    def test_semantic_landmarks_and_release_sections(self):
         html = INDEX.read_text(encoding="utf-8")
-        for landmark in ("header", "nav", "main", "footer"):
+        for landmark in ("header", "main", "footer"):
             self.assertRegex(html, rf"<{landmark}\b")
-        for target in ("main", "overview", "resources", "citation"):
+        for target in ("main", "abstract", "overview", "results", "citation"):
             self.assertIn(f'id="{target}"', html)
-        for href in ("#main", "#overview", "#resources", "#citation"):
-            self.assertIn(f'href="{href}"', html)
+        self.assertIn('href="#main"', html)
 
-    def test_initial_copy_is_minimal(self):
+    def test_academic_hero_is_minimal(self):
         html = INDEX.read_text(encoding="utf-8")
         self.assertIn('id="page-title">TurnFlow</h1>', html)
+        self.assertIn('class="project-type">Research project</p>', html)
         self.assertIn("Coming soon", html)
+        self.assertNotIn("hero-mark", html)
+
+    def test_only_published_resource_is_linked(self):
+        html = INDEX.read_text(encoding="utf-8")
+        probe = ElementProbe()
+        probe.feed(html)
+        self.assertEqual(probe.resource_nav_count, 1)
+        self.assertEqual(len(probe.resource_links), 1)
+
+        code_link = probe.resource_links[0]
+        self.assertEqual(code_link.get("class"), "resource-link")
+        self.assertEqual(code_link.get("href"), "https://github.com/X-EASys/TurnFlow")
+        self.assertEqual(code_link.get("target"), "_blank")
+        self.assertEqual(set(code_link.get("rel", "").split()), {"noopener", "noreferrer"})
+        self.assertNotRegex(html, r'href=(?:"|\')(?:#|)(?:"|\')')
+
+    def test_unreleased_sections_are_present_but_hidden(self):
+        html = INDEX.read_text(encoding="utf-8")
+        elements = parse_elements(html)
+        hidden_sections = {
+            attrs.get("id")
+            for tag, attrs in elements
+            if tag == "section" and "hidden" in attrs
+        }
+        self.assertEqual(
+            hidden_sections,
+            {"abstract", "overview", "results", "citation"},
+        )
 
     def test_no_remote_runtime_dependencies(self):
         html = INDEX.read_text(encoding="utf-8")
@@ -54,11 +111,13 @@ class SiteContractTests(unittest.TestCase):
         css = CSS.read_text(encoding="utf-8")
         for required_rule in (
             ":focus-visible",
-            "@media (max-width: 680px)",
+            ".project-header",
+            ".resource-links",
+            "flex-wrap: wrap",
+            "@media (max-width: 640px)",
             "@media (prefers-reduced-motion: reduce)",
             "overflow-wrap: anywhere",
-            "font-size: clamp(3.5rem, 18vw, 4.5rem);",
-            "white-space: nowrap;",
+            "font-size: clamp(3.25rem, 11vw, 7.5rem);",
         ):
             self.assertIn(required_rule, css)
 
