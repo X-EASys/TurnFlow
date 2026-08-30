@@ -190,6 +190,50 @@ class SiteContractTests(unittest.TestCase):
         self.assertIsNotNone(accent)
         self.assertGreaterEqual(contrast_ratio(paper.group(1), accent.group(1)), 4.5)
 
+    def test_title_typography_stays_close_to_release_note(self):
+        css = CSS.read_text(encoding="utf-8")
+        title_rule = re.search(r"(?ms)^h1\s*\{(?P<body>.*?)^\}", css)
+        note_rule = re.search(r"(?ms)^\.release-note\s*\{(?P<body>.*?)^\}", css)
+        self.assertIsNotNone(title_rule)
+        self.assertIsNotNone(note_rule)
+
+        clamp_pattern = re.compile(
+            r"font-size:\s*clamp\("
+            r"(?P<minimum>[\d.]+)rem,\s*"
+            r"(?P<fluid>[\d.]+)vw,\s*"
+            r"(?P<maximum>[\d.]+)rem\)"
+        )
+        title_size = clamp_pattern.search(title_rule.group("body"))
+        note_size = clamp_pattern.search(note_rule.group("body"))
+        self.assertIsNotNone(title_size)
+        self.assertIsNotNone(note_size)
+
+        def computed_size(match, viewport_width):
+            minimum = float(match.group("minimum")) * 16
+            fluid = float(match.group("fluid")) * viewport_width / 100
+            maximum = float(match.group("maximum")) * 16
+            return min(max(minimum, fluid), maximum)
+
+        for viewport_width, minimum_ratio, maximum_ratio in (
+            (320, 1.45, 1.55),
+            (390, 1.45, 1.55),
+            (1280, 1.85, 1.95),
+            (1440, 1.85, 1.95),
+        ):
+            with self.subTest(viewport_width=viewport_width):
+                title_value = computed_size(title_size, viewport_width)
+                note_value = computed_size(note_size, viewport_width)
+                ratio = title_value / note_value
+                self.assertGreaterEqual(ratio, minimum_ratio)
+                self.assertLessEqual(ratio, maximum_ratio)
+
+        weight = re.search(r"font-weight:\s*(\d+)", title_rule.group("body"))
+        line_height = re.search(r"line-height:\s*([\d.]+)", title_rule.group("body"))
+        self.assertIsNotNone(weight)
+        self.assertIsNotNone(line_height)
+        self.assertEqual(int(weight.group(1)), 680)
+        self.assertEqual(float(line_height.group(1)), 1.12)
+
     def test_pages_workflow_contract(self):
         workflow = WORKFLOW.read_text(encoding="utf-8")
         for expected in (
