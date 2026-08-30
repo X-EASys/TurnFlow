@@ -60,6 +60,27 @@ class SiteContractTests(unittest.TestCase):
         ):
             self.assertIn(required_rule, css)
 
+    def test_pages_workflow_contract(self):
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+        for expected in (
+            "branches: [main]",
+            "contents: read",
+            "pages: write",
+            "id-token: write",
+            "actions/checkout@v4",
+            "actions/configure-pages@v5",
+            "actions/upload-pages-artifact@v3",
+            "actions/deploy-pages@v5",
+            "path: '.'",
+        ):
+            self.assertIn(expected, workflow)
+
+    def test_readme_documents_preview_and_canonical_url(self):
+        readme = README.read_text(encoding="utf-8")
+        self.assertIn("https://x-easys.github.io/TurnFlow/", readme)
+        self.assertIn("python3 -m http.server 8000", readme)
+        self.assertIn("http://localhost:8000/", readme)
+
 
 if __name__ == "__main__":
     unittest.main()
