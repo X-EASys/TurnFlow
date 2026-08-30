@@ -57,6 +57,8 @@ class SiteContractTests(unittest.TestCase):
             "@media (max-width: 680px)",
             "@media (prefers-reduced-motion: reduce)",
             "overflow-wrap: anywhere",
+            "font-size: clamp(3.5rem, 18vw, 4.5rem);",
+            "white-space: nowrap;",
         ):
             self.assertIn(required_rule, css)
 
@@ -67,13 +69,18 @@ class SiteContractTests(unittest.TestCase):
             "contents: read",
             "pages: write",
             "id-token: write",
-            "actions/checkout@v4",
-            "actions/configure-pages@v5",
-            "actions/upload-pages-artifact@v3",
-            "actions/deploy-pages@v5",
+            "actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4",
+            "actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5",
+            "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3",
+            "actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5",
+            "python3 -m unittest discover -s tests -v",
             "path: '.'",
         ):
             self.assertIn(expected, workflow)
+        self.assertLess(
+            workflow.index("python3 -m unittest discover -s tests -v"),
+            workflow.index("actions/configure-pages@"),
+        )
 
     def test_readme_documents_preview_and_canonical_url(self):
         readme = README.read_text(encoding="utf-8")

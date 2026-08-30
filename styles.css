@@ -282,7 +282,8 @@ h1 {
   }
 
   h1 {
-    font-size: clamp(4rem, 24vw, 6.5rem);
+    font-size: clamp(3.5rem, 18vw, 4.5rem);
+    white-space: nowrap;
   }
 }
 
