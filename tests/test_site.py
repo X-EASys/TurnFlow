@@ -45,6 +45,21 @@ class SiteContractTests(unittest.TestCase):
         )
         self.assertIsNone(remote_asset.search(html))
 
+    def test_local_stylesheet_resolves(self):
+        html = INDEX.read_text(encoding="utf-8")
+        self.assertIn('href="styles.css"', html)
+        self.assertTrue(CSS.is_file())
+
+    def test_accessible_responsive_css_contract(self):
+        css = CSS.read_text(encoding="utf-8")
+        for required_rule in (
+            ":focus-visible",
+            "@media (max-width: 680px)",
+            "@media (prefers-reduced-motion: reduce)",
+            "overflow-wrap: anywhere",
+        ):
+            self.assertIn(required_rule, css)
+
 
 if __name__ == "__main__":
     unittest.main()
