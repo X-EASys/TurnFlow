@@ -22,7 +22,10 @@ class ElementProbe(HTMLParser):
         self.resource_nav_count = 0
         self.resource_links = []
         self.links = []
+        self.text_by_tag = {"title": [], "h1": []}
         self._in_resource_nav = False
+        self._capturing_tag = None
+        self._captured_text = []
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -34,10 +37,22 @@ class ElementProbe(HTMLParser):
             self.links.append(attributes)
             if self._in_resource_nav:
                 self.resource_links.append(attributes)
+        if tag in self.text_by_tag:
+            self._capturing_tag = tag
+            self._captured_text = []
+
+    def handle_data(self, data):
+        if self._capturing_tag:
+            self._captured_text.append(data)
 
     def handle_endtag(self, tag):
         if tag == "nav" and self._in_resource_nav:
             self._in_resource_nav = False
+        if tag == self._capturing_tag:
+            text = " ".join("".join(self._captured_text).split())
+            self.text_by_tag[tag].append(text)
+            self._capturing_tag = None
+            self._captured_text = []
 
 
 def parse_elements(html):
@@ -75,15 +90,16 @@ class SiteContractTests(unittest.TestCase):
 
     def test_document_metadata(self):
         html = INDEX.read_text(encoding="utf-8")
-        elements = parse_elements(html)
+        probe = ElementProbe()
+        probe.feed(html)
         self.assertRegex(html, r'<html\s+lang="en"')
         self.assertIn('<meta charset="utf-8">', html)
         self.assertIn('name="viewport"', html)
-        self.assertIn(f"<title>{PAPER_TITLE}</title>", html)
+        self.assertEqual(probe.text_by_tag["title"], [PAPER_TITLE])
 
         descriptions = [
             attrs.get("content")
-            for tag, attrs in elements
+            for tag, attrs in probe.elements
             if tag == "meta" and attrs.get("name") == "description"
         ]
         self.assertEqual(len(descriptions), 1)
@@ -100,7 +116,9 @@ class SiteContractTests(unittest.TestCase):
 
     def test_academic_hero_is_minimal(self):
         html = INDEX.read_text(encoding="utf-8")
-        self.assertIn(f'id="page-title">{PAPER_TITLE}</h1>', html)
+        probe = ElementProbe()
+        probe.feed(html)
+        self.assertEqual(probe.text_by_tag["h1"], [PAPER_TITLE])
         self.assertIn('class="project-type">Research project</p>', html)
         self.assertIn("Coming soon", html)
         self.assertNotIn("hero-mark", html)
