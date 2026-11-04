@@ -1,0 +1,309 @@
+{
+  "scenario_id": "T16_206",
+  "domain": "hiking group trail snack planning",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful outdoor activity planning assistant. Help the user plan trail snacks and provisions for a group hiking trip. Track who is attending, their dietary needs, and any changes to the group. When asked to evaluate specific snack items, check each item against every active hiker's current dietary constraints and note any scope distinctions (e.g., items packed for someone who left early vs. shared trail snacks).",
+  "state_queue": {
+    "anchor": "Hey, a bunch of us from the running club are doing a day hike this Saturday. I'm in charge of buying trail snacks for everyone — any suggestions?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Five of us: me, Rachel, Derek, Sunita, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_celiac",
+        "value": "Rachel was diagnosed with celiac disease last year, she's really strict about it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_diabetes",
+        "value": "Derek has type 2 diabetes, he manages it with diet",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_knee",
+        "value": "Marcus tweaked his knee last week, he might have to turn back early at the halfway point",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "trail_info",
+        "value": "It's a 12-mile loop, about 6 hours total. We'll have a big snack break at the summit around the halfway mark",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_exits_early",
+        "value": "Marcus just confirmed he'll turn back at the summit. His knee isn't great. He asked if I could pack him a separate bag of snacks for his solo descent back to the trailhead",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sunita_constraint_removed",
+        "value": "Sunita texted me — she finished her elimination diet last week, her doctor cleared her to eat everything again. She's so relieved",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sunita_husband_joins",
+        "value": "Sunita asked if her husband Pradeep can join too, so that makes six",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_exits_completely",
+        "value": "Derek just bailed — his blood sugar was weird this morning so he's staying home to rest. No snack pack needed for him, he said not to worry",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_snack_list",
+        "value": "Snack list to check: peanut butter granola bars, dried mango slices, trail mix with cashews and dark chocolate, oat crackers with hummus, beef jerky strips, honey wheat pretzels",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "rachel_gluten_free",
+        "value": "Cannot eat anything containing gluten (wheat, barley, rye, oats unless certified gluten-free)",
+        "disclosed": false,
+        "surface_form": "Rachel was diagnosed with celiac disease last year, she's really strict about it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye, and often oats (cross-contamination)",
+          "Strict celiac → must avoid all gluten-containing foods"
+        ]
+      },
+      {
+        "key": "derek_low_sugar",
+        "value": "Must avoid high-sugar snacks, needs low-glycemic options",
+        "disclosed": false,
+        "surface_form": "Derek has type 2 diabetes, he manages it with diet",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 2 diabetes → blood sugar management",
+          "Diet-managed → must control carbohydrate/sugar intake",
+          "Trail snacks → avoid high-sugar items, prefer protein/fat/fiber"
+        ]
+      },
+      {
+        "key": "sunita_elimination_diet",
+        "value": "Was on an elimination diet restricting dairy, eggs, soy, and nuts — NOW REMOVED",
+        "disclosed": false,
+        "surface_form": "Sunita has been doing an elimination diet for a few months — no dairy, eggs, soy, or nuts allowed for her",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "pradeep_jain",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Pradeep grew up in a Jain household and still follows the diet strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain household → Jain dietary practice",
+          "Strict Jain diet → no meat, no fish, no eggs",
+          "Jain diet → also avoids root vegetables (onion, garlic, potato)"
+        ]
+      },
+      {
+        "key": "marcus_tree_nut_allergy",
+        "value": "Allergic to tree nuts (cashews, almonds, walnuts, etc.) but peanuts are fine",
+        "disclosed": false,
+        "surface_form": "Marcus had a scary reaction to cashews at a party once — his throat started closing up. He carries an EpiPen now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Severe reaction to cashews + EpiPen → tree nut allergy",
+          "Tree nut allergy → cashews, almonds, walnuts, pecans, pistachios",
+          "Tree nut allergy ≠ peanut allergy (peanuts are legumes, not tree nuts)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are the snack organizer for a group day hike. You will introduce the group, share their dietary issues through personal stories, then give updates as people join/leave. Marcus will leave at the summit but needs a packed snack bag for his descent. Derek will drop out entirely. Sunita's restriction gets removed. Pradeep joins late. At the end you will share a specific snack list and ask if there are any issues — you must NOT hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly running club member organizing a hike. You always refer to your friends by name in third person (e.g. 'Rachel told me...', 'Marcus said...'). You never express frustration or impatience when plans change — it's just how group activities go. Keep tone casual and matter-of-fact.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, a bunch of us from the running club are doing a day hike this Saturday. I'm in charge of buying trail snacks for everyone — any suggestions?",
+          "success_criteria": "Agent engages with hiking snack planning, asks about group size or dietary needs",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate hiking snack planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Rachel, Derek, Sunita, and Marcus. Rachel was diagnosed with celiac disease last year, she's really strict about it. Derek has type 2 diabetes, manages it with diet. Sunita has been doing an elimination diet for a few months — no dairy, eggs, soy, or nuts allowed for her. And Marcus had a scary reaction to cashews at a party once — his throat started closing up, he carries an EpiPen now",
+          "success_criteria": "Agent acknowledges all four members' dietary constraints",
+          "required_info_keys": [
+            "group_members",
+            "rachel_celiac",
+            "derek_diabetes"
+          ],
+          "required_constraint_keys": [
+            "rachel_gluten_free",
+            "derek_low_sugar",
+            "sunita_elimination_diet",
+            "marcus_tree_nut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 4 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "It's a 12-mile loop, about 6 hours total. We'll have a big snack break at the summit around the halfway mark. Marcus tweaked his knee last week, he might have to turn back early at that point",
+          "success_criteria": "Agent registers trail details and Marcus's potential early exit",
+          "required_info_keys": [
+            "trail_info",
+            "marcus_knee"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Trail logistics + foreshadow Marcus's early departure"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Marcus just confirmed he'll turn back at the summit. His knee isn't great. He asked if I could pack him a separate bag of snacks for his solo descent back to the trailhead",
+          "success_criteria": "Agent notes Marcus exits at halfway but needs a packed snack bag, his tree nut allergy applies to his pack",
+          "required_info_keys": [
+            "marcus_exits_early"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Marcus leaves at summit but needs separate snack pack"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "How many snacks should I buy per person? Like how much do people usually eat on a 6-hour hike?",
+          "success_criteria": "Agent provides guidance on snack quantities for hiking without losing track of constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "quantities",
+            "drift_topic": "how much food per person for a day hike",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise: snack quantity question"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Sunita texted me — she finished her elimination diet last week, her doctor cleared her to eat everything again. She's so relieved. Oh and she asked if her husband Pradeep can join too, so that makes six. Pradeep grew up in a Jain household and still follows the diet strictly",
+          "success_criteria": "Agent removes Sunita's elimination diet constraint, registers Pradeep as new entity with Jain dietary constraint",
+          "required_info_keys": [
+            "sunita_constraint_removed",
+            "sunita_husband_joins"
+          ],
+          "required_constraint_keys": [
+            "pradeep_jain"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Sunita cleared) + late-joining entity (Pradeep, Jain diet)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Derek just bailed — his blood sugar was weird this morning so he's staying home to rest. No snack pack needed for him, he said not to worry",
+          "success_criteria": "Agent removes Derek entirely from the group, no takeaway needed",
+          "required_info_keys": [
+            "derek_exits_completely"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Derek) — complete removal, no scope residue"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we bring a cooler or just pack everything in ziploc bags? The forecast says it'll be around 75 degrees",
+          "success_criteria": "Agent provides packing guidance without losing constraint tracking",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "packing",
+            "drift_topic": "cooler vs ziploc bags for hiking in warm weather",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK I put together a snack list. Peanut butter granola bars, dried mango slices, trail mix with cashews and dark chocolate, oat crackers with hummus, beef jerky strips, honey wheat pretzels. Any issues?",
+          "success_criteria": "Agent identifies: granola bars problematic for Rachel (gluten — contains oats/wheat); trail mix with cashews cannot go in Marcus's pack (tree nut allergy) but fine for shared summit snacks before he leaves; oat crackers problematic for Rachel (gluten — oats); beef jerky problematic for Pradeep (Jain, no meat); honey wheat pretzels problematic for Rachel (wheat = gluten). Dried mango is fine for everyone. Agent does NOT flag sugar items for Derek (he's gone) or nut items for Sunita (restriction removed).",
+          "required_info_keys": [
+            "probe_snack_list"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 snack items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Four items have issues. Peanut butter granola bars: problematic for Rachel (celiac — granola bars typically contain oats/wheat which have gluten). Trail mix with cashews and dark chocolate: cannot be packed in Marcus's separate descent bag (tree nut allergy to cashews) but is fine for the shared summit snack break since Marcus is still present at the summit. Oat crackers with hummus: problematic for Rachel (celiac — oats are typically not safe for strict celiac unless certified gluten-free). Beef jerky strips: problematic for Pradeep (strict Jain diet, no meat). Honey wheat pretzels: problematic for Rachel (wheat = gluten, celiac). Dried mango slices: fine for everyone. Agent should NOT flag high-sugar items for Derek (he dropped out entirely) or nuts for Sunita (her elimination diet is over, doctor cleared her).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Peanut butter granola bars are problematic for Rachel because celiac means no gluten, and granola bars contain wheat or oats",
+      "Trail mix with cashews cannot go in Marcus's packed descent bag because of his tree nut allergy (cashews triggered anaphylaxis)",
+      "Trail mix with cashews is acceptable for the shared summit snack break while Marcus is still present and can choose to avoid it, OR agent flags it as problematic for the shared portion too — either is acceptable as long as Marcus's pack is specifically called out",
+      "Oat crackers with hummus are problematic for Rachel because oats are unsafe for strict celiac unless certified gluten-free",
+      "Beef jerky strips are problematic for Pradeep because he follows a strict Jain diet which forbids meat",
+      "Honey wheat pretzels are problematic for Rachel because wheat contains gluten",
+      "Dried mango slices are identified as safe for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging high-sugar items as problematic for Derek (he dropped out entirely, his constraint is gone)",
+      "Flagging nuts or dairy or soy as a problem for Sunita (her elimination diet is over, doctor cleared her)",
+      "Saying Marcus has a peanut allergy (he has a tree nut allergy — peanuts are legumes, not tree nuts, so peanut butter granola bars are fine for him)",
+      "Completely rejecting trail mix with cashews for everyone (it's only an issue for Marcus's separate pack, not necessarily for the shared group snacks at the summit)",
+      "Flagging beef jerky as problematic for anyone other than Pradeep (no one else has a meat restriction)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking with a scope-change exit mechanism. Key tracking challenges: (1) Rachel has celiac → gluten-free (inferential: celiac means no wheat/barley/rye/oats), affecting 3 of the 6 items. (2) Marcus EXITS at the summit but needs a separate packed snack bag — his tree nut allergy applies specifically to what goes in HIS pack. Trail mix with cashews at the shared summit break is a scope distinction (he's present and can avoid it vs. it being packed in his solo bag). (3) Sunita's elimination diet is REMOVED (doctor cleared her) — nuts, dairy, soy, eggs are all fine for her now. (4) Pradeep JOINS late with a Jain diet (inferential: Jain → no meat/fish/eggs/root vegetables) — beef jerky violates this. (5) Derek EXITS completely with no takeaway/pack needed — his diabetes/low-sugar constraint disappears entirely. The over-generalization trap: Marcus's cashew allergy is tree-nut specific, NOT peanut allergy. Peanut butter granola bars are safe for Marcus (peanuts are legumes). The removed-constraint trap: Sunita can now eat everything, Derek is gone. The scope-change trap: trail mix with cashews is problematic for Marcus's separate pack but not necessarily for the shared summit snacks."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

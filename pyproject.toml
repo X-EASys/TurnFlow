@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools==84.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "turnflowbench"
+version = "0.3.0"
+description = "Multi-turn evaluation with a user simulator and source-bound judges"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT AND CC-BY-4.0"
+license-files = ["LICENSE", "DATA_LICENSE"]
+dependencies = [
+  "pydantic>=2.0,<3",
+  "litellm==1.101.0",
+  "httpx>=0.28,<1",
+  "loguru>=0.7.3,<1",
+  "tenacity>=9,<10",
+  "rich>=13,<16",
+  "pyyaml>=6,<7",
+  "python-dotenv>=1,<2",
+]
+
+[project.urls]
+Homepage = "https://x-easys.github.io/TurnFlow/"
+Repository = "https://github.com/X-EASys/TurnFlow"
+Dataset = "https://huggingface.co/datasets/Buka7yo/TurnFlow"
+
+[project.scripts]
+turnflow = "benchmark.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["benchmark*"]
+
+[tool.setuptools.package-data]
+"benchmark" = ["resources/dataset/*.json", "resources/dataset/sources/*/*/*.json"]
+"benchmark.evaluator.frozen_judge" = ["resources/*.json"]
+"benchmark.evaluator" = ["verifiable_resources/*.json"]
+"benchmark.user" = ["resources/*.json"]
+
+[project.optional-dependencies]
+dev = ["build>=1.2", "pytest>=8"]
+hf = ["datasets>=3"]

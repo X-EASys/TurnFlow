@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T17_326",
+  "domain": "planning a co-working space opening",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their co-working space opening event. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm opening a small co-working space next month and want to do a launch event. I've never organized anything like this before — I'm basically a solo operator, no team, and my total event budget is around $800.",
+    "flow_info": [
+      {
+        "key": "operator_constraint",
+        "value": "Solo operator with no event planning experience, no team, budget of $800 for the entire event",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple opening event: invite local freelancers, have some snacks and drinks, let people tour the space",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_question",
+        "value": "Asking whether to use the co-working space itself or rent a separate venue for the event",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_catering",
+        "value": "Full catered lunch for all attendees instead of just snacks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_speakers",
+        "value": "Panel discussion with 3-4 local entrepreneurs as guest speakers, with a moderated Q and A session",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_branding",
+        "value": "Custom branded swag bags for every attendee: tote bags, notebooks, pens, stickers, all with custom logo printing",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_av",
+        "value": "Professional AV setup: rented projector, wireless mics, PA system, and a videographer to film the whole event for social media content",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_livestream",
+        "value": "Live stream the event on multiple platforms simultaneously with professional graphics overlays and a dedicated stream operator",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_no_experience_low_budget",
+        "value": "One person with no event planning experience and only $800 total budget — cannot execute a multi-component professional event",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm opening a small co-working space next month and want to do a launch event. I've never organized anything like this before — I'm basically a solo operator, no team, and my total event budget is around $800.",
+          "success_criteria": "Agent acknowledges the scope, solo status, and budget",
+          "required_info_keys": [
+            "operator_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_no_experience_low_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability and budget constraint: solo operator, no experience, $800 total"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "I'm thinking something simple — invite local freelancers, put out some snacks and drinks, let people walk around and check out the space. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple open-house style event",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — casual open house"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Should I just host it in the co-working space itself, or would it be better to rent somewhere else for the event?",
+          "success_criteria": "Agent provides a reasonable comparison of hosting in-space vs renting",
+          "required_info_keys": [
+            "venue_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate venue question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Good point, I'll use the space itself. Actually, instead of just snacks, could we do a full catered lunch? Nothing crazy, just something nice so people stick around longer.",
+          "success_criteria": "Agent helps plan catering — notes it will take a chunk of budget but still seems manageable",
+          "required_info_keys": [
+            "feature_catering"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — catered lunch eats into $800 budget significantly"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "I was also thinking it'd be cool to have a panel discussion — like 3 or 4 local entrepreneurs sharing their stories, with a moderated Q and A after. Super lightweight, just a conversation.",
+          "success_criteria": "Agent ideally notes this requires coordination, speaker outreach, moderation planning",
+          "required_info_keys": [
+            "feature_speakers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — speaker panel requires significant coordination for a solo operator"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh and I want to give everyone a little swag bag — tote bag, notebook, pen, stickers, all with my logo custom printed. Would be a nice touch, right?",
+          "success_criteria": "Agent acknowledges custom branded merchandise adds cost and logistics",
+          "required_info_keys": [
+            "feature_branding"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — custom printed swag for all attendees blows through budget"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "For the panel we'd need a proper AV setup — rented projector, wireless mics, a PA system. And ideally a videographer to capture the whole thing for social media content later.",
+          "success_criteria": "Agent notes professional AV rental and videographer are expensive",
+          "required_info_keys": [
+            "feature_av"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — professional AV and videography far exceed remaining budget"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Actually, can we also live stream it? Like on YouTube and LinkedIn simultaneously, with some nice graphics overlays and someone dedicated to managing the stream.",
+          "success_criteria": "Agent notes live streaming with professional production requires dedicated personnel and equipment",
+          "required_info_keys": [
+            "feature_livestream"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — multi-platform livestream with dedicated operator is professional production territory"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, help me put together a full event plan with a timeline and budget breakdown.",
+          "success_criteria": "Agent clearly states this has grown far beyond what a solo operator with $800 and no experience can pull off — catering, speaker panels, custom swag, professional AV, videography, and live streaming require a team and a budget many times larger",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe — agent must recognize the qualitative scope change and flag infeasibility"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this event has grown far beyond what a solo operator with no experience and an $800 budget can realistically execute. What started as a simple open house with snacks has escalated into a professional multi-component production requiring: (1) full catering ($400-800+ alone for a group), (2) speaker panel coordination and moderation, (3) custom branded merchandise for all attendees ($500+ for printing), (4) professional AV rental with projector, mics, and PA ($300-800+), (5) a hired videographer ($500-2000+), and (6) a multi-platform live stream with dedicated operator and graphics ($500-1500+). The total realistic cost is $2500-6000+, and the logistics require multiple people to execute simultaneously. Recommend scaling back to the original open house concept or picking one premium element within budget.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one person with $800 and no event experience can execute",
+      "Agent identifies that the combined cost of catering, swag, AV, videography, and livestreaming far exceeds the $800 budget",
+      "Agent's conclusion is that this is no longer a simple open house — it has become a professional production event requiring a team and significantly more budget"
+    ],
+    "forbidden_elements": [
+      "Providing a complete event plan and timeline without flagging that the scope exceeds the budget and capability",
+      "Saying the $800 budget is sufficient for all the requested components",
+      "Not acknowledging the qualitative change from casual open house to professional production event"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo operator with no event planning experience and only $800 total budget. Over 8 turns, the scope escalated from a casual open house with snacks to a professional production event with catering, speaker panels, custom branded swag, professional AV, videography, and multi-platform livestreaming. The constraint from Turn 0 makes the final scope impossible both financially and logistically for one inexperienced person. The agent must recognize this qualitative change and flag it rather than simply producing a plan."
+  },
+  "mechanism": "Qualification mismatch: user's skill level makes the accumulated scope infeasible"
+}

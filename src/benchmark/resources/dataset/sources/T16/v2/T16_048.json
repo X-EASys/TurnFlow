@@ -1,0 +1,301 @@
+{
+  "scenario_id": "T16_048",
+  "domain": "beach bonfire cookout for friends",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user plan food for a beach bonfire cookout by tracking who is attending, their dietary needs, and any logistics. When the user asks you to evaluate specific food items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, a bunch of us are planning a beach bonfire cookout this Saturday evening. Can you help me figure out the food?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Five of us: me, Derek, Priya, Sam, and Noor",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_injury",
+        "value": "Derek broke his collarbone mountain biking last month, he's on prescription painkillers so he can't drink alcohol",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_celiac",
+        "value": "Priya got diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_shellfish",
+        "value": "Sam ate shrimp at a wedding last year and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "We're splitting costs, trying to keep it around 25 bucks per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noor_exits",
+        "value": "Noor just texted me, she got called into a night shift at the hospital so she can't make it. She asked if we could save her a plate though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_healed",
+        "value": "Derek told me he finished his painkillers last week and his doctor cleared him, he's totally fine now, back to normal",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_girlfriend_joins",
+        "value": "Derek wants to bring his girlfriend Megan",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "megan_peanut",
+        "value": "Megan has a peanut allergy, pretty serious one apparently",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_constraint_upgrade",
+        "value": "Sam told me he went to the allergist and turns out it's not just shrimp, it's all shellfish — clams, mussels, lobster, the whole deal",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Food list to check: beer-marinated bratwurst, grilled corn with peanut satay sauce, shrimp skewers, sourdough bread bowls with clam chowder, grilled chicken thighs with lemon herb marinade, s'mores",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "noor_diet",
+        "value": "Cannot eat pork or consume alcohol, follows halal dietary laws",
+        "disclosed": false,
+        "surface_form": "Noor is from a Jordanian family, she's Muslim",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jordanian family, Muslim → follows Islamic dietary laws",
+          "Islamic dietary laws → halal",
+          "Halal → no pork, no alcohol"
+        ]
+      },
+      {
+        "key": "priya_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Priya got diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods"
+        ]
+      },
+      {
+        "key": "sam_shellfish_allergy",
+        "value": "Cannot eat shellfish (shrimp, clams, mussels, lobster, crab, etc.)",
+        "disclosed": false,
+        "surface_form": "Sam ate shrimp at a wedding last year and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Severe allergic reaction to shrimp → shrimp allergy (initially)",
+          "Later upgraded: allergist confirmed all shellfish, not just shrimp"
+        ]
+      },
+      {
+        "key": "megan_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Megan has a peanut allergy, pretty serious one apparently",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a beach bonfire cookout for friends. You will introduce the group and their backgrounds across several turns. People will drop out and join, and one person's medical restriction will be lifted. At the end, you will share a specific food list and ask if there are any issues. You must NEVER hint at what the problems are — just list the food and ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing friend organizing a beach hangout. You always refer to your friends by name in third person (e.g. 'Derek told me...', 'Sam said...'). You never express frustration or impatience, even when plans keep changing. You treat each update as totally normal friend-group coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for friend updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, a bunch of us are planning a beach bonfire cookout this Saturday evening. Can you help me figure out the food?",
+          "success_criteria": "Agent engages with cookout food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate beach bonfire cookout planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Derek, Priya, Sam, and Noor. Derek broke his collarbone mountain biking last month, he's on prescription painkillers so he can't drink alcohol. Priya got diagnosed with celiac disease a couple years ago. Sam ate shrimp at a wedding last year and his throat swelled up, had to use an EpiPen. And Noor is from a Jordanian family, she's Muslim.",
+          "success_criteria": "Agent acknowledges all four friends and their constraints",
+          "required_info_keys": [
+            "group_members",
+            "derek_injury",
+            "priya_celiac",
+            "sam_shellfish"
+          ],
+          "required_constraint_keys": [
+            "noor_diet",
+            "priya_gluten",
+            "sam_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're splitting costs, trying to keep it around 25 bucks per person. What kind of stuff works well for a beach bonfire anyway?",
+          "success_criteria": "Agent discusses budget-friendly beach cookout food ideas",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + on-topic noise question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Noor just texted me, she got called into a night shift at the hospital so she can't make it. She asked if we could save her a plate though.",
+          "success_criteria": "Agent notes Noor is no longer attending but needs a saved plate, so her halal constraint applies to the saved plate only",
+          "required_info_keys": [
+            "noor_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Noor leaves but wants a saved plate (halal constraint persists for her plate)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Derek told me he finished his painkillers last week and his doctor cleared him, he's totally fine now, back to normal. Oh and he wants to bring his girlfriend Megan. Apparently Megan has a peanut allergy, pretty serious one.",
+          "success_criteria": "Agent removes Derek's alcohol restriction, registers Megan as new attendee with peanut allergy",
+          "required_info_keys": [
+            "derek_healed",
+            "derek_girlfriend_joins",
+            "megan_peanut"
+          ],
+          "required_constraint_keys": [
+            "megan_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Derek healed, alcohol OK) + late-joining entity (Megan) with peanut allergy"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Sam told me he went to the allergist and turns out it's not just shrimp, it's all shellfish — clams, mussels, lobster, the whole deal.",
+          "success_criteria": "Agent upgrades Sam's constraint from shrimp-only to all shellfish",
+          "required_info_keys": [
+            "sam_constraint_upgrade"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE — Sam's allergy broadened from shrimp to all shellfish"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we get there early to grab a good fire pit spot, or do you think 6pm is fine? Also wondering if we need a permit for the bonfire.",
+          "success_criteria": "Agent responds about logistics without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "arrival time and bonfire permit",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic logistics question to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How much charcoal do you think we need for like 5 people? And should we bring a portable grill or just use the park grills?",
+          "success_criteria": "Agent responds about equipment without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "equipment",
+            "drift_topic": "charcoal amount and grill type",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance between last constraint update and probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I put together a food list based on what looked good online. We'd have: beer-marinated bratwurst, grilled corn with peanut satay sauce, shrimp skewers, sourdough bread bowls with clam chowder, grilled chicken thighs with lemon herb marinade, and s'mores for dessert. Any issues?",
+          "success_criteria": "Agent checks each of the 6 items against all current attendees' constraints and identifies specific problems",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 food items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Four items have problems. (1) Beer-marinated bratwurst: the beer marinade contains alcohol — this is fine for the table since Derek is now cleared to drink, but it CANNOT go on Noor's saved plate because she is Muslim and follows halal (no alcohol, no pork — and bratwurst is typically pork). (2) Grilled corn with peanut satay sauce: contains peanuts — Megan has a serious peanut allergy. (3) Shrimp skewers: Sam is allergic to all shellfish including shrimp. (4) Sourdough bread bowls with clam chowder: sourdough contains gluten — Priya has celiac disease; clam chowder contains clams — Sam is allergic to all shellfish. Two items are fine: grilled chicken thighs with lemon herb marinade are safe for everyone, and s'mores are safe for everyone currently attending (graham crackers contain gluten, which affects Priya — but standard s'mores use graham crackers made from wheat flour, so this is also problematic for Priya).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Beer-marinated bratwurst is problematic for Noor's saved plate: bratwurst is typically pork and the beer marinade contains alcohol — Noor is Muslim (halal, no pork, no alcohol)",
+      "Grilled corn with peanut satay sauce is problematic: contains peanuts — Megan has a peanut allergy",
+      "Shrimp skewers are problematic: shrimp is shellfish — Sam is allergic to all shellfish",
+      "Sourdough bread bowls with clam chowder is problematic on two counts: sourdough contains gluten (Priya has celiac disease) and clam chowder contains clams (Sam is allergic to all shellfish)",
+      "Grilled chicken thighs with lemon herb marinade are fine for everyone currently attending",
+      "Derek has no alcohol restriction anymore — agent does not flag beer-marinated bratwurst as a problem for Derek"
+    ],
+    "forbidden_elements": [
+      "Flagging beer-marinated bratwurst as a problem for Derek (his painkiller restriction has been removed, he is cleared to drink)",
+      "Flagging any item as problematic because of Noor's halal constraint for the group table (Noor is not attending the cookout, her constraint only applies to her saved plate)",
+      "Saying Sam has only a shrimp allergy (it was upgraded to all shellfish)",
+      "Saying Sam has a general seafood allergy (he is allergic to shellfish specifically, not all seafood — fish is fine for Sam)",
+      "Ignoring Megan's peanut allergy on the grilled corn with peanut satay sauce (Megan is a late-joining entity)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint state changes across a beach bonfire cookout planning conversation. The agent must track: (1) Noor is from a Jordanian Muslim family → halal → no pork, no alcohol (inferential chain), (2) Priya has celiac disease → no gluten (inferential), (3) Sam's allergy is UPGRADED mid-conversation from shrimp-only to all shellfish, (4) Derek's alcohol restriction is REMOVED (finished painkillers, doctor cleared him), (5) Noor EXITS the cookout but wants a saved plate (her halal constraint persists for the plate only, not the shared table), (6) Megan JOINS late with a peanut allergy. At probe time, the current constraint state is: Priya=celiac (no gluten), Sam=all shellfish allergy, Megan=peanut allergy, Noor=halal (saved plate only). Derek has NO active restrictions. The 6 food items produce mixed verdicts: beer-marinated bratwurst (problematic for Noor's plate only — pork + alcohol), grilled corn with peanut satay sauce (problematic — Megan's peanut allergy), shrimp skewers (problematic — Sam's shellfish allergy), sourdough bread bowls with clam chowder (problematic — Priya's celiac + Sam's shellfish), grilled chicken thighs (fine for everyone), and s'mores (fine for the table but graham crackers contain gluten affecting Priya). The key traps are: not flagging beer for Derek (constraint removed), not applying Noor's halal to the whole table (she's not attending), catching Megan's peanut allergy (late joiner), and recognizing Sam's upgraded shellfish allergy catches both shrimp skewers and clam chowder."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

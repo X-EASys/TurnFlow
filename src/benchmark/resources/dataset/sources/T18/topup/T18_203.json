@@ -1,0 +1,225 @@
+{
+  "scenario_id": "T18_203",
+  "domain": "choosing a health insurance plan",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a health insurance plan and answer their questions. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to pick a health insurance plan. I've narrowed it down to 3 options from my company's open enrollment.",
+    "flow_info": [
+      {
+        "key": "three_plans",
+        "value": "Choosing between 3 health insurance plans from employer open enrollment: Plan A (Premium Plus), Plan B (Standard Care), Plan C (Basic Shield)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "plan_details",
+        "value": "Plan A (Premium Plus): $380/month premium, $500 deductible, covers all specialists, includes dental and vision. Plan B (Standard Care): $150/month premium, $1500 deductible, covers most specialists, no dental/vision. Plan C (Basic Shield): $95/month premium, $3000 deductible, primary care and urgent care only, no dental/vision.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_volunteering",
+        "value": "User volunteers every Saturday morning at a community clinic and needs weekend coverage for that activity",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "plan_network_hours",
+        "value": "Plan A network clinics operate Monday-Friday only. Plan B network clinics operate Monday-Saturday. Plan C network clinics operate 7 days a week including evenings.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum monthly health insurance budget is $120",
+        "surface_form": "My take-home is $3600 a month and I try to keep insurance under a thirtieth of my annual take-home",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$3600/month take-home × 12 = $43,200 annual",
+          "One thirtieth of $43,200 = $1,440 annual",
+          "$1,440 / 12 months = $120/month max insurance budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weekend_coverage_constraint",
+        "value": "Needs a plan whose network clinics are open on Saturdays because user volunteers at a community clinic every Saturday and wants coverage available that day",
+        "surface_form": "I volunteer at a community clinic every Saturday morning. I need to be able to see a network doctor on Saturdays if anything happens",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "existing_dental_coverage",
+        "value": "User already has separate dental and vision through spouse's plan, so bundled dental/vision adds no value",
+        "surface_form": "My wife's plan already covers dental and vision for both of us through her employer",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 employer health insurance plans (A, B, C). You will share plan details, your budget, your Saturday volunteering schedule, and your existing dental/vision coverage across several turns. Your colleague and friend will praise Plans A and B. At the very end, you will say you need to finalize your enrollment this week and ask which option you should commit to — you must NEVER name which plan you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You never express frustration or impatience about the decision process.",
+        "description": "Prevents emotion escalation that could leak the answer"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to pick a health insurance plan. My company's open enrollment has 3 options: Plan A Premium Plus, Plan B Standard Care, and Plan C Basic Shield.",
+          "success_criteria": "Agent engages with the 3-plan selection",
+          "required_info_keys": [
+            "three_plans"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Plan A is $380 a month with a $500 deductible, covers all specialists, includes dental and vision. Plan B is $150 a month with a $1500 deductible, covers most specialists, no dental or vision. Plan C is $95 a month with a $3000 deductible, primary care and urgent care only, no dental or vision.",
+          "success_criteria": "Agent processes all 3 plans with their premiums, deductibles, and coverage details",
+          "required_info_keys": [
+            "plan_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 plans × attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague Sarah has Plan A. She had knee surgery last year and said the coverage was incredible — barely paid anything out of pocket and the specialist network was huge.",
+          "success_criteria": "Agent responds to the positive Plan A review",
+          "drift_config": {
+            "drift_subject": "colleague Sarah",
+            "drift_topic": "had knee surgery on Plan A, barely paid out of pocket, huge specialist network",
+            "target_option": "Plan A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Plan A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My take-home is $3600 a month and I try to keep insurance under a thirtieth of my annual take-home. Also my wife's plan already covers dental and vision for both of us through her employer.",
+          "success_criteria": "Agent registers the budget constraint and the existing dental/vision coverage",
+          "required_constraint_keys": [
+            "budget_constraint",
+            "existing_dental_coverage"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint (eliminates A and B) and dental/vision info (removes A's bundled advantage)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah also mentioned Plan A's dental saved her a fortune on her kid's braces. She said the vision coverage paid for her husband's new glasses too.",
+          "success_criteria": "Agent responds to Plan A's dental/vision benefits",
+          "drift_config": {
+            "drift_subject": "colleague Sarah",
+            "drift_topic": "Plan A dental saved money on kid's braces, vision paid for husband's glasses",
+            "target_option": "Plan A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Plan A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at a community clinic every Saturday morning. I need to be able to see a network doctor on Saturdays if anything happens. I checked and Plan A's network clinics are only open Monday through Friday. Plan B's network is Monday through Saturday. Plan C's network is open 7 days a week including evenings.",
+          "success_criteria": "Agent recognizes the Saturday coverage requirement and the network hours for each plan",
+          "required_info_keys": [
+            "saturday_volunteering",
+            "plan_network_hours"
+          ],
+          "required_constraint_keys": [
+            "weekend_coverage_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Plan A on Saturday availability, confirms B and C have Saturday hours"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend Dave switched to Plan B last year. He said the $1500 deductible sounds high but he barely hit it because the copays for routine visits are so low. He's really happy with it.",
+          "success_criteria": "Agent responds to the positive Plan B review",
+          "drift_config": {
+            "drift_subject": "friend Dave",
+            "drift_topic": "switched to Plan B, barely hit deductible, low copays for routine visits, very happy",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Plan B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Dave also told me Plan B's specialist referral process is super smooth. He got into a dermatologist within a week. Said the customer service line is way better than what he had before.",
+          "success_criteria": "Agent responds to Plan B's specialist access and service quality",
+          "drift_config": {
+            "drift_subject": "friend Dave",
+            "drift_topic": "Plan B specialist referral is smooth, got dermatologist in a week, great customer service",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Plan B (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I need to finalize my enrollment this week. Which option should I commit to?",
+          "success_criteria": "Agent recommends Plan C as the only option that fits within the $120/month budget, has Saturday network availability, and doesn't waste money on dental/vision the user already has",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "prepare",
+              "ready",
+              "organize",
+              "plan for"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to recommending Plan C based on all 3 constraints"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Plan C (Basic Shield, $95/month). Plan A ($380/month) exceeds the $120/month budget and its network clinics are closed on Saturdays. Plan B ($150/month) exceeds the $120/month budget. Only Plan C ($95 < $120, open 7 days including Saturdays, and no wasted dental/vision premium since the user already has that through spouse) satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends Plan C (Basic Shield) as the enrollment choice",
+      "Agent shows that Plan A at $380/month exceeds the derived $120/month budget cap (from $3600 × 12 = $43,200 annual ÷ 30 = $1,440 annual ÷ 12 = $120/month)",
+      "Agent shows that Plan B at $150/month exceeds the $120/month budget cap",
+      "Agent notes that Plan A network clinics are weekday-only, failing the Saturday coverage requirement",
+      "Agent identifies that Plan C at $95/month is within the $120/month budget and has Saturday network availability"
+    ],
+    "forbidden_elements": [
+      "Recommending Plan A (exceeds budget by over 3x and lacks Saturday network hours)",
+      "Recommending Plan B (exceeds budget at $150 vs $120 cap)",
+      "Ignoring the budget constraint derived from take-home pay",
+      "Ignoring the Saturday network availability requirement",
+      "Asking the user which plan they want (should be determinable from constraints)",
+      "Suggesting Plan A's dental/vision bundle is valuable (user already has dental/vision through spouse)"
+    ],
+    "explanation": "Budget constraint: $3600/month × 12 = $43,200 annual. One thirtieth = $1,440/year = $120/month max. Plan A ($380) eliminated — over 3x budget. Plan B ($150) eliminated — $30 over budget. Schedule constraint: Saturday network needed. Plan A eliminated — weekday only. Plan B passes (Mon-Sat). Plan C passes (7 days). Other obligation: existing dental/vision through spouse makes Plan A's bundle worthless. Final: only Plan C ($95/month, 7-day network, no redundant dental/vision) survives all 3 constraints. Despite 4 drift turns praising Plans A and B, the agent must respect the hard constraints."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

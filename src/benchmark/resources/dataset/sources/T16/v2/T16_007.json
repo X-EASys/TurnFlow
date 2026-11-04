@@ -1,0 +1,291 @@
+{
+  "scenario_id": "T16_007",
+  "domain": "team dinner at a Sichuan restaurant",
+  "personality": "Friendly and easygoing",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and any updates to restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a team dinner this Friday at that Sichuan restaurant on 5th Street. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us going: me, Ah Jie, Xiao Chen, and Da Wei",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "da_wei_stomach",
+        "value": "Da Wei had stomach surgery two months ago, doctor told him to stick to bland food only — nothing spicy, nothing greasy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "ah_jie_sesame_event",
+        "value": "Ah Jie ate sesame paste noodles at a restaurant last month and broke out in hives all over, had to rush to the clinic for a shot",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 40-50 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "ah_jie_exits",
+        "value": "Ah Jie just messaged me — she has to pick up her kid from after-school at 6, so she can't make dinner. She asked if I could pack some food for her to take home",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "da_wei_healed",
+        "value": "Da Wei just told me his doctor cleared him at his checkup yesterday — stomach has fully healed, no more dietary restrictions, he can eat whatever he wants now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "cousin_joins",
+        "value": "Xiao Chen just asked if his cousin can join us — she's visiting from out of town this week, so that makes four of us again",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "cousin_buddhist",
+        "value": "Xiao Chen mentioned his cousin has been a devoted lay Buddhist practitioner for years, very disciplined about her practice",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Dishes to check: mapo tofu, twice-cooked pork, tiger skin peppers, sesame cold noodles, dry-fried green beans, kung pao chicken",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "xiao_chen_diet",
+        "value": "Cannot eat pork or pork-derived products",
+        "disclosed": false,
+        "surface_form": "Xiao Chen's family is Hui, they're from Gansu originally",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hui ethnicity → Muslim",
+          "Muslim → follows halal dietary laws",
+          "Halal → no pork or pork-derived products"
+        ]
+      },
+      {
+        "key": "ah_jie_sesame_allergy",
+        "value": "Allergic to sesame and sesame-derived products",
+        "disclosed": false,
+        "surface_form": "Ah Jie ate sesame paste noodles at a restaurant last month and broke out in hives all over, had to rush to the clinic for a shot",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "da_wei_bland_diet",
+        "value": "Must eat only bland food — no spicy, no greasy, no heavy flavors",
+        "disclosed": false,
+        "surface_form": "Da Wei had stomach surgery two months ago, doctor told him to stick to bland food only",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "cousin_vegetarian",
+        "value": "Strict vegetarian — no meat, no fish, no animal products",
+        "disclosed": false,
+        "surface_form": "Xiao Chen mentioned his cousin has been a devoted lay Buddhist practitioner for years, very disciplined about her practice",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Devoted lay Buddhist practitioner → follows Buddhist dietary precepts",
+          "Buddhist dietary precepts → strict vegetarian",
+          "Strict vegetarian → no meat, no fish, no animal products"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at a Sichuan restaurant for this Friday. You will introduce your three colleagues and their situations in one message. Over the conversation, one colleague will drop out but want takeaway, another's medical restriction will be lifted, and a new person (Xiao Chen's cousin) will join late. At the end you will share a list of 6 dishes from the menu and ask if there are any issues. You must list all 6 dishes exactly and ask openly — do NOT hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact team organizer. You always refer to your colleagues by name in third person (e.g. 'Ah Jie just messaged me...', 'Da Wei told me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination. Keep your messages conversational and natural.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a team dinner this Friday at that Sichuan restaurant on 5th Street. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with dinner planning at a Sichuan restaurant",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Ah Jie, Xiao Chen, and Da Wei. Da Wei had stomach surgery about two months ago, his doctor told him to stick to bland food only — nothing spicy or greasy. Ah Jie ate sesame paste noodles at a restaurant last month and broke out in hives all over, had to rush to the clinic for a shot. And Xiao Chen's family is Hui, they're from Gansu originally",
+          "success_criteria": "Agent acknowledges all three colleagues and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "da_wei_stomach",
+            "ah_jie_sesame_event"
+          ],
+          "required_constraint_keys": [
+            "xiao_chen_diet",
+            "ah_jie_sesame_allergy",
+            "da_wei_bland_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "What do you think is a reasonable budget? We were thinking around 40 to 50 dollars per person",
+          "success_criteria": "Agent responds about budget without losing track of dietary constraints",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "budget",
+            "drift_topic": "per-person spending for the dinner",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise about budget"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Ah Jie just messaged me — she has to pick up her kid from after-school at 6, so she can't make dinner. She asked if I could pack some food for her to take home though",
+          "success_criteria": "Agent notes Ah Jie will not attend dinner but needs takeaway packed for her",
+          "required_info_keys": [
+            "ah_jie_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Ah Jie leaves but her sesame allergy still applies to takeaway"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we try to get a private room or just a regular table? There's usually a minimum spend for private rooms",
+          "success_criteria": "Agent responds about seating without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "private room vs regular table",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance before next lifecycle event"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Da Wei just told me his doctor cleared him at his checkup yesterday — stomach has fully healed, no more dietary restrictions, he can eat whatever he wants now",
+          "success_criteria": "Agent removes Da Wei's bland diet restriction",
+          "required_info_keys": [
+            "da_wei_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Da Wei's bland diet restriction is lifted"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Xiao Chen just asked if his cousin can join us — she's visiting from out of town this week, so that makes four of us again. He mentioned she's been a devoted lay Buddhist practitioner for years, very disciplined about her practice",
+          "success_criteria": "Agent registers the cousin as a new diner and infers her vegetarian dietary constraint from Buddhist practice",
+          "required_info_keys": [
+            "cousin_joins",
+            "cousin_buddhist"
+          ],
+          "required_constraint_keys": [
+            "cousin_vegetarian"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — cousin is Buddhist → strict vegetarian (inferential)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "What time should we book, 6:30 or 7? Friday traffic is always bad",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "reservation time on Friday",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise to create distance between last constraint and probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I looked at their menu online. How about we get: mapo tofu, twice-cooked pork, tiger skin peppers, sesame cold noodles, dry-fried green beans, and kung pao chicken. Any issues?",
+          "success_criteria": "Agent checks each of the 6 dishes against all current diners' constraints and identifies: mapo tofu has pork (Xiao Chen halal + cousin vegetarian), twice-cooked pork has pork (Xiao Chen halal + cousin vegetarian), kung pao chicken has chicken (cousin vegetarian), sesame cold noodles contain sesame (fine for table but cannot be packed for Ah Jie's takeaway). Tiger skin peppers and dry-fried green beans are fine for everyone.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three dishes have pork problems: mapo tofu (contains minced pork — Xiao Chen is Hui/halal, cannot eat pork; cousin is Buddhist vegetarian, cannot eat meat), twice-cooked pork (pork dish — same issues for Xiao Chen and cousin). Kung pao chicken contains chicken — cousin is Buddhist vegetarian, cannot eat meat. Sesame cold noodles contain sesame — fine for the table since Ah Jie is not attending, but must NOT be packed in Ah Jie's takeaway because of her sesame allergy. Tiger skin peppers are fine for everyone — Da Wei's bland diet restriction has been lifted, so spicy food is no longer a concern. Dry-fried green beans are fine for everyone.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Mapo tofu is problematic: contains minced pork — Xiao Chen is Hui (halal, cannot eat pork) and the cousin is a Buddhist vegetarian (cannot eat meat)",
+      "Twice-cooked pork is problematic: pork dish — Xiao Chen cannot eat pork (halal) and the cousin cannot eat meat (Buddhist vegetarian)",
+      "Kung pao chicken is problematic: contains chicken — the cousin is a Buddhist vegetarian and cannot eat meat",
+      "Sesame cold noodles are fine for the table but must NOT be packed for Ah Jie's takeaway because of her sesame allergy",
+      "Tiger skin peppers are fine for everyone currently attending — agent does not flag spicy food as a problem since Da Wei's restriction has been lifted",
+      "Dry-fried green beans are fine for everyone — agent confirms they are acceptable",
+      "Da Wei has no dietary restrictions anymore — agent treats him as able to eat anything"
+    ],
+    "forbidden_elements": [
+      "Flagging tiger skin peppers or any dish as too spicy for Da Wei (his bland diet restriction was removed by his doctor)",
+      "Saying Da Wei cannot eat greasy or heavy food (he has been cleared)",
+      "Flagging sesame cold noodles as problematic for the table (Ah Jie is not attending the dinner, only needs takeaway)",
+      "Saying Ah Jie's sesame allergy does not matter because she is not coming (it still applies to her takeaway)",
+      "Saying Xiao Chen has a general allergy or is vegetarian (he follows halal — no pork, but other meats are fine)",
+      "Forgetting the cousin entirely or not checking dishes against her vegetarian constraint",
+      "Saying kung pao chicken is fine for everyone (the cousin cannot eat chicken)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns. The agent must track: (1) Xiao Chen is Hui ethnicity from Gansu → Muslim → halal → no pork (inferential chain, never explicitly stated as a dietary rule), (2) Ah Jie has a sesame allergy (inferred from her hives reaction to sesame paste noodles), (3) Da Wei's bland diet restriction is REMOVED mid-conversation (doctor cleared him), (4) Ah Jie EXITS the dinner but still needs takeaway packed (her sesame allergy scope changes from table to takeaway only), (5) Xiao Chen's cousin JOINS LATE with an inferential constraint (devoted lay Buddhist practitioner → strict vegetarian → no meat, no fish, no animal products). At probe time, the agent must apply the CURRENT constraint state: Xiao Chen = halal (no pork), cousin = Buddhist vegetarian (no meat/fish/animal products), Ah Jie = sesame allergy (takeaway only). Da Wei's bland diet restriction no longer applies. Key traps: tiger skin peppers look problematic (very spicy, would have been bad for Da Wei) but Da Wei is healed; sesame cold noodles look fine for the table but cannot go in Ah Jie's takeaway; kung pao chicken looks safe (no pork) but the late-joining cousin cannot eat it."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

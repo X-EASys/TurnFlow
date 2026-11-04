@@ -1,0 +1,240 @@
+{
+  "scenario_id": "T18_037",
+  "domain": "choosing between 3 neighborhoods to move to",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user with their apartment search and moving plans. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to move to a new neighborhood. I've narrowed it down to three areas.",
+    "flow_info": [
+      {
+        "key": "three_neighborhoods",
+        "value": "Choosing between 3 neighborhoods to rent an apartment: Riverside Heights (Area A), Maple Grove (Area B), Elm Park (Area C)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rental_prices",
+        "value": "Riverside Heights: typical 1BR is $2400/month. Maple Grove: typical 1BR is $1450/month. Elm Park: typical 1BR is $950/month.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_times",
+        "value": "Riverside Heights: 15 min subway to office. Maple Grove: 35 min subway to office. Elm Park: 50 min subway to office.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "neighborhood_vibes",
+        "value": "Riverside Heights: trendy, lots of restaurants and nightlife. Maple Grove: quiet, family-oriented, good parks. Elm Park: up-and-coming, a few new cafes, mostly residential.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "salary_info",
+        "value": "User's monthly salary is $4500 after tax",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "employer_housing_stipend",
+        "value": "Employer provides a housing stipend of $600/month, capped at $600 regardless of actual rent",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_tolerance",
+        "value": "User does not want a commute longer than 45 minutes each way",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum rent the user can afford out of pocket is $900/month. Combined with the $600 employer stipend, total affordable rent is $1500/month.",
+        "surface_form": "My take-home is $4500 a month. My own out-of-pocket housing spend cannot exceed a fifth of that; this is a hard limit. My company does chip in a flat $600 housing stipend on top of that though.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Take-home $4500, personal housing at most one-fifth => $4500 / 5 = $900 personal max",
+          "Employer stipend $600 is additive → total rent budget = $900 + $600 = $1500/month",
+          "Riverside Heights $2400 > $1500 → eliminated",
+          "Maple Grove $1450 <= $1500 => within budget",
+          "Elm Park $950 < $1500 → within budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "commute_constraint",
+        "value": "Commute must be 45 minutes or less each way",
+        "surface_form": "I really don't want to spend more than 45 minutes getting to work each way, that's my hard limit",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 neighborhoods to rent an apartment: Riverside Heights, Maple Grove, and Elm Park. You will share rental prices, your salary, your employer's housing stipend, commute times, and your commute limit across several turns. Your friend lives in Riverside Heights and your coworker recently moved to Maple Grove — you will relay positive things about both neighborhoods. At the very end, you will say you have made your decision and ask for help figuring out what to do next — you must NEVER name which neighborhood you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information about friends or coworkers, you are casually positive but not gushing.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to move soon. I've been apartment hunting and narrowed it down to three neighborhoods: Riverside Heights, Maple Grove, and Elm Park.",
+          "success_criteria": "Agent engages with the 3-neighborhood decision",
+          "required_info_keys": [
+            "three_neighborhoods"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So for a typical one-bedroom: Riverside Heights runs about $2400 a month, Maple Grove is around $1450, and Elm Park is about $950. Riverside Heights is super trendy with tons of restaurants and nightlife, Maple Grove is quiet and family-oriented with nice parks, and Elm Park is more up-and-coming with a few new cafes but mostly residential.",
+          "success_criteria": "Agent processes all 3 neighborhoods with prices and character descriptions",
+          "required_info_keys": [
+            "rental_prices",
+            "neighborhood_vibes"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and neighborhood descriptions in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My friend Sarah lives in Riverside Heights. She moved there last year and absolutely loves it. She says the weekend farmers market is incredible and there's always something going on.",
+          "success_criteria": "Agent responds to the positive Riverside Heights review",
+          "drift_config": {
+            "drift_subject": "friend Sarah",
+            "drift_topic": "lives in Riverside Heights, loves the farmers market and the vibrant weekend scene",
+            "target_option": "Riverside Heights"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Riverside Heights"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My take-home is $4500 a month. My own out-of-pocket housing spend cannot exceed a fifth of that; this is a hard limit. My company does chip in a flat $600 housing stipend on top of that though.",
+          "success_criteria": "Agent registers the budget information — ideally computes $4500/5 = $900 personal + $600 stipend = $1500 total rent cap",
+          "required_info_keys": [
+            "salary_info",
+            "employer_housing_stipend"
+          ],
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via salary + ratio + stipend — requires computation to derive $1500 cap"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah was telling me Riverside Heights just got a new craft brewery and a rooftop bar. She sent me photos, the views are unreal.",
+          "success_criteria": "Agent responds to more positive Riverside Heights info",
+          "drift_config": {
+            "drift_subject": "friend Sarah",
+            "drift_topic": "Riverside Heights got a new craft brewery and rooftop bar with amazing views",
+            "target_option": "Riverside Heights"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Riverside Heights (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Commute-wise, Riverside Heights is about 15 minutes by subway to my office, Maple Grove is around 35 minutes, and Elm Park is about 50 minutes. I really don't want to spend more than 45 minutes getting to work each way, that's my hard limit.",
+          "success_criteria": "Agent registers commute times and the 45-minute cap, ideally noting Elm Park at 50 min is over the limit",
+          "required_info_keys": [
+            "commute_times",
+            "commute_tolerance"
+          ],
+          "required_constraint_keys": [
+            "commute_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose commute data and the hard 45-minute limit. Elm Park is affordable but too far; Maple Grove satisfies both constraints."
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My coworker Dave just moved to Maple Grove a couple months ago. He keeps saying how peaceful it is, his kids love the park right around the corner. He found this great little Italian place nearby too.",
+          "success_criteria": "Agent responds to the positive Maple Grove review",
+          "drift_config": {
+            "drift_subject": "coworker Dave",
+            "drift_topic": "moved to Maple Grove, loves the peacefulness, kids enjoy the park, found a great Italian restaurant",
+            "target_option": "Maple Grove"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Maple Grove"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Dave also mentioned Maple Grove is getting a new express bus line next year that would cut commute times. And property values there have been going up, so he feels good about the area long-term.",
+          "success_criteria": "Agent responds to Maple Grove's future improvements",
+          "drift_config": {
+            "drift_subject": "coworker Dave",
+            "drift_topic": "Maple Grove getting a new express bus line, property values rising, good long-term outlook",
+            "target_option": "Maple Grove"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive information about Maple Grove; decide using present constraints, not future improvements."
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to commit and sign a lease this week. Help me sort out the next steps.",
+          "success_criteria": "Agent identifies Maple Grove as the sole option meeting both the $1500 hard rent cap and 45-minute hard commute limit.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "cheapest"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the one neighborhood that satisfies all constraints"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Recommend Maple Grove at $1450/month with a 35-minute commute. The total hard rent cap is $4500/5 + $600 = $1500. Riverside Heights costs $2400 and exceeds that cap. Elm Park costs $950 but its 50-minute commute exceeds the hard 45-minute limit. Maple Grove costs the user $850 after the $600 stipend, within the $900 personal cap; no budget exception is needed.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends Maple Grove, the only option satisfying both hard constraints",
+      "Agent rules out Riverside Heights as exceeding the total $1500 rent cap",
+      "Agent rules out Elm Park because its 50-minute commute exceeds the 45-minute limit"
+    ],
+    "forbidden_elements": [
+      "Recommending Riverside Heights despite its $2400 rent exceeding the hard budget",
+      "Recommending Elm Park despite its 50-minute commute exceeding the hard limit",
+      "Asking which neighborhood the user selected instead of inferring it from the disclosed constraints",
+      "Changing either hard constraint to make a rejected option fit"
+    ],
+    "explanation": "The additive stipend gives a $1500 rent cap; the affordable choices are Maple Grove and Elm Park, and only Maple Grove also meets the commute limit. The original impossible-choice/overage contract is replaced."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

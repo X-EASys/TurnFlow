@@ -1,0 +1,291 @@
+{
+  "scenario_id": "T16_056",
+  "domain": "reunion dinner at a dim sum restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant and meal planning assistant. Help the user plan a dim sum reunion dinner by tracking who is attending, their dietary needs, and logistics. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, my family is getting together for a reunion dinner this Saturday at a dim sum place. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "family_members",
+        "value": "Five of us: me, Uncle Hao, Auntie Mei, cousin Derek, and Grandma",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_hao_gout",
+        "value": "Uncle Hao had a gout flare-up last month and his doctor told him to watch his diet carefully",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_allergy",
+        "value": "Cousin Derek ate peanuts at a party once and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reservation_size",
+        "value": "Should I book a table for 5 or get a private room?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_hao_exits",
+        "value": "Uncle Hao just called — his flight got moved up so he has to leave for the airport right after he drops Grandma off. He won't be staying for dinner. But he said he really wants me to pack him a box of his favorites to take on the plane",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "auntie_mei_daughter_joins",
+        "value": "Auntie Mei is bringing her daughter Sophie, she's 4. Sophie was in the hospital last year because she ate shrimp and broke out in hives everywhere, it was really scary",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "grandma_dentures",
+        "value": "Grandma just got new dentures fitted last week, she told me she can only do really soft foods right now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "auntie_mei_exits",
+        "value": "Auntie Mei just texted — she has to run to a work emergency after dropping Sophie off, so she'll leave around noon. Sophie will stay with us though, Grandma will watch her",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noise_drinks",
+        "value": "Should we get tea or do they have other drinks? Grandma loves chrysanthemum tea",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "OK so I'm looking at the menu. How about these: har gow (shrimp dumplings), char siu bao (BBQ pork buns), turnip cake, chicken feet, and peanut sesame balls. Any issues?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "uncle_hao_gout_diet",
+        "value": "Should avoid high-purine foods: organ meats, shellfish/shrimp, rich broths",
+        "disclosed": false,
+        "surface_form": "Uncle Hao had a gout flare-up last month and his doctor told him to watch his diet carefully",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Gout flare-up → uric acid condition",
+          "Doctor told him to watch diet → must avoid high-purine foods",
+          "High-purine foods include organ meats, shellfish, shrimp, and rich meat broths"
+        ]
+      },
+      {
+        "key": "derek_peanut_allergy",
+        "value": "Severe peanut allergy — cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Cousin Derek ate peanuts at a party once and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_shrimp_allergy",
+        "value": "Severe shrimp allergy — cannot eat shrimp or shrimp-derived products",
+        "disclosed": false,
+        "surface_form": "Sophie was in the hospital last year because she ate shrimp and broke out in hives everywhere",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "grandma_soft_food",
+        "value": "Can only eat soft foods due to new dentures",
+        "disclosed": false,
+        "surface_form": "Grandma just got new dentures fitted last week, she told me she can only do really soft foods right now",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a family reunion dim sum dinner. You will introduce 5 family members with various dietary issues, then the group will change: Uncle Hao leaves but wants takeaway packed, Auntie Mei's young daughter Sophie joins with a shrimp allergy, Grandma gets a new constraint (soft foods only), and Auntie Mei leaves but Sophie stays. At the end you will list 5 specific dim sum dishes and ask if there are any issues. You must NEVER hint at which dishes are problematic — just list them and ask.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative family organizer. You always refer to family members by name in third person (e.g. 'Uncle Hao just called...', 'Auntie Mei texted me...'). You never express frustration or impatience even when plans keep changing. You treat each update as normal family coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for family updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, my family is getting together for a reunion dinner this Saturday at a dim sum place. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with dim sum dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dim sum reunion dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Uncle Hao, Auntie Mei, cousin Derek, and Grandma. Uncle Hao had a gout flare-up last month and his doctor told him to watch his diet carefully. And cousin Derek ate peanuts at a party once and his throat swelled up, had to use an EpiPen",
+          "success_criteria": "Agent acknowledges the group and registers Uncle Hao's gout dietary concern and Derek's peanut allergy",
+          "required_info_keys": [
+            "family_members",
+            "uncle_hao_gout",
+            "derek_allergy"
+          ],
+          "required_constraint_keys": [
+            "uncle_hao_gout_diet",
+            "derek_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 5 entities + 2 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "Should I book a table for 5 or get a private room? The restaurant has both",
+          "success_criteria": "Agent responds about seating without losing track of dietary constraints",
+          "required_info_keys": [
+            "reservation_size"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "table vs private room for 5 people",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise about logistics"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Uncle Hao just called — his flight got moved up so he has to leave for the airport right after he drops Grandma off. He won't be staying for dinner. But he said he really wants me to pack him a box of his favorites to take on the plane",
+          "success_criteria": "Agent registers that Uncle Hao is leaving but needs takeaway packed, so his gout constraint applies to the takeaway portion",
+          "required_info_keys": [
+            "uncle_hao_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Uncle Hao leaves but wants takeaway, gout constraint shifts to takeaway only"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Oh also, Auntie Mei is bringing her daughter Sophie, she's 4. Sophie was in the hospital last year because she ate shrimp and broke out in hives everywhere, it was really scary",
+          "success_criteria": "Agent registers Sophie as a new diner with a shrimp allergy",
+          "required_info_keys": [
+            "auntie_mei_daughter_joins"
+          ],
+          "required_constraint_keys": [
+            "sophie_shrimp_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Sophie with shrimp allergy"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Grandma just got new dentures fitted last week, she told me she can only do really soft foods right now",
+          "success_criteria": "Agent registers Grandma's soft food constraint",
+          "required_info_keys": [
+            "grandma_dentures"
+          ],
+          "required_constraint_keys": [
+            "grandma_soft_food"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "New constraint added to existing entity — Grandma needs soft foods"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Auntie Mei just texted — she has to run to a work emergency after dropping Sophie off, so she'll leave around noon. Sophie will stay with us though, Grandma will watch her",
+          "success_criteria": "Agent registers that Auntie Mei is leaving but Sophie stays — Sophie's shrimp allergy remains active for the table",
+          "required_info_keys": [
+            "auntie_mei_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Auntie Mei leaves but child (Sophie) STAYS, so Sophie's shrimp allergy remains active for shared food"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we get tea or do they have other drinks? Grandma loves chrysanthemum tea",
+          "success_criteria": "Agent responds about drink options without losing track of dietary constraints",
+          "required_info_keys": [
+            "noise_drinks"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "drinks",
+            "drift_topic": "tea and drink options, Grandma likes chrysanthemum tea",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I'm looking at the menu. How about these: har gow (shrimp dumplings), char siu bao (BBQ pork buns), turnip cake, chicken feet, and peanut sesame balls. Any issues?",
+          "success_criteria": "Agent identifies: har gow problematic for Sophie (shrimp allergy, she is at the table) and should not be packed for Uncle Hao (high-purine shrimp, gout); chicken feet problematic for Grandma (hard/chewy, not soft food) and should not be packed for Uncle Hao (high-purine); peanut sesame balls problematic for Derek (peanut allergy); char siu bao and turnip cake are fine for everyone at the table; notes har gow scope distinction for takeaway vs table",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dim sum dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Har gow (shrimp dumplings): problematic for Sophie who has a shrimp allergy and is present at the table; also should not be packed for Uncle Hao's takeaway since shrimp is high-purine and he has gout. Char siu bao (BBQ pork buns): fine for everyone at the table and fine for Uncle Hao's takeaway. Turnip cake: fine for everyone at the table and fine for Uncle Hao's takeaway (soft, no allergens, low-purine). Chicken feet: problematic for Grandma because they are tough and chewy, not suitable for someone with new dentures who can only eat soft foods; also should not be packed for Uncle Hao since chicken feet are moderately high in purines. Peanut sesame balls: problematic for cousin Derek who has a severe peanut allergy. Auntie Mei left but has no dietary constraints that matter — her departure changes nothing. Sophie stays at the table even though Auntie Mei left, so Sophie's shrimp allergy remains active for all shared dishes.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Har gow is problematic for Sophie because she has a shrimp allergy and is present at the table",
+      "Har gow should also not be packed for Uncle Hao's takeaway because shrimp is high-purine and he has gout",
+      "Chicken feet are problematic for Grandma because they are tough and chewy, not suitable for her new dentures requiring soft foods only",
+      "Peanut sesame balls are problematic for cousin Derek because he has a severe peanut allergy",
+      "Char siu bao is fine for everyone currently at the table",
+      "Turnip cake is fine for everyone currently at the table",
+      "Sophie's shrimp allergy is treated as active for the table even though Auntie Mei left — Sophie stays"
+    ],
+    "forbidden_elements": [
+      "Flagging har gow only for Uncle Hao's takeaway while ignoring Sophie's shrimp allergy at the table",
+      "Saying Auntie Mei has dietary constraints that affect the order (she has none and she left)",
+      "Saying Sophie left with Auntie Mei (Sophie stays with Grandma)",
+      "Saying Derek has a general nut allergy or tree nut allergy (he specifically has a peanut allergy)",
+      "Flagging char siu bao as problematic for anyone currently attending",
+      "Flagging turnip cake as problematic for anyone currently attending",
+      "Applying Uncle Hao's gout constraint to dishes eaten at the table (he is not dining in, only getting takeaway)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking with scope changes across a dim sum reunion dinner. The agent must track: (1) Uncle Hao has gout → must avoid high-purine foods like shrimp and organ meats (inferential chain from 'gout flare-up' + 'doctor told him to watch diet'), (2) Uncle Hao EXITS the dinner but wants takeaway packed → his gout constraint applies ONLY to the takeaway box, not to what others eat at the table, (3) Sophie (age 4) JOINS late with a shrimp allergy, (4) Grandma gets a NEW constraint mid-conversation (new dentures → soft foods only), (5) Auntie Mei EXITS but Sophie STAYS — the child's shrimp allergy remains active for shared table food even though the parent left. At probe time with 5 dishes: har gow fails for Sophie at the table (shrimp) AND for Uncle Hao's takeaway (high-purine shrimp); chicken feet fail for Grandma (not soft); peanut sesame balls fail for Derek (peanut allergy); char siu bao and turnip cake are fine for everyone present. The over-generalization trap is Derek's peanut allergy — it is specifically peanuts, not all nuts or sesame."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

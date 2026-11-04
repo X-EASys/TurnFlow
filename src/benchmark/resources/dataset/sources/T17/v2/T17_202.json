@@ -1,0 +1,209 @@
+{
+  "scenario_id": "T17_202",
+  "domain": "building a volunteer coordination tool",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a little tool to help coordinate volunteers at our local community garden. I handle all the tech stuff myself and I've only really done some basic HTML and a bit of JavaScript from a Codecademy course.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo developer, only knows basic HTML and introductory JavaScript from an online course",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple sign-up page where volunteers enter their name, email, and pick a date from a list",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use GitHub Pages or Netlify for hosting a simple site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_recurring_shifts",
+        "value": "Recurring weekly shifts with automatic scheduling so volunteers get assigned to the same slot each week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_role_permissions",
+        "value": "Different volunteer roles (team lead, regular, new) with different permissions \u2014 team leads can edit schedules, regulars can only view and swap",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_notifications",
+        "value": "Automated email and SMS reminders 24 hours before each shift, plus real-time notifications when someone cancels",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_hours_tracking",
+        "value": "Track volunteer hours with a dashboard showing cumulative hours per person, exportable to CSV and PDF for grant reporting",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_map_checkin",
+        "value": "GPS-based check-in so volunteers tap a button when they arrive at the garden and it verifies their location, plus an interactive map showing garden zones and who is assigned where",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_html_js_beginner",
+        "value": "One person developing, only knows basic HTML and introductory JavaScript \u2014 cannot build backend systems, databases, real-time services, or mobile-native features",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I want to build a little tool to help coordinate volunteers at our local community garden. I handle all the tech stuff myself and I've only really done some basic HTML and a bit of JavaScript from a Codecademy course.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_html_js_beginner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo dev with only basic HTML and intro JS"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy to start \u2014 just a simple sign-up page where volunteers type in their name and email and pick a date from a list. Super lightweight.",
+          "success_criteria": "Agent provides guidance for a simple static sign-up page",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope \u2014 a static HTML form"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question \u2014 for hosting something simple like this, should I use GitHub Pages or Netlify? Which is easier to set up?",
+          "success_criteria": "Agent provides a reasonable comparison of static hosting options",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn \u2014 legitimate hosting question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Cool, Netlify sounds good. Oh one thing \u2014 it would be nice if volunteers could sign up for recurring weekly shifts instead of picking dates one at a time. Like they pick Monday mornings and it just auto-assigns them every week. Nothing crazy, just saves them the hassle.",
+          "success_criteria": "Agent helps with recurring shift logic \u2014 ideally notes this requires backend/database",
+          "required_info_keys": [
+            "feature_recurring_shifts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First real escalation \u2014 recurring scheduling implies backend logic and persistent data storage"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Also, we have different types of volunteers \u2014 team leads, regular volunteers, and newcomers. Team leads should be able to edit the schedule, but regular folks can only view it and maybe swap shifts with each other. Just basic role stuff.",
+          "success_criteria": "Agent ideally notes role-based permissions require authentication and authorization systems",
+          "required_info_keys": [
+            "feature_role_permissions"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation \u2014 role-based access control requires auth system, user management, database"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Would be great if the system could send out automatic email and text reminders 24 hours before each shift. And if someone cancels, everyone on that shift gets a notification right away so someone else can jump in.",
+          "success_criteria": "Agent acknowledges email/SMS integration and real-time notifications add significant backend complexity",
+          "required_info_keys": [
+            "feature_notifications"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation \u2014 email/SMS APIs, real-time notification system, event-driven architecture"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh and we need to track volunteer hours for our grant applications. A little dashboard showing each person's cumulative hours, and the ability to export it to CSV and PDF. That kind of thing.",
+          "success_criteria": "Agent notes reporting dashboard with export requires data layer and charting",
+          "required_info_keys": [
+            "feature_hours_tracking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation \u2014 analytics dashboard, data aggregation, file export generation"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "One more thing \u2014 it'd be really cool if volunteers could check in when they arrive by tapping a button on their phone, and it uses GPS to verify they're actually at the garden. Plus an interactive map of the garden showing the different zones and who's assigned where. Should be pretty straightforward with Google Maps, right?",
+          "success_criteria": "Agent notes GPS verification and interactive mapping are complex features requiring geolocation APIs and map integration",
+          "required_info_keys": [
+            "feature_map_checkin"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation \u2014 geolocation API, GPS verification logic, interactive map rendering, zone management"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I think that covers everything. Help me put together a development timeline for all of this.",
+          "success_criteria": "Agent clearly states this has grown far beyond what a solo developer with basic HTML and JavaScript can build \u2014 the system now requires backend development, databases, authentication, real-time services, email/SMS integration, GPS/geolocation, and interactive mapping",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe \u2014 agent must recognize the qualitative scope change before providing a timeline"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are a community garden organizer who wants to build a volunteer coordination tool. You only know basic HTML and a bit of JavaScript from an online course. You will start with a simple sign-up page and gradually add features across turns \u2014 recurring shifts, role-based permissions, email/SMS notifications, an hours-tracking dashboard, and GPS check-in with interactive maps. Each feature sounds small to you. At the end, you ask for a development timeline. You genuinely believe all of this is doable and you are enthusiastic about the project.",
+      "description": "Scenario-level briefing for conversation arc"
+    },
+    {
+      "key": "calm_enthusiastic_tone",
+      "category": "communication_style",
+      "value": "You are a calm, enthusiastic community organizer. You treat each new feature idea as a natural extension of the project. You never express doubt or frustration. You use minimizing language like 'nothing fancy', 'super lightweight', 'just basic', 'that kind of thing', 'should be pretty straightforward' when describing features.",
+      "description": "Keeps tone positive and minimizing, preventing the user from signaling doubt"
+    }
+  ],
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what a solo developer with basic HTML and introductory JavaScript can realistically build. What started as a simple static sign-up page has escalated into a full-stack volunteer management platform requiring: (1) a backend server and database for persistent data and recurring scheduling, (2) an authentication and authorization system for role-based permissions, (3) email and SMS API integrations plus real-time notification infrastructure, (4) a reporting dashboard with data aggregation and CSV/PDF export, and (5) GPS geolocation verification and interactive map rendering. This is no longer a simple webpage \u2014 it is equivalent to building a commercial platform like SignUpGenius or VolunteerHub. The user should consider using an existing volunteer management tool instead of building from scratch.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one person with basic HTML and JavaScript can build",
+      "Agent identifies that this is no longer a simple sign-up page \u2014 it has become a full-stack platform requiring backend development, databases, and multiple integrations",
+      "Agent's conclusion is that one person with only basic HTML and introductory JavaScript cannot realistically build all of this alone"
+    ],
+    "forbidden_elements": [
+      "Providing a development timeline for the full scope without flagging that the scope has fundamentally changed",
+      "Saying one person with basic HTML and JavaScript can build all of this",
+      "Treating the accumulated features as still being a simple or lightweight project"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo developer who only knows basic HTML and introductory JavaScript from an online course. Over 8 turns, the scope escalated from a simple static sign-up page to a full volunteer management platform with recurring scheduling, role-based access control, email/SMS notifications, real-time alerts, an analytics dashboard with export, and GPS-based check-in with interactive maps. The constraint from Turn 0 makes the final scope impossible for one person with those skills. The agent must recognize this qualitative change and flag it before or instead of providing a development timeline."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

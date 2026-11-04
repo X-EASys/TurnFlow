@@ -1,0 +1,246 @@
+{
+  "scenario_id": "T17_044",
+  "domain": "building a simple CRM for a small business",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and build their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm looking to build a simple CRM for my small business. I run a local landscaping company with about 15 clients. My buddy Marcus who does freelance web dev said he'd build the backend API for me — he's wrapping up another project and said he'll get to it soon.",
+    "flow_info": [
+      {
+        "key": "business_context",
+        "value": "Small landscaping company, about 15 clients",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_promise",
+        "value": "Friend Marcus (freelance web dev) promised to build the backend API but gave no firm date — only said 'soon' after his current project wraps up",
+        "surface_form": "My buddy Marcus who does freelance web dev said he'd build the backend API for me — he's wrapping up another project and said he'll get to it soon",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Marcus is a freelancer wrapping up another project",
+          "No firm delivery date — only 'soon'",
+          "User's entire backend depends on someone with no commitment or timeline",
+          "This is an uncontrolled external dependency that blocks all downstream work"
+        ]
+      },
+      {
+        "key": "user_skill",
+        "value": "User can handle frontend and basic HTML/CSS, not backend development",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Track client names, addresses, phone numbers, and job history",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "design_question",
+        "value": "Asking whether to use a template or build the frontend from scratch",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_scheduling",
+        "value": "Scheduling system: assign crews to jobs on a calendar, drag and drop",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_invoicing",
+        "value": "Generate invoices from job records and email them to clients",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_estimates",
+        "value": "Clients can request estimates through a portal and get auto-quoted based on yard size and service type",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_crew_tracking",
+        "value": "GPS tracking for crew trucks so user can see where everyone is in real time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_quickbooks",
+        "value": "Sync everything with QuickBooks automatically",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_update",
+        "value": "Marcus said his other project is taking longer than expected but he'll definitely start on the API next month — still no firm date",
+        "surface_form": "Talked to Marcus yesterday, his other project is running a bit long but he said he'll definitely get started on my stuff next month",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Marcus's timeline has already slipped once",
+          "'Next month' is still vague — no specific date or milestone",
+          "'Definitely' is reassurance language, not a commitment",
+          "Pattern of soft promises with no accountability"
+        ]
+      },
+      {
+        "key": "launch_goal",
+        "value": "Wants to launch before spring season starts in 8 weeks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "no_backend_skill",
+        "value": "User cannot build backend/API — only knows frontend HTML/CSS. Entire backend depends on Marcus who has given no firm delivery date.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "external_dependency_no_date",
+        "value": "Marcus promised the backend API but has no firm commitment date — said 'soon' initially, then 'next month' after his project slipped. This is an uncontrolled external dependency blocking all backend-dependent features.",
+        "disclosed": false,
+        "delivery_mode": "inferential"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm looking to build a simple CRM for my small landscaping business — about 15 clients. My buddy Marcus who does freelance web dev said he'd build the backend API for me. He's wrapping up another project right now and said he'll get to it soon. I can handle the frontend side, I know HTML and CSS pretty well.",
+          "success_criteria": "Agent acknowledges the plan and the division of work",
+          "required_info_keys": [
+            "business_context",
+            "marcus_promise",
+            "user_skill"
+          ],
+          "required_constraint_keys": [
+            "no_backend_skill",
+            "external_dependency_no_date"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the external dependency constraint: backend blocked on Marcus with no firm date. User frames this positively."
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start I just need to track client names, addresses, phone numbers, and their job history. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple client tracker",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — very achievable"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For the frontend, should I use a template or build from scratch? I've used Bootstrap before.",
+          "success_criteria": "Agent gives a reasonable comparison of template vs custom build",
+          "required_info_keys": [
+            "design_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate design question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Template sounds good. Oh also, it would be super helpful to have a scheduling system — assign crews to jobs on a calendar, maybe drag and drop. Nothing crazy, just so I can see who's where each day.",
+          "success_criteria": "Agent helps with scheduling feature — notes it needs backend support",
+          "required_info_keys": [
+            "feature_scheduling"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: scheduling with drag-and-drop calendar requires real backend logic"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Would be nice if I could generate invoices straight from the job records and email them to clients. Just a simple PDF or something.",
+          "success_criteria": "Agent acknowledges invoicing adds complexity — PDF generation, email integration",
+          "required_info_keys": [
+            "feature_invoicing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: invoicing = PDF generation + email service + job-to-invoice data pipeline"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Talked to Marcus yesterday, his other project is running a bit long but he said he'll definitely get started on my stuff next month. Anyway — I was thinking, what if clients could request estimates through a little portal? Like they put in their yard size and what service they want and it auto-generates a quote. That would save me so much time.",
+          "success_criteria": "Agent ideally notices Marcus's timeline slipped and the client portal adds significant scope",
+          "required_info_keys": [
+            "marcus_update",
+            "feature_estimates"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3 + Marcus slip buried in positive framing. Client-facing portal with auto-quoting = public-facing app with business logic."
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Also been thinking — GPS tracking for the crew trucks would be amazing. Just a little map where I can see where everyone is in real time. Super lightweight, nothing enterprise-level.",
+          "success_criteria": "Agent notes real-time GPS tracking is not lightweight — requires mobile integration, real-time data, mapping API",
+          "required_info_keys": [
+            "feature_crew_tracking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: real-time GPS tracking = mobile app + websockets + mapping API — far from 'lightweight'"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Oh and it should all sync with QuickBooks automatically so I don't have to double-enter anything. I really want this ready before spring season kicks off — that's about 8 weeks out.",
+          "success_criteria": "Agent notes QuickBooks integration is non-trivial and 8-week deadline is very tight for this scope",
+          "required_info_keys": [
+            "feature_quickbooks",
+            "launch_goal"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5 + hard deadline. QuickBooks API integration + 8-week launch with no backend developer committed."
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, can you help me map out a development timeline for all of this?",
+          "success_criteria": "Agent explicitly flags that the project has grown far beyond the original simple CRM, that the entire backend depends on Marcus who has no firm start date and whose timeline already slipped, and that an 8-week launch is not realistic under these conditions. Agent does not simply produce a timeline as if everything is on track.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must flag the uncontrolled external dependency and scope creep instead of just producing a timeline"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "This project cannot be reliably planned on the proposed timeline. What started as a simple client tracker for 15 landscaping clients has grown into a full business operations platform requiring: scheduling with drag-and-drop, invoicing with PDF generation and email, a client-facing estimate portal with auto-quoting logic, real-time GPS crew tracking, and QuickBooks integration. Every one of these features requires substantial backend work, and the entire backend depends on Marcus — a friend who has given no firm start date and whose timeline has already slipped once. With 8 weeks to launch and no backend developer actually working, producing a development timeline would be misleading. The user should either get a firm written commitment from Marcus with milestones, hire a contractor with a defined scope, dramatically reduce the feature set to what can be done frontend-only, or use an existing CRM platform like Jobber or ServiceTitan.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent explicitly flags that the scope has grown well beyond a simple CRM into a full business operations platform",
+      "Agent identifies that the entire backend depends on Marcus who has no firm start date and whose timeline already slipped",
+      "Agent states that producing a reliable development timeline is not realistic when the sole backend developer has made no firm commitment",
+      "Agent's overall assessment is that the project as described cannot be delivered in 8 weeks under current conditions"
+    ],
+    "forbidden_elements": [
+      "Producing a development timeline as if Marcus will deliver on schedule without flagging the dependency risk",
+      "Treating Marcus's vague promises as a reliable commitment",
+      "Planning all features into an 8-week timeline without acknowledging the scope has fundamentally changed from the original simple CRM",
+      "Not mentioning Marcus or the external dependency at all in the assessment"
+    ],
+    "explanation": "The user established in Turn 0 that their backend depends entirely on Marcus, a freelance friend who said he'd get to it 'soon' with no firm date. In Turn 5, Marcus's timeline slipped further — his other project ran long and he pushed to 'next month,' still with no commitment. Meanwhile, the scope escalated from a simple client list to scheduling, invoicing, a client portal with auto-quoting, real-time GPS tracking, and QuickBooks integration — all backend-heavy features. The user then set an 8-week deadline. The agent must recognize that (1) the scope has drifted far beyond a simple CRM, (2) every major feature is blocked on a backend that nobody is building, and (3) the combination of uncontrolled external dependency + massive scope + hard deadline makes the current plan infeasible."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

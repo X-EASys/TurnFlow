@@ -1,0 +1,231 @@
+{
+  "scenario_id": "T18_040",
+  "domain": "choosing between 3 virtual assistant services",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and set up a virtual assistant service subscription. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking into getting a virtual assistant service for scheduling and email management. I've narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 virtual assistant services: TimelyBot Pro, DeskMate Plus, QuickAssist Lite",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_details",
+        "value": "TimelyBot Pro: full-featured AI assistant with calendar, email triage, and meeting prep, $280/month per seat. DeskMate Plus: calendar sync and email drafting, $95/month per seat. QuickAssist Lite: calendar management and basic email sorting, $65/month per seat.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "employer_contribution",
+        "value": "User's employer covers up to $40/month for productivity tool subscriptions",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "personal_budget_info",
+        "value": "User can chip in up to $40/month out of pocket on top of the employer contribution",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "integration_requirement",
+        "value": "User's company uses Google Workspace. TimelyBot Pro only integrates with Microsoft 365. DeskMate Plus supports both Google Workspace and Microsoft 365. QuickAssist Lite supports Google Workspace natively.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "total_budget",
+        "value": "Maximum total monthly spend is $80 (employer $40 + personal $40)",
+        "surface_form": "My company gives us a $40/month allowance for productivity tools, and I can throw in another $40 from my own pocket — that's about all I can swing right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer contributes $40/month",
+          "User adds $40/month personal",
+          "$40 + $40 = $80 total monthly budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "integration_constraint",
+        "value": "Must integrate with Google Workspace — TimelyBot Pro only supports Microsoft 365, so it is incompatible",
+        "surface_form": "Our whole office runs on Google Workspace — calendar, email, Drive, the works",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Company uses Google Workspace for everything",
+          "Any assistant service must integrate with Google Workspace",
+          "TimelyBot Pro only integrates with Microsoft 365 → incompatible"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 virtual assistant services (TimelyBot Pro, DeskMate Plus, QuickAssist Lite). You will share service details, your combined budget (employer + personal), and your company's tech stack across several turns. Your colleague and a friend will praise TimelyBot Pro and DeskMate Plus. At the very end, you will simply say you have decided and need to finalize the subscription — you must NEVER name which service you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact professional. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information about colleagues or friends, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking into getting a virtual assistant service for scheduling and email management. I've narrowed it down to three: TimelyBot Pro, DeskMate Plus, and QuickAssist Lite.",
+          "success_criteria": "Agent engages with the 3-option decision framework",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've gathered: TimelyBot Pro is the full package — calendar, email triage, meeting prep — runs $280 a month per seat. DeskMate Plus does calendar sync and email drafting for $95 a month. And QuickAssist Lite handles calendar management and basic email sorting for $65 a month.",
+          "success_criteria": "Agent processes all 3 options with their prices and features",
+          "required_info_keys": [
+            "service_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague on the sales team just started using TimelyBot Pro last month. She told me the meeting prep feature is a game changer — it pulls context from past emails and builds briefing docs automatically before every call.",
+          "success_criteria": "Agent responds to the positive TimelyBot Pro review",
+          "drift_config": {
+            "drift_subject": "colleague on sales team",
+            "drift_topic": "started using TimelyBot Pro, meeting prep feature builds briefing docs automatically, calls it a game changer",
+            "target_option": "TimelyBot Pro"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward TimelyBot Pro"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company gives us a $40/month allowance for productivity tools, and I can throw in another $40 from my own pocket — that's about all I can swing right now",
+          "success_criteria": "Agent registers the combined budget of $80/month and ideally begins eliminating options that exceed it",
+          "required_info_keys": [
+            "employer_contribution",
+            "personal_budget_info"
+          ],
+          "required_constraint_keys": [
+            "total_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — employer $40 + personal $40 = $80 cap. Eliminates TimelyBot Pro ($280) and DeskMate Plus ($95)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned TimelyBot Pro has this smart priority inbox thing — it learns which emails matter and surfaces them first. She said she's saving like an hour a day on email alone.",
+          "success_criteria": "Agent responds to more TimelyBot Pro praise",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "TimelyBot Pro has smart priority inbox, learns email importance, saves her an hour a day",
+            "target_option": "TimelyBot Pro"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about TimelyBot Pro (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Our whole office runs on Google Workspace — calendar, email, Drive, the works",
+          "success_criteria": "Agent recognizes this as a compatibility requirement and ideally notes that TimelyBot Pro only supports Microsoft 365",
+          "required_info_keys": [
+            "integration_requirement"
+          ],
+          "required_constraint_keys": [
+            "integration_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver integration constraint — double-eliminates TimelyBot Pro (over budget AND wrong platform)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend of mine at another company uses DeskMate Plus. He was telling me the email drafting feature is really polished — it picks up on your writing style after a couple weeks and the drafts barely need editing.",
+          "success_criteria": "Agent responds to the positive DeskMate Plus review",
+          "drift_config": {
+            "drift_subject": "friend at another company",
+            "drift_topic": "uses DeskMate Plus, email drafting learns your writing style, drafts barely need editing",
+            "target_option": "DeskMate Plus"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward DeskMate Plus"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "He also said DeskMate Plus just rolled out a team dashboard where managers can see everyone's calendar load. His whole department adopted it and their meeting conflicts dropped by like 30 percent.",
+          "success_criteria": "Agent responds to more DeskMate Plus praise",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "DeskMate Plus new team dashboard shows calendar load, department meeting conflicts dropped 30%",
+            "target_option": "DeskMate Plus"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about DeskMate Plus (eliminated by budget at $95 > $80)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to get this set up before Monday — can you walk me through what I need to do to activate the subscription and connect it to my work accounts?",
+          "success_criteria": "Agent focuses on QuickAssist Lite subscription activation and Google Workspace integration setup (only option within $80 budget and compatible with Google Workspace)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "cheapest"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they decided, agent must determine it is QuickAssist Lite and help with activation"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should subscribe to QuickAssist Lite ($65/month). TimelyBot Pro ($280) far exceeds the $80 combined budget ($40 employer + $40 personal) and only integrates with Microsoft 365, not the user's Google Workspace. DeskMate Plus ($95) exceeds the $80 budget. Only QuickAssist Lite ($65 < $80, Google Workspace native support) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the combined budget is $40 employer allowance + $40 personal = $80/month before recommending",
+      "Agent shows that TimelyBot Pro at $280/month exceeds the derived $80 budget and only supports Microsoft 365, not the user's Google Workspace",
+      "Agent shows that DeskMate Plus at $95/month exceeds the derived $80/month budget",
+      "Agent's activation guidance is specifically for QuickAssist Lite, including connecting it to Google Workspace"
+    ],
+    "forbidden_elements": [
+      "Helping activate TimelyBot Pro ($280 far exceeds $80 budget and incompatible with Google Workspace)",
+      "Helping activate DeskMate Plus ($95 exceeds $80 budget)",
+      "Ignoring the budget constraint when providing setup instructions",
+      "Ignoring the Google Workspace integration requirement",
+      "Asking which service the user decided on (should be determinable from constraints)"
+    ],
+    "explanation": "Budget constraint: employer $40 + personal $40 = $80 max. TimelyBot Pro $280 exceeds budget by 250% and only supports Microsoft 365 (user needs Google Workspace). DeskMate Plus $95 exceeds budget by ~19%. QuickAssist Lite $65 is within budget and supports Google Workspace natively. Despite 4 drift turns praising TimelyBot Pro and DeskMate Plus, the agent must respect both the hard budget constraint and the integration requirement. Two independent axes eliminate the two wrong options: budget eliminates all three non-correct paths (TimelyBot Pro and DeskMate Plus), and integration independently eliminates TimelyBot Pro."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

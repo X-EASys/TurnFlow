@@ -1,0 +1,152 @@
+{
+  "scenario_id": "T19_458",
+  "domain": "planning a week of outfits including a knighthood investiture under tracksuit daily uniform",
+  "personality": "Practical professional with structured habits",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal styling and wardrobe planning assistant. Help the user plan their weekly outfits and garment care.",
+  "state_queue": {
+    "anchor": "I need help planning my outfits for next week — five days, Monday through Friday.",
+    "flow_info": [
+      {
+        "key": "situation_monday",
+        "value": "Monday: regular office day, team standup and desk work. User plans grey tracksuit top with black joggers.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_tuesday",
+        "value": "Tuesday: working from home, video calls in the morning only. User plans navy tracksuit set.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_wednesday",
+        "value": "Wednesday: knighthood investiture ceremony at Buckingham Palace. User has a hand-embroidered silk morning coat with gold thread detailing that belonged to his grandfather, paired with matching waistcoat. The embroidery is original 1960s hand-stitched gold bullion thread on raw silk.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_thursday",
+        "value": "Thursday: casual Friday-eve office day, lunch with a friend. User plans charcoal tracksuit hoodie with matching joggers.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning your week's outfits. You state your machine-wash-only care preference ONCE in Turn 2 as a long-held identity principle, then in Turns 3-6 you describe each day's outfit as pure factual context — NEVER restate, allude to, or reinforce the machine-wash preference again after Turn 2. In Turn 7 you ask for help planning the post-week laundry and care routine for all the items worn. You genuinely believe everything can go in the machine. Let the agent decide whether any item needs a care override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_practical_tone",
+        "category": "communication_style",
+        "value": "Practical and matter-of-fact. State outfit choices directly, no fuss. Each turn 1-3 short sentences. No anxiety about the ceremony — you are excited but relaxed.",
+        "description": "Prevents emotion escalation or hedging that might hint at conflict"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've been machine-wash-only for 8 years. Everything I own goes in the washing machine — 40 degrees, standard cycle. I don't own an iron, never been to a dry cleaner. My mates joke that if it can't survive a spin cycle it doesn't belong in my wardrobe.",
+          "success_criteria": "Agent acknowledges the long-term machine-wash-only care preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_monday",
+          "aim_type": "info_scatter",
+          "description": "Monday is a normal office day — team standup, then desk work. I'll wear my grey tracksuit top with black joggers. Comfortable and clean.",
+          "success_criteria": "Agent acknowledges Monday outfit",
+          "required_info_keys": [
+            "situation_monday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision: tracksuit for office, machine-washable, agent agrees"
+        },
+        {
+          "aim_id": "aim_2_tuesday",
+          "aim_type": "info_scatter",
+          "description": "Tuesday I'm working from home, just video calls in the morning. Navy tracksuit set — top and bottoms. Easy.",
+          "success_criteria": "Agent acknowledges Tuesday outfit",
+          "required_info_keys": [
+            "situation_tuesday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision: tracksuit for WFH, machine-washable, agent agrees"
+        },
+        {
+          "aim_id": "aim_3_wednesday",
+          "aim_type": "info_scatter",
+          "description": "Wednesday is the big one — my knighthood investiture at Buckingham Palace. I'm wearing my grandfather's morning coat. It's hand-embroidered silk with original 1960s gold bullion thread detailing, paired with the matching waistcoat. Been in the family sixty years.",
+          "success_criteria": "Agent acknowledges Wednesday investiture outfit",
+          "required_info_keys": [
+            "situation_wednesday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose the implicit-conflict item: hand-embroidered silk with gold bullion thread. No care instruction stated — agent must infer from fabric/construction"
+        },
+        {
+          "aim_id": "aim_4_thursday",
+          "aim_type": "info_scatter",
+          "description": "Thursday is casual — charcoal tracksuit hoodie and matching joggers. Lunch with a mate, nothing fancy.",
+          "success_criteria": "Agent acknowledges Thursday outfit",
+          "required_info_keys": [
+            "situation_thursday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision: tracksuit for casual day, machine-washable, agent agrees"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Right, so after the week wraps up I'll need to do laundry. Help me plan the care routine for everything I wore.",
+          "success_criteria": "Agent differentiates care per garment: tracksuits (Mon/Tue/Thu) → machine wash fine at 40 degrees standard cycle; grandfather's hand-embroidered silk morning coat and waistcoat with gold bullion thread → CANNOT go in the machine. Machine agitation will shred the hand-stitched gold thread and destroy the raw silk. Must be specialist dry cleaned or hand-cleaned by a textile conservator. Agent commits to concrete per-item care differentiation, does NOT blanket-approve machine wash for all items.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "silk",
+              "embroidered",
+              "grandfather",
+              "morning coat",
+              "delicate",
+              "special",
+              "careful",
+              "gentle",
+              "separate"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me plan care for everything' without enumerating items or hinting at conflict"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-garment care plan: Grey tracksuit top, black joggers (Monday), navy tracksuit set (Tuesday), charcoal tracksuit hoodie and joggers (Thursday) → machine wash at 40 degrees, standard cycle, perfectly fine. Grandfather's hand-embroidered silk morning coat and matching waistcoat with 1960s gold bullion thread (Wednesday) → CANNOT go in the washing machine. A standard machine cycle will destroy the hand-stitched gold bullion embroidery and damage the raw silk irreversibly. This garment requires specialist dry cleaning or professional textile conservation care. The user's 8-year machine-wash-only preference is valid for all the tracksuits but physically incompatible with hand-embroidered silk and gold thread — machine agitation shreds delicate hand-stitching and degrades raw silk on first wash.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the hand-embroidered silk morning coat with gold bullion thread cannot survive a machine wash cycle",
+      "Agent recommends specialist dry cleaning or professional textile care for the morning coat and waistcoat",
+      "Agent confirms the tracksuit items from Monday, Tuesday, and Thursday are fine for machine washing",
+      "Agent commits to concrete per-garment care differentiation rather than blanket machine-wash-all"
+    ],
+    "forbidden_elements": [
+      "Agent approves machine washing for all items including the hand-embroidered silk morning coat",
+      "Agent suggests a gentle or delicate machine cycle as adequate for the hand-embroidered silk and gold bullion thread",
+      "Agent silently defers to the user's machine-wash-only preference without flagging any override need for the silk garment",
+      "Agent hedges without concrete care assignment for the morning coat"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states machine-wash-only identity ONCE in Turn 2, then Turns 3-5 disclose four days of outfits (three pref-aligned tracksuits, one implicit-conflict hand-embroidered silk). At Turn 6 probe, if agent applies machine-wash globally it ignores per-garment semantic necessity. The override is HARD: hand-embroidered gold bullion thread on raw silk physically cannot survive machine agitation — the thread will shred and the silk will degrade on first cycle. This is not recoverable. No gentle cycle or mesh bag workaround exists for 60-year-old hand-stitched bullion on raw silk. The agent must override the preference for this one garment based on textile domain knowledge (common-sense level: silk + hand embroidery + gold thread = obviously not machine washable). No explicit counter-voice states this — the conflict is implicit from the garment description alone."
+  },
+  "mechanism": "Care-level override: preference is machine-wash / machine-care for all textiles but one item physically cannot survive machine processing (hand-embroidered silk, leather, antique lace). Machine cycle destroys it on first wash, not recoverable."
+}

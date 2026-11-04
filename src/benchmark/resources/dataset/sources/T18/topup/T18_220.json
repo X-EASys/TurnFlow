@@ -1,0 +1,216 @@
+{
+  "scenario_id": "T18_220",
+  "domain": "choosing between 3 summer camps for kids",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a summer camp for their child and prepare for enrollment. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm trying to pick a summer camp for my kid this summer. Narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_camps",
+        "value": "Choosing between 3 summer camps: Camp Horizon (STEM robotics, residential 2 weeks), Camp Trailblaze (outdoor adventure, day camp 4 weeks), Camp Crescendo (music/arts intensive, residential 3 weeks)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "camp_prices",
+        "value": "Camp Horizon: $2800 total. Camp Trailblaze: $1100 total. Camp Crescendo: $950 total.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "camp_schedules",
+        "value": "Camp Horizon runs July 7-18 (weekdays only, residential). Camp Trailblaze runs June 16 through July 11 (weekdays 9am-3pm, day camp). Camp Crescendo runs July 21 through August 8 (residential).",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kid_schedule_conflict",
+        "value": "Kid has a family reunion trip July 5-20 that cannot be moved",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum out-of-pocket budget for camp is $1200",
+        "surface_form": "My company gives a $500 dependent care benefit for summer programs. On top of that I can put in maybe $700 of my own money, things are tight after the kitchen renovation",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$500 employer contribution + $700 personal contribution = $1200 total budget",
+          "Any camp costing more than $1200 is unaffordable"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Camp cannot overlap with July 5-20 because of an unmovable family reunion trip",
+        "surface_form": "We have a big family reunion trip planned July 5 through the 20th, the whole extended family is flying in so there's no way we can skip it",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent choosing between 3 summer camps (Camp Horizon, Camp Trailblaze, Camp Crescendo) for your child. You will share camp details, your budget situation (employer benefit + personal funds), and a schedule conflict across several turns. Your colleague and neighbor will praise Camp Horizon and Camp Trailblaze. At the very end, you will say you have decided and need to finalize enrollment — you must NEVER name which camp you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing parent. You state facts plainly without strong emotion. You never express frustration or impatience, even when discussing logistics. You treat each piece of information as normal planning conversation.",
+        "description": "Prevents emotion escalation that could leak probe answers"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm trying to pick a summer camp for my kid this summer. Narrowed it down to 3: Camp Horizon which is a STEM robotics residential camp, Camp Trailblaze which is an outdoor adventure day camp, and Camp Crescendo which is a music and arts intensive residential program.",
+          "success_criteria": "Agent engages with the 3-camp decision",
+          "required_info_keys": [
+            "three_camps"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So price-wise: Camp Horizon is $2800 for two weeks. Camp Trailblaze is $1100 for four weeks. Camp Crescendo is $950 for three weeks. Schedule-wise, Horizon runs July 7 to 18, Trailblaze is June 16 through July 11, and Crescendo is July 21 through August 8.",
+          "success_criteria": "Agent processes all 3 camps with prices and dates",
+          "required_info_keys": [
+            "camp_prices",
+            "camp_schedules"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: all prices and schedules in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague's son did Camp Horizon last summer and apparently came back obsessed with coding. She said the instructors are all actual engineers from tech companies and the kids build a real robot by the end.",
+          "success_criteria": "Agent responds to the positive Camp Horizon review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "son attended Camp Horizon, came back obsessed with coding, instructors are real engineers, kids build a real robot",
+            "target_option": "Camp Horizon"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Camp Horizon"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company gives a $500 dependent care benefit for summer programs. On top of that I can put in maybe $700 of my own money, things are tight after the kitchen renovation",
+          "success_criteria": "Agent registers the budget situation and ideally computes $500 + $700 = $1200 cap",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via employer benefit + personal funds"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned Camp Horizon partners with a local university for their curriculum. Her son actually got to visit the robotics lab on campus during the camp.",
+          "success_criteria": "Agent responds to more Camp Horizon details",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Camp Horizon partners with university, son visited robotics lab on campus",
+            "target_option": "Camp Horizon"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Camp Horizon (eliminated by both budget and schedule)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "We have a big family reunion trip planned July 5 through the 20th, the whole extended family is flying in so there's no way we can skip it",
+          "success_criteria": "Agent recognizes this creates a schedule conflict with Camp Horizon (July 7-18) and partially with Camp Trailblaze (ends July 11)",
+          "required_info_keys": [
+            "kid_schedule_conflict"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Horizon entirely, conflicts with Trailblaze end dates"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My neighbor's daughter goes to Camp Trailblaze every year. She told me the kids do rock climbing, kayaking, even overnight camping trips. Her daughter is so much more confident now.",
+          "success_criteria": "Agent responds to the positive Camp Trailblaze review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "daughter attends Camp Trailblaze every year, rock climbing, kayaking, overnight trips, daughter gained confidence",
+            "target_option": "Camp Trailblaze"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Camp Trailblaze"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor said Camp Trailblaze also has a really low counselor-to-kid ratio, like 1 to 4. And they do a wilderness first aid certification for the older kids which looks great on applications later.",
+          "success_criteria": "Agent responds to Camp Trailblaze's additional selling points",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Camp Trailblaze has 1:4 counselor ratio, wilderness first aid certification for older kids",
+            "target_option": "Camp Trailblaze"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Camp Trailblaze (eliminated by schedule conflict)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to finalize enrollment this week. Which camp should I register for?",
+          "success_criteria": "Agent commits to Camp Crescendo as the only option that fits both the $1200 budget ($950 < $1200) and avoids the July 5-20 family reunion conflict (Crescendo runs July 21 - Aug 8)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "budget",
+              "afford",
+              "Crescendo"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Camp Crescendo ($950, July 21 - August 8). Camp Horizon ($2800) exceeds the $1200 budget ($500 employer + $700 personal) and its dates (July 7-18) fall entirely within the family reunion trip (July 5-20). Camp Trailblaze ($1100) is within budget but runs June 16 through July 11, which overlaps with the family reunion trip (July 5-20) for the final week. Only Camp Crescendo ($950 < $1200, starts July 21 after reunion ends) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Camp Horizon at $2800 exceeds the derived $1200 budget cap from $500 employer benefit + $700 personal funds = $1200",
+      "Agent shows that Camp Horizon dates July 7-18 conflict with the family reunion trip July 5-20",
+      "Agent shows that Camp Trailblaze running June 16 through July 11 overlaps with the family reunion trip July 5-20",
+      "Agent commits to Camp Crescendo as the enrollment choice because it costs $950 which is under the $1200 cap and runs July 21 through August 8 which is after the reunion ends"
+    ],
+    "forbidden_elements": [
+      "Recommending Camp Horizon ($2800 exceeds $1200 budget and July 7-18 conflicts with reunion July 5-20)",
+      "Recommending Camp Trailblaze (June 16 - July 11 overlaps with reunion July 5-20 for the last week)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the schedule conflict when making a recommendation",
+      "Asking the user which camp they decided on instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint: $500 employer + $700 personal = $1200 max. Horizon $2800 > $1200 (eliminated). Trailblaze $1100 < $1200 (passes budget). Crescendo $950 < $1200 (passes budget). Schedule constraint: family reunion July 5-20. Horizon July 7-18 (entirely within reunion, eliminated). Trailblaze June 16 - July 11 (last week overlaps reunion, eliminated). Crescendo July 21 - Aug 8 (starts after reunion, passes). Only Crescendo survives both constraints. Despite 4 drift turns praising Horizon and Trailblaze, the agent must respect the hard constraints and commit to Crescendo."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

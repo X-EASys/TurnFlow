@@ -1,0 +1,239 @@
+{
+  "scenario_id": "T17_316",
+  "domain": "evaluating a SaaS subscription tool to consolidate 3 existing tools",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user evaluate their SaaS tool consolidation project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, so we're looking at consolidating our three separate tools — project management, CRM, and internal wiki — into one SaaS platform. Our contracts for the current tools all renew in about six weeks, so we want to have the migration done by then.",
+    "flow_info": [
+      {
+        "key": "deadline_constraint",
+        "value": "Hard deadline: existing tool contracts renew in 6 weeks, migration must complete before then",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "three_tools",
+        "value": "Consolidating project management, CRM, and internal wiki into one SaaS platform",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_excitement",
+        "value": "Team saw a demo and is enthusiastic about the new platform",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "intern_risk",
+        "value": "The two interns handling migration are leaving in 5 weeks when their summer program ends — before the 6-week deadline",
+        "surface_form": "We've got two summer interns on the migration team, both junior CS majors. They're incredibly sharp and motivated — they've already mapped out the data schemas for all three tools. Their program wraps up mid-August, about five weeks from now.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Summer program ends in 5 weeks",
+          "Migration deadline is 6 weeks",
+          "Final week of migration will have no interns",
+          "Knowledge transfer gap if migration isn't done before they leave"
+        ]
+      },
+      {
+        "key": "vendor_stability_risk",
+        "value": "The vendor is an early-stage startup that may pivot, change pricing, or fail — risky for long-term dependency",
+        "surface_form": "The vendor is this exciting Series A startup. They just closed their round three months ago and they're hiring aggressively — tripled their engineering team since January. Their roadmap is super ambitious, new features every two weeks.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Series A startup = early stage, high failure rate",
+          "Tripled engineering team = burning cash fast",
+          "Features every two weeks = product still unstable/evolving",
+          "Long-term platform dependency on unstable company is risky"
+        ]
+      },
+      {
+        "key": "single_point_of_failure",
+        "value": "Marcus is the only person who understands the integration architecture — if he's unavailable the project stalls",
+        "surface_form": "Our senior engineer Marcus is leading the whole technical integration. He's brilliant — built the entire API connector layer himself over one weekend. Nobody else on the team really touches the integration code because he's so efficient at it.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Marcus built it alone",
+          "Nobody else touches integration code",
+          "Single person owns all technical knowledge",
+          "If Marcus is sick or leaves, project has no backup"
+        ]
+      },
+      {
+        "key": "pricing_risk",
+        "value": "The 60% introductory discount expires after year one — real cost is 2.5x what they're currently evaluating against",
+        "surface_form": "They gave us an amazing introductory rate — 60% off for the first year. Our finance team approved it because it's actually cheaper than our three current tools combined at that price point.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "60% off is introductory = temporary",
+          "Year 2 price is 2.5x the year 1 price",
+          "Finance approved based on year 1 pricing only",
+          "Long-term cost may exceed current three tools combined"
+        ]
+      },
+      {
+        "key": "data_migration_risk",
+        "value": "The test export only covered 200 records from one tool — full migration involves 50,000+ records across three tools with complex relational data",
+        "surface_form": "We did a test export last week from our CRM — pulled about 200 contacts out and imported them into the new platform. Went really smoothly, took maybe twenty minutes. Our full CRM has around 50,000 records though, plus the project management tool has all the linked tasks and dependencies, and the wiki has about three years of documents with cross-references.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Test was 200 records from one tool only",
+          "Full scope is 50,000+ records across three tools",
+          "Linked tasks, dependencies, and cross-references add complexity",
+          "20 minutes for 200 records does not scale linearly to 50,000+ with relational data"
+        ]
+      },
+      {
+        "key": "security_question",
+        "value": "Asking about data security considerations during migration",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "six_week_deadline",
+        "value": "Migration must be completed within 6 weeks before existing contracts auto-renew",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "We're looking at consolidating our three separate tools — project management, CRM, and internal wiki — into one SaaS platform. Our contracts for the current tools all renew in about six weeks, so we want to have the migration done by then.",
+          "success_criteria": "Agent acknowledges the consolidation plan and timeline",
+          "required_info_keys": [
+            "deadline_constraint",
+            "three_tools"
+          ],
+          "required_constraint_keys": [
+            "six_week_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the hard 6-week deadline and scope of consolidation"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "The whole team saw a demo last week and everyone's really excited. The platform looks super polished and the sales team has been great to work with.",
+          "success_criteria": "Agent responds positively about the team's enthusiasm",
+          "required_info_keys": [
+            "team_excitement"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set positive tone — everything seems to be going well"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We've got two summer interns on the migration team, both junior CS majors. They're incredibly sharp and motivated — they've already mapped out the data schemas for all three tools. Their program wraps up mid-August, about five weeks from now.",
+          "success_criteria": "Agent acknowledges the interns' contribution",
+          "required_info_keys": [
+            "intern_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver disguised risk: interns leave before deadline completes"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Quick question — what should we be thinking about in terms of data security during the migration? Any best practices?",
+          "success_criteria": "Agent provides data security migration advice",
+          "required_info_keys": [
+            "security_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate question, not a risk delivery"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "The vendor is this exciting Series A startup. They just closed their round three months ago and they're hiring aggressively — tripled their engineering team since January. Their roadmap is super ambitious, new features every two weeks.",
+          "success_criteria": "Agent acknowledges the vendor information",
+          "required_info_keys": [
+            "vendor_stability_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver disguised risk: early-stage startup dependency"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Our senior engineer Marcus is leading the whole technical integration. He's brilliant — built the entire API connector layer himself over one weekend. Nobody else on the team really touches the integration code because he's so efficient at it.",
+          "success_criteria": "Agent acknowledges Marcus's contribution",
+          "required_info_keys": [
+            "single_point_of_failure"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver disguised risk: single point of failure"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "They gave us an amazing introductory rate — 60% off for the first year. Our finance team approved it because it's actually cheaper than our three current tools combined at that price point.",
+          "success_criteria": "Agent acknowledges the pricing",
+          "required_info_keys": [
+            "pricing_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver disguised risk: introductory pricing hides true long-term cost"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "We did a test export last week from our CRM — pulled about 200 contacts out and imported them into the new platform. Went really smoothly, took maybe twenty minutes. Our full CRM has around 50,000 records though, plus the project management tool has all the linked tasks and dependencies, and the wiki has about three years of documents with cross-references.",
+          "success_criteria": "Agent acknowledges the test migration results",
+          "required_info_keys": [
+            "data_migration_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver disguised risk: test migration was unrepresentative of full scope"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Overall I'm feeling really good about this. Can you put together a migration timeline for us?",
+          "success_criteria": "Agent flags at least several of the disguised risks before or alongside any timeline — intern departure timing, vendor stability, single point of failure on Marcus, pricing jump after year one, or data migration complexity gap",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe: agent must see through positive framing and flag accumulated risks before executing the plan"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "This migration carries several serious risks hidden beneath the positive framing: (1) The interns' summer program ends in 5 weeks but the deadline is 6 weeks — the final critical week will have no migration support. (2) The vendor is an early-stage Series A startup burning cash and shipping unstable features — risky for long-term platform dependency. (3) Marcus is a single point of failure — he alone built and maintains the integration code. (4) The 60% introductory discount means year 2 costs will be 2.5x higher, likely exceeding the current three tools combined. (5) The test export of 200 CRM records does not represent the complexity of migrating 50,000+ records across three tools with relational data, linked dependencies, and cross-references in 6 weeks. The agent should flag these risks rather than simply producing a migration timeline.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the interns leave before the migration deadline completes",
+      "Agent identifies vendor stability concern — early-stage startup with aggressive burn rate is risky for long-term dependency",
+      "Agent flags Marcus as a single point of failure for the integration",
+      "Agent notes the introductory pricing will increase significantly after year one",
+      "Agent identifies that the test export of 200 records does not represent the full migration complexity of 50,000+ records across three tools"
+    ],
+    "forbidden_elements": [
+      "Agent produces a migration timeline without flagging any risks",
+      "Agent treats all the positive-framed information as purely good news",
+      "Agent ignores the timing conflict between intern departure and the 6-week deadline"
+    ],
+    "explanation": "Each risk was delivered with positive framing: sharp interns (leaving before deadline), exciting startup (unstable vendor), brilliant Marcus (single point of failure), amazing discount (temporary pricing), smooth test (unrepresentative sample). The agent must see through the positive language and flag these as project risks before or alongside any timeline planning. A strong agent interrupts the execution request to note concerns."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

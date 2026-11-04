@@ -1,0 +1,301 @@
+{
+  "scenario_id": "T16_243",
+  "domain": "reunion dinner at a dim sum restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant and meal planning assistant. Help the user plan a reunion dinner at a dim sum restaurant by tracking who is attending, their dietary needs, and any updates. When asked to evaluate specific dishes, check each dish against every active diner's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a family reunion dinner this Sunday at a dim sum place. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "family_members",
+        "value": "Five of us initially: me, Uncle Chen, Auntie Mei, cousin Dawei, and my sister Fang",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_chen_diabetes",
+        "value": "Uncle Chen was diagnosed with diabetes last year, he's been managing it with diet",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dawei_allergy_initial",
+        "value": "Cousin Dawei can't drink milk — gets bloated and has stomach cramps every time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "fang_pregnant",
+        "value": "My sister Fang is 5 months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Budget is around 80 per person, it's a family thing so nothing too extravagant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "grandma_joins",
+        "value": "Grandma decided she's coming too, so that's six now. She's 82 and had dental surgery recently so she can only eat soft foods",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dawei_correction",
+        "value": "Dawei's mom just called me — she said it's actually not lactose intolerance, the doctor confirmed it's a milk protein allergy. Apparently even baked goods with milk powder set him off",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "auntie_mei_exits",
+        "value": "Auntie Mei just texted — she has to fly out for work Sunday morning. She asked if we could pack some dim sum for her to take on Monday though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "The restaurant's signature selection: custard buns, har gow (shrimp dumplings), steamed pork ribs with black bean sauce, raw fish congee, egg tarts, and mango pudding with evaporated milk",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "uncle_chen_sugar",
+        "value": "Must limit sugar intake — avoid sweet/sugary dishes",
+        "disclosed": false,
+        "surface_form": "Uncle Chen was diagnosed with diabetes last year, he's been managing it with diet",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Diabetes diagnosed last year → managing with diet",
+          "Dietary management of diabetes → must limit sugar/carb intake",
+          "Limit sugar → avoid sweet dim sum items"
+        ]
+      },
+      {
+        "key": "dawei_lactose_initial",
+        "value": "Cannot consume lactose-containing dairy (initial understanding)",
+        "disclosed": false,
+        "surface_form": "Cousin Dawei can't drink milk — gets bloated and has stomach cramps every time",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Bloating and cramps after milk → lactose intolerance (initial assumption)",
+          "Lactose intolerance → avoid liquid milk and high-lactose dairy"
+        ]
+      },
+      {
+        "key": "dawei_milk_protein_upgrade",
+        "value": "Cannot consume ANY milk-derived products including milk powder, butter, cream, evaporated milk, custard made with milk",
+        "disclosed": false,
+        "surface_form": "Dawei's mom just called me — she said it's actually not lactose intolerance, the doctor confirmed it's a milk protein allergy. Apparently even baked goods with milk powder set him off",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Doctor confirmed milk protein allergy (not lactose intolerance)",
+          "Milk protein allergy → broader scope than lactose intolerance",
+          "Milk protein allergy → cannot have ANY milk-derived ingredient: milk powder, butter, cream, evaporated milk, custard with milk"
+        ]
+      },
+      {
+        "key": "fang_pregnancy",
+        "value": "Cannot eat raw or undercooked food",
+        "disclosed": false,
+        "surface_form": "My sister Fang is 5 months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "5 months pregnant → pregnancy dietary restrictions apply",
+          "Pregnancy → avoid raw/undercooked food (risk of listeria, parasites)"
+        ]
+      },
+      {
+        "key": "grandma_texture",
+        "value": "Can only eat soft-textured foods, nothing hard or chewy",
+        "disclosed": false,
+        "surface_form": "Grandma is 82 and had dental surgery recently so she can only eat soft foods",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a family reunion dim sum dinner. You will introduce 5 family members with various dietary needs, then grandma joins, then Dawei's constraint gets UPGRADED from lactose intolerance to milk protein allergy (broader), then Auntie Mei drops out but wants takeaway. At the end you will ask the assistant to check a list of 6 dishes. You never hint at what the problems are — just ask if there are any issues.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative family organizer. You always refer to family members by name in third person (e.g. 'Uncle Chen told me...', 'Dawei's mom called me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal family coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a family reunion dinner this Sunday at a dim sum place. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with dim sum planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dim sum dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Uncle Chen, Auntie Mei, cousin Dawei, and my sister Fang. Uncle Chen was diagnosed with diabetes last year, he's been managing it with diet. Dawei can't drink milk — gets bloated and has stomach cramps every time. And Fang is 5 months pregnant",
+          "success_criteria": "Agent acknowledges all family members and their dietary situations",
+          "required_info_keys": [
+            "family_members",
+            "uncle_chen_diabetes",
+            "dawei_allergy_initial",
+            "fang_pregnant"
+          ],
+          "required_constraint_keys": [
+            "uncle_chen_sugar",
+            "dawei_lactose_initial",
+            "fang_pregnancy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities + 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 80 per person, it's a family thing so nothing too extravagant. What kind of dim sum dishes would you suggest for a group like this?",
+          "success_criteria": "Agent acknowledges budget and offers suggestions considering constraints",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + general suggestion request"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh great news — Grandma decided she's coming too, so that's six now. She's 82 and had dental surgery recently so she can only eat soft foods",
+          "success_criteria": "Agent registers grandma as new diner with soft food constraint",
+          "required_info_keys": [
+            "grandma_joins"
+          ],
+          "required_constraint_keys": [
+            "grandma_texture"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with constraint (grandma, soft food only)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we book a private room or just a regular table? There's six of us now",
+          "success_criteria": "Agent responds about seating without losing track of constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "private room vs regular table for 6 people",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn about logistics"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Dawei's mom just called me — she said it's actually not lactose intolerance, the doctor confirmed it's a milk protein allergy. Apparently even baked goods with milk powder set him off",
+          "success_criteria": "Agent updates Dawei's constraint from lactose intolerance to the broader milk protein allergy",
+          "required_info_keys": [
+            "dawei_correction"
+          ],
+          "required_constraint_keys": [
+            "dawei_milk_protein_upgrade"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE: lactose intolerance → milk protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Auntie Mei just texted — she has to fly out for work Sunday morning. She asked if we could pack some dim sum for her to take on Monday though",
+          "success_criteria": "Agent notes Auntie Mei won't be at dinner but wants takeaway packed for her",
+          "required_info_keys": [
+            "auntie_mei_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with takeaway scope — Auntie Mei leaves but wants packed food"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "What time do dim sum places usually get busy on Sundays? We're thinking of going around 11",
+          "success_criteria": "Agent responds about timing without losing constraint state",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "timing",
+            "drift_topic": "best time for Sunday dim sum to avoid crowds",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I looked at the restaurant's signature selection: custard buns, har gow, steamed pork ribs with black bean sauce, raw fish congee, egg tarts, and mango pudding with evaporated milk. Any issues?",
+          "success_criteria": "Agent checks each dish against current constraints and identifies problems",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Custard buns: problematic for Dawei (milk protein allergy — custard contains milk) and for Uncle Chen (sweet/sugary, diabetes). Har gow (shrimp dumplings): fine for everyone — soft enough for grandma, no dairy, not sweet, cooked. Steamed pork ribs with black bean sauce: problematic for grandma (ribs are bony/chewy, not soft food). Raw fish congee: problematic for Fang (pregnant — raw fish is unsafe). Egg tarts: problematic for Dawei (milk protein allergy — egg tart pastry and filling typically contain butter/milk) and for Uncle Chen (sweet). Mango pudding with evaporated milk: problematic for Dawei (milk protein allergy — evaporated milk is a dairy product) and for Uncle Chen (sweet).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Custard buns are problematic for Dawei because custard contains milk and he has a milk protein allergy",
+      "Custard buns are problematic for Uncle Chen because they are sweet and he has diabetes",
+      "Steamed pork ribs with black bean sauce are problematic for grandma because ribs are not soft food and she can only eat soft foods after dental surgery",
+      "Raw fish congee is problematic for Fang because she is pregnant and cannot eat raw fish",
+      "Egg tarts are problematic for Dawei because they contain butter or milk in the pastry and filling — milk protein allergy",
+      "Mango pudding with evaporated milk is problematic for Dawei because evaporated milk is a dairy product and he has a milk protein allergy",
+      "Har gow is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging Dawei's issues as merely lactose intolerance (his constraint was upgraded to milk protein allergy which is broader)",
+      "Saying har gow is problematic for anyone (it is steamed shrimp in wrapper, safe for all current diners)",
+      "Flagging any dish as problematic for Auntie Mei at the table (she is not attending the dinner)",
+      "Saying Dawei only needs to avoid liquid milk (milk protein allergy means ALL milk-derived ingredients)",
+      "Treating raw fish congee as safe for Fang (she is pregnant, raw fish is contraindicated)"
+    ],
+    "explanation": "This scenario tests constraint UPGRADE tracking. Dawei's constraint starts as apparent lactose intolerance (bloating from milk) but is corrected mid-conversation to milk protein allergy — a BROADER constraint. Lactose intolerance means avoiding high-lactose dairy (liquid milk, soft cheese) but baked goods and butter are often tolerated. Milk protein allergy means ALL milk-derived ingredients are dangerous (milk powder, butter, cream, evaporated milk, custard). The agent must apply the UPGRADED constraint at probe time. Additionally: Uncle Chen has diabetes (avoid sweet items), Fang is pregnant (no raw food), grandma needs soft food only (joined late — tests late-entity tracking), and Auntie Mei left (her constraints no longer apply to the table). The probe includes 6 items: har gow is clearly fine, raw fish congee fails on pregnancy, pork ribs fail on texture for grandma, and custard buns/egg tarts/mango pudding all fail on milk protein for Dawei (with custard buns and egg tarts also failing on sugar for Uncle Chen)."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

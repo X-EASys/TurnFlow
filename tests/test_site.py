@@ -120,7 +120,7 @@ class SiteContractTests(unittest.TestCase):
         probe.feed(html)
         self.assertEqual(probe.text_by_tag["h1"], [PAPER_TITLE])
         self.assertIn('class="project-type">Research project</p>', html)
-        self.assertIn("Coming soon", html)
+        self.assertIn("Code and dataset available", html)
         self.assertNotIn("hero-mark", html)
 
     def test_only_published_resource_is_linked(self):
@@ -128,7 +128,7 @@ class SiteContractTests(unittest.TestCase):
         probe = ElementProbe()
         probe.feed(html)
         self.assertEqual(probe.resource_nav_count, 1)
-        self.assertEqual(len(probe.resource_links), 1)
+        self.assertEqual(len(probe.resource_links), 2)
 
         code_link = probe.resource_links[0]
         self.assertEqual(code_link.get("class"), "resource-link")
@@ -137,7 +137,7 @@ class SiteContractTests(unittest.TestCase):
         self.assertEqual(set(code_link.get("rel", "").split()), {"noopener", "noreferrer"})
         self.assertCountEqual(
             [link.get("href") for link in probe.links],
-            ["#main", "https://github.com/X-EASys/TurnFlow"],
+            ["#main", "https://github.com/X-EASys/TurnFlow", "https://huggingface.co/datasets/Buka7yo/TurnFlow"],
         )
         self.assertNotRegex(html, r'href=(?:"|\')(?:#|)(?:"|\')')
 
@@ -245,12 +245,12 @@ class SiteContractTests(unittest.TestCase):
             "actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5",
             "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3",
             "actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5",
-            "python3 -m unittest discover -s tests -v",
-            "path: '.'",
+            "python3 -m unittest discover -s tests -p test_site.py -v",
+            "path: '_site'",
         ):
             self.assertIn(expected, workflow)
         self.assertLess(
-            workflow.index("python3 -m unittest discover -s tests -v"),
+            workflow.index("python3 -m unittest discover -s tests -p test_site.py -v"),
             workflow.index("actions/configure-pages@"),
         )
 

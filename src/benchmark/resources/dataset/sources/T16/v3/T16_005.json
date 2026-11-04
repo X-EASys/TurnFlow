@@ -1,0 +1,313 @@
+{
+  "scenario_id": "T16_005",
+  "domain": "BBQ potluck at someone's backyard",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning and party coordination assistant. Help the user plan a backyard BBQ potluck by tracking who is attending, what they can and cannot eat, and logistics. When the user asks you to evaluate specific items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and any updates to restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, I'm throwing a BBQ potluck at my place this Saturday and need some help figuring out the food situation.",
+    "flow_info": [
+      {
+        "key": "guest_list",
+        "value": "Five of us confirmed so far: me, Derek, Priya, Sam, and Nadia",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_peanut_incident",
+        "value": "Sam ate a pad thai at a food truck last month and his throat started swelling up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nadia_pregnant",
+        "value": "Nadia just told us she's 14 weeks pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Trying to keep the whole spread under $150 total since everyone's chipping in",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_exits_takeaway",
+        "value": "Sam just texted me — he got called into work for an emergency shift Saturday afternoon. He's bummed but asked if I could save him a plate",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_healed",
+        "value": "Priya told me her doctor cleared her last week — her knee is fully healed and she's off all the anti-inflammatory meds, no more dietary restrictions from that",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_joins",
+        "value": "Derek's roommate Marcus wants to come too, so that's one more",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timing_question",
+        "value": "Should we start at noon or 2pm? Some people might want to swim first",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_items",
+        "value": "Here's what we're thinking of making: marinated chicken skewers with satay peanut sauce, beef burgers on brioche buns, a big Caesar salad, smoked salmon platter, and brownies for dessert. How does that look?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_nsaid_diet",
+        "value": "Must avoid acidic and spicy foods while on anti-inflammatory medication",
+        "disclosed": false,
+        "surface_form": "Priya's been on some strong anti-inflammatory meds for her knee injury, doctor told her to watch what she eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Anti-inflammatory medication (NSAIDs) → stomach sensitivity",
+          "Doctor dietary warning → avoid acidic, spicy, and harsh foods while on medication"
+        ]
+      },
+      {
+        "key": "derek_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Derek was diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "No gluten → no regular bread, buns, pasta, most sauces with flour"
+        ]
+      },
+      {
+        "key": "sam_peanut_allergy",
+        "value": "Severe peanut allergy — cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Sam ate a pad thai at a food truck last month and his throat started swelling up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pad thai → commonly contains peanuts/peanut sauce",
+          "Throat swelling + EpiPen → anaphylactic reaction",
+          "Anaphylaxis from pad thai → severe peanut allergy"
+        ]
+      },
+      {
+        "key": "nadia_pregnancy_diet",
+        "value": "Should avoid raw or undercooked fish, deli meats, and unpasteurized foods",
+        "disclosed": false,
+        "surface_form": "Nadia just told us she's 14 weeks pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw fish, undercooked meats, unpasteurized cheese"
+        ]
+      },
+      {
+        "key": "marcus_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Marcus grew up in a Jain family and still follows the diet pretty strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain family → Jain dietary practice",
+          "Jain diet → no meat, no fish, no eggs, no root vegetables"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting a backyard BBQ potluck this Saturday. You will introduce your guest list and their backgrounds across several turns. Plans will change — someone leaves but wants food saved, someone's medical restriction gets lifted, and a new guest joins late. At the end, you will share a specific list of dishes and ask if there are any issues. You must deliver the dish list EXACTLY as written and never hint at which dishes are problematic.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a relaxed, easygoing host planning a casual weekend BBQ. You always refer to your friends by name in third person (e.g. 'Derek told me...', 'Sam just texted me...'). You never express frustration or impatience when plans change — it's just how group events go. You state facts plainly without strong emotion.",
+        "description": "Prevents emotion escalation and ensures third-person relay for friend updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm throwing a BBQ potluck at my place this Saturday and need some help figuring out the food situation.",
+          "success_criteria": "Agent engages with BBQ planning and asks about guests or dietary needs",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate BBQ planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Five of us confirmed so far: me, Derek, Priya, Sam, and Nadia. Derek was diagnosed with celiac disease a couple years ago. Priya's been on some strong anti-inflammatory meds for her knee injury, doctor told her to watch what she eats. Sam ate a pad thai at a food truck last month and his throat started swelling up, had to use an EpiPen. And Nadia just told us she's 14 weeks pregnant.",
+          "success_criteria": "Agent acknowledges all four guests and their respective dietary situations",
+          "required_info_keys": [
+            "guest_list",
+            "derek_celiac",
+            "sam_peanut_incident",
+            "nadia_pregnant"
+          ],
+          "required_constraint_keys": [
+            "priya_nsaid_diet",
+            "derek_gluten",
+            "sam_peanut_allergy",
+            "nadia_pregnancy_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Trying to keep the whole spread under $150 total since everyone's chipping in. Any ideas for what kind of stuff works for a group like this?",
+          "success_criteria": "Agent acknowledges budget and offers food suggestions considering the constraints",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget constraint and get initial suggestions"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Sam just texted me — he got called into work for an emergency shift Saturday afternoon. He's bummed but asked if I could save him a plate.",
+          "success_criteria": "Agent notes Sam won't be at the BBQ but needs a plate saved, recognizing his peanut allergy still applies to the saved plate",
+          "required_info_keys": [
+            "sam_exits_takeaway"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Sam leaves but his peanut allergy applies to saved plate"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we start at noon or 2pm? Some people might want to swim first since I've got the pool set up.",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [
+            "timing_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party logistics",
+            "drift_topic": "start time and swimming before eating",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance between constraint updates and probe"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh good news — Priya told me her doctor cleared her last week. Her knee is fully healed and she's off all the anti-inflammatory meds, no more dietary restrictions from that.",
+          "success_criteria": "Agent removes Priya's NSAID dietary restriction",
+          "required_info_keys": [
+            "priya_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Priya's medication restriction lifted"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Derek's roommate Marcus wants to come too, so that's one more. Marcus grew up in a Jain family and still follows the diet pretty strictly.",
+          "success_criteria": "Agent registers Marcus as a new attendee with Jain dietary restrictions",
+          "required_info_keys": [
+            "marcus_joins"
+          ],
+          "required_constraint_keys": [
+            "marcus_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Marcus with Jain diet"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How much ice do you think I need? I've got two coolers and a bunch of sodas already.",
+          "success_criteria": "Agent responds about ice and drinks without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party supplies",
+            "drift_topic": "ice and drink logistics",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Here's what we're thinking of making: marinated chicken skewers with satay peanut sauce, beef burgers on brioche buns, a big Caesar salad, smoked salmon platter, and brownies for dessert. How does that look?",
+          "success_criteria": "Agent identifies problems with chicken satay skewers (peanut sauce — Sam's saved plate), beef burgers on brioche buns (gluten in brioche — Derek; also Marcus is Jain, no meat), chicken skewers (Marcus is Jain, no meat), smoked salmon platter (Nadia pregnant — raw fish concern; Marcus is Jain, no fish), Caesar salad needs checking for Marcus (anchovies in dressing, eggs in dressing — Jain restriction), and notes brownies are fine for the table. Agent should NOT flag acidic/spicy foods for Priya since she's off her meds.",
+          "required_info_keys": [
+            "probe_items"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Chicken skewers with satay peanut sauce: problematic — the peanut sauce means this cannot be included on Sam's saved plate (severe peanut allergy, EpiPen incident). Also problematic for Marcus (Jain — no meat). Beef burgers on brioche buns: problematic — brioche buns contain gluten (Derek has celiac disease). Also beef is meat, so Marcus (Jain) cannot eat this. Smoked salmon platter: problematic — smoked salmon is a concern for Nadia (pregnant — should avoid raw/undercooked fish, and cold-smoked salmon carries listeria risk). Also Marcus (Jain) cannot eat fish. Caesar salad: problematic for Marcus — traditional Caesar dressing contains anchovies (fish) and egg, both of which Jain diet excludes. Brownies: fine for everyone currently attending (no gluten issue if made standard, no peanuts assumed). Priya has NO restrictions anymore — she is off her medication. Sam is not attending but his peanut allergy applies to his saved plate.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Chicken skewers with satay peanut sauce cannot be on Sam's saved plate because of his severe peanut allergy",
+      "Chicken skewers are problematic for Marcus because Jain diet forbids meat",
+      "Beef burgers on brioche buns are problematic for Derek because brioche contains gluten and he has celiac disease",
+      "Beef burgers are problematic for Marcus because Jain diet forbids meat",
+      "Smoked salmon platter is problematic for Nadia because she is pregnant and should avoid raw or undercooked fish",
+      "Smoked salmon platter is problematic for Marcus because Jain diet forbids fish",
+      "Caesar salad is problematic for Marcus because traditional Caesar dressing contains anchovies and egg, which Jain diet forbids",
+      "Priya has no dietary restrictions anymore — agent treats her as able to eat anything"
+    ],
+    "forbidden_elements": [
+      "Flagging any food as problematic for Priya (she is off her anti-inflammatory meds and has no restrictions)",
+      "Flagging peanut sauce as a problem for the table (Sam is not attending the BBQ, only his saved plate matters)",
+      "Saying Sam has a general nut allergy or tree nut allergy (he specifically has a peanut allergy from the pad thai incident)",
+      "Forgetting Marcus entirely when evaluating the dishes (late-joining entity)",
+      "Saying Nadia cannot eat any cooked fish (pregnancy restriction is about raw or undercooked fish, not all fish)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns. The agent must track: (1) Derek has celiac disease → no gluten → brioche buns are wheat-based (inferential chain), (2) Sam had an anaphylactic reaction to pad thai → peanut allergy → no peanut sauce (inferential chain), (3) Nadia is 14 weeks pregnant → pregnancy dietary restrictions → avoid raw/undercooked fish (inferential chain), (4) Priya's NSAID dietary restriction is REMOVED mid-conversation (doctor cleared her, off meds), (5) Sam EXITS the BBQ but wants a saved plate (peanut allergy scope changes from table to saved plate only), (6) Marcus JOINS late with Jain dietary practice → no meat, no fish, no eggs (inferential chain from Jain family). At probe time, the agent must apply the CURRENT constraint state: Derek=celiac (no gluten), Sam=peanut allergy (saved plate only), Nadia=pregnant (no raw fish), Marcus=Jain (no meat, no fish, no eggs). Priya's medication restriction no longer applies. Key traps: (a) peanut sauce is only a saved-plate issue since Sam isn't at the table, (b) Priya's restriction is gone so acidic/spicy foods are fine, (c) Marcus joined late and has the most constraints — models often forget late-joining entities, (d) Caesar salad looks vegetarian but traditional dressing has anchovies and egg (hidden ingredient trap for Marcus's Jain diet), (e) smoked salmon is problematic for both Nadia (pregnancy) and Marcus (Jain, no fish) for different reasons."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

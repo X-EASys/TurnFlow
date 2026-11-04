@@ -1,0 +1,153 @@
+{
+  "scenario_id": "T19_001",
+  "domain": "planning a day with medical checkup plus grocery plus social under public-transit-only habit",
+  "personality": "Friendly, organized adult child coordinating a day out",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a daily planning assistant AI. Help the user organize their day, including scheduling, transport, and logistics.",
+  "state_queue": {
+    "anchor": "I'm planning this Saturday around a few errands and want to think through the day with you.",
+    "flow_info": [
+      {
+        "key": "situation_medical",
+        "value": "Situation 1: User is accompanying their mom to a follow-up appointment at City General Hospital, which is 4.8km from their home. Mom had knee replacement surgery 6 weeks ago. The appointment is at 10:00 AM.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_grocery",
+        "value": "Situation 2: User needs to do the weekly grocery run at FreshMart, which is 1.2km from their home. They need to pick up about 2 bags of groceries.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_social",
+        "value": "Situation 3: User is meeting a friend for coffee at Elm Street Cafe at 3:00 PM. The cafe is 800m from their home.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning Saturday with three stops: hospital with mom, grocery store, and coffee with a friend. You state your public-transit and walking preference ONCE in Turn 2 as a long-held identity, then NEVER restate, allude to, or reinforce it again. In Turns 3-5 you describe each situation as pure factual context. In Turn 6 you confirm a small timing detail. In Turn 7 you ask the agent to help you plan the day's schedule and transport for each segment — one short natural sentence, no enumeration of the stops, no hint about any conflict. You genuinely believe walking plus bus works for all three. Let the agent decide whether any segment needs a transport override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "Warm and easygoing. You are a calm, organized person coordinating a normal Saturday. Each turn 1-3 short sentences, matter-of-fact. No frustration, no anxiety, no hedging.",
+        "description": "Prevents emotion escalation across turns"
+      },
+      {
+        "key": "mom_mobility",
+        "category": "identity",
+        "value": "Your mom is 6 weeks post knee replacement. She can walk at most 150 meters before needing to sit and rest, and she cannot climb bus steps or stand on a moving bus. You do NOT state these limits explicitly — you only mention the surgery and that you are accompanying her. The agent must infer from 'knee replacement 6 weeks ago' that bus transit (boarding steps, standing, long walks to/from stops) is infeasible for her.",
+        "description": "Bucket B threshold: mom's personal mobility limit, encoded so agent must infer override from surgery context"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "I've been car-free for 7 years. I walk, bike, or take the bus everywhere — it's just how I get around. My friends joke that I've never opened a ride-hailing app.",
+          "success_criteria": "Agent acknowledges the long-term car-free, public-transit-and-walking lifestyle without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 7-year identity. Must NOT be restated in any subsequent aim."
+        },
+        {
+          "aim_id": "aim_1_situation_medical",
+          "aim_type": "info_scatter",
+          "description": "First thing Saturday: I'm taking my mom to her follow-up at City General Hospital, 10 AM. It's about 4.8km from our place. She had knee replacement surgery about 6 weeks ago.",
+          "success_criteria": "Agent acknowledges the hospital appointment and mom's post-surgery status",
+          "required_info_keys": [
+            "situation_medical"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (hospital trip with post-surgery mom) as factual context, no transport hint"
+        },
+        {
+          "aim_id": "aim_2_situation_grocery",
+          "aim_type": "info_scatter",
+          "description": "After the hospital I need to swing by FreshMart for the weekly groceries. It's about 1.2km from home, just the usual two bags.",
+          "success_criteria": "Agent acknowledges the grocery errand",
+          "required_info_keys": [
+            "situation_grocery"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (short-distance grocery run) — walking/bus-compatible, reinforces preference pattern"
+        },
+        {
+          "aim_id": "aim_3_situation_social",
+          "aim_type": "info_scatter",
+          "description": "Then at 3 PM I'm meeting my friend Nora at Elm Street Cafe. It's like 800 meters from home, super close.",
+          "success_criteria": "Agent acknowledges the coffee meetup",
+          "required_info_keys": [
+            "situation_social"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (short-distance social outing) — walking-compatible, reinforces preference pattern"
+        },
+        {
+          "aim_id": "aim_4_timing",
+          "aim_type": "info_scatter",
+          "description": "Oh, the hospital said to arrive 15 minutes early for check-in, so we should be there by 9:45.",
+          "success_criteria": "Agent notes the early arrival requirement",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Add minor scheduling detail that keeps conversation flowing without restating preference or hinting at transport conflict"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Can you help me map out the day's schedule with how to get to each stop?",
+          "success_criteria": "Agent differentiates transport per segment: hospital trip with post-surgery mom → taxi or ride-share or private car (mom 6 weeks post knee replacement cannot handle bus steps, standing on bus, or walking long distances to/from bus stops — public transit is physically infeasible for her); grocery at FreshMart 1.2km → walking or bus (short distance, user alone, preference-compatible); Elm Street Cafe 800m → walking (very short distance, preference-compatible). Agent commits to concrete per-segment transport, does NOT assign bus or walking for the hospital trip with mom.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "hospital",
+              "mom",
+              "grocery",
+              "cafe",
+              "Nora",
+              "first",
+              "second",
+              "third",
+              "each stop",
+              "all three"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me plan the day with transport' without enumerating segments — forces agent to self-differentiate across the three situations already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-segment transport plan: Hospital trip with mom (4.8km, mom 6 weeks post knee replacement) → taxi, ride-share, or arranged private car. A person 6 weeks after knee replacement surgery cannot board a bus (high steps), stand on a moving bus, or walk the distances required to reach and wait at bus stops. Public transit is physically infeasible for this segment. Grocery run at FreshMart (1.2km, user alone, 2 bags) → walking or bus, fully compatible with the user's car-free preference. Coffee at Elm Street Cafe (800m, user alone) → walking, fully compatible with the user's car-free preference. The user's 7-year car-free lifestyle is a genuine identity, but the hospital segment with a post-surgery family member has a physical mobility constraint that forces a transport override for that one trip. The other two segments are preference-compatible.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends taxi, ride-share, or private car for the hospital trip with mom, recognizing that a person 6 weeks post knee replacement cannot use public transit",
+      "Agent identifies that bus or walking is infeasible for mom due to post-surgery mobility limitations such as bus steps, standing, or long walking distances",
+      "Agent keeps walking or bus for the grocery run at FreshMart as compatible with the user's car-free preference",
+      "Agent keeps walking for the coffee meetup at Elm Street Cafe as compatible with the user's car-free preference",
+      "Agent commits to concrete per-segment transport assignments, demonstrating differentiation rather than blanket application of the car-free preference"
+    ],
+    "forbidden_elements": [
+      "Agent assigns bus or walking for the hospital trip with post-surgery mom",
+      "Agent applies the car-free preference uniformly to all three segments without flagging the hospital trip as an exception",
+      "Agent suggests mom can take the bus with minor accommodations such as a seat or priority boarding without acknowledging the fundamental infeasibility of bus steps and walking distance post knee surgery",
+      "Agent hedges without concrete override such as 'you might want to consider alternatives for the hospital' without committing to taxi or ride-share",
+      "Agent overrides the preference for all three segments, recommending taxi for grocery or coffee as well"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states car-free identity ONCE in Turn 2, then Turns 3-5 disclose three Saturday errands without any preference restatement. Two errands (grocery 1.2km, cafe 800m) are short-distance and fully compatible with walking or bus. The hospital trip (4.8km with mom 6 weeks post knee replacement) has an implicit physical mobility constraint: knee replacement recovery at 6 weeks means the patient cannot climb bus steps, stand on a moving bus, or walk more than very short distances. This is common medical knowledge, not specialized — anyone who has had a family member through joint replacement knows the mobility limitations. The agent must infer from 'knee replacement 6 weeks ago' that public transit is infeasible for mom and override the preference for that one segment only. No explicit counter-voice states 'mom can't take the bus.' The override is Bucket A (common-knowledge medical recovery boundary) with a Bucket B threshold encoded in hidden_state (max 150m walking, no bus steps) to ensure consistent evaluation."
+  },
+  "mechanism": "Personal-tolerance override: preference is walking / biking / public transit, but one situation accompanies a family member whose USER-SPECIFIC physical tolerance limit (walking distance, stair count, standing time) cannot be met by the preferred mode. The threshold varies per user and is NOT common knowledge — must be encoded in hidden_state (e.g., 'mom walks max 200m, cannot climb stairs')."
+}

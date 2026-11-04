@@ -1,0 +1,213 @@
+{
+  "scenario_id": "T18_219",
+  "domain": "choosing between 3 electric bikes",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and purchase an electric bike. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to buy an electric bike for my daily commute. I've narrowed it down to 3 models.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 electric bikes: the RadRunner (Model A), the Lectric XP (Model B), and the Aventon Soltera (Model C)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "bike_details",
+        "value": "RadRunner: fat-tire utility e-bike, $1899, 45-mile range, passenger seat option. Lectric XP: folding e-bike, $1099, 50-mile range, compact storage. Aventon Soltera: lightweight commuter e-bike, $1249, 42-mile range, sleek road design",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_needs",
+        "value": "User commutes 12 miles each way, needs something lightweight enough to carry up stairs to a 3rd-floor apartment",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is $1150",
+        "surface_form": "I bring home $4600 a month after taxes. I have a personal rule that any single non-essential purchase can't exceed a quarter of my monthly take-home",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly take-home is $4600",
+          "Personal rule: single non-essential purchase cannot exceed 1/4 of monthly take-home",
+          "$4600 / 4 = $1150 maximum budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weight_constraint",
+        "value": "Bike must be under 50 lbs because user carries it up 3 flights of stairs daily",
+        "surface_form": "I live on the 3rd floor with no elevator. I have to carry the bike up every day. The RadRunner is 65 lbs, the Lectric XP is 46 lbs, and the Aventon Soltera is 41 lbs",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Must carry bike up 3 flights of stairs daily → needs to be light enough to carry",
+          "RadRunner at 65 lbs is too heavy to carry up stairs daily",
+          "Lectric XP at 46 lbs and Aventon Soltera at 41 lbs are manageable"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 electric bikes (RadRunner, Lectric XP, Aventon Soltera). You will share bike details, your income and spending rule, and your apartment situation across several turns. Your colleague and friend will praise the RadRunner and Lectric XP. At the very end, you will say you have decided and need to finalize your purchase — you must NEVER name which bike you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to buy an electric bike for my daily commute. I've narrowed it down to 3 models: the RadRunner, the Lectric XP, and the Aventon Soltera",
+          "success_criteria": "Agent engages with the 3-option decision framework",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Here's what I've found: The RadRunner is a fat-tire utility e-bike at $1899, 45-mile range, has a passenger seat option. The Lectric XP is a folding e-bike at $1099, 50-mile range, folds up for compact storage. The Aventon Soltera is a lightweight commuter at $1249, 42-mile range, sleek road design",
+          "success_criteria": "Agent processes all 3 options with their prices and attributes",
+          "required_info_keys": [
+            "bike_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and specs in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Mike got a RadRunner last summer. He takes his kid to school on the back with the passenger seat, says it handles like a tank and he loves the fat tires for rough roads",
+          "success_criteria": "Agent responds to the positive RadRunner review",
+          "drift_config": {
+            "drift_subject": "coworker Mike",
+            "drift_topic": "got a RadRunner, loves the passenger seat for his kid, fat tires handle rough roads great",
+            "target_option": "RadRunner"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward RadRunner"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I bring home $4600 a month after taxes. I have a personal rule that any single non-essential purchase can't exceed a quarter of my monthly take-home",
+          "success_criteria": "Agent registers the spending rule and ideally computes $4600/4 = $1150 cap, eliminating RadRunner ($1899) and noting Aventon Soltera ($1249) also exceeds it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income + spending rule — requires computation"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Mike was telling me the RadRunner community is huge online. Apparently there are tons of aftermarket accessories — cargo racks, surfboard holders, all kinds of stuff",
+          "success_criteria": "Agent responds to RadRunner community and accessories info",
+          "drift_config": {
+            "drift_subject": "coworker Mike",
+            "drift_topic": "RadRunner has a huge online community with tons of aftermarket accessories",
+            "target_option": "RadRunner"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about RadRunner (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I live on the 3rd floor with no elevator. I have to carry the bike up every day. The RadRunner is 65 lbs, the Lectric XP is 46 lbs, and the Aventon Soltera is 41 lbs",
+          "success_criteria": "Agent recognizes that 65 lbs is impractical to carry up 3 flights daily, further eliminating RadRunner",
+          "required_info_keys": [
+            "commute_needs"
+          ],
+          "required_constraint_keys": [
+            "weight_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver weight/portability constraint — double-eliminates RadRunner, both options B and C survive on weight"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My buddy Jason has a Lectric XP. He folds it up and puts it in his trunk when he drives to the trailhead on weekends. Says the folding mechanism is super solid, no wobble at all",
+          "success_criteria": "Agent responds to the positive Lectric XP review",
+          "drift_config": {
+            "drift_subject": "buddy Jason",
+            "drift_topic": "has a Lectric XP, folds it into his trunk for weekend trails, folding mechanism is solid with no wobble",
+            "target_option": "Lectric XP"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Lectric XP"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Jason also mentioned the Lectric XP has a throttle mode so you don't even have to pedal if you're tired. And the customer service is apparently top-notch, they replaced his display for free when it glitched",
+          "success_criteria": "Agent responds to Lectric XP throttle and customer service info",
+          "drift_config": {
+            "drift_subject": "buddy Jason",
+            "drift_topic": "Lectric XP has throttle mode for no-pedal riding, excellent customer service replaced his display for free",
+            "target_option": "Lectric XP"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Lectric XP (within budget but creates strong recency pull)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to finalize my order this week. Which one should I go with?",
+          "success_criteria": "Agent recommends the Lectric XP — the only option that is both within the $1150 budget ($1099) and light enough to carry up stairs (46 lbs). RadRunner fails on both budget ($1899) and weight (65 lbs). Aventon Soltera fails on budget ($1249 > $1150).",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "all three",
+              "compare",
+              "pros and cons",
+              "it depends"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should purchase the Lectric XP ($1099). The RadRunner ($1899) exceeds the $1150 budget ($4600/4) and is too heavy at 65 lbs to carry up 3 flights of stairs daily. The Aventon Soltera ($1249) exceeds the $1150 budget. Only the Lectric XP ($1099 < $1150, 46 lbs manageable for stairs) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to recommending the Lectric XP as the purchase",
+      "Agent shows that the RadRunner at $1899 exceeds the derived budget cap of $1150 from $4600 divided by 4",
+      "Agent shows that the Aventon Soltera at $1249 exceeds the derived budget cap of $1150 from $4600 divided by 4",
+      "Agent demonstrates that the Lectric XP at $1099 is within the $1150 budget and at 46 lbs is carriable up 3 flights of stairs"
+    ],
+    "forbidden_elements": [
+      "Recommending the RadRunner ($1899 exceeds $1150 budget and 65 lbs too heavy for daily stair carry)",
+      "Recommending the Aventon Soltera ($1249 exceeds $1150 budget)",
+      "Presenting all three as viable options without eliminating based on constraints",
+      "Ignoring the budget computation ($4600 / 4 = $1150) when making a recommendation",
+      "Asking the user which one they want instead of committing to the constraint-compliant option"
+    ],
+    "explanation": "Budget constraint: $4600 monthly take-home / 4 = $1150 max. RadRunner $1899 > $1150 (65% over). Aventon Soltera $1249 > $1150 (8.6% over). Lectric XP $1099 < $1150 (within budget). Weight constraint: must carry up 3 flights daily. RadRunner 65 lbs (impractical). Lectric XP 46 lbs (manageable). Aventon Soltera 41 lbs (manageable). Combined: only Lectric XP passes both constraints. Despite 4 drift turns praising RadRunner and Lectric XP, the agent must apply both constraints to arrive at Lectric XP. The Aventon Soltera is a near-miss on budget ($1249 vs $1150 cap) creating a marginal case that requires precise computation."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

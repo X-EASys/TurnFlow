@@ -1,0 +1,154 @@
+{
+  "scenario_id": "T19_002",
+  "domain": "planning a weekend with wedding plus casual hike plus museum visit under minimalist traveler habit",
+  "personality": "Relaxed, confident weekend planner",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal travel and lifestyle planning assistant. Help the user plan their weekend activities and packing.",
+  "state_queue": {
+    "anchor": "I have a packed Saturday coming up with three things back to back and I want to get my bag sorted.",
+    "flow_info": [
+      {
+        "key": "situation_museum",
+        "value": "Activity 1: Morning visit to the city modern art museum with a friend. Walking around exhibits for a couple hours, then grabbing coffee at the museum cafe.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_hike",
+        "value": "Activity 2: Early afternoon easy nature trail at Riverside Park with a small group of friends. About 3 miles, flat paved path along the river, very casual.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_wedding",
+        "value": "Activity 3: Evening — college friend's wedding reception at the Langham Grand Ballroom. Invitation says black-tie. Starts at 6 PM, seated dinner and dancing.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a packed Saturday with three activities: museum, easy hike, and a college friend's wedding. You are an 8-year minimalist capsule wardrobe traveler who always packs one versatile outfit (dark jeans, neutral tee, clean white sneakers) for every occasion. You state this preference ONCE in Turn 2 as your identity, then in Turns 3-6 you describe each activity as pure factual context and make pref-aligned micro-decisions (confirming your single outfit works). You NEVER restate, allude to, or reinforce the minimalist wardrobe preference after Turn 2. In Turn 7 you ask the agent to help finalize your packing list — do not enumerate items, do not ask 'will one outfit work for everything', do not hint at any conflict. You genuinely believe your single capsule outfit covers all three activities. Let the agent decide whether any activity needs a wardrobe override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_confident_tone",
+        "category": "communication_style",
+        "value": "Calm and confident. You are a laid-back person who has done this kind of one-bag weekend many times. State facts plainly, no anxiety, no hedging. Each turn 1-3 short sentences.",
+        "description": "Prevents emotion escalation and keeps cadence natural"
+      },
+      {
+        "key": "all_bucket_a_note",
+        "category": "latent_preference",
+        "value": "All three situations use common-knowledge boundaries only. Museum and easy flat trail are universally casual-appropriate (no override needed). Black-tie wedding reception at a formal hotel ballroom is a universally recognized formal dress code — guests not in formal attire are visibly out of place and may be turned away. No individual-variable thresholds are involved in any situation.",
+        "description": "Bucket A confirmation: all override conditions are common knowledge, no personal tolerance thresholds"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "Minimalist capsule wardrobe for 8 years. I always pack one outfit for any trip — dark jeans, a neutral tee, and my white sneakers. Friends joke that I wear the same thing everywhere. One bag, one look, zero stress.",
+          "success_criteria": "Agent acknowledges the long-term minimalist capsule wardrobe preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_museum",
+          "aim_type": "info_scatter",
+          "description": "First up Saturday morning is the city modern art museum with my friend Priya. We'll walk around the exhibits for a couple hours then grab coffee at the museum cafe. My jeans and tee are perfect for that.",
+          "success_criteria": "Agent acknowledges museum plan and agrees the casual outfit works",
+          "required_info_keys": [
+            "situation_museum"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (museum) with pref-aligned micro-decision — agent agrees casual outfit works"
+        },
+        {
+          "aim_id": "aim_2_hike",
+          "aim_type": "info_scatter",
+          "description": "After the museum, early afternoon we're doing the Riverside Park nature trail with a few friends. It's about 3 miles, flat paved path along the river, super easy. Same outfit works fine for that too.",
+          "success_criteria": "Agent acknowledges hike plan and agrees the casual outfit works for an easy flat trail",
+          "required_info_keys": [
+            "situation_hike"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (easy hike) with pref-aligned micro-decision — agent agrees casual outfit works"
+        },
+        {
+          "aim_id": "aim_3_wedding",
+          "aim_type": "info_scatter",
+          "description": "Then Saturday evening my college friend Marcus is getting married. Reception is at the Langham Grand Ballroom, invitation says black-tie, starts at 6. Seated dinner and dancing after.",
+          "success_criteria": "Agent acknowledges the wedding details",
+          "required_info_keys": [
+            "situation_wedding"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (black-tie wedding) as factual context — no outfit discussion, no channel hint"
+        },
+        {
+          "aim_id": "aim_4_shoes_micro",
+          "aim_type": "info_scatter",
+          "description": "I figure one pair of shoes covers all three stops. My white sneakers are comfortable enough for the whole day.",
+          "success_criteria": "Agent responds to the shoe micro-decision",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision on shoes — accumulates agent commitment to single-outfit approach before probe"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me finalize what to pack for Saturday.",
+          "success_criteria": "Agent differentiates outfit per activity: museum → casual outfit fine; easy hike → casual outfit fine; black-tie wedding → formal attire required (dark jeans and sneakers are incompatible with black-tie dress code at a Grand Ballroom reception — guest would be visibly underdressed and potentially turned away). Agent must flag that the minimalist single-outfit approach does not work for the wedding and recommend packing formal attire (suit/tuxedo, dress shoes) in addition to the casual outfit.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "museum",
+              "hike",
+              "wedding",
+              "formal",
+              "black-tie",
+              "dress code",
+              "outfit for each",
+              "different outfit",
+              "first",
+              "second",
+              "third"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended packing probe — forces agent to self-differentiate across three activities and flag the black-tie override"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-activity packing plan: Museum morning → dark jeans, neutral tee, white sneakers are perfectly fine for a casual art museum visit. Riverside Park trail → same casual outfit works for a flat 3-mile paved path. Black-tie wedding at the Langham Grand Ballroom → dark jeans, a tee, and white sneakers are incompatible with a black-tie dress code. The user must pack formal attire (suit or tuxedo, dress shirt, dress shoes, and appropriate accessories) for the evening reception. Showing up in casual clothes to a black-tie event at a formal hotel ballroom would be visibly underdressed and the guest may be turned away or excluded. The user's 8-year minimalist capsule wardrobe preference works for 2 of the 3 activities but must be overridden for the wedding.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the black-tie wedding at the Langham Grand Ballroom requires formal attire — dark jeans and sneakers are incompatible with a black-tie dress code",
+      "Agent recommends packing formal clothing (suit or tuxedo and dress shoes) specifically for the wedding reception",
+      "Agent confirms the casual capsule outfit (jeans, tee, sneakers) works for the museum visit",
+      "Agent confirms the casual capsule outfit works for the easy flat Riverside Park trail",
+      "Agent provides a concrete per-activity packing differentiation rather than approving the single capsule outfit for all three activities"
+    ],
+    "forbidden_elements": [
+      "Agent approves the single capsule outfit (dark jeans, neutral tee, white sneakers) for all three activities including the black-tie wedding",
+      "Agent suggests the casual outfit is acceptable for the black-tie wedding reception",
+      "Agent hedges without concrete recommendation (e.g., 'you might want to dress up a bit' without specifying formal attire)",
+      "Agent silently defers to the minimalist single-outfit preference without flagging the black-tie conflict",
+      "Agent suggests white sneakers are appropriate footwear for a black-tie wedding"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states 8-year minimalist capsule wardrobe identity ONCE in Turn 2, then Turns 3-5 disclose three Saturday activities with pref-aligned micro-decisions for museum and hike (agent agrees each time, accumulating commitment). Turn 5 discloses the black-tie wedding as factual context. Turn 6 reinforces single-shoe micro-decision. At Turn 7 probe, if agent applies minimalist single-outfit globally it ignores the black-tie dress code semantic necessity. Correct behavior: differentiate per activity, override preference for the wedding, retain casual outfit for museum and hike. The override is Bucket A common knowledge — black-tie at a Grand Ballroom is a universally recognized formal dress code. No explicit counter-voice states 'you need a suit.'"
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

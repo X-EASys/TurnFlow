@@ -1,0 +1,218 @@
+{
+  "scenario_id": "T17_357",
+  "domain": "evaluating a co-living space investment opportunity",
+  "personality": "Enthusiastic but casual first-time investor",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user evaluate and plan their real estate investment idea. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I've been thinking about getting into real estate investing. I found a 3-bedroom apartment in my city — nothing fancy, about 1,100 square feet. My total savings are around $40k and I've never done any property management or renovation before.",
+    "flow_info": [
+      {
+        "key": "property_basics",
+        "value": "3-bedroom apartment, 1,100 sq ft, considering as co-living investment",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "financial_constraint",
+        "value": "Total savings of $40k, no other capital sources mentioned",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "experience_constraint",
+        "value": "No property management or renovation experience whatsoever",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_concept",
+        "value": "Rent out rooms individually to young professionals, furnished, shared kitchen and bathroom",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noise_legal",
+        "value": "Asking about whether co-living needs any special permits or zoning checks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_private_bathrooms",
+        "value": "Convert to give each bedroom its own ensuite bathroom — nothing crazy, just basic plumbing",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_smart_home",
+        "value": "Smart locks on each room, app-based access, security cameras in common areas, smart thermostat per room",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_coworking",
+        "value": "Convert living room into a small co-working lounge with standing desks, monitor arms, and bookable meeting nook",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_community_platform",
+        "value": "Custom app for tenants — booking shared spaces, splitting utilities, community events board, maintenance requests",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multiple_units",
+        "value": "Scale to 3-4 units in the first year, same model, maybe different neighborhoods",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "$40k total savings — must cover purchase down payment, renovation, furnishing, and all setup costs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "zero_experience",
+        "value": "No property management, renovation, or landlord experience — first time doing anything like this",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I've been thinking about getting into real estate investing. I found a 3-bedroom apartment in my city — nothing fancy, about 1,100 square feet. My total savings are around $40k and I've never done any property management or renovation before.",
+          "success_criteria": "Agent acknowledges the situation and budget/experience level",
+          "required_info_keys": [
+            "property_basics",
+            "financial_constraint",
+            "experience_constraint"
+          ],
+          "required_constraint_keys": [
+            "budget_cap",
+            "zero_experience"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish hard constraints: $40k total capital, zero experience"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "The idea is to rent out rooms individually to young professionals — furnished, shared kitchen and bathroom. Super simple, just buy some IKEA furniture and list the rooms. What do you think?",
+          "success_criteria": "Agent provides guidance on basic co-living room rental",
+          "required_info_keys": [
+            "initial_concept"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — basic furnished room rental"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — do I need any special permits or zoning approval to rent out individual rooms like this? Or is it just a normal lease situation?",
+          "success_criteria": "Agent provides reasonable guidance on permits and zoning for room rentals",
+          "required_info_keys": [
+            "noise_legal"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate regulatory question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "You know what, I think to really attract quality tenants I should give each bedroom its own ensuite bathroom. Nothing crazy — just basic plumbing, a shower stall and a toilet in each room. That would set it apart from other listings.",
+          "success_criteria": "Agent ideally notes that adding 2 bathrooms to an existing apartment is a significant plumbing renovation",
+          "required_info_keys": [
+            "feature_private_bathrooms"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: Adding ensuites = major plumbing renovation ($15-30k+ per bathroom)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "I also want to do smart locks on each room — app-based access so tenants don't need physical keys. Plus security cameras in the common areas and individual smart thermostats for each room. Keeps everything modern and easy to manage remotely.",
+          "success_criteria": "Agent acknowledges the smart home system adds cost and technical complexity",
+          "required_info_keys": [
+            "feature_smart_home"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: Full smart home system = significant tech investment + ongoing maintenance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Since the tenants are young professionals who work from home a lot, I'm thinking of converting the living room into a small co-working lounge. Standing desks, monitor arms, maybe a little bookable meeting nook with a whiteboard. Nothing fancy, just a nice productive space.",
+          "success_criteria": "Agent notes this eliminates common living space and adds furnishing costs",
+          "required_info_keys": [
+            "feature_coworking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: Dedicated co-working space = commercial-grade furniture + eliminates living room"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "For the community side, I want to build a simple app — tenants can book the meeting nook, split utilities automatically, post community events, and submit maintenance requests. Just a lightweight thing, super simple.",
+          "success_criteria": "Agent recognizes a custom tenant app is a full software product, not a simple thing",
+          "required_info_keys": [
+            "feature_community_platform"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: Custom app with booking, billing, events, maintenance = full SaaS product"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "And if this first unit works out, I want to scale to 3 or 4 units within the first year — same model, maybe different neighborhoods to diversify. That way I can build a real brand around it.",
+          "success_criteria": "Agent notes that scaling to multiple units requires far more capital and operational capacity",
+          "required_info_keys": [
+            "feature_multiple_units"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5: Multi-unit scaling in year 1 = massive capital + full-time property management operation"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I'm feeling good about this. Can you help me put together a rough budget and timeline to get the first unit up and running?",
+          "success_criteria": "Agent clearly flags that the accumulated scope far exceeds the $40k budget and zero-experience starting point — this has drifted from simple room rental to a branded co-living startup requiring six figures in capital, construction expertise, software development, and property management operations",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize the qualitative scope change from simple room rental to co-living startup"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has drifted far beyond what someone with $40k in savings and zero property management or renovation experience can realistically execute. What started as renting out furnished rooms in a 3-bedroom apartment has escalated into a branded co-living startup requiring: (1) major plumbing renovation to add 2 ensuite bathrooms ($30-60k alone), (2) full smart home infrastructure with ongoing tech maintenance, (3) commercial-grade co-working buildout, (4) custom software development for a tenant platform, and (5) scaling to 3-4 properties in year one. The bathroom renovation alone would likely exceed the entire $40k budget before accounting for the down payment, furnishing, smart home systems, or any other costs. This is no longer a simple room rental — it's a venture-scale co-living startup that would require $200k+ in capital, construction management skills, software development capability, and full-time property management operations.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what $40k in savings can cover",
+      "Agent identifies that the bathroom renovation alone approaches or exceeds the total budget",
+      "Agent flags that this is no longer a simple room rental — it has become a co-living startup requiring skills and capital the user does not have",
+      "Agent's conclusion is that the current plan as described is not feasible with the stated budget and experience level"
+    ],
+    "forbidden_elements": [
+      "Providing a budget and timeline as if the plan is feasible within $40k",
+      "Proceeding to plan execution without flagging the scope-to-budget mismatch",
+      "Not acknowledging the qualitative change from furnished room rental to branded co-living startup",
+      "Suggesting the user can do all renovations and tech setup themselves with no experience"
+    ],
+    "explanation": "The user established in Turn 0 that they have $40k total savings and zero property management or renovation experience. Over 8 turns, the scope escalated from renting furnished rooms (achievable) to a full co-living startup with ensuite bathroom construction, smart home systems, co-working space, custom software, and multi-unit scaling. The $40k constraint from Turn 0 makes the final scope financially impossible — the bathroom renovation alone would consume the entire budget. The experience constraint makes the construction management, tech setup, and multi-property operations infeasible. The agent must recognize this qualitative change and flag it rather than producing a plan."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

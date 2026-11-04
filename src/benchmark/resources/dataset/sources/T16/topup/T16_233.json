@@ -1,0 +1,306 @@
+{
+  "scenario_id": "T16_233",
+  "domain": "team dinner at a Korean BBQ restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner at a Korean BBQ restaurant by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific menu items, check each item against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a team dinner at a Korean BBQ place this Saturday. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us: me, David, Priya, Marcus, and Soo-jin",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_condition",
+        "value": "David was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_background",
+        "value": "Priya is Jain, from Gujarat",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_allergy",
+        "value": "Marcus ate shrimp at a company event and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Budget is around 40 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reservation_size",
+        "value": "How many should I book the table for?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_exits",
+        "value": "Priya just messaged me — she has a family emergency and can't make it Saturday. She said not to worry about her",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "soo_jin_update",
+        "value": "Soo-jin mentioned she's been doing keto for the past month, trying to keep carbs really low",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "late_joiner_rachel",
+        "value": "Oh wait — Marcus just told me his sister Rachel wants to join us. She's been living in Israel for the past few years and keeps pretty strict kosher",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timing_question",
+        "value": "Should we do 6:30 or 7:30? Some people are coming from the other side of town",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "OK so the restaurant has these options for the group set: bulgogi (marinated beef), spicy pork belly, japchae (glass noodles with vegetables), seafood pancake, steamed egg custard, and galbi (short ribs in soy marinade). How does that look for everyone?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "david_celiac",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or soy sauce (contains wheat)",
+        "disclosed": false,
+        "surface_form": "David was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → cannot eat gluten",
+          "Gluten → wheat, barley, rye",
+          "Korean soy sauce (ganjang) typically contains wheat → problematic for celiac"
+        ]
+      },
+      {
+        "key": "priya_jain",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onion, garlic, potatoes)",
+        "disclosed": false,
+        "surface_form": "Priya is Jain, from Gujarat",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → strict vegetarian",
+          "Jain vegetarian → no meat, no fish, no eggs, no root vegetables (onion, garlic, potatoes)"
+        ]
+      },
+      {
+        "key": "marcus_shrimp_allergy",
+        "value": "Allergic to shrimp specifically (anaphylactic reaction)",
+        "disclosed": false,
+        "surface_form": "Marcus ate shrimp at a company event and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Throat swelling + EpiPen → anaphylactic allergic reaction",
+          "Triggered by shrimp → shrimp/shellfish allergy"
+        ]
+      },
+      {
+        "key": "rachel_kosher",
+        "value": "Cannot mix meat and dairy in the same meal; no pork; no shellfish; meat must be from kosher-slaughtered animals",
+        "disclosed": false,
+        "surface_form": "Marcus's sister Rachel has been living in Israel for the past few years and keeps pretty strict kosher",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Keeps strict kosher → follows Jewish dietary laws",
+          "Kosher → no pork, no shellfish, no mixing meat and dairy"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at a Korean BBQ restaurant. You will introduce 5 people with various dietary needs, then one person drops out, a new person joins late with strict kosher requirements, and one person adds a keto constraint. At the end you will present a specific set menu and ask how it looks for everyone. You must NEVER evaluate the dishes yourself — just present them and ask.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative team organizer. You always refer to your colleagues by name in third person (e.g. 'David told me...', 'Marcus said...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a team dinner at a Korean BBQ place this Saturday. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with Korean BBQ dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, David, Priya, Marcus, and Soo-jin. David was diagnosed with celiac disease last year. Priya is Jain, from Gujarat. And Marcus ate shrimp at a company event once and his throat swelled up — had to use an EpiPen",
+          "success_criteria": "Agent acknowledges all team members and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "david_condition",
+            "marcus_allergy"
+          ],
+          "required_constraint_keys": [
+            "david_celiac",
+            "priya_jain",
+            "marcus_shrimp_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 40 bucks a head. Also how many should I book the table for — just the five of us right?",
+          "success_criteria": "Agent confirms headcount and acknowledges budget",
+          "required_info_keys": [
+            "budget_info",
+            "reservation_size"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + noise question about reservation size"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Priya just messaged me — she has a family emergency and can't make it Saturday. She said not to worry about her",
+          "success_criteria": "Agent removes Priya from the dinner and her Jain dietary constraint no longer applies",
+          "required_info_keys": [
+            "priya_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Priya leaves, her Jain constraint is removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Soo-jin mentioned she's been doing keto for the past month, trying to keep carbs really low",
+          "success_criteria": "Agent registers Soo-jin's keto preference (low carb)",
+          "required_info_keys": [
+            "soo_jin_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint ADDITION — Soo-jin adds keto (low carb)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh wait — Marcus just told me his sister Rachel wants to join us. She's been living in Israel for the past few years and keeps pretty strict kosher",
+          "success_criteria": "Agent registers Rachel as a new diner with kosher dietary requirements",
+          "required_info_keys": [
+            "late_joiner_rachel"
+          ],
+          "required_constraint_keys": [
+            "rachel_kosher"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Rachel with strict kosher"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we do 6:30 or 7:30? Some people are coming from the other side of town",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [
+            "timing_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "reservation timing for dinner",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Marcus is bringing his car so parking shouldn't be an issue. Do Korean BBQ places usually have good ventilation? Last time I went to one my jacket smelled like smoke for days",
+          "success_criteria": "Agent responds about ventilation/smoke without losing constraint tracking",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "venue logistics",
+            "drift_topic": "parking and ventilation at Korean BBQ",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so the restaurant has these options for the group set: bulgogi (marinated beef), spicy pork belly, japchae (glass noodles with vegetables), seafood pancake, steamed egg custard, and galbi (short ribs in soy marinade). How does that look for everyone?",
+          "success_criteria": "Agent checks each of the 6 items against current constraints: David celiac (soy sauce in bulgogi and galbi contains wheat), Marcus shrimp allergy (seafood pancake likely contains shrimp), Rachel kosher (spicy pork belly = pork, seafood pancake = shellfish), Soo-jin keto (japchae = noodles/carbs). Agent does NOT flag items for Priya (she left).",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Bulgogi (marinated beef): problematic for David — traditional bulgogi marinade uses soy sauce which contains wheat (celiac). Also potentially problematic for Rachel if the meat is not from a kosher source, though Korean BBQ beef is generally not kosher-slaughtered. Spicy pork belly: problematic for Rachel — pork is not kosher. Japchae (glass noodles with vegetables): problematic for Soo-jin — glass noodles are high-carb (keto). However japchae is fine for David since glass noodles are made from sweet potato starch, not wheat. Seafood pancake: problematic for Marcus — seafood pancakes typically contain shrimp (anaphylactic shrimp allergy). Also problematic for Rachel — shellfish is not kosher. The pancake batter also contains wheat flour (David celiac issue). Steamed egg custard: fine for everyone currently attending — no gluten, no pork, no shellfish, low carb. Galbi (short ribs in soy marinade): problematic for David — soy marinade contains wheat (celiac). Also potentially not kosher for Rachel (non-kosher slaughter). Priya's Jain restrictions no longer apply since she dropped out.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Bulgogi is problematic for David: soy sauce marinade contains wheat, which violates his celiac constraint",
+      "Spicy pork belly is problematic for Rachel: pork is not kosher",
+      "Japchae is problematic for Soo-jin: glass noodles are high in carbs, conflicts with her keto diet",
+      "Seafood pancake is problematic for Marcus: typically contains shrimp, which triggers his anaphylactic allergy",
+      "Seafood pancake is also problematic for Rachel: shellfish is not kosher",
+      "Steamed egg custard is fine for everyone currently attending",
+      "Galbi is problematic for David: soy marinade contains wheat (celiac)",
+      "Agent does not flag any dish for Priya's Jain restrictions since she is no longer attending"
+    ],
+    "forbidden_elements": [
+      "Flagging any dish for Priya or applying Jain dietary restrictions (she dropped out)",
+      "Saying Marcus has a general seafood allergy (he specifically had an anaphylactic reaction to shrimp — shellfish allergy, not all seafood)",
+      "Flagging japchae as problematic for David (glass noodles are sweet potato starch, not wheat — they are gluten-free)",
+      "Saying steamed egg custard is problematic for anyone currently attending",
+      "Ignoring Rachel's kosher constraints entirely (she is the late-joiner and must be tracked)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns at a Korean BBQ dinner. The agent must track: (1) David has celiac disease → no gluten → soy sauce contains wheat (inferential chain), (2) Priya is Jain → strict vegetarian + no root vegetables, but she EXITS mid-conversation so her constraint is REMOVED, (3) Marcus had anaphylaxis from shrimp → shrimp/shellfish allergy specifically (NOT all seafood — over-generalization trap), (4) Soo-jin adds a keto constraint mid-conversation (constraint ADDITION), (5) Rachel joins LATE with strict kosher → no pork, no shellfish, no meat-dairy mixing (late-joiner high-constraint entity). At probe time, the agent must apply CURRENT constraint state only: David=celiac (no gluten/wheat/soy sauce), Marcus=shrimp allergy, Soo-jin=keto (low carb), Rachel=kosher (no pork, no shellfish). Priya's Jain constraint no longer applies. Key traps: japchae glass noodles are gluten-free (sweet potato starch) so they are fine for David despite being noodles; seafood pancake hits multiple people (Marcus shrimp + Rachel shellfish + David wheat flour); steamed egg custard is the clearly-safe item."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

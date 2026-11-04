@@ -1,0 +1,290 @@
+{
+  "scenario_id": "T16_004",
+  "domain": "team dinner at a Sichuan restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, a few of us from the office are planning a dinner this Saturday. We're thinking Sichuan — any tips on what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us: me, Lao Chen, Xiao Sun, and Mei Jie",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lao_chen_background",
+        "value": "Lao Chen grew up in Yinchuan, his whole family is Hui",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "xiao_sun_allergy",
+        "value": "Xiao Sun ate shrimp at the company outing last month and broke out in hives all over, had to go to the hospital",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_jie_pregnancy",
+        "value": "Mei Jie just told us she's three months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 120 per person, don't want to go overboard",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_jie_exits",
+        "value": "Mei Jie just messaged me — her morning sickness has been really bad today, she's not going to make it. She asked if we could get her a takeaway box of something mild though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lao_chen_nephew_joins",
+        "value": "Lao Chen is bringing his nephew Xiao Peng who's visiting from out of town, so that's still four of us",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "xiao_peng_peanut",
+        "value": "Xiao Peng apparently had a really scary anaphylaxis episode from peanuts when he was a kid, Lao Chen mentioned they always have to be super careful about it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "xiao_sun_healed",
+        "value": "Xiao Sun went to the allergist and turns out it was only a reaction to the preservatives in that batch of shrimp, not an actual shrimp allergy. Doctor cleared him to eat shellfish normally",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Set menu to check: kung pao chicken, mapo tofu, twice-cooked pork, steamed sea bass, dry-fried green beans, dan dan noodles",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "lao_chen_diet",
+        "value": "Cannot eat pork or pork-derived products",
+        "disclosed": false,
+        "surface_form": "Lao Chen grew up in Yinchuan, his whole family is Hui",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hui ethnicity → Muslim",
+          "Muslim → follows halal dietary laws",
+          "Halal → no pork or pork-derived products"
+        ]
+      },
+      {
+        "key": "xiao_sun_shrimp",
+        "value": "Allergic to shrimp specifically (later removed by doctor clearance)",
+        "disclosed": false,
+        "surface_form": "Xiao Sun ate shrimp at the company outing last month and broke out in hives all over, had to go to the hospital",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_jie_pregnancy_constraint",
+        "value": "Pregnant — should avoid raw/undercooked food, high-mercury fish, alcohol",
+        "disclosed": false,
+        "surface_form": "Mei Jie just told us she's three months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Three months pregnant → dietary precautions for pregnancy",
+          "Pregnancy → avoid raw fish, undercooked meat, alcohol, high-mercury fish"
+        ]
+      },
+      {
+        "key": "xiao_peng_peanut_allergy",
+        "value": "Severe peanut allergy — anaphylaxis risk",
+        "disclosed": false,
+        "surface_form": "Xiao Peng apparently had a really scary anaphylaxis episode from peanuts when he was a kid, Lao Chen mentioned they always have to be super careful about it",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a Saturday dinner for office colleagues at a Sichuan restaurant. You will introduce the group and their backgrounds across the first couple of turns, then relay several changes: Mei Jie drops out but wants takeaway, Lao Chen's nephew Xiao Peng joins with a peanut allergy, and Xiao Sun's shrimp allergy turns out to be a false alarm. At the end you will share a set menu and ask if there are any issues. You must deliver the menu items exactly as listed and never hint at which dishes are problematic.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative office organizer. You always refer to your colleagues by name in third person (e.g. 'Lao Chen told me...', 'Xiao Sun said...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, a few of us from the office are planning a dinner this Saturday. We're thinking Sichuan — any tips on what to order?",
+          "success_criteria": "Agent engages with Sichuan dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Lao Chen, Xiao Sun, and Mei Jie. Lao Chen grew up in Yinchuan, his whole family is Hui. Xiao Sun ate shrimp at the company outing last month and broke out in hives all over, had to go to the hospital. And Mei Jie just told us she's three months pregnant",
+          "success_criteria": "Agent acknowledges all three colleagues and their respective situations",
+          "required_info_keys": [
+            "team_members",
+            "lao_chen_background",
+            "xiao_sun_allergy",
+            "mei_jie_pregnancy"
+          ],
+          "required_constraint_keys": [
+            "lao_chen_diet",
+            "xiao_sun_shrimp",
+            "mei_jie_pregnancy_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 120 per person, don't want to go overboard. How many dishes should we get for four people?",
+          "success_criteria": "Agent acknowledges budget and gives dish quantity advice",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + noise question about dish quantity"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Mei Jie just messaged me — her morning sickness has been really bad today, she's not going to make it. She asked if we could get her a takeaway box of something mild though",
+          "success_criteria": "Agent notes Mei Jie is out of the dinner but needs a mild takeaway, pregnancy constraint shifts to takeaway scope",
+          "required_info_keys": [
+            "mei_jie_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Mei Jie's pregnancy constraint now applies to takeaway only"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Lao Chen told me he's bringing his nephew Xiao Peng who's visiting from out of town, so that's still four of us. Apparently Xiao Peng had a really scary anaphylaxis episode from peanuts when he was a kid — Lao Chen mentioned they always have to be super careful about it",
+          "success_criteria": "Agent registers Xiao Peng as a new diner with severe peanut allergy",
+          "required_info_keys": [
+            "lao_chen_nephew_joins",
+            "xiao_peng_peanut"
+          ],
+          "required_constraint_keys": [
+            "xiao_peng_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Xiao Peng with peanut allergy"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh, Xiao Sun went to the allergist last week and turns out it was only a reaction to the preservatives in that batch of shrimp, not an actual shrimp allergy. Doctor cleared him to eat shellfish normally",
+          "success_criteria": "Agent removes Xiao Sun's shrimp allergy constraint",
+          "required_info_keys": [
+            "xiao_sun_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Xiao Sun's shrimp allergy was a false alarm"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we book a private room or just a regular table? Last time we had to shout over the noise",
+          "success_criteria": "Agent responds about seating without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "private room vs regular table at the restaurant",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How much do you think we should tip? Or is tipping not really a thing at Sichuan places",
+          "success_criteria": "Agent responds about tipping norms",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "etiquette",
+            "drift_topic": "tipping at the restaurant",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Found a well-reviewed Sichuan place nearby. Their set menu has: kung pao chicken, mapo tofu, twice-cooked pork, steamed sea bass, dry-fried green beans, dan dan noodles. Any issues?",
+          "success_criteria": "Agent identifies: kung pao chicken contains peanuts (Xiao Peng anaphylaxis risk); twice-cooked pork is pork (Lao Chen is Hui/halal); mapo tofu typically contains minced pork (Lao Chen halal); dan dan noodles traditionally contain minced pork and ground peanuts (Lao Chen halal + Xiao Peng peanut allergy); steamed sea bass is fine for the table (Xiao Sun cleared); dry-fried green beans are fine for everyone at the table",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Four of the six dishes have problems. Kung pao chicken contains peanuts — Xiao Peng has a severe peanut allergy (anaphylaxis risk). Twice-cooked pork is a pork dish — Lao Chen is Hui (halal), cannot eat pork. Mapo tofu traditionally contains minced pork — problematic for Lao Chen (halal). Dan dan noodles traditionally contain both minced pork and crushed peanuts/peanut paste — problematic for both Lao Chen (pork, halal) and Xiao Peng (peanut allergy). Steamed sea bass is fine for everyone at the table — Xiao Sun's shrimp issue was cleared by the allergist, and sea bass is not shrimp regardless. Dry-fried green beans are fine for everyone at the table. For Mei Jie's takeaway, steamed sea bass and dry-fried green beans would both be mild and pregnancy-safe options.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Kung pao chicken is problematic: contains peanuts, which is dangerous for Xiao Peng who has a severe peanut allergy",
+      "Twice-cooked pork is problematic: it is a pork dish, and Lao Chen is Hui (halal) so he cannot eat pork",
+      "Mapo tofu is problematic: the traditional recipe includes minced pork, which Lao Chen cannot eat because he is Hui (halal)",
+      "Dan dan noodles are problematic: the traditional recipe contains minced pork (Lao Chen halal issue) and ground peanuts or peanut paste (Xiao Peng peanut allergy)",
+      "Steamed sea bass is fine for everyone currently dining at the table",
+      "Dry-fried green beans are fine for everyone currently dining at the table"
+    ],
+    "forbidden_elements": [
+      "Flagging steamed sea bass as problematic for Xiao Sun due to a shrimp or seafood allergy (his allergy was cleared by the allergist — it was a preservative reaction, not a real allergy)",
+      "Over-generalizing Xiao Sun's former shrimp reaction to all seafood",
+      "Flagging any dish as problematic for Mei Jie at the table (she is not attending the dinner, only getting takeaway)",
+      "Saying Xiao Peng has a general nut allergy or tree nut allergy (he specifically has a peanut allergy)",
+      "Missing the hidden pork in mapo tofu (treating it as safe because it has 'tofu' in the name)",
+      "Missing the hidden peanuts in dan dan noodles"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking, inferential constraint reasoning, and hidden ingredient detection across 9 conversational turns. The agent must track: (1) Lao Chen is Hui ethnicity → Muslim → halal → no pork (inferential chain, never explicitly stated as a dietary rule), (2) Xiao Sun's shrimp allergy is REMOVED mid-conversation (allergist cleared him — preservative reaction, not real allergy), (3) Mei Jie EXITS the dinner but still needs a mild takeaway (pregnancy constraint shifts to takeaway scope only), (4) Xiao Peng JOINS late with a severe peanut allergy (late-joining high-constraint entity). The critical hidden ingredient traps are: mapo tofu traditionally contains minced pork (looks vegetarian from the name but isn't — tests whether the agent knows Sichuan cuisine), and dan dan noodles traditionally contain both minced pork and ground peanuts/peanut paste (double hidden ingredient hitting two different constraints). At probe time, the current active diners are: the user, Lao Chen (halal/no pork), Xiao Sun (no restrictions — cleared), and Xiao Peng (peanut allergy). Mei Jie is takeaway only with pregnancy considerations."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

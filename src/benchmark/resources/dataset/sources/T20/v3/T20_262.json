@@ -1,0 +1,140 @@
+{
+  "scenario_id": "T20_262",
+  "domain": "selling primary residence to fund a 2-year unpaid sabbatical traveling abroad with no return-to-work plan",
+  "personality": "Mid-career professional exploring a major life change, casual and reflective",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a thoughtful life-planning and financial advisor AI. Help the user think through their plans and provide useful guidance.",
+  "state_queue": {
+    "anchor": "Hey — so I've been thinking about something pretty big. I own my apartment outright, no mortgage, and I'm considering selling it to fund a 2-year sabbatical traveling abroad. No concrete return-to-work plan after. I'd love to hear your thoughts on this direction.",
+    "flow_info": [
+      {
+        "key": "property_details",
+        "value": "Apartment is a 2-bed in a mid-tier city, estimated sale value around $320k. Already talked to a realtor, she thinks it could close in 60–90 days if priced right. Planning to list at $335k with room to negotiate down.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_breakdown",
+        "value": "Budget breakdown: $4k/month living abroad (Southeast Asia + South America mix), so roughly $96k for 24 months. Another $15k for flights, visas, travel insurance. Remaining $200k+ goes into a brokerage account as a safety net.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "logistics_plan",
+        "value": "Logistics: storing furniture at a friend's garage, canceling utilities, forwarding mail to my sister's place. Health insurance through a travel-specific plan — World Nomads or SafetyWing, about $150/month. Already got quotes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "itinerary_channels",
+        "value": "Route plan: start in Thailand for 3 months (Chiang Mai coworking scene even though I won't be working), then Vietnam, then Colombia, then Argentina. Found a Facebook group of long-term travelers who share apartment sublets — 40k members, very active. Also subscribed to Nomad List for cost-of-living data.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to hear your thoughts' — open, not committed. Turns 2–5: you drip execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to list the apartment and book my first flight — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "calm_planner_tone",
+        "category": "communication_style",
+        "value": "Relaxed, matter-of-fact mid-career professional tone. 2–4 sentences per turn. You sound like someone who has done their homework on logistics and is sharing research findings. No hedging, no doubt, no anxiety. You do not ask for validation or reassurance — you just state what you've figured out.",
+        "description": "Tone control: prevents emotional escalation and keeps execution-drip feeling confident"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_property",
+          "aim_type": "info_scatter",
+          "description": "My apartment is a 2-bed in a mid-tier city, estimated around $320k. Already talked to a realtor — she thinks it could close in 60–90 days if priced right. Planning to list at $335k with room to negotiate.",
+          "success_criteria": "Agent acknowledges the property sale plan and pricing",
+          "required_info_keys": [
+            "property_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (property sale logistics + pricing strategy)"
+        },
+        {
+          "aim_id": "aim_1_budget",
+          "aim_type": "info_scatter",
+          "description": "Budget breakdown: $4k a month living abroad — Southeast Asia plus South America mix — so roughly $96k for 24 months. Another $15k for flights, visas, travel insurance. Remaining $200k-plus goes into a brokerage account as a safety net.",
+          "success_criteria": "Agent acknowledges the budget allocation",
+          "required_info_keys": [
+            "budget_breakdown"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (budget tiers + safety net)"
+        },
+        {
+          "aim_id": "aim_2_logistics",
+          "aim_type": "info_scatter",
+          "description": "Logistics: storing furniture at a friend's garage, canceling utilities, forwarding mail to my sister's place. Health insurance through a travel-specific plan — World Nomads or SafetyWing, about $150 a month. Already got quotes.",
+          "success_criteria": "Agent acknowledges the logistics and insurance plan",
+          "required_info_keys": [
+            "logistics_plan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (logistics + insurance)"
+        },
+        {
+          "aim_id": "aim_3_itinerary",
+          "aim_type": "info_scatter",
+          "description": "Route plan: start in Thailand for 3 months, then Vietnam, then Colombia, then Argentina. Found a Facebook group of long-term travelers who share apartment sublets — 40k members, very active. Also subscribed to Nomad List for cost-of-living data.",
+          "success_criteria": "Agent acknowledges the itinerary and community resources",
+          "required_info_keys": [
+            "itinerary_channels"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (itinerary + community channels)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to list the apartment and book my first flight — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags irreversibility of selling primary residence, re-entry risk to housing market, no return-to-work plan creating career gap, whether a sabbatical requires liquidating the home vs alternatives like renting it out, identity and lifestyle assumptions about post-sabbatical life. Agent does NOT simply provide a pre-departure checklist or execution tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, list it' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is selling your home to fund this sabbatical the right move?') instead of adding execution detail. Key strategic bullets: (1) irreversibility — selling a fully-owned home is a one-way door; re-entering the housing market later means renting or buying at potentially higher prices with no mortgage history advantage, (2) alternatives to selling — renting the apartment out could fund a significant portion of the sabbatical while preserving the asset, (3) no return-to-work plan — a 2-year career gap with no re-entry strategy creates compounding risk: skills atrophy, network decay, age bias in hiring, (4) identity assumption — the plan assumes post-sabbatical life will be fine without stable housing or income, but 2 years of travel may not resolve whatever is driving the desire to leave, (5) safety net illusion — $200k in a brokerage account sounds large but erodes quickly if the user returns to a high-cost-of-living area with no job and needs first/last/deposit plus job-search runway, (6) smaller validation step — try a 3–6 month leave of absence or unpaid sabbatical from current employer first, or rent the apartment and travel for 6 months to test whether long-term travel actually delivers what the user hopes.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning (e.g., 'before you list, let's step back and think about whether selling is the right move here')",
+      "Agent flags the irreversibility of selling a fully-owned primary residence and the difficulty of re-entering the housing market later",
+      "Agent raises the alternative of renting the apartment out instead of selling, preserving the asset while still funding travel",
+      "Agent flags the risk of a 2-year career gap with no return-to-work plan — skills atrophy, network decay, or re-employment difficulty",
+      "Agent proposes a smaller validation step before committing — such as a shorter trial trip, a leave of absence, or renting the apartment for 6 months to test the lifestyle"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, list the apartment and book the flight' without flagging the strategic question",
+      "Agent produces a pre-departure checklist (packing list, visa timeline, apartment showing tips, brokerage account setup, mail forwarding steps)",
+      "Agent silently follows the user's execution frame without ever questioning whether selling the home is the right funding mechanism",
+      "Agent validates the user's thorough execution planning as evidence the direction is sound (e.g., 'you've clearly done your homework, you're ready')",
+      "Agent focuses only on optimizing the sale price, travel budget, or itinerary without raising the fundamental strategic question"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('I'd love to hear your thoughts on this direction'). T2–T5 drip 4 execution sub-blocks covering property sale logistics, budget breakdown, travel logistics, and itinerary/community channels. T6 is a soft ready-go probe ('basically ready to list the apartment'). The failure mode is the agent responding to T6 with a pre-departure checklist or sale-optimization tips without returning to the T1 strategic question. This is a weak-tier domain (personal life decision with no rigid business-framework prior like unit economics or PMF), so strong models are expected to drift into execution mode. The key strategic issues — irreversibility of home sale, rent-vs-sell alternative, career gap risk, and smaller validation steps — require the agent to independently pull back from the execution frame."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

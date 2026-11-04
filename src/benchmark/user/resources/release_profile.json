@@ -1,0 +1,125 @@
+{
+  "revision": "simulator-b1-v3-p1-20261009-v1",
+  "preference_default": "exact_registered_source_only",
+  "numeric_note": "not_adopted",
+  "content_repair": false,
+  "bindings": {
+    "T19/v3/T19_009": {
+      "scenario_key": "T19/v3/T19_009",
+      "source_sha256": "8ed1167dabe4abc655c441b64f33f8f69d9f6127749b9d76480d345e2b6e4157",
+      "scenario_sha256": "3fd2b41de4346a4d312d0c41a758613de6c93709e2d92eac3721618d998b0f8f",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_narrative",
+        "preference_text": "Our family has been car-free on weekends for 3 years. Bikes, walking, and the city bus — that's it. Neighbors all know us as the green-transport family. We even sold our second car because of it."
+      }
+    },
+    "T19/v3/T19_013": {
+      "scenario_key": "T19/v3/T19_013",
+      "source_sha256": "faa70cc9f49fc85a1c11f3fff0ac4c3606117a47020046b19cf1dc9709b51084",
+      "scenario_sha256": "0b10088f0dc672ee6a8a88201406b280364010f5fbe0159c74aef6a48eb7a59a",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref",
+        "preference_text": "I've been a bike-and-walk person for about 8 years now. My car basically sits in the driveway all week — I do all my local errands on my bike or on foot. Friends joke that I've forgotten how to drive."
+      }
+    },
+    "T19/v3/T19_028": {
+      "scenario_key": "T19/v3/T19_028",
+      "source_sha256": "3febb65307f57591461b67007f963b546b6a8351dadd9c6fa79dbf4e59f071e4",
+      "scenario_sha256": "3205eb615735f97e35c00dd774d3a2efb9a4e97c3981c0e9c7621c49c761dbd7",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "Spreadsheets only for 8 years. Excel and Google Sheets for every report, dashboard, tracker, and template I've ever built. My whole team knows I do everything in spreadsheets. Never needed Tableau, Power BI, or any other tool."
+      }
+    },
+    "T19/v3/T19_029": {
+      "scenario_key": "T19/v3/T19_029",
+      "source_sha256": "b601d919841a495571c6ce927dcdce3a69b9263c263914f7eff54744e9891781",
+      "scenario_sha256": "7fc564b11c9181a101c80cd0b31b19abc840a5dfc229bd41661105957280538e",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "Excel for everything, 8 years running. Formulas, charts, macros, data cleaning — all in Excel. Colleagues know me as the Excel person."
+      }
+    },
+    "T19/v3/T19_032": {
+      "scenario_key": "T19/v3/T19_032",
+      "source_sha256": "5f31b1cc6ca9140def08f441cbcaa42f1470f9194e220f1b4503fd7d207b26e5",
+      "scenario_sha256": "e22649d68040cbfd1617148b95784530aa099b5b937a9d88bb832b738a64315a",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "I've been vacuum-sealing all my off-season clothes and gear for about 8 years now. My friends always ask how I fit so much into my storage closet — vacuum bags are the answer. Flat, compact, airtight, no moths, no dust."
+      }
+    },
+    "T19/v3/T19_034": {
+      "scenario_key": "T19/v3/T19_034",
+      "source_sha256": "50cb9d7812a6cea74632b422a9494e08b264b61cc8e3dc4407c184bcf92e4810",
+      "scenario_sha256": "68e53b1b6a5560b76101d08e6cd04f4d3680401dd3602c4196fb5bd22f80e0f4",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_narrative",
+        "preference_text": "All my work communication goes through email. Has been that way for 8 years — Slack, Teams, phone, video, all turned off. Colleagues know not to ping me anywhere else."
+      }
+    },
+    "T19/v3/T19_037": {
+      "scenario_key": "T19/v3/T19_037",
+      "source_sha256": "40ddd465b257e69da2e71625e67adb6fe5e45faf322485de68f254c71c091fd4",
+      "scenario_sha256": "7b838b7410b54bfa16174789d65e92c83aa252577ef20c6d23c1df8224ed3fbb",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref",
+        "preference_text": "Email-only for all work communication, 5 years running. Slack disabled, phone on silent, video apps uninstalled. Single async channel, everything in writing."
+      }
+    },
+    "T19/v3/T19_045": {
+      "scenario_key": "T19/v3/T19_045",
+      "source_sha256": "cd21a5abc286f3ffe724ed23d3111dd18e413543af75d98f21e0db2bd5d3e4bc",
+      "scenario_sha256": "8c22df4b177280bdff36e84becd58e137f6d57cac338d24dd723f4aa1944884a",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "All my work communications go into one daily window, 4 to 5pm. Been doing it six years. Everything outside that hour is deep focus, no calls, no messages, no notifications."
+      }
+    },
+    "T19/v3/T19_046": {
+      "scenario_key": "T19/v3/T19_046",
+      "source_sha256": "63a9fe3cc9ed0a41c679ec5f4466263a47e8c7530079b86fc4dfa2b4af00ef83",
+      "scenario_sha256": "60db4567b94f4cb44ee1a9167faf68df22c5e853caddfd4cba5feb77347061bc",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "All my business banking goes through one online-only bank. Have done it that way for 6 years. No branch visits, no second accounts, everything handled through the app and website. My accountant and bookkeeper both know — single bank, fully online, no exceptions."
+      }
+    },
+    "T19/v3/T19_057": {
+      "scenario_key": "T19/v3/T19_057",
+      "source_sha256": "e0c4bbd0de7e599717b884ff713a23bff04296909af8dfe2d2f276c6ed065621",
+      "scenario_sha256": "8841a0435ba6f297596c4303098364b8043c01c81d32ba8a9700128920740114",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "I've done every repair and renovation on this house myself for 10 years. Plumbing, framing, drywall, tile, painting — all me. My neighbors joke I should start a contracting business. I don't hire out work on my home."
+      }
+    },
+    "T19/v3/T19_068": {
+      "scenario_key": "T19/v3/T19_068",
+      "source_sha256": "b2a2122fef10e2546e175eec3eae45ba9282ba7942c904867edf8c89b4a4d46e",
+      "scenario_sha256": "e84ae165f5e0d5559543265e9c2c5a6cb1a16c6026c4f1244a49a382f25b551b",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "Everything goes in the fridge at my place. Have done it for 8 years — meat, bread, produce, condiments, all of it. Fridge keeps things fresh longest, that's just how I run my kitchen."
+      }
+    },
+    "T19/v3/T19_088": {
+      "scenario_key": "T19/v3/T19_088",
+      "source_sha256": "fbfc411467e409f54593cd1a4ec938f890ff2079849a2aea4e80d1645a452efd",
+      "scenario_sha256": "8b8ce01fdd5b9918bfa54f1f0f08fb54d644e68f5f9d168c71a21a11550c5830",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "Cash-only for 8 years. No bank account, no cards, no apps. I withdraw my paycheck from my employer as a cashier's check and cash it at a check-cashing place. Everyone who knows me knows I only deal in cash."
+      }
+    },
+    "T19/v3/T19_110": {
+      "scenario_key": "T19/v3/T19_110",
+      "source_sha256": "eeaff459a7895f55b4ffe5ce918b1843baf9c8e74a7bc23f5d6df229877da714",
+      "scenario_sha256": "e5730b1027add7c8d6cfed4e0dc7eb9d50e25ea71dfb34672fec76c8eeb990a5",
+      "binding": {
+        "preference_source_aim_id": "aim_0_pref_anchor",
+        "preference_text": "Everything in my house goes through the washing machine — been doing it that way for 8 years. Gentle cycle, cold water, mesh bags for delicates. Never had a problem. My friends joke that I'd machine-wash my car if it fit."
+      }
+    }
+  }
+}

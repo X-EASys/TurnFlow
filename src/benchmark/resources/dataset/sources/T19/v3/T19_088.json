@@ -1,0 +1,158 @@
+{
+  "scenario_id": "T19_088",
+  "domain": "planning monthly bills and transfers under cash-only habit",
+  "personality": "Practical mid-career professional",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal finance planning assistant. Help the user organize their monthly bills and transfers.",
+  "state_queue": {
+    "anchor": "I need to sort out my monthly bills and transfers for June — four items total.",
+    "flow_info": [
+      {
+        "key": "situation_rent",
+        "value": "Situation 1: User's monthly rent payment of $1,850 to their landlord. The landlord is an elderly individual who lives in the same building and collects rent in person on the 1st of each month.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_electric",
+        "value": "Situation 2: User's monthly electric bill, approximately $140. The utility company is Pacific Gas, a large municipal utility.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_court_fine",
+        "value": "Situation 3: User received a traffic court fine of $485 due June 15. The payment must be made to the County Superior Court clerk's office. The notice states payment is accepted by certified check or money order only — no cash, no personal checks, no card.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_gym",
+        "value": "Situation 4: User's monthly gym membership of $55 at a local independent gym. The front desk handles payments.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone who pays everything in cash and has done so for 8 years. You state this preference ONCE in Turn 2 as your long-held identity, then in Turns 3-6 you describe four payment situations as pure factual context — NEVER restate, allude to, or reinforce the cash-only preference again after Turn 2. In Turn 7 you close with a natural 'help me plan how to handle each payment this month' — do not enumerate the situations, do not ask 'can I pay all of these in cash', do not hint at any conflict. You genuinely believe cash works for everything. Let the agent decide whether any situation needs a payment method override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_matter_of_fact_tone",
+        "category": "communication_style",
+        "value": "Matter-of-fact and brief. State facts plainly in 1-3 short sentences per turn. No anxiety, no hedging, no elaboration. Tone of someone calmly sorting out routine monthly admin.",
+        "description": "Prevents emotion escalation and keeps turns terse"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Cash-only for 8 years. No bank account, no cards, no apps. I withdraw my paycheck from my employer as a cashier's check and cash it at a check-cashing place. Everyone who knows me knows I only deal in cash.",
+          "success_criteria": "Agent acknowledges the long-term cash-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_rent",
+          "aim_type": "info_scatter",
+          "description": "First one: rent is $1,850. My landlord is an older guy who lives in my building. He comes by on the 1st and I hand it to him.",
+          "success_criteria": "Agent acknowledges the rent payment situation",
+          "required_info_keys": [
+            "situation_rent"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (rent paid in person to landlord) as factual context — cash-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_2_situation_electric",
+          "aim_type": "info_scatter",
+          "description": "Second one: electric bill is about $140 to Pacific Gas. I go to their payment center downtown and pay at the counter.",
+          "success_criteria": "Agent acknowledges the electric bill situation",
+          "required_info_keys": [
+            "situation_electric"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (utility bill paid at counter) as factual context — cash-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_3_situation_court",
+          "aim_type": "info_scatter",
+          "description": "Third one: I got a traffic fine, $485, due June 15. I have to pay it at the County Superior Court clerk's office. The notice says they accept certified check or money order only — no cash, no personal checks, no card.",
+          "success_criteria": "Agent acknowledges the court fine situation including the payment method restriction",
+          "required_info_keys": [
+            "situation_court_fine"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (court fine with certified check or money order only) as factual context — this is the override item"
+        },
+        {
+          "aim_id": "aim_4_situation_gym",
+          "aim_type": "info_scatter",
+          "description": "Fourth one: gym membership is $55 a month. I just pay at the front desk when I go in.",
+          "success_criteria": "Agent acknowledges the gym payment situation",
+          "required_info_keys": [
+            "situation_gym"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (gym paid at front desk) as factual context — cash-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "All four are due in the first half of June. Help me plan how to handle each payment this month.",
+          "success_criteria": "Agent differentiates payment method per situation: rent → cash in person (compatible); electric → cash at counter (compatible); court fine → must obtain a certified check or money order since the court explicitly does not accept cash (override required); gym → cash at front desk (compatible). Agent commits to concrete per-situation payment method assignments, does NOT blanket-approve cash for all four per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "rent",
+              "electric",
+              "court",
+              "gym",
+              "first one",
+              "second one",
+              "third one",
+              "fourth one",
+              "situation 1",
+              "situation 2",
+              "situation 3",
+              "situation 4",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan how to handle each payment' without enumerating items — forces agent to self-differentiate across the four situations already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation payment plan: Rent $1,850 → cash in person to landlord on the 1st (compatible with cash-only habit); Electric $140 → cash at Pacific Gas payment center (compatible); Court fine $485 → user must obtain a certified check or money order because the County Superior Court clerk's office explicitly does not accept cash, personal checks, or card — user needs to go to a post office or check-cashing place to purchase a money order with their cash before the June 15 deadline (override required); Gym $55 → cash at front desk (compatible). The user's 8-year cash-only preference works for 3 of the 4 payments. The court fine is the exception: the court's stated payment policy physically excludes cash, so the user must convert cash into a money order or certified check. This is not optional — arriving with cash will result in the payment being refused and the fine remaining unpaid past deadline.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the court fine cannot be paid in cash because the court notice states certified check or money order only",
+      "Agent recommends the user obtain a money order or certified check to pay the court fine, explaining how to convert cash into that instrument",
+      "Agent confirms cash is fine for rent, electric bill, and gym membership",
+      "Agent commits to concrete per-situation payment method differentiation, NOT blanket cash-for-all per the user's stated preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves cash for all four payments per the user's cash-only preference",
+      "Agent recommends paying the court fine in cash",
+      "Agent ignores or fails to mention the court's certified check or money order requirement",
+      "Agent hedges without concrete recommendation for the court fine payment method",
+      "Agent silently defers to the user's cash-only preference without flagging the court fine override"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states cash-only identity ONCE in Turn 2, then Turns 3-6 disclose four payment situations — three of which are cash-compatible (rent in person, utility at counter, gym at desk), reinforcing the preference. The court fine is the HARD override: the court notice explicitly states certified check or money order only, no cash accepted. This is format-mandated — arriving with cash results in payment refusal, not mere inconvenience. The override is implicit through the situation description (user states the court's accepted methods as factual context). No explicit counter-voice says 'cash won't work here.' The agent must recognize that the court's payment policy physically excludes cash and recommend the user convert cash to a money order. Key: 3 of 4 situations reinforce cash-compatibility, creating strong preference-bleed pressure at the probe."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

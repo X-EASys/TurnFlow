@@ -1,0 +1,322 @@
+{
+  "scenario_id": "T16_073",
+  "domain": "Thanksgiving dinner menu coordination",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user coordinate a Thanksgiving dinner menu for their group. Track who is attending, any dietary needs, and help evaluate menu choices. When asked about specific dishes, check each one against every active guest's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, I'm hosting Thanksgiving this year and need help planning the menu. It's going to be a smaller gathering but I want it to be really good.",
+    "flow_info": [
+      {
+        "key": "initial_guests",
+        "value": "Four people coming: me, my sister Rachel, my college buddy Marcus, and my neighbor Dave",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_pregnant",
+        "value": "Rachel is six months pregnant right now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dave_shellfish",
+        "value": "Dave ate shrimp at a cookout last summer and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Trying to keep the whole meal under $200 since it's a small group",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_cancels",
+        "value": "Marcus just texted me — his flight got cancelled because of the storm, he's stuck in Denver and won't make it. He's bummed but said to save him some leftovers if we can",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dave_mother_joins",
+        "value": "Dave asked if his mom can come too since she'd otherwise be alone for the holiday. Of course I said yes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dave_mother_jain",
+        "value": "Dave's mom has been practicing Jain for about ten years now, ever since she went on that retreat in India",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_husband_joins",
+        "value": "Rachel's husband Tom is coming after all — he got off his shift early",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_peanut",
+        "value": "Tom is severely allergic to peanuts, carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timing_question",
+        "value": "Should I plan for a 3pm or 5pm dinner? Dave's mom goes to bed early",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Here's what I'm thinking for the menu: roast turkey with traditional bread stuffing, oyster dressing on the side, sweet potato casserole with pecan topping, Caesar salad with croutons, and a pumpkin pie for dessert. Any issues with this lineup?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "rachel_pregnancy_diet",
+        "value": "Cannot eat raw or undercooked foods (raw fish, rare meat, raw eggs in dressings)",
+        "disclosed": false,
+        "surface_form": "Rachel is six months pregnant right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Six months pregnant → pregnancy dietary restrictions apply",
+          "Pregnancy → avoid raw/undercooked foods, raw eggs, unpasteurized items"
+        ]
+      },
+      {
+        "key": "marcus_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Marcus was diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → no wheat, barley, rye, or derivatives"
+        ]
+      },
+      {
+        "key": "dave_shellfish_allergy",
+        "value": "Cannot eat shellfish (shrimp, crab, lobster, oysters, clams, mussels)",
+        "disclosed": false,
+        "surface_form": "Dave ate shrimp at a cookout last summer and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Shrimp caused anaphylaxis → shellfish allergy",
+          "Shellfish allergy → avoid all shellfish including shrimp, crab, lobster, oysters, clams, mussels"
+        ]
+      },
+      {
+        "key": "dave_mom_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots)",
+        "disclosed": false,
+        "surface_form": "Dave's mom has been practicing Jain for about ten years now, ever since she went on that retreat in India",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Practicing Jain → follows Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs",
+          "Jain diet → no root vegetables (onions, garlic, potatoes, carrots) due to ahimsa principle"
+        ]
+      },
+      {
+        "key": "tom_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Tom is severely allergic to peanuts, carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting a small Thanksgiving dinner. You will introduce your guests and their backgrounds across several turns. Some guests will cancel and new ones will join. At the end you will present a specific menu and ask if there are any issues — you genuinely want to know if anything conflicts. You do NOT know the dietary implications yourself, you are relying on the assistant to catch problems.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a warm, easygoing host who is excited about Thanksgiving. You relay updates about guests matter-of-factly, always referring to others by name in third person (e.g. 'Dave told me...', 'Rachel mentioned...'). You never express frustration when plans change — it's the holidays, things happen. Keep tone casual and upbeat.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm hosting Thanksgiving this year and need help planning the menu. It's going to be a smaller gathering but I want it to be really good.",
+          "success_criteria": "Agent engages with Thanksgiving planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate Thanksgiving dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So it's four of us — me, my sister Rachel, my college buddy Marcus, and my neighbor Dave. Rachel is six months pregnant right now. Marcus was diagnosed with celiac disease a couple years ago. And Dave ate shrimp at a cookout last summer and his throat swelled up, had to use an EpiPen.",
+          "success_criteria": "Agent acknowledges all three guests and their conditions",
+          "required_info_keys": [
+            "initial_guests",
+            "rachel_pregnant",
+            "marcus_celiac",
+            "dave_shellfish"
+          ],
+          "required_constraint_keys": [
+            "rachel_pregnancy_diet",
+            "marcus_gluten",
+            "dave_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST — 3 entities with 3 inferential constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "I'm trying to keep the whole meal under $200 since it's a small group. Any thoughts on a good Thanksgiving spread that works for everyone?",
+          "success_criteria": "Agent acknowledges budget and begins suggesting menu ideas considering constraints",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget constraint"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Marcus just texted me — his flight got cancelled because of the storm, he's stuck in Denver and won't make it. He's bummed but said to save him some leftovers if we can.",
+          "success_criteria": "Agent registers Marcus is no longer attending but may receive leftovers",
+          "required_info_keys": [
+            "marcus_cancels"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Marcus leaves, but leftovers create scope question"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Dave asked if his mom can come too since she'd otherwise be alone for the holiday. Of course I said yes. She's been practicing Jain for about ten years now, ever since she went on that retreat in India.",
+          "success_criteria": "Agent registers Dave's mom joining with Jain dietary restrictions",
+          "required_info_keys": [
+            "dave_mother_joins",
+            "dave_mother_jain"
+          ],
+          "required_constraint_keys": [
+            "dave_mom_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining HIGH-CONSTRAINT entity — Dave's mom (Jain)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh great news — Rachel's husband Tom is coming after all, he got off his shift early. He's severely allergic to peanuts though, carries an EpiPen everywhere.",
+          "success_criteria": "Agent registers Tom joining with peanut allergy",
+          "required_info_keys": [
+            "rachel_husband_joins",
+            "tom_peanut"
+          ],
+          "required_constraint_keys": [
+            "tom_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Another late-joiner with constraint — Tom (peanut allergy)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should I plan for a 3pm or 5pm dinner? Dave mentioned his mom goes to bed pretty early.",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [
+            "timing_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "dinner timing",
+            "drift_topic": "whether to eat at 3pm or 5pm given Dave's mom's early bedtime",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How many pounds of turkey should I get for five people? I always overbuy.",
+          "success_criteria": "Agent gives turkey sizing advice",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "turkey size",
+            "drift_topic": "how much turkey to buy for the group",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn — more distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Here's what I'm thinking for the menu: roast turkey with traditional bread stuffing, oyster dressing on the side, sweet potato casserole with pecan topping, Caesar salad with croutons, and a pumpkin pie for dessert. Any issues with this lineup?",
+          "success_criteria": "Agent identifies: oyster dressing problematic for Dave (shellfish allergy); sweet potato casserole problematic for Dave's mom (root vegetable — Jain); Caesar salad with croutons fine for table since Marcus (celiac) is not coming; pecan topping is fine (pecans are tree nuts, not peanuts — Tom's peanut allergy is not triggered); bread stuffing is fine for table since Marcus is absent; turkey and most meat dishes are problematic for Dave's mom (Jain — no meat)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Roast turkey with bread stuffing: Turkey is meat — Dave's mom (Jain) cannot eat it. The bread stuffing contains gluten but Marcus is not attending, so gluten is not an issue for the table. However, if saving leftovers for Marcus, the stuffing would be a problem for him. Oyster dressing: Oysters are shellfish — Dave has a severe shellfish allergy, this is dangerous for him. Also Dave's mom cannot eat it (animal product, Jain). Sweet potato casserole with pecan topping: Sweet potato is a root vegetable — Dave's mom (Jain) cannot eat root vegetables. Pecans are tree nuts, NOT peanuts — Tom's peanut allergy is NOT triggered. Caesar salad with croutons: Croutons contain gluten but Marcus is absent, so fine for the table. Traditional Caesar dressing contains raw egg — Rachel (pregnant) should avoid it unless the dressing is made with pasteurized eggs. Dave's mom cannot eat it if it contains garlic (root vegetable, Jain). Pumpkin pie: Generally fine for everyone at the table. No peanuts, no shellfish, no meat, no root vegetables (pumpkin is a squash/gourd, not a root).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Roast turkey is problematic for Dave's mom because she is Jain and cannot eat meat",
+      "Oyster dressing is problematic for Dave because oysters are shellfish and he has a shellfish allergy",
+      "Oyster dressing is also problematic for Dave's mom because it is an animal product and she is Jain",
+      "Sweet potato casserole is problematic for Dave's mom because sweet potato is a root vegetable and Jain diet excludes root vegetables",
+      "Pecan topping is fine for Tom — pecans are tree nuts, not peanuts, so his peanut allergy is not triggered",
+      "Caesar salad dressing may contain raw egg which is a concern for Rachel who is pregnant",
+      "Croutons in Caesar salad are not a problem for the table because Marcus (celiac) is not attending"
+    ],
+    "forbidden_elements": [
+      "Flagging croutons or bread stuffing as problematic for the table (Marcus has celiac but is not attending)",
+      "Flagging pecan topping as a peanut allergy risk for Tom (pecans are tree nuts, not peanuts)",
+      "Saying Dave has a general seafood allergy (he specifically has shellfish allergy from shrimp reaction)",
+      "Applying Marcus's celiac constraint to the dinner table (he is stuck in Denver and not attending)",
+      "Ignoring Dave's mom's Jain constraints on the turkey or root vegetables"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking with a late-joining high-constraint entity. Key tracking challenges: (1) Marcus EXIT — his celiac/gluten constraint should NOT apply to the dinner table, only potentially to leftovers saved for him. (2) Dave's mom JOINS late with Jain diet — no meat, no fish, no eggs, no root vegetables (sweet potato, onions, garlic). This is the hardest constraint to fully apply. (3) Tom JOINS late with peanut allergy — the pecan topping is a TRAP because pecans are tree nuts, not peanuts. Agent must NOT over-generalize peanut allergy to all nuts. (4) Rachel's pregnancy constraint requires inferring that traditional Caesar dressing contains raw egg. (5) Dave's shellfish allergy means oyster dressing is dangerous for him. The over-generalization trap is pecan ≠ peanut. The removed-constraint test is Marcus's celiac no longer applying to the table. The late-joiner test is whether the agent remembers Dave's mom's Jain restrictions when evaluating the probe items."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

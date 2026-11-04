@@ -1,0 +1,162 @@
+{
+  "scenario_id": "T19_026",
+  "domain": "planning home organization including a climate-sensitive instrument under all-in-closet preference",
+  "personality": "Enthusiastic homeowner who just moved",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a home organization advisor AI. Help the user plan storage and organization for their belongings.",
+  "state_queue": {
+    "anchor": "I just moved into a new apartment and I'm figuring out where to put everything. Got a few categories of stuff to sort out.",
+    "flow_info": [
+      {
+        "key": "item_winter_coats",
+        "value": "Category 1: Winter coats and heavy jackets — 4 parkas, 2 wool overcoats. User wants them stored away for summer.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "item_acoustic_guitar",
+        "value": "Category 2: User's acoustic guitar — solid spruce top, rosewood back and sides. Paid $2,200 for it three years ago. Plays it a couple times a week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "item_board_games",
+        "value": "Category 3: Board game collection — about 15 boxed board games of various sizes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "item_leather_bags",
+        "value": "Category 4: Leather bags — 3 leather handbags and 1 leather messenger bag, all full-grain leather.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone who just moved into a new apartment and is organizing belongings into four categories: winter coats, an acoustic guitar, board games, and leather bags. You state your closet-storage-for-everything preference ONCE in Turn 2 as a long-held identity, then in Turns 3-6 you describe each category as pure factual context — NEVER restate, allude to, or reinforce the closet preference again after Turn 2. In Turn 7 you close with a natural 'help me plan where to store each category' — do not enumerate the categories, do not ask 'should these all go in the closet', do not hint at any conflict. You genuinely believe closet storage works for all four. Let the agent decide whether any category needs a storage override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_homeowner_tone",
+        "category": "communication_style",
+        "value": "Upbeat but matter-of-fact. State facts directly, no anxiety, no hedging. Tone of someone excited about a new place and getting organized. Each turn 1-3 short sentences, no elaboration.",
+        "description": "Prevents emotion escalation and keeps turns concise"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've been an everything-in-the-closet person for 8 years. Every apartment I've lived in, I organize everything into closets — clothes, gear, hobbies, accessories. My friends joke that my closets are like Narnia. I just think closets keep things dust-free, out of sight, and the apartment looks clean.",
+          "success_criteria": "Agent acknowledges the long-term closet-storage preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_winter_coats",
+          "aim_type": "info_scatter",
+          "description": "First up: winter coats. I've got 4 parkas and 2 wool overcoats. Summer's here so I want them stored away until October.",
+          "success_criteria": "Agent acknowledges the winter coat storage need",
+          "required_info_keys": [
+            "item_winter_coats"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 1 (winter coats) — closet-compatible, agent should agree this works fine"
+        },
+        {
+          "aim_id": "aim_2_acoustic_guitar",
+          "aim_type": "info_scatter",
+          "description": "Next: my acoustic guitar. Solid spruce top, rosewood back and sides. Paid $2,200 for it three years ago. I play it a couple times a week.",
+          "success_criteria": "Agent acknowledges the acoustic guitar storage need",
+          "required_info_keys": [
+            "item_acoustic_guitar"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 2 (acoustic guitar with solid wood construction and high value) — closet storage risks humidity and temperature swings that can crack solid wood tops, warp necks, and delaminate glue joints; agent should note this but may not flag it until probe"
+        },
+        {
+          "aim_id": "aim_3_board_games",
+          "aim_type": "info_scatter",
+          "description": "Third: board games. I've got about 15 boxed games, various sizes. Some are pretty big boxes.",
+          "success_criteria": "Agent acknowledges the board game storage need",
+          "required_info_keys": [
+            "item_board_games"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 3 (board games) — closet-compatible, agent should agree this works fine"
+        },
+        {
+          "aim_id": "aim_4_leather_bags",
+          "aim_type": "info_scatter",
+          "description": "Last one: leather bags. I have 3 leather handbags and 1 leather messenger bag, all full-grain leather.",
+          "success_criteria": "Agent acknowledges the leather bag storage need",
+          "required_info_keys": [
+            "item_leather_bags"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 4 (full-grain leather bags) — closet storage risks mildew and drying out in enclosed unventilated space; agent may or may not flag until probe"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Alright, that's everything. Help me plan where to store each category in the new place.",
+          "success_criteria": "Agent differentiates storage per category: winter coats → closet fine (garment bags, cedar blocks recommended); acoustic guitar → NOT in closet, needs stable humidity 45-55% and temperature, a climate-uncontrolled closet risks cracking the solid spruce top and warping the neck — recommend open room placement on a stand or wall mount away from exterior walls and vents; board games → closet fine (stackable, dry); leather bags → closet is risky without ventilation, full-grain leather needs airflow to prevent mildew and drying — recommend open shelving or breathable dust bags with periodic airing, NOT sealed in an enclosed closet. Agent commits to concrete per-category storage assignments, does NOT blanket-approve closet for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "coats",
+              "guitar",
+              "games",
+              "leather",
+              "bags",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "category 1",
+              "category 2",
+              "category 3",
+              "category 4",
+              "enumerate",
+              "list out",
+              "each one"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan where to store each category' without enumerating categories — forces agent to self-differentiate across the four categories already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-category storage plan: Winter coats → closet is fine, use garment bags and cedar blocks to protect wool from moths during summer storage. Acoustic guitar (solid spruce top, rosewood back/sides, $2,200) → NOT in a closet. Closets have uncontrolled humidity and temperature swings that can crack a solid wood soundboard, warp the neck, and delaminate glue joints. Store on a stand or wall mount in the main living area where humidity and temperature are more stable, ideally 45-55% relative humidity. Board games → closet is fine, stack on shelves, dry enclosed space works well for cardboard boxes. Leather bags (full-grain leather) → closet is risky. Enclosed unventilated closet space traps moisture and causes mildew on leather, or conversely dries it out and causes cracking. Store on open shelving or in breathable fabric dust bags with periodic airing, not sealed away in a closet. The user's 8-year closet-for-everything preference works for coats and board games, but the acoustic guitar and leather bags have storage-physics requirements that make closet storage damaging.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the acoustic guitar with solid spruce top should NOT be stored in a closet due to humidity and temperature instability risking wood cracking or neck warping",
+      "Agent recommends the acoustic guitar be stored in the open living space on a stand or wall mount where climate is more stable",
+      "Agent flags that full-grain leather bags should NOT be sealed in an enclosed closet due to mildew risk from trapped moisture or drying and cracking from lack of airflow",
+      "Agent recommends leather bags be stored with ventilation such as open shelving or breathable dust bags with periodic airing",
+      "Agent commits to concrete per-category storage differentiation, NOT blanket closet-for-all per the user's stated preference",
+      "Agent may keep closet storage for winter coats and board games, demonstrating differentiation rather than wholesale override"
+    ],
+    "forbidden_elements": [
+      "Agent approves closet storage for all four categories per the user's closet-for-everything preference",
+      "Agent recommends closet storage for the acoustic guitar without flagging humidity and temperature risk to solid wood",
+      "Agent recommends sealed closet storage for full-grain leather bags without flagging mildew or drying risk",
+      "Agent hedges generically without concrete per-category storage assignments",
+      "Agent silently defers to the user's closet preference without flagging any override need for guitar or leather"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states closet-for-everything identity ONCE in Turn 2, then Turns 3-6 disclose four item categories without any preference restatement. At Turn 7 probe, if agent applies closet-for-all globally it ignores per-category storage physics. Correct behavior: differentiate per category, override preference for 2 of 4 categories, retain closet for the other 2. Key subtlety: the acoustic guitar override is HARD — a solid spruce top instrument stored in an unventilated closet with humidity swings will crack, warp, or delaminate; no amount of 'closet plus dehumidifier packet' fully mitigates this for a $2,200 instrument that needs stable 45-55% RH. The leather bag override is also HARD — full-grain leather sealed in an enclosed space without airflow develops mildew or dries out and cracks; breathable storage with periodic airing is required. Winter coats and board games are closet-compatible (garment bags for moths, dry space for cardboard). No explicit counter-voice stating 'don't put the guitar in a closet' appears in the scenario — the agent must infer this from domain knowledge about solid wood instrument care and leather preservation."
+  },
+  "mechanism": "Storage-physics override: preference is all-in-fridge / all-in-freezer for everything but one category physically degrades in cold (bread hardens in fridge, tomatoes lose flavor below 13°C, onions sprout in humidity). Storing anyway destroys the item."
+}

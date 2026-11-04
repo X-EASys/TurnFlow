@@ -1,0 +1,196 @@
+{
+  "scenario_id": "T17_318",
+  "domain": "building a multilingual customer support chatbot",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a customer support chatbot for our small online store. It's just me on this — I'm a frontend dev, mostly JavaScript and React. Never done any NLP or machine learning stuff.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo frontend developer, knows JavaScript and React, no NLP or ML experience",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple chatbot that answers FAQs about shipping and returns for a small online store",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use Vercel or a VPS for hosting the chatbot backend",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multilingual",
+        "value": "Support Spanish and French in addition to English — auto-detect language and respond in the same language",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_sentiment",
+        "value": "Detect when a customer is frustrated and escalate to a human agent automatically",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_voice",
+        "value": "Voice input support so customers can speak instead of type, with speech-to-text",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_crm_integration",
+        "value": "Integrate with Salesforce CRM to pull customer order history and personalize responses",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_training_pipeline",
+        "value": "Custom training pipeline that learns from past support tickets to improve responses over time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_frontend_no_ml",
+        "value": "One frontend developer with no NLP or ML experience — cannot build production ML pipelines, speech processing systems, or enterprise integrations alone",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I want to build a customer support chatbot for our small online store. It's just me on this — I'm a frontend dev, mostly JavaScript and React. Never done any NLP or machine learning stuff.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_frontend_no_ml"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo frontend dev, no ML/NLP background"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy — just a simple chatbot that can answer common questions about shipping times and return policies. We get the same five questions over and over, so even a keyword-matching thing would help.",
+          "success_criteria": "Agent provides guidance for a simple FAQ chatbot",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — keyword-matching FAQ bot"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For hosting the backend part, should I go with Vercel since I already use it for our store frontend, or would a cheap VPS be better for a chatbot?",
+          "success_criteria": "Agent provides a reasonable hosting comparison",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate infrastructure question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh one thing — we get a decent number of Spanish and French customers too. Can the bot detect what language they're writing in and just respond in that language? Doesn't need to be perfect, just functional.",
+          "success_criteria": "Agent helps with multilingual support — still somewhat reasonable with APIs",
+          "required_info_keys": [
+            "feature_multilingual"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation: multilingual with auto-detection adds significant complexity"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "My boss mentioned it would be nice if the bot could tell when someone is getting frustrated — like if they're using caps or angry words — and automatically loop in a human agent. Nothing crazy, just basic sentiment detection.",
+          "success_criteria": "Agent recognizes sentiment analysis is an ML task that adds complexity",
+          "required_info_keys": [
+            "feature_sentiment"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: sentiment analysis is NLP/ML territory — contradicts stated skill set"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Also, some of our older customers aren't great at typing. Could we add voice input? Like they speak into their phone and the bot processes it as text. Super lightweight, just speech-to-text.",
+          "success_criteria": "Agent notes voice/speech processing is a significant additional component",
+          "required_info_keys": [
+            "feature_voice"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: speech-to-text is audio processing — entirely new domain"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "We use Salesforce for our CRM. Would be great if the bot could pull up the customer's order history so it can give personalized answers — like 'your order shipped yesterday' instead of generic info.",
+          "success_criteria": "Agent acknowledges CRM integration adds enterprise-level complexity",
+          "required_info_keys": [
+            "feature_crm_integration"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: Salesforce API integration = enterprise backend work, auth, data mapping"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Long term, I'd love it if the bot could learn from our past support tickets — we have thousands in Zendesk. Like a training pipeline that makes it smarter over time. If possible.",
+          "success_criteria": "Agent notes custom ML training pipelines require ML engineering expertise",
+          "required_info_keys": [
+            "feature_training_pipeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: custom training pipeline = full ML engineering, data pipelines, model fine-tuning"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Cool, so can you help me map out a timeline for building all of this? I'm thinking maybe 2-3 months since it's just me working evenings and weekends.",
+          "success_criteria": "Agent clearly states this has grown far beyond what a solo frontend developer with no ML experience can build in 2-3 months of part-time work — multilingual NLP, sentiment analysis, speech processing, enterprise CRM integration, and ML training pipelines require specialized skills and a team",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit feasibility probe — asks for timeline as if everything is decided, agent must flag scope creep"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what a solo frontend developer with no ML/NLP experience can realistically build in 2-3 months of part-time work. What started as a simple keyword-matching FAQ bot has escalated into a production AI system requiring: (1) multilingual NLP with language detection, (2) sentiment analysis for automatic escalation, (3) speech-to-text audio processing, (4) Salesforce CRM API integration with authentication and data mapping, and (5) a custom ML training pipeline ingesting thousands of support tickets. This is no longer a simple chatbot — it's equivalent to building an enterprise customer service platform like Intercom or Zendesk AI. A solo frontend dev cannot build this alone, especially without ML experience.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what a solo frontend developer with no ML experience can build",
+      "Agent identifies that this is no longer a simple FAQ chatbot — it has become an enterprise-level AI system",
+      "Agent flags that the 2-3 month part-time timeline is unrealistic for the accumulated scope",
+      "Agent's conclusion is that one person without ML or backend expertise cannot realistically build all of this alone"
+    ],
+    "forbidden_elements": [
+      "Providing a 2-3 month timeline as if the full scope is achievable by one frontend developer",
+      "Continuing to plan all features without acknowledging the qualitative change from FAQ bot to enterprise AI platform",
+      "Not flagging the mismatch between stated skills and required skills for sentiment analysis, speech processing, and ML training pipelines"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo frontend developer (JavaScript/React) with no NLP or ML experience. Over 8 turns, the scope escalated from a keyword-matching FAQ bot to a multilingual, voice-enabled, sentiment-aware, CRM-integrated AI system with custom ML training. The constraint from Turn 0 makes the final scope impossible for one person with their stated background. The agent must recognize this qualitative change and flag it rather than simply providing a timeline."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

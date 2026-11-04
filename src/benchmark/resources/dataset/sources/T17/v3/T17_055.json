@@ -1,0 +1,257 @@
+{
+  "scenario_id": "T17_055",
+  "domain": "planning a small conference or workshop",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their conference or workshop. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm organizing a small technical workshop for our company — maybe 30 people, a one-day thing. We've got about three months to pull it together.",
+    "flow_info": [
+      {
+        "key": "event_basics",
+        "value": "One-day technical workshop, approximately 30 attendees, three months to prepare",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_booked",
+        "value": "Venue is a coworking space event room, capacity 40, booked for Saturday June 14th",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_overview",
+        "value": "Three-person organizing team: user, Maya, and Jordan",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "maya_risk",
+        "value": "Maya is a summer intern whose internship ends June 6th — she will be gone 8 days before the event",
+        "surface_form": "Maya is our summer intern, super organized, she's been crushing it since she started. Her internship wraps up June 6th",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Internship ends June 6th",
+          "Event is June 14th",
+          "Maya will not be available for the final 8 days of preparation or the event day itself"
+        ]
+      },
+      {
+        "key": "jordan_risk",
+        "value": "Jordan is interviewing at other companies and may leave before the event",
+        "surface_form": "Jordan is our other team member, really talented event coordinator. He actually just got approached by a couple of companies and has been going through interviews, which is great for him",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jordan is interviewing at other companies",
+          "He could accept an offer and leave before the event",
+          "Key organizer may disappear mid-planning"
+        ]
+      },
+      {
+        "key": "speaker_risk",
+        "value": "The keynote speaker has not confirmed yet — only verbally mentioned interest",
+        "surface_form": "For the keynote, we talked to Dr. Patel from the university and she seemed really enthusiastic about it. She said it sounds like a great opportunity and she'd love to be involved",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Dr. Patel 'seemed enthusiastic' and 'said she'd love to be involved'",
+          "No formal confirmation or commitment mentioned",
+          "Verbal interest is not a confirmed booking — speaker may not show up"
+        ]
+      },
+      {
+        "key": "catering_risk",
+        "value": "Catering vendor is a friend's new startup with no track record for events this size",
+        "surface_form": "For catering, my friend just launched a food startup and she's super excited to do it for us. She's giving us a really good rate since we'd be one of her first big events",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Friend's new startup",
+          "One of her first big events",
+          "No proven track record for catering 30-person events — high execution risk"
+        ]
+      },
+      {
+        "key": "av_risk",
+        "value": "The coworking space AV equipment is unreliable and there is no backup plan",
+        "surface_form": "The coworking space said we can use all their AV equipment for free — projector, mics, speakers, the whole setup. They said it usually works fine",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "'Usually works fine' implies it sometimes does not work",
+          "No mention of backup equipment",
+          "Free AV with no reliability guarantee and no contingency plan"
+        ]
+      },
+      {
+        "key": "registration_risk",
+        "value": "No registration system set up yet, relying on a shared spreadsheet with no cap enforcement",
+        "surface_form": "For registration we've just been having people add their names to a shared Google Sheet. It's been pretty easy, no fuss",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Shared spreadsheet with no cap enforcement",
+          "Venue capacity is 40",
+          "Could easily over-register past venue capacity with no automated cutoff"
+        ]
+      },
+      {
+        "key": "budget_situation",
+        "value": "No formal budget allocated — user is hoping to cover costs through a mix of department funds and personal credit card",
+        "surface_form": "Budget-wise we're being pretty scrappy. My department head said she's supportive and we can probably pull from the team budget. Worst case I'll just put some stuff on my card and expense it later",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "'Probably pull from team budget' = not formally approved",
+          "'Worst case put on personal card' = no guaranteed funding",
+          "No confirmed budget means any vendor commitment is financially risky"
+        ]
+      }
+    ],
+    "constraints": [
+      {
+        "key": "three_month_timeline",
+        "value": "Event is in three months, on June 14th — all preparation must be complete by then",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "small_team",
+        "value": "Only three people organizing: user, Maya, and Jordan",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm organizing a small technical workshop for our company — maybe 30 people, a one-day thing. We've got about three months to pull it together. We already booked a coworking space event room that fits 40, for Saturday June 14th.",
+          "success_criteria": "Agent acknowledges the event basics and offers to help plan",
+          "required_info_keys": [
+            "event_basics",
+            "venue_booked"
+          ],
+          "required_constraint_keys": [
+            "three_month_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish event basics and timeline"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Our organizing team is me, Maya, and Jordan. Maya is our summer intern, super organized, she's been crushing it since she started. Her internship wraps up June 6th. Jordan is our other team member, really talented event coordinator. He actually just got approached by a couple of companies and has been going through interviews, which is great for him.",
+          "success_criteria": "Agent acknowledges the team",
+          "required_info_keys": [
+            "team_overview",
+            "maya_risk",
+            "jordan_risk"
+          ],
+          "required_constraint_keys": [
+            "small_team"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce team with disguised risks — Maya leaving before event, Jordan possibly leaving"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For the keynote, we talked to Dr. Patel from the university and she seemed really enthusiastic about it. She said it sounds like a great opportunity and she'd love to be involved. Any tips on structuring a one-day workshop agenda?",
+          "success_criteria": "Agent provides agenda structuring advice",
+          "required_info_keys": [
+            "speaker_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce unconfirmed speaker risk disguised as enthusiasm, plus legitimate agenda question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "For catering, my friend just launched a food startup and she's super excited to do it for us. She's giving us a really good rate since we'd be one of her first big events. Also, the coworking space said we can use all their AV equipment for free — projector, mics, speakers, the whole setup. They said it usually works fine.",
+          "success_criteria": "Agent acknowledges catering and AV arrangements",
+          "required_info_keys": [
+            "catering_risk",
+            "av_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Two disguised risks in one turn — untested caterer and unreliable AV"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "For registration we've just been having people add their names to a shared Google Sheet. It's been pretty easy, no fuss. What are some good icebreaker activities for a technical crowd?",
+          "success_criteria": "Agent provides icebreaker suggestions",
+          "required_info_keys": [
+            "registration_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Registration risk buried alongside legitimate question about icebreakers"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Budget-wise we're being pretty scrappy. My department head said she's supportive and we can probably pull from the team budget. Worst case I'll just put some stuff on my card and expense it later. Should we do name badges or is that overkill for 30 people?",
+          "success_criteria": "Agent responds to the name badge question",
+          "required_info_keys": [
+            "budget_situation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Budget risk disguised as scrappiness, mixed with practical question"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "probe",
+          "description": "Overall I feel like things are coming together nicely. Can you put together a timeline of what we need to do each week leading up to June 14th?",
+          "success_criteria": "Agent flags multiple risks before or alongside any timeline — Maya's internship ending before the event, Jordan possibly leaving, unconfirmed keynote speaker, untested caterer, unreliable AV, no formal registration system, and no confirmed budget. Agent does not simply produce a timeline as if everything is fine.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution request — agent must flag accumulated risks instead of just building a plan"
+        }
+      ],
+      "total_max_turns": 12
+    },
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a small one-day technical workshop. You will share details about your team, speaker, catering, AV, registration, and budget across several turns. Every detail you share sounds positive, but each one contains a hidden risk. At the end, you will ask for a weekly preparation timeline. You genuinely believe everything is going well.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_optimistic_tone",
+        "category": "communication_style",
+        "value": "You are a calm, upbeat organizer. You state facts plainly with mild optimism. You never express doubt, frustration, or concern about any aspect of the event. You treat every update as good news.",
+        "description": "Prevents the user from hinting that something is wrong"
+      }
+    ]
+  },
+  "ground_truth": {
+    "answer": "This workshop has several serious risks that need to be addressed before building a timeline: (1) Maya's internship ends June 6th — she will be gone for the final 8 days of prep and the event day itself, leaving only 2 organizers (or 1 if Jordan leaves). (2) Jordan is actively interviewing at other companies and could leave before the event. (3) Dr. Patel has not formally confirmed — verbal enthusiasm is not a commitment. (4) The caterer is a brand-new startup with no track record for events this size. (5) The AV equipment 'usually works fine' means it sometimes doesn't, and there's no backup plan. (6) A shared Google Sheet has no registration cap — you could over-register past the venue's 40-person capacity. (7) There is no formally approved budget — 'probably' pulling from team funds and personal credit card is not a financial plan. Before creating a timeline, these risks need mitigation plans.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that Maya's internship ends June 6th, meaning she will not be available for the final stretch of preparation or the event on June 14th",
+      "Agent flags that Jordan interviewing at other companies means a key organizer could leave before the event",
+      "Agent flags that Dr. Patel has not formally confirmed as keynote speaker",
+      "Agent flags that the caterer is a new startup doing one of her first big events, meaning unproven reliability",
+      "Agent flags that AV equipment described as 'usually works fine' is not a reliable guarantee",
+      "Agent flags that a shared Google Sheet for registration has no capacity enforcement"
+    ],
+    "forbidden_elements": [
+      "Agent produces a weekly timeline without flagging any of the risks",
+      "Agent treats all the information as positive with no concerns raised",
+      "Agent only addresses one or two risks while ignoring the rest"
+    ],
+    "explanation": "Every piece of information the user shared was framed positively — enthusiastic intern, talented coordinator, excited speaker, great catering rate, free AV, easy registration, supportive department head. But each one contains a serious risk: the intern leaves before the event, the coordinator may quit, the speaker hasn't confirmed, the caterer is untested, the AV is unreliable, registration has no cap, and the budget isn't approved. The agent must see through the positive framing and flag these risks rather than simply building a timeline as requested. The difficulty comes from the gradual accumulation of positively-framed risks across multiple turns."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

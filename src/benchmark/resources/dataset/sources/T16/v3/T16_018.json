@@ -1,0 +1,304 @@
+{
+  "scenario_id": "T16_018",
+  "domain": "team dinner at an Indian restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a team dinner this Saturday at an Indian restaurant. Got any tips on what to order for a group?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us: me, Priya, Sam, Derek, and Noor",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnancy",
+        "value": "Priya is 7 months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_allergy_event",
+        "value": "Sam ate peanut satay at a Thai place last year and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 30-35 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_exits",
+        "value": "Derek just told me he has to leave by 7:30 to catch a flight, but he asked if we could pack him some food to take to the airport",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noor_healed",
+        "value": "Noor told me her doctor cleared her — the kidney thing is fully resolved, no more low-sodium diet",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noor_husband_joins",
+        "value": "Noor wants to bring her husband Arjun along",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Dishes to check: chicken tikka masala, paneer butter masala, lamb rogan josh, garlic naan, shrimp biryani, gulab jamun",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_pregnancy_diet",
+        "value": "Cannot eat raw or undercooked food, should avoid high-mercury fish",
+        "disclosed": false,
+        "surface_form": "Priya is 7 months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "7 months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw/undercooked food, high-mercury fish"
+        ]
+      },
+      {
+        "key": "sam_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Sam ate peanut satay at a Thai place last year and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Throat swelling + EpiPen after peanut satay → severe peanut allergy",
+          "Peanut allergy → must avoid peanuts and peanut-derived ingredients"
+        ]
+      },
+      {
+        "key": "derek_celiac_diet",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products made from them",
+        "disclosed": false,
+        "surface_form": "Derek was diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "No wheat → naan, roti, samosa, most breads are off-limits"
+        ]
+      },
+      {
+        "key": "noor_low_sodium",
+        "value": "Must follow a low-sodium diet",
+        "disclosed": false,
+        "surface_form": "Noor has been dealing with some kidney issues, her doctor put her on a pretty strict diet",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Kidney issues → renal dietary restrictions",
+          "Renal diet → low sodium intake"
+        ]
+      },
+      {
+        "key": "arjun_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onion, garlic, potatoes)",
+        "disclosed": false,
+        "surface_form": "Arjun's family is Jain, he's pretty observant about it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs, no root vegetables (onion, garlic, potatoes)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at an Indian restaurant for Saturday. You will introduce 5 people with various dietary issues in a burst, then updates will come in: Derek leaves early but wants takeaway, Noor's kidney restriction gets lifted, Noor's husband Arjun joins (he's Jain). At the end you will share a list of 6 dishes and ask if there are any issues. You must NEVER hint at what the problems are — just list the dishes and ask.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative team organizer. You always refer to your colleagues by name in third person (e.g. 'Priya told me...', 'Sam mentioned...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a team dinner this Saturday at an Indian restaurant. Got any tips on what to order for a group?",
+          "success_criteria": "Agent engages with Indian restaurant dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "There's five of us — me, Priya, Sam, Derek, and Noor. Priya is 7 months pregnant. Sam ate peanut satay at a Thai place last year and his throat swelled up, had to use an EpiPen. Derek was diagnosed with celiac disease a couple years ago. And Noor has been dealing with some kidney issues, her doctor put her on a pretty strict diet",
+          "success_criteria": "Agent acknowledges all four colleagues and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "priya_pregnancy",
+            "sam_allergy_event",
+            "derek_celiac"
+          ],
+          "required_constraint_keys": [
+            "priya_pregnancy_diet",
+            "sam_peanut_allergy",
+            "derek_celiac_diet",
+            "noor_low_sodium"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget-wise, we're thinking around 30-35 dollars per person. We don't want to go overboard",
+          "success_criteria": "Agent registers the budget constraint",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Derek just told me he has to leave by 7:30 to catch a flight, but he asked if we could pack him some food to take to the airport",
+          "success_criteria": "Agent notes Derek is leaving early but needs takeaway packed, so his celiac constraint still applies to his packed food",
+          "required_info_keys": [
+            "derek_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Derek leaves but wants takeaway, celiac constraint persists for his packed food"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "How many dishes should we order for a group of this size? Like is 5-6 dishes enough or should we get more?",
+          "success_criteria": "Agent responds with ordering advice for group size",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "group ordering",
+            "drift_topic": "how many dishes to order for the group size",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance before next constraint update"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Good news — Noor told me her doctor cleared her, the kidney thing is fully resolved now, no more strict diet. Oh and she wants to bring her husband Arjun along too",
+          "success_criteria": "Agent removes Noor's low-sodium restriction and registers Arjun as a new diner",
+          "required_info_keys": [
+            "noor_healed",
+            "noor_husband_joins"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Noor healed) + entity JOIN (Arjun)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Arjun's family is Jain, he's pretty observant about it",
+          "success_criteria": "Agent registers Arjun's Jain dietary restrictions",
+          "required_info_keys": [],
+          "required_constraint_keys": [
+            "arjun_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Arjun is Jain (no meat, no fish, no eggs, no root vegetables including onion and garlic)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we make a reservation or do they usually take walk-ins on Saturdays?",
+          "success_criteria": "Agent responds about reservation logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "whether to make a reservation for Saturday",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I looked at the menu online. How about we get: chicken tikka masala, paneer butter masala, lamb rogan josh, garlic naan, shrimp biryani, and gulab jamun for dessert. Any issues?",
+          "success_criteria": "Agent checks each of the 6 dishes against all active constraints and identifies problems per item",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Chicken tikka masala: problematic for Arjun (Jain — no meat). Paneer butter masala: problematic for Arjun (typically contains garlic and onion — Jain diet excludes root vegetables including garlic and onion). Lamb rogan josh: problematic for Arjun (Jain — no meat), and contains garlic/onion. Garlic naan: problematic for Arjun (contains garlic — Jain restriction on root vegetables; also contains wheat/gluten) and must not be packed for Derek's takeaway (celiac — naan is wheat-based). Shrimp biryani: problematic for Arjun (Jain — no meat/fish/seafood). Gulab jamun: fine for everyone currently dining in. Note: Noor has no dietary restrictions anymore (kidney issue resolved). Derek is leaving early but wants takeaway — his celiac constraint applies only to what gets packed for him.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Chicken tikka masala is problematic for Arjun because he is Jain and cannot eat meat",
+      "Paneer butter masala is problematic for Arjun because it typically contains garlic and onion, which are root vegetables excluded under Jain dietary practice",
+      "Lamb rogan josh is problematic for Arjun because he is Jain and cannot eat meat",
+      "Garlic naan is problematic for Arjun because garlic is a root vegetable excluded under Jain dietary practice",
+      "Garlic naan must not be packed for Derek's takeaway because naan is wheat-based and Derek has celiac disease — cannot eat gluten",
+      "Shrimp biryani is problematic for Arjun because Jain diet excludes seafood and fish",
+      "Gulab jamun is fine for everyone currently attending",
+      "Noor has no dietary restrictions anymore — agent treats her as able to eat anything"
+    ],
+    "forbidden_elements": [
+      "Flagging any dish as problematic for Noor due to sodium or kidney diet (her restriction was removed)",
+      "Saying Derek cannot eat at the restaurant at all (he is leaving early but wants takeaway packed)",
+      "Flagging garlic naan as problematic for Derek at the table (he is leaving early; the gluten issue only matters for his packed takeaway)",
+      "Saying Sam has a general nut allergy or tree nut allergy (he specifically has a peanut allergy)",
+      "Flagging dishes as unsafe for Sam without evidence they contain peanuts (Indian cuisine does not typically use peanuts in tikka masala, rogan josh, naan, biryani, or gulab jamun)",
+      "Saying Arjun cannot eat dairy or paneer (Jain diet allows dairy; the issue with paneer butter masala is the garlic and onion, not the paneer itself)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns at an Indian restaurant. The agent must track: (1) Priya is 7 months pregnant → avoid raw/undercooked food and high-mercury fish (none of the probe dishes trigger this — all are cooked, no high-mercury fish), (2) Sam has a severe peanut allergy inferred from the EpiPen incident (peanuts are not a standard ingredient in the probe dishes, so Sam should be fine), (3) Derek has celiac disease → no gluten/wheat (he leaves early but wants takeaway — his constraint applies to packed food only, specifically garlic naan cannot be packed for him), (4) Noor's kidney/low-sodium restriction is REMOVED mid-conversation (doctor cleared her), (5) Arjun joins late as Noor's husband and is Jain → no meat, no fish, no eggs, no root vegetables including onion and garlic (this is the highest-constraint entity, affecting chicken tikka masala, paneer butter masala, lamb rogan josh, garlic naan, and shrimp biryani). The key traps: paneer butter masala LOOKS vegetarian-friendly but contains garlic and onion (Jain restriction on root vegetables); garlic naan has a scope distinction (problematic for Arjun at the table AND cannot be packed for Derek's takeaway due to gluten); gulab jamun is the clearly-fine item; Sam's peanut allergy should NOT be over-generalized to flag dishes without peanuts; Noor's removed constraint should not ghost into the evaluation."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

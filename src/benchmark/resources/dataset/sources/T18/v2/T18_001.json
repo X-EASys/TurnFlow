@@ -1,0 +1,254 @@
+{
+  "scenario_id": "T18_001",
+  "domain": "choosing between 3 summer camps for kids",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a summer camp for their child and prepare for enrollment. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "My kid is starting first grade in the fall and I want to sign him up for a summer camp. I've narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_camps",
+        "value": "Choosing between 3 summer camps: Camp Starlight, Camp Riverside, Camp Horizon",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "camp_details",
+        "value": "Camp Starlight: weekday full-day Mon-Fri 9am-5pm, 980 yuan per week, swimming plus robotics plus field trips. Camp Riverside: weekday afternoon Mon-Fri 1pm-5pm, 650 yuan per week, art plus nature exploration. Camp Horizon: weekday morning Mon-Fri 8am-12pm, 520 yuan per week, science experiments plus outdoor sports.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tutoring_cost",
+        "value": "The kid's English tutoring costs 1050 yuan per month",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "piano_schedule",
+        "value": "The kid has piano lessons on Monday, Wednesday, and Friday afternoons from 2pm to 4pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "grandma_availability",
+        "value": "The user's mother-in-law handles drop-off and pick-up. She does tai chi every afternoon starting at 1pm so she can only manage morning schedules.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum weekly camp budget is 700 yuan, derived from two-thirds of the monthly English tutoring fee of 1050 yuan",
+        "surface_form": "My kid's English tutoring runs 1050 a month. My wife and I agreed the camp fee shouldn't be more than two-thirds of that",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "English tutoring costs 1050 yuan per month",
+          "Two-thirds of 1050 = 700 yuan",
+          "Weekly camp budget cap is 700 yuan"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend camps that run during Monday, Wednesday, Friday 2pm-4pm because of piano lessons",
+        "surface_form": "He also has piano on Monday, Wednesday, and Friday afternoons, 2 to 4",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Piano lessons Mon/Wed/Fri 2pm-4pm",
+          "Camp Riverside runs Mon-Fri 1pm-5pm",
+          "Riverside overlaps with piano on 3 out of 5 days",
+          "Schedule conflict eliminates Camp Riverside"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "caregiver_constraint",
+        "value": "Mother-in-law can only do morning drop-off and pick-up because her afternoon tai chi starts at 1pm",
+        "surface_form": "My mother-in-law is handling drop-off and pick-up this summer. She does tai chi every afternoon starting at 1 though",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Mother-in-law does tai chi every afternoon starting at 1pm",
+          "She cannot handle afternoon drop-off or pick-up",
+          "Camp Riverside runs 1pm-5pm requiring afternoon drop-off",
+          "Caregiver unavailability eliminates Camp Riverside"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent choosing between 3 summer camps (Starlight, Riverside, Horizon) for your son who is about to start first grade. You will share camp details, your budget reasoning, your son's piano schedule, and your mother-in-law's availability across several turns. Your colleagues and neighbors will praise Camp Starlight and Camp Riverside. At the very end you will say you have made your decision and ask what to prepare for registration. You must NEVER name which camp you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing parent. You state facts plainly without strong emotion. You never express frustration or impatience, even if the assistant asks clarifying questions. You treat each piece of information as normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "My kid is going into first grade this fall and I want to get him into a summer camp. I've been looking at three: Camp Starlight, Camp Riverside, and Camp Horizon",
+          "success_criteria": "Agent engages with the summer camp selection topic",
+          "required_info_keys": [
+            "three_camps"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Camp Starlight is full-day weekdays, Monday to Friday 9 to 5, 980 a week, they do swimming, robotics, and field trips. Camp Riverside is afternoons only, Monday to Friday 1 to 5, 650 a week, art and nature stuff. Camp Horizon is mornings, Monday to Friday 8 to 12, 520 a week, science experiments and outdoor sports",
+          "success_criteria": "Agent processes all 3 camps with schedules, prices, and activities",
+          "required_info_keys": [
+            "camp_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 camps with schedule, price, and activity details in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just signed her daughter up for Camp Starlight last week. She said the robotics program is really well designed, the kids build actual working robots by the end",
+          "success_criteria": "Agent responds to the positive Camp Starlight review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "signed her daughter up for Camp Starlight, robotics program is really well designed, kids build working robots",
+            "target_option": "Camp Starlight"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Camp Starlight"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My kid's English tutoring runs 1050 a month. My wife and I agreed the camp fee shouldn't be more than two-thirds of that",
+          "success_criteria": "Agent registers the budget constraint and ideally computes 1050 times two-thirds equals 700 yuan per week cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via inferential surface form. Eliminates Camp Starlight at 980"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned Camp Starlight takes the kids on a field trip to the science museum every other week. Her daughter loved it",
+          "success_criteria": "Agent responds to the Camp Starlight field trip information",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Camp Starlight takes kids to science museum every other week, her daughter loved it",
+            "target_option": "Camp Starlight"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive information about Camp Starlight which is already eliminated by budget"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "He also has piano on Monday, Wednesday, and Friday afternoons, 2 to 4",
+          "success_criteria": "Agent recognizes the piano schedule creates a conflict with Camp Riverside which runs 1pm to 5pm on weekdays",
+          "required_info_keys": [
+            "piano_schedule"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint. Eliminates Camp Riverside due to overlap with piano lessons"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "My mother-in-law is handling drop-off and pick-up this summer. She does tai chi every afternoon starting at 1 though",
+          "success_criteria": "Agent recognizes that afternoon camps are not feasible because the caregiver is unavailable after 1pm",
+          "required_info_keys": [
+            "grandma_availability"
+          ],
+          "required_constraint_keys": [
+            "caregiver_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver caregiver constraint. Provides additional elimination of Camp Riverside on a separate axis"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor's son went to Camp Riverside last summer. She said the art teacher there is incredible, the kids had a gallery show at the end",
+          "success_criteria": "Agent responds to the positive Camp Riverside review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "her son went to Camp Riverside last summer, art teacher is incredible, kids had a gallery show",
+            "target_option": "Camp Riverside"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Camp Riverside which is already eliminated by schedule and caregiver constraints"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "She also said Camp Riverside does nature walks along the river every Friday, the kids collect leaves and insects for their science journals",
+          "success_criteria": "Agent responds to the Camp Riverside nature walk information",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Camp Riverside does nature walks along the river every Friday, kids collect specimens for science journals",
+            "target_option": "Camp Riverside"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive information about Camp Riverside to strengthen recency pull"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright I have made up my mind. I need to register him this week. Which camp should I go with?",
+          "success_criteria": "Agent identifies Camp Horizon as the only camp that fits within the 700 yuan weekly budget and does not conflict with piano lessons or the mother-in-law's afternoon tai chi schedule",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to Camp Horizon based on constraint elimination"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should register for Camp Horizon (weekday morning 8am-12pm, 520 yuan per week). Camp Starlight (980 yuan per week) exceeds the 700 yuan weekly budget derived from two-thirds of the 1050 yuan monthly tutoring fee. Camp Riverside (weekday afternoon 1pm-5pm) conflicts with piano lessons on Monday, Wednesday, and Friday from 2pm to 4pm, and the mother-in-law who handles drop-off and pick-up is unavailable afternoons due to tai chi starting at 1pm. Only Camp Horizon satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to Camp Horizon as the camp to register for",
+      "Agent shows that Camp Starlight at 980 yuan per week exceeds the budget cap derived from two-thirds of 1050 yuan per month equaling 700 yuan per week",
+      "Agent shows that Camp Riverside afternoon schedule from 1pm to 5pm conflicts with piano lessons on Monday, Wednesday, and Friday from 2pm to 4pm",
+      "Agent shows that the mother-in-law cannot handle afternoon drop-off and pick-up because her tai chi starts at 1pm, which independently rules out Camp Riverside"
+    ],
+    "forbidden_elements": [
+      "Recommending Camp Starlight which at 980 yuan per week exceeds the 700 yuan weekly budget cap",
+      "Recommending Camp Riverside which conflicts with piano lessons and the mother-in-law's afternoon tai chi schedule",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the piano schedule conflict when making a recommendation",
+      "Asking the user which camp they decided on instead of determining it from the constraints"
+    ],
+    "explanation": "Budget constraint: two-thirds of 1050 yuan tutoring equals 700 yuan per week cap. Camp Starlight at 980 exceeds 700 (1.4x cap, in the boundary band). Camp Riverside at 650 and Camp Horizon at 520 both pass budget. Schedule constraint: piano Mon/Wed/Fri 2pm-4pm overlaps with Camp Riverside Mon-Fri 1pm-5pm. Caregiver constraint: mother-in-law does tai chi from 1pm so cannot do afternoon pick-up, independently eliminating Camp Riverside. Only Camp Horizon (morning 8am-12pm, 520 yuan per week) survives all three constraints. Despite 4 drift turns praising Camp Starlight and Camp Riverside, the agent must respect the hard constraints and commit to Camp Horizon."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

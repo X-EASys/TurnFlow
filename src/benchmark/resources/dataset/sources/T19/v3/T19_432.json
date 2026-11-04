@@ -1,0 +1,155 @@
+{
+  "scenario_id": "T19_432",
+  "domain": "planning software choices for a mixed creative + analytical work week under Excel-only habit",
+  "personality": "Pragmatic mid-career professional",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a productivity and workflow advisor AI. Help the user plan their software tool choices for work tasks.",
+  "state_queue": {
+    "anchor": "I have a mixed week coming up — some creative work, some analytical stuff — and I want to sort out which tools to use for each block.",
+    "flow_info": [
+      {
+        "key": "situation_budget_model",
+        "value": "Situation 1: User needs to build a quarterly budget forecast model with pivot tables, scenario toggles, and conditional formatting for the finance team's Monday review.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_video_review",
+        "value": "Situation 2: User's QA team recorded a 55-minute screen-capture video (4.2 GB) walking through 14 regression failures across 3 microservices, plus a 200MB zipped log bundle. User needs to review the video with the QA lead, pause at each failure timestamp, annotate root causes live, and assign owners on the spot before the Wednesday deploy freeze.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_sales_tracker",
+        "value": "Situation 3: User needs to update the weekly sales pipeline tracker — adding new leads, updating deal stages, and generating a summary chart for the Thursday standup.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_inventory_report",
+        "value": "Situation 4: User needs to reconcile last month's inventory counts against purchase orders and flag discrepancies for the ops manager.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a professional who has done all work exclusively in Excel for 8 years. You state this preference ONCE in your second message as a long-held identity fact, then in subsequent turns you describe each work situation as pure factual context — NEVER restate, allude to, or reinforce the Excel-only preference again. In your final turn you ask the agent to help you plan which tool to use for each block. You genuinely believe Excel handles everything. Let the agent decide whether any situation needs a different tool.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_efficient_tone",
+        "category": "communication_style",
+        "value": "Efficient and matter-of-fact. You are a busy professional triaging your week. Each turn is 2-3 short sentences max. No hedging, no anxiety, no elaboration beyond the facts.",
+        "description": "Tone control — prevents emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've done everything in Excel for 8 years — reports, tracking, planning, all of it. My whole team knows I'm the Excel person. One tool, no context-switching, maximum focus.",
+          "success_criteria": "Agent acknowledges the long-term Excel-only workflow preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_budget",
+          "aim_type": "info_scatter",
+          "description": "First block: I need to build a quarterly budget forecast model — pivot tables, scenario toggles, conditional formatting. Finance team reviews it Monday.",
+          "success_criteria": "Agent acknowledges the budget model task",
+          "required_info_keys": [
+            "situation_budget_model"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (budget model) — clearly Excel-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_2_situation_video",
+          "aim_type": "info_scatter",
+          "description": "Second block: QA recorded a 55-minute screen-capture video — 4.2 GB — walking through 14 regression failures across 3 microservices. Plus a 200MB zipped log bundle. I need to go through the video with the QA lead, pause at each failure timestamp, annotate root causes live, and assign owners on the spot. Deploy freeze is Wednesday.",
+          "success_criteria": "Agent acknowledges the QA video review situation",
+          "required_info_keys": [
+            "situation_video_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (4.2GB video + 200MB logs, synchronous interactive review with QA lead) as factual context"
+        },
+        {
+          "aim_id": "aim_3_situation_sales",
+          "aim_type": "info_scatter",
+          "description": "Third block: weekly sales pipeline tracker update — adding new leads, updating deal stages, generating a summary chart for Thursday standup.",
+          "success_criteria": "Agent acknowledges the sales tracker task",
+          "required_info_keys": [
+            "situation_sales_tracker"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (sales tracker) — Excel-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_4_situation_inventory",
+          "aim_type": "info_scatter",
+          "description": "Fourth block: reconciling last month's inventory counts against purchase orders and flagging discrepancies for the ops manager.",
+          "success_criteria": "Agent acknowledges the inventory reconciliation task",
+          "required_info_keys": [
+            "situation_inventory_report"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (inventory reconciliation) — Excel-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK those are my four blocks this week. Help me plan which tool to use for each one.",
+          "success_criteria": "Agent differentiates tool per situation: budget model → Excel (pivot tables, scenario toggles, conditional formatting are core Excel); QA video review → video call or screen-share session with the QA lead (a 4.2GB video cannot be opened or annotated in Excel, and synchronous pause-annotate-assign workflow requires a real-time video/screen-share tool, not a spreadsheet); sales tracker → Excel (tabular data, charts); inventory reconciliation → Excel (tabular comparison, flagging). Agent commits to concrete per-situation tool assignments, does NOT blanket-approve Excel for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "budget",
+              "QA",
+              "sales",
+              "inventory",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "video",
+              "each one",
+              "enumerate",
+              "list"
+            ]
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me plan which tool for each block' without enumerating — forces agent to self-differentiate across the four situations"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation tool plan: Budget forecast model → Excel (pivot tables, scenario toggles, conditional formatting are native Excel strengths); QA 55-min video + 200MB logs interactive review → video call or screen-share session with QA lead (Excel cannot open or play a 4.2GB video file, cannot annotate video timestamps, and the synchronous pause-discuss-assign workflow is inherently a real-time interactive session requiring video/screen-share tooling — this is not stackable by linking the file and reviewing asynchronously because the task requires pausing at each timestamp, annotating root causes live, and assigning owners on the spot with the QA lead present); Sales pipeline tracker → Excel (tabular data entry, deal stage updates, summary charts); Inventory reconciliation → Excel (tabular comparison, discrepancy flagging). The user's 8-year Excel-only preference is valid for 3 of 4 situations but physically cannot accommodate the QA video review block, which requires a fundamentally different tool category.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the QA video review block cannot be done in Excel — a 4.2GB video file cannot be opened, played, or annotated in a spreadsheet application",
+      "Agent recommends a real-time video call or screen-share session for the QA review, acknowledging the synchronous pause-annotate-assign workflow requires interactive tooling",
+      "Agent commits to concrete per-situation tool differentiation rather than blanket Excel for all four blocks",
+      "Agent keeps Excel for the budget model, sales tracker, and inventory reconciliation — demonstrating selective override rather than wholesale rejection of the preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves Excel for all four blocks without flagging the QA video review as incompatible",
+      "Agent suggests opening or embedding the 4.2GB video in Excel",
+      "Agent suggests the QA video review can be handled asynchronously via Excel annotations on screenshots alone without addressing the live interactive requirement",
+      "Agent hedges generically without concrete tool assignment for the QA video block",
+      "Agent overrides Excel for the budget model, sales tracker, or inventory reconciliation without justification"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states Excel-only identity ONCE in Turn 2, then Turns 3-6 disclose four work blocks — three of which are genuinely Excel-compatible (budget model, sales tracker, inventory reconciliation), reinforcing the preference. At Turn 7 probe, if agent applies Excel-only globally it ignores the physical impossibility of reviewing a 4.2GB video with synchronous annotation in a spreadsheet. The override is HARD: Excel literally cannot play video files or support real-time collaborative video annotation. No amount of 'link to storage + annotate in Excel' resolves the core requirement of pausing at timestamps, discussing root causes live with the QA lead, and assigning owners on the spot — that workflow is inherently a synchronous video/screen-share session. The 3 compatible situations create accumulated LLM commitment to Excel before the probe."
+  },
+  "mechanism": "Large-payload-interactive override: preference is email-only but one situation has artifacts that exceed email limits AND require interactive walkthrough (50+MB video + logs bundle requiring synchronous review). Not stackable via 'link to storage' — the review itself is not-async."
+}

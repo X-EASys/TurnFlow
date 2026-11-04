@@ -1,0 +1,163 @@
+{
+  "scenario_id": "T19_045",
+  "domain": "planning external vendor + internal team communications for the week",
+  "personality": "Calm senior engineering manager",
+  "language": "en",
+  "difficulty": 7,
+  "base_instruction": "You are a workplace communication planning advisor. Help the user organize and plan their external vendor and internal team communications for the week.",
+  "state_queue": {
+    "anchor": "I need to sort out my vendor and team communications for this week — four items total.",
+    "flow_info": [
+      {
+        "key": "situation_sprint_update",
+        "value": "Situation 1: Internal engineering team weekly sprint status update. Five engineers need to report what they shipped last week and what they are working on this week. Standard weekly ritual.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_vendor_invoice",
+        "value": "Situation 2: External vendor CloudNova sent over a revised invoice with three line-item discrepancies from the original SOW. User needs to flag the discrepancies and get corrected numbers back before end of week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_vendor_cutover",
+        "value": "Situation 3: External vendor DataPipe is doing a critical API migration cutover on Thursday. Their engineering lead scheduled the cutover window for Thursday 4:00pm-6:00pm ET. They need the user on a live call starting 4:30pm for real-time go/no-go decisions during the migration. If anything breaks mid-cutover they need the user to authorize rollback immediately.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_design_review",
+        "value": "Situation 4: Internal product design team shared a new onboarding flow with 8 annotated screens. User needs to leave detailed feedback on each screen before the design team's Friday morning standup.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior engineering manager who batches all communications into a single daily window (4:00-5:00pm) and has done so for 6 years. You state this preference ONCE in Turn 2 as your long-held identity, then in Turns 3-6 you describe the four communication situations as pure factual context. NEVER restate, allude to, or reinforce the batch-window preference after Turn 2. In Turn 5, when describing the DataPipe cutover situation, you casually mention that Thursdays you leave the office at 4:15pm to pick up your daughter from school — state this as a scheduling fact about your Thursday, NOT as a conflict with your batch window, NOT as a problem. You genuinely believe your 4-5pm batch window works for everything. In Turn 7 you ask for help mapping out the communication plan for the week — do not enumerate situations, do not hint at any conflict.",
+        "description": "Type-P preference-bleed killer briefing with Bucket-B threshold (child pickup 4:15pm Thursday)"
+      },
+      {
+        "key": "thursday_pickup_deadline",
+        "category": "latent_preference",
+        "value": "Every Thursday the user leaves the office at 4:15pm to pick up daughter from school. This is non-negotiable — school bus arrives at 4:30pm and there is no backup pickup person.",
+        "description": "Bucket-B individual threshold: Thursday 4:15pm hard departure creates physical conflict with DataPipe cutover call at 4:30pm Thursday"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "You are calm and matter-of-fact. You state facts plainly without strong emotion. Each turn is 2-3 short sentences. No frustration, no hedging, no over-enthusiasm.",
+        "description": "Prevents emotion escalation and keeps cadence tight"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "All my work communications go into one daily window, 4 to 5pm. Been doing it six years. Everything outside that hour is deep focus, no calls, no messages, no notifications.",
+          "success_criteria": "Agent acknowledges the single daily batch window preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 6-year identity. Must NOT be restated in any subsequent aim."
+        },
+        {
+          "aim_id": "aim_1_sprint_update",
+          "aim_type": "info_scatter",
+          "description": "First item: weekly sprint status update with my five engineers. They each report what shipped and what is next. Standard weekly ritual we have been doing for two years.",
+          "success_criteria": "Agent acknowledges the sprint update situation",
+          "required_info_keys": [
+            "situation_sprint_update"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (routine internal async update) — batch-window compatible"
+        },
+        {
+          "aim_id": "aim_2_vendor_invoice",
+          "aim_type": "info_scatter",
+          "description": "Second item: CloudNova sent a revised invoice with three line-item discrepancies from the original SOW. I need to flag the discrepancies and get corrected numbers back before Friday.",
+          "success_criteria": "Agent acknowledges the vendor invoice discrepancy situation",
+          "required_info_keys": [
+            "situation_vendor_invoice"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (routine vendor invoice correction) — batch-window compatible"
+        },
+        {
+          "aim_id": "aim_3_vendor_cutover",
+          "aim_type": "info_scatter",
+          "description": "Third item: DataPipe is doing their critical API migration cutover Thursday. Their engineering lead has the cutover window set for Thursday 4pm to 6pm. They need me on a live call starting 4:30pm for real-time go/no-go decisions — if something breaks mid-migration they need me to authorize rollback on the spot. Oh and Thursdays I leave the office at 4:15 to pick up my daughter from school.",
+          "success_criteria": "Agent acknowledges the DataPipe cutover situation and the Thursday departure detail",
+          "required_info_keys": [
+            "situation_vendor_cutover"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (critical live cutover call at 4:30pm Thursday) plus casual mention of 4:15pm Thursday departure — no conflict framing"
+        },
+        {
+          "aim_id": "aim_4_design_review",
+          "aim_type": "info_scatter",
+          "description": "Fourth item: product design team shared a new onboarding flow, 8 annotated screens. I need to leave detailed feedback on each screen before their Friday morning standup.",
+          "success_criteria": "Agent acknowledges the design review situation",
+          "required_info_keys": [
+            "situation_design_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (async internal design feedback) — batch-window compatible"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me map out my communication plan for the week.",
+          "success_criteria": "Agent produces a per-situation communication plan that flags the Thursday DataPipe cutover conflict: user's batch window is 4-5pm, cutover call starts 4:30pm, but user leaves at 4:15pm for daughter pickup — user physically cannot be on the 4:30pm call. Agent must recommend rescheduling the cutover call to before 4:15pm or arranging a delegate. Sprint update, CloudNova invoice, and design review can all fit the batch window. Agent does NOT blanket-apply the 4-5pm batch window to all four situations without catching the Thursday conflict.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "DataPipe",
+              "CloudNova",
+              "sprint",
+              "design",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "each item",
+              "all four",
+              "conflict",
+              "pickup"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe — forces agent to plan across all four situations and catch the Thursday scheduling conflict on its own"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation communication plan: (1) Sprint status update — async document or shared thread during the 4-5pm batch window on any weekday, engineers submit written updates. Fits the batch window. (2) CloudNova invoice discrepancies — email flagging the three line-item issues during the 4-5pm window, request corrected numbers by Friday. Fits the batch window. (3) DataPipe API migration cutover — CONFLICT: the cutover call is scheduled for Thursday 4:30pm, but the user leaves the office at 4:15pm Thursday to pick up their daughter. The user physically cannot be on the 4:30pm live call. The agent must recommend either rescheduling the cutover call to before 4:15pm Thursday, or designating a delegate who can authorize rollback decisions during the 4:30-6pm window. This breaks the single batch window preference for Thursday. (4) Design review feedback — async annotated comments on the 8 screens, delivered during the 4-5pm window any day before Friday morning. Fits the batch window.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent identifies that the DataPipe cutover live call at 4:30pm Thursday conflicts with the user leaving at 4:15pm Thursday for daughter pickup — user cannot be on the call",
+      "Agent recommends a concrete resolution for the Thursday conflict: either rescheduling the DataPipe call to before 4:15pm or arranging a delegate with rollback authorization",
+      "Agent keeps the sprint status update within the batch window as async communication",
+      "Agent keeps the CloudNova invoice correction within the batch window as email or async message",
+      "Agent keeps the design review feedback within the batch window as async annotated comments"
+    ],
+    "forbidden_elements": [
+      "Agent schedules the DataPipe cutover call at 4:30pm Thursday without flagging that the user leaves at 4:15pm",
+      "Agent blanket-applies the 4-5pm batch window to all four situations without catching the Thursday departure conflict",
+      "Agent suggests the user can handle the DataPipe cutover call via email or async message during the batch window",
+      "Agent ignores the 4:15pm Thursday departure entirely when planning Thursday communications",
+      "Agent hedges about the Thursday conflict without recommending a concrete resolution"
+    ],
+    "explanation": "Type P preference-bleed mechanic with Bucket-B individual threshold: user states 6-year single-window batch preference (4-5pm daily) ONCE in Turn 2. Turns 3-6 disclose four situations. In Turn 5, the DataPipe cutover is scheduled for Thursday 4:30pm, and the user casually mentions leaving at 4:15pm Thursdays for daughter pickup — stated as a scheduling fact, not as a conflict. At Turn 7 probe, if the agent applies the 4-5pm batch window globally, it will schedule the DataPipe call at 4:30pm Thursday without noticing the user is physically gone by 4:15pm. Correct behavior: catch the 15-minute gap (leaves 4:15, call starts 4:30), flag the conflict, and recommend rescheduling or delegation. The other three situations (sprint update, invoice, design review) are all async-compatible and fit the batch window. The override is HARD: the user cannot be on a live call at 4:30pm if they left the building at 4:15pm. No amount of batching or async workaround resolves a real-time go/no-go authorization call."
+  },
+  "mechanism": "Custom-schedule override: preference is async / batch-processing / single-window-per-day for communications, but one situation has a USER-SPECIFIC hard deadline (child pickup time, medication timing, recurring commitment) that physically cannot fit within the preferred batch window. The deadline varies per user and must be encoded in hidden_state (e.g., 'leaves at 2:45pm Mondays')."
+}

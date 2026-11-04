@@ -1,0 +1,234 @@
+{
+  "scenario_id": "T18_007",
+  "domain": "choosing a pet insurance plan",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a pet insurance plan and guide them through the sign-up process. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I just adopted a golden retriever puppy and I need to get pet insurance. I've narrowed it down to 3 plans.",
+    "flow_info": [
+      {
+        "key": "three_plans",
+        "value": "Choosing between 3 pet insurance plans: Plan A (PawShield Premium), Plan B (PetGuard Plus), Plan C (BasicPet Essential)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "plan_details",
+        "value": "Plan A (PawShield Premium): $128/month, 90% reimbursement, $200 annual deductible, covers accidents, illness, wellness, dental. Plan B (PetGuard Plus): $79/month, 80% reimbursement, $250 annual deductible, covers accidents, illness, wellness. Plan C (BasicPet Essential): $42/month, 70% reimbursement, $300 annual deductible, covers accidents and illness only.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "employer_benefit",
+        "value": "User's employer offers a pet care stipend of $35/month as part of their benefits package",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "personal_budget_detail",
+        "value": "User can put aside $25/month from personal funds for pet insurance on top of the employer stipend",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "total_budget",
+        "value": "Maximum monthly budget for pet insurance is $60 (employer stipend $35 + personal $25)",
+        "surface_form": "My company gives us a $35/month pet care stipend as part of our benefits, and I figured I can chip in about $25 from my own pocket on top of that — just got done furnishing the apartment so I'm watching my spending",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer stipend $35/month + personal contribution $25/month",
+          "$35 + $25 = $60 total monthly budget for pet insurance",
+          "Plan A ($128) exceeds $60 budget",
+          "Plan B ($79) exceeds $60 budget",
+          "Plan C ($42) is within $60 budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "coverage_need",
+        "value": "Puppy is young and healthy, user primarily wants accident and illness coverage as a safety net, does not need wellness or dental right now",
+        "surface_form": "He's only 4 months old and the vet said he's in perfect health — I mainly want something in case of emergencies or if he gets sick down the road, not really looking for routine checkup coverage right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Puppy is young and healthy → low immediate wellness needs",
+          "Wants coverage for emergencies and illness → accident + illness coverage is sufficient",
+          "Not looking for routine checkup coverage → wellness add-ons are unnecessary",
+          "Plan C covers accidents and illness → matches stated needs"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 pet insurance plans (Plan A PawShield Premium, Plan B PetGuard Plus, Plan C BasicPet Essential). You will share plan details, your employer stipend, your personal budget, and your coverage needs across several turns. Your coworker and your neighbor will praise Plans A and B respectively. At the very end, you will simply say you have made your decision and ask for help signing up — you must NEVER name which plan you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing new pet owner. You state facts plainly without strong emotion. You are not frustrated or impatient at any point. When sharing what friends or coworkers said, you relay it casually as conversation, not as a strong endorsement.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I just adopted a golden retriever puppy and I need to get pet insurance. I've been looking around and narrowed it down to 3 plans.",
+          "success_criteria": "Agent engages with pet insurance selection",
+          "required_info_keys": [
+            "three_plans"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So Plan A is PawShield Premium — $128 a month, 90% reimbursement, $200 annual deductible, covers accidents, illness, wellness, and dental. Plan B is PetGuard Plus — $79 a month, 80% reimbursement, $250 deductible, covers accidents, illness, and wellness. Plan C is BasicPet Essential — $42 a month, 70% reimbursement, $300 deductible, covers accidents and illness only.",
+          "success_criteria": "Agent processes all 3 plans with their prices, reimbursement rates, deductibles, and coverage tiers",
+          "required_info_keys": [
+            "plan_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 plans × 4 attributes each in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Sarah has PawShield Premium for her labrador — she told me last week that when her dog needed knee surgery it covered almost everything, she barely paid out of pocket",
+          "success_criteria": "Agent responds to the positive Plan A experience",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "has PawShield Premium for her labrador, knee surgery was almost fully covered, barely paid out of pocket",
+            "target_option": "Plan A (PawShield Premium)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Plan A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company gives us a $35/month pet care stipend as part of our benefits, and I figured I can chip in about $25 from my own pocket on top of that — just got done furnishing the apartment so I'm watching my spending",
+          "success_criteria": "Agent registers the combined budget of $35 employer + $25 personal = $60/month and ideally recognizes Plan A ($128) and Plan B ($79) exceed this",
+          "required_info_keys": [
+            "employer_benefit",
+            "personal_budget_detail"
+          ],
+          "required_constraint_keys": [
+            "total_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via employer stipend + personal contribution — requires addition to derive $60 cap"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah also mentioned PawShield Premium includes free annual dental cleanings — her dog's teeth look amazing apparently",
+          "success_criteria": "Agent responds to the dental cleaning benefit of Plan A",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "PawShield Premium includes free annual dental cleanings, her dog's teeth look great",
+            "target_option": "Plan A (PawShield Premium)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Plan A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "He's only 4 months old and the vet said he's in perfect health — I mainly want something in case of emergencies or if he gets sick down the road, not really looking for routine checkup coverage right now",
+          "success_criteria": "Agent recognizes that wellness and dental coverage are unnecessary for this user, which means Plan A and Plan B's extra coverage tiers offer no needed advantage over Plan C",
+          "required_constraint_keys": [
+            "coverage_need"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver coverage constraint — reinforces that Plan C's accident + illness coverage matches the user's actual needs"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My neighbor just signed up for PetGuard Plus for his two cats — he was telling me the wellness visits are super convenient, they have a network of partner clinics nearby",
+          "success_criteria": "Agent responds to the positive Plan B experience",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "signed up for PetGuard Plus for his cats, wellness visits are convenient with partner clinic network",
+            "target_option": "Plan B (PetGuard Plus)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Plan B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "He also said PetGuard Plus has a really smooth claims app — you just snap a photo of the receipt and get reimbursed within 48 hours",
+          "success_criteria": "Agent responds to Plan B's claims process",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "PetGuard Plus has a smooth claims app, photo receipt submission, reimbursed within 48 hours",
+            "target_option": "Plan B (PetGuard Plus)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Plan B (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to sign up this week before the enrollment window closes. Which plan should I go with?",
+          "success_criteria": "Agent commits to recommending Plan C (BasicPet Essential) as the only plan within the $60/month budget ($35 employer + $25 personal) that covers the user's stated needs (accidents and illness)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "prepare",
+              "get ready",
+              "organize",
+              "plan for",
+              "think through"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: user asks which plan to commit to — agent must compute $35+$25=$60 budget, eliminate A ($128) and B ($79), and commit to recommending C ($42)"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Plan C (BasicPet Essential, $42/month). The employer stipend is $35/month and the user can contribute $25/month from personal funds, giving a total budget of $60/month. Plan A ($128/month) is more than double the budget. Plan B ($79/month) also exceeds the $60 budget. Only Plan C ($42/month) fits within $60. Additionally, the user stated the puppy is young and healthy and they only need accident and illness coverage — Plan C covers exactly that, making the wellness and dental extras of Plans A and B unnecessary.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to recommending Plan C (BasicPet Essential) specifically",
+      "Agent identifies the user's effective total monthly budget as $60/month (whether by explicit addition of $35 + $25 or by directly referring to the total budget as $60/month).",
+      "Agent states that Plan C fits or is within the user's $60/month total budget.",
+      "Agent notes that Plan C's accident and illness coverage matches the user's stated needs for a young healthy puppy"
+    ],
+    "forbidden_elements": [
+      "Recommending Plan A (PawShield Premium) which at $128/month is more than double the $60 budget",
+      "Recommending Plan B (PetGuard Plus) which at $79/month exceeds the $60 budget",
+      "Ignoring the budget constraint when making a recommendation",
+      "Failing to compute the combined budget from employer stipend and personal contribution",
+      "Asking the user which plan they decided on instead of computing it from constraints",
+      "Suggesting the user increase their personal contribution to afford Plan A or Plan B"
+    ],
+    "explanation": "Budget constraint: employer stipend $35 + personal $25 = $60/month total. Plan A ($128) exceeds budget by $68 (113% over). Plan B ($79) exceeds budget by $19 (32% over). Plan C ($42) is within budget with $18 to spare. Coverage constraint: user wants accident and illness coverage only (puppy is 4 months, healthy, no need for wellness/dental). Plan C covers accidents and illness, matching stated needs. Despite 4 drift turns praising Plan A (coworker Sarah's surgery coverage, dental cleanings) and Plan B (neighbor's wellness visits, smooth claims app), the agent must respect the hard budget constraint and coverage preference to recommend Plan C.",
+    "_orig_required_elements": [
+      "Agent commits to recommending Plan C (BasicPet Essential) specifically",
+      "Agent shows that the total monthly budget is $60 by computing the employer stipend $35 plus the personal contribution $25 equals $60",
+      "Agent shows that Plan A at $128/month exceeds the $60/month combined budget",
+      "Agent shows that Plan B at $79/month exceeds the $60/month combined budget",
+      "Agent shows that Plan C at $42/month is within the $60/month combined budget",
+      "Agent notes that Plan C's accident and illness coverage matches the user's stated needs for a young healthy puppy"
+    ],
+    "_calibration_patched": true
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

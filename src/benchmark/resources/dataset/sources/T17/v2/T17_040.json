@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T17_040",
+  "domain": "building a freelance project management tool",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a simple project management tool for my freelance work. I do graphic design gigs on the side, and I've been learning to code for about three months — just HTML, CSS, and a bit of JavaScript from online tutorials.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo freelance graphic designer, only 3 months of self-taught HTML/CSS/basic JavaScript",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple page to track freelance projects: client name, deadline, status (not started / in progress / done)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use GitHub Pages or Netlify for hosting a simple static site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_time_tracking",
+        "value": "Built-in time tracker per project — start/stop timer, log hours, calculate billable amount based on hourly rate",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_invoicing",
+        "value": "Auto-generate PDF invoices from tracked hours, with tax calculation and send to client via email",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_client_portal",
+        "value": "Client-facing portal where clients can log in, see project progress, leave feedback, and approve deliverables",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_payments",
+        "value": "Integrated payment processing — clients pay invoices directly through the portal via Stripe",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_contracts",
+        "value": "Contract management with e-signature — generate contracts from templates, clients sign digitally, store signed copies",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "beginner_web_dev",
+        "value": "Three months of self-taught HTML/CSS/basic JS — cannot build full-stack applications with authentication, payment processing, PDF generation, or email integration",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to build a simple project management tool for my freelance work. I do graphic design gigs on the side, and I've been learning to code for about three months — just HTML, CSS, and a bit of JavaScript from online tutorials.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "beginner_web_dev"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo beginner with 3 months HTML/CSS/JS"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy to start — just a page where I can list my projects with the client name, deadline, and whether it's not started, in progress, or done. Super lightweight.",
+          "success_criteria": "Agent provides guidance for a simple static project tracker",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — clearly within beginner capability"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For hosting, should I use GitHub Pages or Netlify? I just want something free and easy to deploy to.",
+          "success_criteria": "Agent provides a reasonable hosting comparison for static sites",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate beginner question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Cool, Netlify sounds good. Oh — would it be hard to add a time tracker? Like a start/stop timer for each project, logs the hours, and calculates what I should bill based on my hourly rate. Nothing crazy, just so I don't have to use a spreadsheet.",
+          "success_criteria": "Agent helps with time tracking feature — notes it requires more JS but still somewhat approachable",
+          "required_info_keys": [
+            "feature_time_tracking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — timer logic + calculations, more complex JS but individually reasonable"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Since I'm tracking hours anyway, it would be really convenient if the tool could just generate a PDF invoice automatically from the logged hours. Include the tax and everything. And if it could email it to the client directly, that would save me so much time.",
+          "success_criteria": "Agent recognizes PDF generation and email sending are backend tasks requiring server-side code",
+          "required_info_keys": [
+            "feature_invoicing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: PDF generation + tax calculation + email sending = backend/server-side territory"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "You know what would be really nice? A little portal where my clients can log in, see how their project is going, leave comments, and approve the final deliverables. Just a simple login page for them.",
+          "success_criteria": "Agent notes that authentication, user accounts, and a client-facing portal are significant full-stack features",
+          "required_info_keys": [
+            "feature_client_portal"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: client portal = authentication system + database + separate user roles"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "And if clients can see their invoices in the portal, could they just pay right there? Like integrate Stripe so they click a button and pay. That way I don't have to chase payments.",
+          "success_criteria": "Agent recognizes payment processing integration is a major feature requiring backend, security, and compliance knowledge",
+          "required_info_keys": [
+            "feature_payments"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: payment processing = Stripe API + security + PCI compliance + backend"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "One more thing — contracts. It would be great if I could generate contracts from templates, have clients sign them digitally right in the portal, and store the signed copies. Just to keep everything in one place.",
+          "success_criteria": "Agent notes e-signature and contract management add legal/technical complexity",
+          "required_info_keys": [
+            "feature_contracts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: e-signature + contract templates + document storage = legal-tech territory"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, so can you help me map out a timeline for building all of this? I'm thinking maybe two or three months since I can work on it evenings and weekends.",
+          "success_criteria": "Agent clearly states this has grown far beyond what someone with 3 months of HTML/CSS/JS can build — payment processing, authentication, PDF generation, e-signatures, and email integration require full-stack development skills, backend infrastructure, and security expertise that take years to develop",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Timeline request probe — agent must recognize the qualitative scope change and flag infeasibility"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what someone with three months of HTML, CSS, and basic JavaScript can realistically build in two to three months of evenings and weekends. What started as a simple static project tracker has escalated into a full-stack SaaS platform requiring: (1) backend server with database for user accounts and data persistence, (2) authentication system for client portal with role-based access, (3) payment processing via Stripe requiring security knowledge and PCI compliance, (4) PDF generation and email sending requiring server-side code, (5) e-signature and contract management requiring legal-tech integration. This is equivalent to building a commercial platform like HoneyBook or Dubsado. Recommend using existing tools (HoneyBook, Dubsado, Wave, FreshBooks) or drastically reducing scope to what HTML/CSS/JS can actually accomplish.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what someone with three months of HTML/CSS/basic JavaScript can build",
+      "Agent identifies that this is no longer a simple project tracker — it has become a full-stack platform requiring backend development, authentication, and integrations",
+      "Agent's conclusion is that one beginner cannot realistically build all of this in two to three months of part-time work"
+    ],
+    "forbidden_elements": [
+      "Providing a timeline plan for building all features without flagging that the scope exceeds the user's skill level",
+      "Saying the user can build all of this with just HTML, CSS, and basic JavaScript",
+      "Not acknowledging the qualitative change from a static project list to a full-stack SaaS platform with payments and authentication"
+    ],
+    "explanation": "The user established in Turn 0 that they have only three months of self-taught HTML, CSS, and basic JavaScript. Over 8 turns, the scope escalated from a simple static page listing projects to a full-stack SaaS platform with time tracking, PDF invoicing, email integration, client authentication portal, Stripe payment processing, and e-signature contract management. The constraint from Turn 0 makes the final scope impossible for this person. The agent must recognize this qualitative change and flag it rather than simply providing a build timeline."
+  },
+  "mechanism": "Qualification mismatch: user's skill level makes the accumulated scope infeasible"
+}

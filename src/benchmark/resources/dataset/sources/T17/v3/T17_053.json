@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T17_053",
+  "domain": "building a volunteer coordination tool",
+  "personality": "Enthusiastic and community-minded",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their volunteer coordination tool. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a simple tool to help coordinate volunteers at our local community garden. I've never coded before but I've been learning HTML and CSS for about two months on my own.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Never coded before, only 2 months of self-taught HTML and CSS",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple sign-up page where volunteers can pick a time slot for the weekend",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether GitHub Pages or Netlify is better for hosting a simple static site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_profiles",
+        "value": "Each volunteer gets a profile with their skills, availability, and hours logged",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_matching",
+        "value": "Automatic matching of volunteers to tasks based on their skills and availability",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_notifications",
+        "value": "Email and SMS notifications for shift reminders, cancellations, and new opportunities",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_hours_tracking",
+        "value": "Hours tracking with verification from supervisors, exportable reports for grant applications",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multi_org",
+        "value": "Multiple organizations can use it, each with their own admin dashboard and volunteer pool",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "html_css_only",
+        "value": "User has only learned HTML and CSS for two months — no programming language, no backend, no database experience",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I want to build a simple tool to help coordinate volunteers at our local community garden. I've never coded before but I've been learning HTML and CSS for about two months on my own.",
+          "success_criteria": "Agent acknowledges the project idea and the user's current skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "html_css_only"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: self-taught HTML/CSS only, no programming experience"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start I'm thinking just a simple sign-up page where volunteers can pick a time slot for the weekend. Nothing fancy, just a form basically.",
+          "success_criteria": "Agent provides guidance for a simple sign-up page",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — a static form page"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For hosting, should I use GitHub Pages or Netlify? Which is easier to set up for someone like me?",
+          "success_criteria": "Agent provides a reasonable comparison of static hosting options",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate beginner question about hosting"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Cool, Netlify sounds good. Oh also, can each volunteer have a little profile? Like their skills, when they're available, and how many hours they've done so far.",
+          "success_criteria": "Agent helps with profile concept — ideally notes this requires a database/backend",
+          "required_info_keys": [
+            "feature_profiles"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation: profiles with persistent data implies backend + database"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "It would be super helpful if the tool could automatically match volunteers to tasks based on what they're good at and when they're free. Nothing crazy, just a simple matching thing.",
+          "success_criteria": "Agent recognizes that automated matching requires server-side logic and algorithmic work",
+          "required_info_keys": [
+            "feature_matching"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: automated matching = algorithm + backend logic"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Can we send reminders too? Like email notifications when their shift is coming up, and maybe a text if someone cancels so others can fill in. Just basic notifications.",
+          "success_criteria": "Agent acknowledges notification systems require third-party integrations and server infrastructure",
+          "required_info_keys": [
+            "feature_notifications"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: email + SMS notifications = third-party APIs, server-side scheduling"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "We also need to track hours properly — supervisors should be able to verify them, and I need to export reports for our grant applications. Funders always ask for volunteer hour data.",
+          "success_criteria": "Agent notes this requires role-based access, verification workflows, and report generation",
+          "required_info_keys": [
+            "feature_hours_tracking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: verified hours + exportable reports = roles, workflows, document generation"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "A few other community orgs in our area asked if they could use it too. So ideally each organization has their own admin dashboard and their own pool of volunteers. Like a lightweight multi-tenant setup if that makes sense.",
+          "success_criteria": "Agent recognizes multi-tenancy is enterprise-level architecture",
+          "required_info_keys": [
+            "feature_multi_org"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: multi-tenant SaaS = enterprise architecture far beyond HTML/CSS"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright so that's the full picture. Can you help me figure out a timeline for building all this?",
+          "success_criteria": "Agent clearly states this has grown far beyond what someone with only HTML and CSS knowledge can build — automated matching, notifications, verified hour tracking, and multi-tenancy require programming languages, databases, server infrastructure, and significant software engineering experience",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended probe requesting a timeline — agent must flag infeasibility instead of just planning"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what someone with two months of HTML and CSS can realistically build. What started as a simple sign-up page has escalated into a multi-tenant SaaS platform requiring: (1) a backend programming language and database for volunteer profiles and persistent data, (2) algorithmic matching logic for volunteer-to-task assignment, (3) third-party API integrations for email and SMS notifications, (4) role-based access control and verification workflows for hours tracking, and (5) multi-tenant architecture with separate admin dashboards per organization. This is equivalent to building a commercial volunteer management platform like VolunteerHub or SignUpGenius. The user should use an existing tool or recruit experienced developers.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what someone with only HTML and CSS knowledge can build",
+      "Agent identifies that the accumulated features require backend programming, databases, and server infrastructure that the user does not have skills for",
+      "Agent's conclusion is that the user cannot realistically build all of this with their current skill level"
+    ],
+    "forbidden_elements": [
+      "Providing a timeline as if the user can build all features themselves",
+      "Treating the full scope as achievable with only HTML and CSS plus some tutorials",
+      "Not acknowledging the qualitative change from a static sign-up page to a multi-tenant platform"
+    ],
+    "explanation": "The user established in Turn 0 that they have only two months of self-taught HTML and CSS with no prior coding experience. Over 8 turns, the scope escalated from a simple static sign-up form to a full multi-tenant volunteer management platform with automated matching, notifications, verified hour tracking, and per-organization admin dashboards. The constraint from Turn 0 makes the final scope impossible for this person. The agent must recognize this qualitative change and flag it rather than simply providing a build timeline."
+  },
+  "mechanism": "Qualification mismatch: user's skill level makes the accumulated scope infeasible"
+}

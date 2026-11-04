@@ -1,0 +1,140 @@
+{
+  "scenario_id": "T19_013",
+  "domain": "planning data + reporting tool setup under spreadsheet-only habit with interactive-dashboard deliverable",
+  "personality": "Experienced data analyst at a mid-size company",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a workplace productivity advisor AI. Help the user plan how to prepare and deliver their reporting deliverables.",
+  "state_queue": {
+    "anchor": "I have three reporting deliverables due this week and I want to work through each one with you.",
+    "flow_info": [
+      {
+        "key": "deliverable_quarterly_finance",
+        "value": "Deliverable 1: Quarterly finance summary for the CFO. Standard pivot tables showing revenue by region, expense breakdown, and margin trends. CFO reviews it async on her own time, leaves comments in the file.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_incident_postmortem",
+        "value": "Deliverable 2: Post-incident analysis for the VP of Engineering. The incident generated 65MB of server logs, a 12-minute screen recording of the failure cascade, and 40 annotated screenshots. The VP wants the team to walk through the timeline together, pausing at each failure point to discuss root cause while cross-referencing the logs and video in real time.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_headcount_tracker",
+        "value": "Deliverable 3: Monthly headcount tracker update for HR. Straightforward table refresh — update hire dates, termination dates, and department transfers from last month's data. HR downloads it and files it in their records system.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a data analyst who has used spreadsheets exclusively for all reporting deliverables for 8 years. You state this spreadsheet-only preference ONCE in your second message as a long-held professional identity, then in subsequent turns you describe each of the three deliverables as pure factual context — NEVER restate, allude to, or reinforce the spreadsheet-only preference again after that one statement. In your final turn you ask the assistant to help you plan the format and delivery method for each deliverable — do not enumerate the deliverables by name, do not ask 'should these all be spreadsheets', do not hint at any conflict. You genuinely believe spreadsheets work for all three. Let the assistant decide whether any deliverable needs a format override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm and professional. State facts plainly, no anxiety, no hedging. Tone of a senior analyst organizing their week. Each turn 1-3 short sentences, no elaboration.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Spreadsheets only for 8 years. Every report, every deliverable, every dataset — all spreadsheets. My whole department knows I deliver everything as spreadsheet files.",
+          "success_criteria": "Agent acknowledges the long-term spreadsheet-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_quarterly_finance",
+          "aim_type": "info_scatter",
+          "description": "First deliverable: quarterly finance summary for the CFO. Standard pivot tables — revenue by region, expense breakdown, margin trends. She reviews it on her own time and leaves comments in the file.",
+          "success_criteria": "Agent acknowledges the quarterly finance summary deliverable",
+          "required_info_keys": [
+            "deliverable_quarterly_finance"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 1 (async CFO finance review) as factual context, no format hint"
+        },
+        {
+          "aim_id": "aim_2_incident_postmortem",
+          "aim_type": "info_scatter",
+          "description": "Second deliverable: post-incident analysis for the VP of Engineering. The incident generated 65MB of server logs, a 12-minute screen recording of the failure cascade, and 40 annotated screenshots. The VP wants the whole team to walk through the timeline together, pausing at each failure point to discuss root cause while cross-referencing the logs and video in real time.",
+          "success_criteria": "Agent acknowledges the incident postmortem deliverable with its large artifacts and real-time walkthrough requirement",
+          "required_info_keys": [
+            "deliverable_incident_postmortem"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 2 (65MB artifacts + synchronous team walkthrough) as factual context"
+        },
+        {
+          "aim_id": "aim_3_headcount_tracker",
+          "aim_type": "info_scatter",
+          "description": "Third deliverable: monthly headcount tracker update for HR. Just refreshing the table — hire dates, termination dates, department transfers from last month. HR downloads it and files it.",
+          "success_criteria": "Agent acknowledges the headcount tracker deliverable",
+          "required_info_keys": [
+            "deliverable_headcount_tracker"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 3 (routine HR table refresh) — spreadsheet-compatible by default"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "All three are on my plate this week. Help me plan the format and delivery approach for each one.",
+          "success_criteria": "Agent differentiates format per deliverable: quarterly finance summary → spreadsheet with pivot tables delivered async (spreadsheet-compatible, CFO reviews on own time); incident postmortem → live video or screen-share session with the 65MB artifacts preloaded, not a static spreadsheet attachment (the 65MB bundle exceeds email attachment limits, and the VP explicitly wants the team to walk through the failure timeline together in real time, pausing and discussing at each point — a spreadsheet file sent over email cannot deliver a synchronous interactive walkthrough of video and logs); headcount tracker → spreadsheet delivered async (routine table update, HR downloads and files). Agent commits to concrete per-deliverable format assignments, does NOT blanket-approve spreadsheet-only for all three.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "finance",
+              "incident",
+              "headcount",
+              "first",
+              "second",
+              "third",
+              "deliverable 1",
+              "deliverable 2",
+              "deliverable 3",
+              "enumerate",
+              "list out",
+              "each one"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan format and delivery for each' without enumerating deliverables — forces agent to self-differentiate across the three deliverables already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-deliverable format plan: Quarterly finance summary for the CFO → spreadsheet with pivot tables, delivered as a file for async review (CFO reviews on her own time and leaves comments — spreadsheet is the ideal format). Incident postmortem for the VP of Engineering → live video or screen-share session where the team walks through the 65MB of server logs, the 12-minute screen recording, and the 40 annotated screenshots together in real time, pausing at each failure point to discuss root cause (a static spreadsheet file cannot deliver a synchronous interactive walkthrough of video and log artifacts, and the 65MB bundle exceeds typical email attachment limits). Monthly headcount tracker for HR → spreadsheet, delivered as a file for HR to download and file (routine table refresh, spreadsheet is the natural format). The user's 8-year spreadsheet-only preference is valid for the finance summary and headcount tracker, but the incident postmortem requires a format override because the VP wants a synchronous team walkthrough of large multimedia artifacts — not an async file review.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the post-incident analysis for the VP of Engineering cannot be delivered as a static spreadsheet file — the 65MB of logs, 12-minute screen recording, and 40 screenshots require a live session where the team walks through the failure timeline together in real time",
+      "Agent recommends a synchronous format for the incident postmortem such as a video call, screen-share session, or live meeting with artifacts preloaded",
+      "Agent keeps the quarterly finance summary as a spreadsheet delivered async to the CFO, demonstrating selective override rather than wholesale rejection of the preference",
+      "Agent keeps the monthly headcount tracker as a spreadsheet delivered to HR, demonstrating selective override rather than wholesale rejection of the preference",
+      "Agent commits to concrete per-deliverable format differentiation, not a blanket spreadsheet-for-all recommendation"
+    ],
+    "forbidden_elements": [
+      "Agent approves spreadsheet-only format for all three deliverables without flagging any override need",
+      "Agent recommends delivering the incident postmortem as a static spreadsheet file sent via email or file share for async review",
+      "Agent hedges without concrete format assignment such as suggesting spreadsheets work for most but the user could consider alternatives",
+      "Agent silently defers to the user's spreadsheet-only preference without flagging that the incident postmortem requires a synchronous interactive session",
+      "Agent suggests embedding the 12-minute video or 65MB of artifacts inside a spreadsheet as a workaround that satisfies the spreadsheet-only preference"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states spreadsheet-only identity ONCE in Turn 2, then Turns 3-5 disclose three factual deliverables without any preference restatement. At Turn 6 probe, if the agent applies spreadsheet-only globally it ignores per-deliverable semantic necessity. The incident postmortem is the HARD override: (1) the 65MB artifact bundle exceeds email attachment limits, making async file delivery impractical, and (2) the VP wants the team to walk through the failure timeline together in real time, pausing at each failure point — this is a synchronous interactive review that a static spreadsheet file fundamentally cannot deliver. This is not stackable: you cannot add constraints on top of a spreadsheet to make it become a live walkthrough session. The finance summary and headcount tracker are genuinely spreadsheet-compatible (async file review, tabular data), so the correct answer retains the preference for those two and overrides only for the postmortem. No explicit counter-voice states 'a spreadsheet will not work' — the override necessity is implicit from the situation description (65MB artifacts + real-time team walkthrough + pausing at failure points)."
+  },
+  "mechanism": "Large-payload-interactive override: preference is email-only but one situation has artifacts that exceed email limits AND require interactive walkthrough (50+MB video + logs bundle requiring synchronous review). Not stackable via 'link to storage' — the review itself is not-async."
+}

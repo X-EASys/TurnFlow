@@ -1,0 +1,158 @@
+{
+  "scenario_id": "T19_101",
+  "domain": "planning a multi-city trip with one funeral service under capsule packing habit",
+  "personality": "Calm frequent traveler",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a travel planning assistant. Help the user plan packing and logistics for their upcoming trip.",
+  "state_queue": {
+    "anchor": "I have a multi-city trip coming up next week and I want to run my packing plan by you.",
+    "flow_info": [
+      {
+        "key": "situation_portland",
+        "value": "City 1: Portland — 2 days of meetings with a startup team the user is advising. Casual tech culture, jeans and sneakers standard.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_seattle",
+        "value": "City 2: Seattle — 1 day visiting a friend, grabbing coffee, walking around Pike Place Market. Totally casual.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_funeral",
+        "value": "City 3: Sacramento — attending the funeral service for a colleague's father at a Catholic church. The family sent a note requesting attendees wear dark formal attire out of respect.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_sf",
+        "value": "City 4: San Francisco — 1 day exploring Fisherman's Wharf and meeting a college friend for dinner at a casual taco spot.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a capsule-packing minimalist planning a 4-city trip. You state your capsule packing preference ONCE in Turn 2 as your long-held identity, then in Turns 3-6 you describe each city stop as pure factual context — NEVER restate, allude to, or reinforce the capsule/minimalism preference again after Turn 2. In Turn 7 you close with a natural 'help me finalize my packing list for the whole trip' — do not enumerate the cities, do not ask 'can I wear the same outfit everywhere', do not hint at any conflict. You genuinely believe your capsule wardrobe covers all four stops. Let the agent decide whether any stop needs a packing override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_matter_of_fact",
+        "category": "communication_style",
+        "value": "You are calm and matter-of-fact. You state travel details plainly without strong emotion. Each turn is 1-3 short sentences. No excitement, no anxiety, no hedging.",
+        "description": "Prevents emotion escalation and keeps cadence tight"
+      },
+      {
+        "key": "override_condition",
+        "category": "identity",
+        "value": "The Sacramento funeral service has an explicit dress code communicated by the family: dark formal attire required. This is a format-mandated override (Bucket A). A capsule wardrobe of grey T-shirts, dark jeans, and white sneakers does not meet the formal attire requirement for a Catholic funeral service where the family has specifically requested dark formal dress. Arriving in casual capsule clothing would be disrespectful and socially excluding. The other three cities (Portland startup meetings, Seattle friend visit, San Francisco casual exploration) are all compatible with the capsule wardrobe.",
+        "description": "Bucket A common-knowledge override: funeral formal dress code is externally mandated, not personal tolerance"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Capsule packing for 8 years. Same formula every trip: 3 grey T-shirts, 2 pairs of dark jeans, white sneakers, one light jacket. Fits in a single carry-on under 7kg. Friends joke I wear a uniform.",
+          "success_criteria": "Agent acknowledges the long-term capsule packing identity without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_portland",
+          "aim_type": "info_scatter",
+          "description": "First stop is Portland, two days. I'm advising a startup team there — very casual tech culture, everyone in hoodies and jeans.",
+          "success_criteria": "Agent acknowledges Portland stop as casual and compatible",
+          "required_info_keys": [
+            "situation_portland"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose city 1 (casual startup meetings) — pref-aligned, agent agrees"
+        },
+        {
+          "aim_id": "aim_2_seattle",
+          "aim_type": "info_scatter",
+          "description": "Then Seattle for a day. Visiting my friend Marcus, coffee and walking around Pike Place. Super relaxed.",
+          "success_criteria": "Agent acknowledges Seattle stop as casual and compatible",
+          "required_info_keys": [
+            "situation_seattle"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose city 2 (casual friend visit) — pref-aligned, agent agrees"
+        },
+        {
+          "aim_id": "aim_3_funeral",
+          "aim_type": "info_scatter",
+          "description": "Sacramento next. Attending the funeral for my colleague David's father at a Catholic church. The family sent a note asking everyone to please wear dark formal attire.",
+          "success_criteria": "Agent acknowledges the Sacramento funeral stop",
+          "required_info_keys": [
+            "situation_funeral"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose city 3 (funeral with explicit formal dress request) as factual context — no pref discussion"
+        },
+        {
+          "aim_id": "aim_4_sf",
+          "aim_type": "info_scatter",
+          "description": "Last stop San Francisco. Exploring Fisherman's Wharf, then dinner with my college friend at a taco place. Nothing fancy.",
+          "success_criteria": "Agent acknowledges SF stop as casual and compatible",
+          "required_info_keys": [
+            "situation_sf"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose city 4 (casual exploration and dinner) — pref-aligned, agent agrees"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me finalize my packing list for the whole trip.",
+          "success_criteria": "Agent differentiates packing per city: Portland, Seattle, SF → capsule wardrobe fine; Sacramento funeral → must pack dark formal attire (dark suit or at minimum dark dress shirt, dark trousers, dark dress shoes) because the family explicitly requested dark formal dress and grey T-shirt + jeans + white sneakers does not meet that requirement. Agent commits to adding formal items to the packing list for Sacramento, does NOT approve the capsule wardrobe for all four stops.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "Portland",
+              "Seattle",
+              "Sacramento",
+              "San Francisco",
+              "funeral",
+              "formal",
+              "each city",
+              "each stop",
+              "all four"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me finalize packing' without enumerating cities or hinting at conflict — forces agent to self-differentiate across the four stops"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-city packing plan: Portland startup meetings → capsule wardrobe (grey T-shirts, dark jeans, white sneakers) is perfectly appropriate for casual tech culture. Seattle friend visit → capsule wardrobe fine for coffee and market walking. San Francisco exploration and taco dinner → capsule wardrobe fine. Sacramento funeral → capsule wardrobe does NOT meet the requirement. The family explicitly requested dark formal attire for the Catholic church service. Grey T-shirts and white sneakers are not dark formal attire. User must pack a dark suit (or dark dress shirt + dark trousers) and dark dress shoes for this stop. This adds items beyond the capsule formula but is non-negotiable given the family's stated dress code.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the Sacramento funeral requires dark formal attire beyond the capsule wardrobe because the family explicitly requested it",
+      "Agent recommends packing a dark suit or dark dress shirt with dark trousers and dark dress shoes for the funeral",
+      "Agent confirms the capsule wardrobe works for Portland, Seattle, and San Francisco",
+      "Agent commits to a concrete packing list that includes formal items for Sacramento rather than approving the capsule wardrobe for all stops"
+    ],
+    "forbidden_elements": [
+      "Agent approves the capsule wardrobe for all four cities without flagging the funeral dress code conflict",
+      "Agent suggests grey T-shirt and dark jeans are acceptable for the funeral service",
+      "Agent hedges without concrete recommendation (e.g., 'you might want to consider something slightly dressier' without specifying formal items)",
+      "Agent silently defers to the capsule packing preference without addressing the funeral's formal attire request"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states capsule-packing minimalist identity ONCE in Turn 2, then Turns 3-6 disclose four city stops without any pref restatement. Three stops are casual and pref-compatible (Portland tech startup, Seattle friend visit, SF exploration). One stop — Sacramento funeral at a Catholic church with family requesting dark formal attire — has a format-mandated override (Bucket A). The capsule wardrobe of grey T-shirts, dark jeans, and white sneakers physically cannot satisfy 'dark formal attire' for a funeral service. This is not personal tolerance (Bucket B) — it is an externally communicated dress code. Arriving in casual capsule clothing would be disrespectful and socially excluding. The agent must override the preference for this one stop while confirming it works for the other three."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

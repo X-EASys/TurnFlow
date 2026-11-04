@@ -1,0 +1,231 @@
+{
+  "scenario_id": "T18_242",
+  "domain": "choosing between 3 storage unit facilities",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user find and rent a storage unit. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to rent a storage unit. I'm deciding between 3 facilities near me.",
+    "flow_info": [
+      {
+        "key": "three_facilities",
+        "value": "Choosing between 3 storage unit facilities: StoreSafe, LockBox, and CubeStor",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "facility_details",
+        "value": "StoreSafe: 10x10 climate-controlled unit, $280/month, 24-hour access. LockBox: 10x10 climate-controlled unit, $155/month, access weekdays 7am-7pm only. CubeStor: 10x10 climate-controlled unit, $95/month, access 7 days a week 7am-6pm.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_volunteering",
+        "value": "User volunteers at a food bank every Saturday morning from 8am to noon, and needs to drop off and pick up supplies from storage on Saturdays",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum monthly budget for storage is $120",
+        "surface_form": "I just started a new lease on my apartment and my monthly discretionary budget is about $360. I can put a third of that toward storage at most",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$360 discretionary budget",
+          "One third toward storage → $360 / 3 = $120 max for storage"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weekend_access_constraint",
+        "value": "Must access storage on Saturday before the 8am food bank shift to collect supplies on the way, and after the shift to return them",
+        "surface_form": "I volunteer at a food bank every Saturday from 8am to noon. I keep the donation bins and supplies in storage, grab them on my way there, and return them after my shift",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "The Saturday shift runs 8am to noon; supplies must be collected on the way and returned afterward",
+          "Saturday access must include a pickup window before 8am and a return window after noon",
+          "CubeStor opens Saturday at 7am and closes at 6pm; LockBox has no Saturday access"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "climate_control_need",
+        "value": "Needs climate-controlled unit to protect sensitive items",
+        "surface_form": "I'm storing some of my late grandmother's oil paintings and old photo albums, they can't handle humidity or temperature swings",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Oil paintings and photo albums → sensitive to humidity and temperature",
+          "Sensitive items → requires climate-controlled storage"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 storage facilities (StoreSafe, LockBox, CubeStor). You will share facility details, your budget, your weekend volunteering schedule, and your storage needs across several turns. Your neighbor and coworker will praise StoreSafe and LockBox. At the very end, you will say you have decided and need to finalize your rental — you must NEVER name which facility you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You never express frustration or impatience, even if the conversation goes back and forth.",
+        "description": "Prevents emotion escalation that could leak the answer"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to rent a storage unit. I've narrowed it down to three facilities near me: StoreSafe, LockBox, and CubeStor",
+          "success_criteria": "Agent engages with the 3-facility decision",
+          "required_info_keys": [
+            "three_facilities"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "StoreSafe has a 10x10 climate-controlled unit for $280 a month with 24-hour access. LockBox has the same size climate-controlled for $155 a month but access is weekdays only, 7am to 7pm. CubeStor is $95 a month for a 10x10 climate-controlled unit, open 7 days a week from 7am to 6pm.",
+          "success_criteria": "Agent processes all 3 facilities with prices and access hours",
+          "required_info_keys": [
+            "facility_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with price and access schedule in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor has been using StoreSafe for two years. He told me the security there is top-notch, cameras everywhere, and the staff recognizes him by name",
+          "success_criteria": "Agent responds to the positive StoreSafe review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "uses StoreSafe, excellent security, cameras everywhere, staff knows him by name",
+            "target_option": "StoreSafe"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward StoreSafe"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I just started a new lease on my apartment and my monthly discretionary budget is about $360. I can put a third of that toward storage at most",
+          "success_criteria": "Agent registers the budget constraint and ideally computes $360/3 = $120 max",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates StoreSafe ($280) and LockBox ($155)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned StoreSafe has a loading dock with free dollies and carts, makes moving heavy stuff in and out really easy",
+          "success_criteria": "Agent responds to StoreSafe's loading amenities",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "StoreSafe has loading dock with free dollies and carts, easy for heavy items",
+            "target_option": "StoreSafe"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about StoreSafe (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at a food bank every Saturday from 8am to noon. I keep the donation bins and supplies in storage, grab them on my way there, and return them after my shift",
+          "success_criteria": "Agent registers Saturday pickup before the 8am shift and return after noon; LockBox has no Saturday access",
+          "required_info_keys": [
+            "saturday_volunteering"
+          ],
+          "required_constraint_keys": [
+            "weekend_access_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates LockBox (weekday-only access)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I'm storing some of my late grandmother's oil paintings and old photo albums, they can't handle humidity or temperature swings",
+          "success_criteria": "Agent notes the need for climate control",
+          "required_constraint_keys": [
+            "climate_control_need"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver climate control requirement — all 3 options satisfy this, confirms unit type needed"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "A coworker of mine rents at LockBox. She said their online account portal is really slick, you can pay rent and check your access log from your phone",
+          "success_criteria": "Agent responds to LockBox's tech features",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "rents at LockBox, great online portal, pay rent and check access log from phone",
+            "target_option": "LockBox"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward LockBox"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "She also said LockBox gave her the first month free when she signed a 12-month contract, and the hallways are always spotless",
+          "success_criteria": "Agent responds to LockBox's promotion and cleanliness",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "LockBox first month free on 12-month contract, hallways always spotless",
+            "target_option": "LockBox"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about LockBox (already eliminated by schedule)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright I've made my decision. I need to finalize the rental this week. Which facility should I commit to?",
+          "success_criteria": "Agent recommends CubeStor specifically, showing it is the only facility that fits within the $120 budget and provides weekend access for Saturday volunteering",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which do you prefer",
+              "up to you",
+              "any of them",
+              "depends"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to CubeStor based on constraint elimination"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "Rent at CubeStor ($95/month). It is within the $120 monthly cap ($360/3), has climate control, and opens Saturdays from 7am to 6pm, providing a pickup window before the 8am food bank shift and a return window after noon. StoreSafe and LockBox exceed the cap; LockBox also has no Saturday access.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Recommend CubeStor as the facility to rent, respecting the $120 cap, climate-control requirement, and Saturday access for supplies before the 8am shift and after noon."
+    ],
+    "forbidden_elements": [
+      "Recommending StoreSafe as the facility to rent",
+      "Recommending LockBox as the facility to rent",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the Saturday access requirement when making a recommendation",
+      "Asking the user which facility they decided on instead of computing the answer from constraints"
+    ],
+    "explanation": "The cap is $360/3=$120. StoreSafe costs $280 and LockBox $155, both over budget; LockBox also has no Saturday access. CubeStor costs $95, provides climate control, and opens 7am–6pm on Saturdays, giving a window for pickup before the 8am shift and return after noon. No travel duration is specified. A correct facility recommendation does not separately have to explain every elimination reason."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

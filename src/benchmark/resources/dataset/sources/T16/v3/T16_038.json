@@ -1,0 +1,310 @@
+{
+  "scenario_id": "T16_038",
+  "domain": "kids birthday party food planning",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful party planning assistant. Help the user plan food for a kids' birthday party by tracking who is attending, their dietary needs, and any allergies. When the user asks you to evaluate specific food items, check each item against every attending child's current dietary constraints. Pay close attention to changes in the guest list and any updates to restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, my daughter Emma is turning 7 next Saturday and we're throwing a birthday party. Can you help me figure out the food?",
+    "flow_info": [
+      {
+        "key": "initial_kids",
+        "value": "Five kids confirmed so far: Emma (birthday girl), Noah, Lily, Mason, and Zoe",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noah_celiac",
+        "value": "Noah was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_allergy_history",
+        "value": "Lily ate a granola bar with cashews at school and her face swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mason_diabetes",
+        "value": "Mason's mom manages his type 1 diabetes pretty carefully",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "zoe_egg_allergy",
+        "value": "Zoe broke out in hives last time she had scrambled eggs, her pediatrician confirmed egg allergy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "party_details",
+        "value": "Party is 2pm to 5pm, about 15 dollars per kid budget for food, planning to do it in the backyard",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "oliver_joins",
+        "value": "Emma's cousin Oliver is coming too, his mom just confirmed. He's been on a strict dairy-free diet since he was a toddler because he gets really sick from milk — his doctor said it's milk protein allergy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "zoe_healed",
+        "value": "Zoe's mom just called me — she took Zoe back to the allergist last month and they did a food challenge. Turns out Zoe has completely outgrown her egg allergy, she can eat everything now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mason_exits",
+        "value": "Mason's mom texted that they have a family thing that afternoon so Mason can't come anymore. But she asked if I could set aside a little goodie bag of party snacks for him since he'll be sad to miss it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Food list to check: cheese pizza, gluten-free chicken nuggets, peanut butter cookies, fruit skewers with yogurt dip, vanilla cupcakes",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "noah_gluten",
+        "value": "Cannot eat gluten or wheat-based products",
+        "disclosed": false,
+        "surface_form": "Noah was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all wheat/gluten-containing foods"
+        ]
+      },
+      {
+        "key": "lily_tree_nut",
+        "value": "Cannot eat tree nuts (cashews confirmed, should avoid all tree nuts as a precaution)",
+        "disclosed": false,
+        "surface_form": "Lily ate a granola bar with cashews at school and her face swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Cashew reaction with facial swelling + EpiPen → severe tree nut allergy",
+          "Severe allergic reaction to cashews → tree nut allergy"
+        ]
+      },
+      {
+        "key": "mason_sugar",
+        "value": "Needs low-sugar options, must be careful with high-sugar foods",
+        "disclosed": false,
+        "surface_form": "Mason's mom manages his type 1 diabetes pretty carefully",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 1 diabetes → blood sugar management is critical",
+          "Careful management → needs low-sugar or sugar-controlled food options"
+        ]
+      },
+      {
+        "key": "zoe_egg",
+        "value": "Cannot eat eggs or egg-containing products",
+        "disclosed": false,
+        "surface_form": "Zoe broke out in hives last time she had scrambled eggs, her pediatrician confirmed egg allergy",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hives from scrambled eggs + pediatrician confirmation → egg allergy",
+          "Egg allergy → must avoid eggs and egg-containing foods"
+        ]
+      },
+      {
+        "key": "oliver_dairy",
+        "value": "Cannot consume any dairy or milk-derived products",
+        "disclosed": false,
+        "surface_form": "Oliver has been on a strict dairy-free diet since he was a toddler because he gets really sick from milk — his doctor said it's milk protein allergy",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Milk protein allergy → immune reaction to proteins in cow's milk",
+          "Milk protein allergy → must avoid ALL dairy products (milk, cheese, butter, yogurt, whey, casein)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent planning your daughter Emma's 7th birthday party. You will share the guest list and each child's dietary issues in a burst, then updates will come in over several turns: a new kid joins, one kid's allergy is outgrown (removed), and one kid drops out but wants a goodie bag. At the end you will share a specific food list and ask if there are any issues. You must NEVER hint at which items are problematic — just list them and ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly parent coordinating a kids' party. You always refer to other parents and children by name in third person (e.g. 'Mason's mom texted me...', 'Zoe's mom just called...'). You never express frustration or impatience when plans change — it's just normal party planning chaos. You are matter-of-fact and cheerful.",
+        "description": "Prevents emotion escalation and ensures third-person relay for updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, my daughter Emma is turning 7 next Saturday and we're throwing a birthday party. Can you help me figure out the food?",
+          "success_criteria": "Agent engages with birthday party food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate party food planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So we've got five kids confirmed: Emma, Noah, Lily, Mason, and Zoe. Noah was diagnosed with celiac disease last year. Lily ate a granola bar with cashews at school and her face swelled up so bad they had to use an EpiPen. Mason's mom manages his type 1 diabetes pretty carefully. And Zoe broke out in hives last time she had scrambled eggs — her pediatrician confirmed egg allergy",
+          "success_criteria": "Agent acknowledges all five children and registers dietary constraints for Noah, Lily, Mason, and Zoe",
+          "required_info_keys": [
+            "initial_kids",
+            "noah_celiac",
+            "lily_allergy_history",
+            "mason_diabetes",
+            "zoe_egg_allergy"
+          ],
+          "required_constraint_keys": [
+            "noah_gluten",
+            "lily_tree_nut",
+            "mason_sugar",
+            "zoe_egg"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 5 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Party is 2pm to 5pm, thinking about 15 dollars per kid for food. We're doing it in the backyard so we have plenty of space",
+          "success_criteria": "Agent registers budget and party logistics",
+          "required_info_keys": [
+            "party_details"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Provide budget and logistics info"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh great news — Emma's cousin Oliver is coming too, his mom just confirmed. He's been on a strict dairy-free diet since he was a toddler because he gets really sick from milk — his doctor said it's milk protein allergy",
+          "success_criteria": "Agent registers Oliver as a new attendee with milk protein allergy (dairy-free constraint)",
+          "required_info_keys": [
+            "oliver_joins"
+          ],
+          "required_constraint_keys": [
+            "oliver_dairy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with significant constraint (milk protein allergy → all dairy)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should I do a themed table setup or just keep it simple? Emma wants a unicorn theme but I'm not sure if that's too much work",
+          "success_criteria": "Agent responds about party decoration without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party decorations",
+            "drift_topic": "unicorn theme table setup",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic but unrelated to dietary constraints"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Zoe's mom just called me — she took Zoe back to the allergist last month and they did a full food challenge. Turns out Zoe has completely outgrown her egg allergy, she can eat everything now. Such good news!",
+          "success_criteria": "Agent removes Zoe's egg allergy constraint",
+          "required_info_keys": [
+            "zoe_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Zoe's egg allergy is gone"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Mason's mom just texted me that they have a family thing that afternoon so Mason can't come anymore. But she asked if I could set aside a little goodie bag of party snacks for him since he'll be sad to miss it",
+          "success_criteria": "Agent notes Mason is no longer attending but needs a goodie bag, so his diabetes constraint applies only to the goodie bag",
+          "required_info_keys": [
+            "mason_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Mason's diabetes constraint now applies to goodie bag only"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How many of each thing should I make? Like how much do seven-year-olds actually eat at a party?",
+          "success_criteria": "Agent gives portion guidance without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "portion sizes",
+            "drift_topic": "how much food for kids at a party",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so here's what I'm thinking for the menu: cheese pizza, gluten-free chicken nuggets, peanut butter cookies, fruit skewers with yogurt dip, and vanilla cupcakes. Any issues?",
+          "success_criteria": "Agent identifies: cheese pizza problematic for Oliver (milk protein allergy = no cheese) and Noah (regular pizza crust has gluten); peanut butter cookies are fine for Lily (peanuts are legumes, not tree nuts) but agent may reasonably flag cross-reactivity concern; fruit skewers with yogurt dip problematic for Oliver (yogurt is dairy); vanilla cupcakes contain gluten (Noah) and likely contain eggs and dairy but Zoe's egg allergy is gone so eggs are fine now. Agent should NOT flag sugar as a problem for the party table since Mason is not attending — only for his goodie bag.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 food items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Cheese pizza: problematic for Oliver (milk protein allergy — cheese is dairy) and Noah (standard pizza crust contains gluten — celiac). Gluten-free chicken nuggets: fine for everyone at the party table, but if included in Mason's goodie bag, note his diabetes (sugar content of any coating/sauce). Peanut butter cookies: fine for Lily — peanuts are legumes, NOT tree nuts, so her cashew/tree nut allergy does not apply; however they contain gluten so Noah cannot eat them. Fruit skewers with yogurt dip: the fruit skewers are fine, but the yogurt dip is problematic for Oliver (yogurt is dairy → milk protein allergy). Vanilla cupcakes: problematic for Noah (contain gluten from flour) and Oliver (typically contain butter/milk → dairy); Zoe CAN eat them now since her egg allergy has been outgrown. Sugar-heavy items (cookies, cupcakes) should not be flagged as problems for the party table since Mason is not attending — only relevant if included in his goodie bag.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Cheese pizza is problematic for Oliver because cheese is dairy and he has milk protein allergy",
+      "Cheese pizza is problematic for Noah because regular pizza crust contains gluten and he has celiac disease",
+      "Fruit skewers with yogurt dip: the yogurt dip is problematic for Oliver because yogurt is dairy and he has milk protein allergy",
+      "Vanilla cupcakes are problematic for Noah because they contain wheat flour (gluten) — celiac",
+      "Vanilla cupcakes are problematic for Oliver because they typically contain butter and milk (dairy) — milk protein allergy",
+      "Peanut butter cookies are problematic for Noah because they contain flour (gluten) — celiac",
+      "Zoe can eat everything now — agent does NOT flag eggs as a problem for her since her egg allergy has been outgrown",
+      "Gluten-free chicken nuggets are fine for everyone currently attending the party"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut butter cookies as dangerous for Lily — peanuts are legumes, not tree nuts, and her allergy is to cashews/tree nuts",
+      "Flagging high-sugar items as problematic for the party table — Mason is not attending, his diabetes constraint only applies to his goodie bag",
+      "Saying Zoe cannot eat cupcakes or any egg-containing food — her egg allergy has been outgrown",
+      "Saying Lily has a peanut allergy — she has a tree nut allergy (cashews), peanuts are a different category"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint removal across a kids' birthday party planning conversation. The agent must track: (1) Noah has celiac disease → no gluten (inferential), (2) Lily had a severe reaction to cashews → tree nut allergy, NOT peanut allergy (over-generalization trap: peanuts are legumes, not tree nuts), (3) Mason has type 1 diabetes → low sugar needs (inferential), (4) Zoe's egg allergy is REMOVED mid-conversation (outgrown — constraint removal is the primary difficulty mechanism), (5) Oliver JOINS late with milk protein allergy → no dairy at all (late-joining high-constraint entity), (6) Mason EXITS but wants a goodie bag (scope change — his diabetes constraint shifts from party table to goodie bag only). At probe time: cheese pizza fails for Oliver (cheese=dairy) and Noah (gluten in crust). Gluten-free chicken nuggets are fine for the table. Peanut butter cookies are a trap — they look dangerous for Lily but peanuts are NOT tree nuts, so they're fine for her; however they fail for Noah (gluten). Fruit skewers with yogurt dip: fruit is fine but yogurt fails for Oliver (dairy). Vanilla cupcakes fail for Noah (gluten) and Oliver (dairy in butter/milk), but are now fine for Zoe (egg allergy removed). Mason's sugar constraint should NOT be applied to the party table since he's not attending."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

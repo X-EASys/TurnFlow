@@ -1,0 +1,318 @@
+{
+  "scenario_id": "T16_219",
+  "domain": "youth sports team end-of-season banquet",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan a youth sports team end-of-season banquet by tracking attendees, their dietary needs, and logistics. When the user asks you to evaluate specific menu items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and any updates to restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, I'm organizing the end-of-season banquet for my kid's soccer team. Can you help me plan the food?",
+    "flow_info": [
+      {
+        "key": "initial_attendees",
+        "value": "Confirmed so far: my son Jake, his teammates Marcus and Aiden, and Coach Rivera",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "aiden_peanut",
+        "value": "Aiden's mom told me he had a scary reaction to peanuts at a birthday party — they had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "coach_rivera_background",
+        "value": "Coach Rivera grew up in a Jain family in Gujarat",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "We're thinking of using the community center banquet hall, seats about 30",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "emma_joins",
+        "value": "Emma from the team is coming too — her dad just confirmed. She's been on a strict keto diet for her epilepsy, doctor prescribed it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_healed",
+        "value": "Marcus's mom just called me — turns out after more testing, the doctors said he doesn't actually have celiac. It was a misdiagnosis. He's been eating regular bread and pasta for weeks now with no issues",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "coach_wife_joins",
+        "value": "Coach Rivera is bringing his wife too",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "coach_wife_pregnancy",
+        "value": "Coach's wife is about six months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "aiden_leaves",
+        "value": "Aiden's family has a conflict — they're going to his grandma's 80th birthday instead. But Aiden asked if we could save him a plate to pick up later",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "The caterer sent over their buffet options: chicken satay with peanut sauce, Caesar salad with croutons, sushi platter with raw salmon and tuna, veggie spring rolls with sweet chili sauce, pasta carbonara",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "coach_rivera_jain",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots)",
+        "disclosed": false,
+        "surface_form": "Coach Rivera grew up in a Jain family in Gujarat",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain family → practices Jainism",
+          "Jainism → strict vegetarian diet",
+          "Jain vegetarian → no meat, no fish, no eggs, no root vegetables"
+        ]
+      },
+      {
+        "key": "aiden_peanut_allergy",
+        "value": "Severe peanut allergy, anaphylaxis risk",
+        "disclosed": false,
+        "surface_form": "Aiden's mom told me he had a scary reaction to peanuts at a birthday party — they had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac_constraint",
+        "value": "Cannot eat gluten (wheat, barley, rye)",
+        "disclosed": false,
+        "surface_form": "Marcus was diagnosed with celiac disease last year",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "emma_keto",
+        "value": "Must follow strict ketogenic diet — very low carb, high fat, moderate protein. No bread, pasta, rice, sugar, starchy foods",
+        "disclosed": false,
+        "surface_form": "She's been on a strict keto diet for her epilepsy, doctor prescribed it",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "coach_wife_pregnant",
+        "value": "Cannot eat raw fish or undercooked meat",
+        "disclosed": false,
+        "surface_form": "Coach's wife is about six months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Six months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw fish and undercooked meat"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent organizing an end-of-season banquet for your kid's soccer team. You will introduce attendees and their backgrounds across several turns. Some constraints will be removed (misdiagnosis), some people will join late, and one person will leave but want a plate saved. At the end, you will share a caterer's buffet menu and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly parent volunteer. You relay information about other families in third person (e.g., 'Marcus's mom just called me...', 'Aiden's mom told me...'). You never express frustration or impatience. You treat schedule changes and updates as normal coordination for a kids' event.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm organizing the end-of-season banquet for my kid's soccer team. Can you help me plan the food?",
+          "success_criteria": "Agent engages with banquet food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate banquet planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So confirmed so far it's my son Jake, his teammates Marcus and Aiden, and Coach Rivera. Marcus was diagnosed with celiac disease last year. Aiden's mom told me he had a scary reaction to peanuts at a birthday party — they had to use an EpiPen. And Coach Rivera grew up in a Jain family in Gujarat",
+          "success_criteria": "Agent acknowledges all attendees and their dietary constraints",
+          "required_info_keys": [
+            "initial_attendees",
+            "marcus_celiac",
+            "aiden_peanut"
+          ],
+          "required_constraint_keys": [
+            "coach_rivera_jain",
+            "aiden_peanut_allergy",
+            "marcus_celiac_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities + 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're thinking of using the community center banquet hall — it seats about 30 so plenty of room. What kind of food format works best for a group of kids and adults?",
+          "success_criteria": "Agent suggests buffet or family-style format considering the mixed group",
+          "required_info_keys": [
+            "venue_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Venue info + noise question about format"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh great news — Emma from the team is coming too, her dad just confirmed. She's been on a strict keto diet for her epilepsy, doctor prescribed it",
+          "success_criteria": "Agent registers Emma as new attendee with keto constraint",
+          "required_info_keys": [
+            "emma_joins"
+          ],
+          "required_constraint_keys": [
+            "emma_keto"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with significant constraint"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Marcus's mom just called me — turns out after more testing, the doctors said he doesn't actually have celiac. It was a misdiagnosis. He's been eating regular bread and pasta for weeks now with no issues",
+          "success_criteria": "Agent removes Marcus's gluten restriction",
+          "required_info_keys": [
+            "marcus_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Marcus's celiac was a misdiagnosis"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Coach Rivera is bringing his wife too. She's about six months pregnant",
+          "success_criteria": "Agent registers Coach's wife as new attendee and infers pregnancy dietary restrictions",
+          "required_info_keys": [
+            "coach_wife_joins",
+            "coach_wife_pregnancy"
+          ],
+          "required_constraint_keys": [
+            "coach_wife_pregnant"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with inferential constraint (pregnant → no raw fish)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Aiden's family has a conflict — they're going to his grandma's 80th birthday instead. But Aiden asked if we could save him a plate to pick up later",
+          "success_criteria": "Agent notes Aiden won't attend but needs a saved plate, so his peanut allergy applies to the saved plate",
+          "required_info_keys": [
+            "aiden_leaves"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Aiden's peanut allergy applies to saved plate only"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we do the trophy ceremony before or after the food? Last year we did it before and the kids were antsy",
+          "success_criteria": "Agent responds about ceremony timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "event logistics",
+            "drift_topic": "trophy ceremony timing relative to food",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "How many people total are we at now? I want to make sure I give the caterer the right headcount",
+          "success_criteria": "Agent provides current headcount",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "headcount for caterer",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn — on-topic but creates more distance before probe"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "The caterer sent over their buffet options: chicken satay with peanut sauce, Caesar salad with croutons, sushi platter with raw salmon and tuna, veggie spring rolls with sweet chili sauce, pasta carbonara. Any issues?",
+          "success_criteria": "Agent identifies problems with chicken satay (peanut sauce → Aiden's saved plate), sushi platter (raw fish → Coach's wife pregnant; also Coach Rivera is Jain → no fish), Caesar salad with croutons (fine for everyone at the table now that Marcus's celiac is cleared), veggie spring rolls (need to verify no root veg for Coach Rivera but otherwise OK), pasta carbonara (high carb → Emma keto; contains egg → Coach Rivera Jain)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 buffet items against current constraint state"
+        }
+      ],
+      "total_max_turns": 17
+    }
+  },
+  "ground_truth": {
+    "answer": "Chicken satay with peanut sauce: problematic for Aiden's saved plate (severe peanut allergy) and for Coach Rivera (Jain — no meat). Sushi platter with raw salmon and tuna: problematic for Coach Rivera (Jain — no fish) and Coach's wife (pregnant — no raw fish). Caesar salad with croutons: fine for everyone at the table — Marcus's celiac was a misdiagnosis, he can eat gluten now. Veggie spring rolls with sweet chili sauce: need to check ingredients for Coach Rivera (Jain — no root vegetables like onion/garlic), but otherwise fine. Pasta carbonara: problematic for Emma (keto — pasta is high carb) and for Coach Rivera (Jain — contains egg, and often contains garlic). The peanut sauce on the chicken satay must be excluded from Aiden's saved plate.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Chicken satay with peanut sauce is problematic for Coach Rivera because he is Jain and cannot eat meat",
+      "Chicken satay with peanut sauce must not be included in Aiden's saved plate due to his severe peanut allergy",
+      "Sushi platter is problematic for Coach Rivera because Jain diet forbids fish",
+      "Sushi platter is problematic for Coach's wife because she is pregnant and cannot eat raw fish",
+      "Pasta carbonara is problematic for Emma because she is on a strict keto diet and pasta is high carb",
+      "Pasta carbonara is problematic for Coach Rivera because Jain diet forbids eggs",
+      "Caesar salad with croutons is fine — Marcus's celiac was a misdiagnosis, he can eat gluten now",
+      "Agent does not flag gluten as a problem for Marcus (constraint was removed)"
+    ],
+    "forbidden_elements": [
+      "Flagging Caesar salad croutons as a gluten problem for Marcus (his celiac was a misdiagnosis, constraint removed)",
+      "Saying Aiden's peanut allergy applies to the buffet table (he is not attending, only getting a saved plate)",
+      "Flagging any dish as problematic because of a general 'nut allergy' for Aiden (he specifically has peanut allergy only)",
+      "Saying Marcus has any dietary restriction (celiac was cleared)",
+      "Ignoring Coach Rivera's Jain dietary constraints on meat and fish dishes"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint removal. Key tracking challenges: (1) Coach Rivera is from a Jain family → Jain vegetarian → no meat, no fish, no eggs, no root vegetables (inferential chain). (2) Marcus's celiac disease is REMOVED mid-conversation (misdiagnosis confirmed). (3) Aiden EXITS the banquet but wants a saved plate (peanut allergy scope changes from table to saved plate only). (4) Coach's wife JOINS late with an inferential constraint (pregnant → no raw fish). (5) Emma JOINS late with keto constraint. At probe time, the agent must apply CURRENT state: Coach Rivera = Jain (no meat/fish/eggs/root veg), Coach's wife = pregnant (no raw fish), Emma = keto (no high carb), Aiden = peanut allergy (saved plate only). Marcus has NO restrictions. The Caesar salad is a trap — it looks problematic for celiac but that constraint was removed. The chicken satay tests both the Jain constraint (meat) and the scope-limited peanut allergy (saved plate)."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

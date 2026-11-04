@@ -1,0 +1,216 @@
+{
+  "scenario_id": "T18_068",
+  "domain": "choosing between 3 savings accounts",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and open a savings account. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to open a new savings account. I've narrowed it down to 3 options at different banks.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 savings accounts: Account A (Premier Savings at First National), Account B (Growth Saver at City Bank), Account C (Basic Saver at Metro Credit Union)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "account_details",
+        "value": "Account A: Premier Savings at First National, 4.2% annual rate, requires $5000 minimum opening deposit, no monthly fee. Account B: Growth Saver at City Bank, 3.8% annual rate, requires $2500 minimum opening deposit, $5/month fee waived if balance stays above $2000. Account C: Basic Saver at Metro Credit Union, 3.5% annual rate, requires $500 minimum opening deposit, no monthly fee, no minimum balance requirement.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "access_features",
+        "value": "Account A has in-branch-only access with no mobile app. Account B has full online and mobile banking. Account C has full online and mobile banking with 24/7 chat support.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "deposit_budget",
+        "value": "Maximum amount available for opening deposit is $1600",
+        "surface_form": "I bring home $4800 a month after taxes. My partner and I agreed we'd set aside no more than one-third of one month's pay for the opening deposit",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly take-home pay is $4800",
+          "One-third of $4800 = $1600",
+          "Maximum opening deposit budget is $1600"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "access_constraint",
+        "value": "Cannot use in-branch-only accounts because user travels frequently for work and needs mobile access",
+        "surface_form": "I travel a lot for work, sometimes gone two or three weeks at a stretch. I need to be able to check and manage my account from my phone",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Travels frequently for work, gone weeks at a time",
+          "Needs mobile access to manage account",
+          "Account A is in-branch-only with no mobile app → incompatible"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 savings accounts (A: Premier Savings at First National, B: Growth Saver at City Bank, C: Basic Saver at Metro Credit Union). You will share account details, your deposit budget, and your access needs across several turns. Your sister and a coworker will praise Accounts A and B. At the very end, you will simply say you have made your decision and ask what documents you need to open the account — you must NEVER name which account you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information about friends or family, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to open a new savings account. I've narrowed it down to 3 options: Premier Savings at First National, Growth Saver at City Bank, and Basic Saver at Metro Credit Union",
+          "success_criteria": "Agent engages with the 3-option savings account selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've gathered: Account A, Premier Savings at First National, gives 4.2% annual rate and needs a $5000 minimum opening deposit, no monthly fee. Account B, Growth Saver at City Bank, gives 3.8% annual rate, needs $2500 minimum opening deposit, has a $5 monthly fee that's waived if you keep the balance above $2000. Account C, Basic Saver at Metro Credit Union, gives 3.5% annual rate, only needs $500 to open, no monthly fee, no minimum balance requirement",
+          "success_criteria": "Agent processes all 3 accounts with their rates, deposit requirements, and fee structures",
+          "required_info_keys": [
+            "account_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 accounts with rates, minimums, and fees in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My sister opened the Premier Savings at First National last year. She told me the branch manager gave her a really thorough walkthrough of their investment options too",
+          "success_criteria": "Agent responds to the positive Account A review from the sister",
+          "drift_config": {
+            "drift_subject": "sister",
+            "drift_topic": "opened Premier Savings at First National, branch manager gave thorough investment walkthrough",
+            "target_option": "Account A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Account A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I bring home $4800 a month after taxes. My partner and I agreed we'd set aside no more than one-third of one month's pay for the opening deposit",
+          "success_criteria": "Agent registers the deposit budget constraint and ideally computes $4800 / 3 = $1600, eliminating Account A ($5000) and Account B ($2500)",
+          "required_constraint_keys": [
+            "deposit_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver deposit budget constraint via income + spending rule — eliminates A and B on minimum deposit"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My sister mentioned that First National also has a rewards program where you earn points on your savings balance. She's already redeemed points for a gift card",
+          "success_criteria": "Agent responds to more positive Account A information from the sister",
+          "drift_config": {
+            "drift_subject": "sister",
+            "drift_topic": "First National has rewards program on savings balance, already redeemed points for gift card",
+            "target_option": "Account A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Account A (already eliminated by deposit minimum)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I travel a lot for work, sometimes gone two or three weeks at a stretch. I need to be able to check and manage my account from my phone. Oh and Account A is in-branch-only with no mobile app. Account B and C both have full online and mobile banking, and C even has 24/7 chat support",
+          "success_criteria": "Agent recognizes that Account A's in-branch-only access is incompatible with the user's travel schedule",
+          "required_info_keys": [
+            "access_features"
+          ],
+          "required_constraint_keys": [
+            "access_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver access constraint and channel details — double-eliminates A (in-branch-only + over deposit budget)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A coworker of mine just switched to the Growth Saver at City Bank. He told me their mobile app is really slick, and the 3.8% rate is hard to beat for a no-hassle account",
+          "success_criteria": "Agent responds to the positive Account B review from the coworker",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "switched to Growth Saver at City Bank, mobile app is slick, 3.8% rate is hard to beat",
+            "target_option": "Account B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Account B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My coworker also said City Bank's customer service has been great, they resolved a billing issue for him in one phone call. He's been really happy with the switch overall",
+          "success_criteria": "Agent responds to more positive Account B information from the coworker",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "City Bank customer service resolved billing issue in one call, very happy overall",
+            "target_option": "Account B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Account B (already eliminated by deposit minimum)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to go in and get this opened this week. What documents and information should I bring with me?",
+          "success_criteria": "Agent focuses on Account C (Basic Saver at Metro Credit Union) as the account being opened, since it is the only option with a minimum deposit ($500) within the $1600 budget and offers mobile banking for the user's travel needs",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "deposit limit"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they decided — agent must determine which account and focus on Account C"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should open Account C, Basic Saver at Metro Credit Union (3.5% rate, $500 minimum deposit, no monthly fee, full mobile banking). Account A requires a $5000 minimum deposit which far exceeds the $1600 budget ($4800 / 3 = $1600), and is in-branch-only which conflicts with the user's frequent travel. Account B requires a $2500 minimum deposit which also exceeds the $1600 budget. Only Account C ($500 minimum deposit < $1600 budget, mobile banking available) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent's response focuses specifically on opening Account C (Basic Saver at Metro Credit Union)",
+      "Agent shows that Account A's $5000 minimum deposit exceeds the derived $1600 cap from $4800 divided by 3 equals $1600",
+      "Agent shows that Account B's $2500 minimum deposit exceeds the derived $1600 cap from $4800 divided by 3 equals $1600",
+      "Agent shows that Account C's $500 minimum deposit fits within the $1600 derived deposit budget",
+      "Agent identifies that Account A's in-branch-only access is incompatible with the user's frequent work travel requiring mobile access"
+    ],
+    "forbidden_elements": [
+      "Helping open Account A (Premier Savings at First National — $5000 minimum deposit far exceeds $1600 budget, also in-branch-only conflicts with travel)",
+      "Helping open Account B (Growth Saver at City Bank — $2500 minimum deposit exceeds $1600 budget)",
+      "Ignoring the deposit budget constraint when making a recommendation",
+      "Asking which account the user decided on instead of computing it from constraints",
+      "Recommending Account B because the coworker praised it in recent turns"
+    ],
+    "explanation": "Deposit budget constraint: $4800 monthly income / 3 = $1600 maximum opening deposit. Account A requires $5000 (3.1x over budget, eliminated). Account B requires $2500 (1.56x over budget, eliminated). Account C requires $500 (well within $1600 budget, passes). Access constraint: user travels frequently and needs mobile banking. Account A is in-branch-only (eliminated on access too). Account B has mobile banking (passes access but fails deposit). Account C has mobile banking (passes access). Only Account C survives both constraints. Despite 4 drift turns praising Account A and Account B, the agent must respect the hard constraints and focus on Account C."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

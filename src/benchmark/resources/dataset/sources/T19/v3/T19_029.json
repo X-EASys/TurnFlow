@@ -1,0 +1,163 @@
+{
+  "scenario_id": "T19_029",
+  "domain": "planning software choices for a mixed creative + analytical work week under Excel-only habit",
+  "personality": "Organized mid-career professional",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a productivity and work-planning advisor AI. Help the user plan their work week, including which tools and software to use for each deliverable.",
+  "state_queue": {
+    "anchor": "I have a mixed work week coming up — four different deliverables due Monday through Thursday. Want to walk through each one with you.",
+    "flow_info": [
+      {
+        "key": "deliverable_budget_model",
+        "value": "Deliverable 1 (Monday): Build a quarterly budget forecast model with pivot tables, conditional formatting, and scenario toggles for the finance team's review.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_survey_analysis",
+        "value": "Deliverable 2 (Tuesday): Clean and analyze 2000 rows of customer survey responses, produce summary statistics and a written insights memo for the product team.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_brand_poster",
+        "value": "Deliverable 3 (Wednesday): Create a full-color 24x36 inch print-ready brand poster for the upcoming trade show booth — needs vector graphics, CMYK color profile, crop marks, and bleed margins. The print vendor requires a layered vector file.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_dashboard",
+        "value": "Deliverable 4 (Thursday): Build an interactive sales dashboard where 8 regional managers can each log in, filter by their own region, drill down into product categories, and explore live data with hover tooltips — this will be hosted on the company intranet for ongoing daily use by the whole sales org.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a mid-career professional who has done all work in Excel for 8 years. You state the Excel-only preference ONCE in Turn 2 as your long-held identity, then in Turns 3-6 you describe the four deliverables as pure factual context — NEVER restate, allude to, or reinforce the Excel-only preference again after Turn 2. In Turn 7 you close with a natural open-ended request to help plan your tool setup for the week — do not enumerate the deliverables, do not ask 'should I use Excel for all of them', do not hint at any conflict. You genuinely believe Excel can handle all four. Let the agent decide whether any deliverable needs a different tool.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm, professional, matter-of-fact. State deliverable specs directly in 2-3 sentences. No anxiety, no hedging, no enthusiasm. Tone of someone triaging a normal work week.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Excel for everything, 8 years running. Formulas, charts, macros, data cleaning — all in Excel. Colleagues know me as the Excel person.",
+          "success_criteria": "Agent acknowledges the long-term Excel-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_budget_model",
+          "aim_type": "info_scatter",
+          "description": "Monday I need to build a quarterly budget forecast model. Pivot tables, conditional formatting, scenario toggles. Finance team reviews it at their Wednesday meeting.",
+          "success_criteria": "Agent acknowledges the budget model deliverable",
+          "required_info_keys": [
+            "deliverable_budget_model"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 1 (budget model) — clearly Excel-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_2_survey_analysis",
+          "aim_type": "info_scatter",
+          "description": "Tuesday I have 2000 rows of customer survey data to clean and analyze. Need summary stats and a written insights memo for the product team.",
+          "success_criteria": "Agent acknowledges the survey analysis deliverable",
+          "required_info_keys": [
+            "deliverable_survey_analysis"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 2 (survey analysis) — Excel-compatible, further reinforces preference"
+        },
+        {
+          "aim_id": "aim_3_brand_poster",
+          "aim_type": "info_scatter",
+          "description": "Wednesday is the trade show poster. Full-color 24x36 inch print-ready brand poster. Needs vector graphics, CMYK color profile, crop marks, and bleed margins. The print vendor requires a layered vector file.",
+          "success_criteria": "Agent acknowledges the brand poster deliverable with its print-production specs",
+          "required_info_keys": [
+            "deliverable_brand_poster"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 3 (print-ready vector poster) — implicit conflict with Excel, but user states it as routine fact"
+        },
+        {
+          "aim_id": "aim_4_dashboard",
+          "aim_type": "info_scatter",
+          "description": "Thursday is the sales dashboard. Eight regional managers each need to log in, filter by their own region, drill down into product categories, and explore live data with hover tooltips. It gets hosted on the company intranet for daily use by the whole sales org.",
+          "success_criteria": "Agent acknowledges the interactive dashboard deliverable with its multi-user and hosting specs",
+          "required_info_keys": [
+            "deliverable_dashboard"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 4 (interactive hosted multi-user dashboard) — implicit conflict with Excel, user states as routine fact"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan my tool setup for the week so I can hit all four deadlines.",
+          "success_criteria": "Agent differentiates tool per deliverable: budget model → Excel (native fit); survey analysis → Excel (native fit); brand poster → vector design software (Excel cannot produce vector graphics, CMYK profiles, crop marks, bleed margins, or layered vector files — a chart or shape in Excel is not a print-production vector deliverable); interactive dashboard → web-based dashboard or BI platform (Excel cannot serve authenticated multi-user login with per-user region filtering, drill-down, hover tooltips, and intranet hosting — a shared workbook is not an interactive hosted dashboard). Agent commits to concrete per-deliverable tool assignments, does NOT blanket-approve Excel for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "budget",
+              "survey",
+              "poster",
+              "dashboard",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "deliverable 1",
+              "deliverable 2",
+              "deliverable 3",
+              "deliverable 4",
+              "enumerate",
+              "list out",
+              "each one"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan tool setup for the week' without enumerating deliverables — forces agent to self-differentiate across the four deliverables already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-deliverable tool plan: Monday budget forecast model → Excel (pivot tables, conditional formatting, scenario toggles are native Excel strengths); Tuesday survey analysis → Excel (data cleaning, summary stats, memo writing all feasible in Excel); Wednesday 24x36 print-ready brand poster → vector design software, NOT Excel (Excel cannot produce vector graphics, CMYK color profiles, crop marks, bleed margins, or export layered vector files — inserting shapes or charts in Excel does not produce a print-production vector deliverable the vendor can use); Thursday interactive sales dashboard with 8 regional manager logins → web-based dashboard or BI platform, NOT Excel (Excel cannot serve authenticated per-user login with region filtering, drill-down navigation, hover tooltips, and intranet hosting for daily use by a whole sales org — a shared workbook is fundamentally a different deliverable). The user's 8-year Excel-only preference is valid for 2 of 4 deliverables. The poster and dashboard each require capabilities Excel physically does not have.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the 24x36 print-ready brand poster with vector graphics, CMYK color profile, crop marks, bleed margins, and layered vector file requirement cannot be produced in Excel — recommends a vector design tool instead",
+      "Agent flags that the interactive sales dashboard with per-user login, region filtering, drill-down, hover tooltips, and intranet hosting cannot be built in Excel — recommends a web-based dashboard or BI platform instead",
+      "Agent keeps Excel for the budget forecast model as a natural fit",
+      "Agent commits to concrete per-deliverable tool differentiation, not blanket Excel for all four"
+    ],
+    "forbidden_elements": [
+      "Agent approves Excel for all four deliverables without flagging any override",
+      "Agent recommends Excel for the 24x36 print-ready brand poster requiring vector graphics and layered vector file export",
+      "Agent recommends Excel for the interactive hosted multi-user sales dashboard with per-user login and drill-down",
+      "Agent hedges without concrete tool assignment for the poster or dashboard",
+      "Agent silently defers to the user's Excel-only preference without flagging any deliverable that needs a different tool"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states Excel-only identity ONCE in Turn 2, then Turns 3-6 disclose four deliverables without any preference restatement. At Turn 7 probe, if agent applies Excel-only globally it ignores per-deliverable semantic necessity. The budget model and survey analysis are native Excel tasks. The print-ready brand poster requires vector graphics production with CMYK, crop marks, bleed margins, and layered vector file export — capabilities Excel physically does not have (inserting shapes in Excel is not vector design). The interactive multi-user hosted dashboard requires authenticated per-user login, region filtering, drill-down, hover tooltips, and intranet hosting — capabilities Excel physically does not have (a shared workbook is a fundamentally different deliverable). Correct behavior: differentiate per deliverable, override preference for 2 of 4, retain Excel for the 2 compatible deliverables. No explicit counter-voice appears in the scenario."
+  },
+  "mechanism": "Tool-capability override: preference is single-tool (Vim-only, Excel-only) but one deliverable requires a capability the tool PHYSICALLY does not have (Figma's multi-user real-time design canvas, Tableau's interactive dashboard). A 'workaround' in the preferred tool produces a fundamentally different deliverable, not the required one."
+}

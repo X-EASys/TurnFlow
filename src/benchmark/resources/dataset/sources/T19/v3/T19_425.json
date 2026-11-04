@@ -1,0 +1,143 @@
+{
+  "scenario_id": "T19_425",
+  "domain": "planning a data engineering week with deliverables under SQL-notebook-only preference",
+  "personality": "Pragmatic senior data engineer",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a data engineering workflow advisor AI. Help the user plan their weekly deliverables and communication approach for data engineering tasks.",
+  "state_queue": {
+    "anchor": "I have three deliverables this week I need to coordinate with different stakeholders.",
+    "flow_info": [
+      {
+        "key": "situation_pipeline_postmortem",
+        "value": "Situation 1: Last Friday a critical ETL pipeline failed silently for 6 hours, corrupting downstream dashboards. The VP of Analytics has asked the user to walk the data platform team through what happened. The user has a 55MB bundle of pipeline execution logs, a 12-minute screen recording showing the cascading failure across DAGs, and annotated screenshots of the corrupted dashboard states. The team needs to trace the failure path together in real time to agree on the root cause before any fix is scoped.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_migration_ddl",
+        "value": "Situation 2: User is migrating a legacy Oracle schema to Snowflake. This week's deliverable is the DDL transformation scripts — 14 tables with type mappings, constraint translations, and index strategy changes. Needs to share the final DDL with the DBA for sign-off.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_quarterly_metrics",
+        "value": "Situation 3: User needs to deliver the Q2 data quality metrics summary to the data governance committee. Standard quarterly report — row counts, null rates, schema drift incidents, SLA compliance percentages. Routine, same format as last quarter.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior data engineer who has used SQL notebooks (Databricks notebooks, Jupyter with SQL kernels, Observable) as your ONLY deliverable format for 8 years. You state this preference ONCE in Turn 2 as your professional identity, then in Turns 3-5 you describe the three deliverables as pure factual context — NEVER restate, allude to, or reinforce the SQL-notebook-only preference again after Turn 2. In Turn 6 you close with a natural 'help me plan how to deliver each of these this week' — do not enumerate the situations, do not ask 'should these all be notebooks', do not hint at any conflict. You genuinely believe SQL notebooks work for all three. Let the agent decide whether any situation needs a format override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm, direct, matter-of-fact. State facts in 2-3 short sentences per turn. No anxiety, no hedging, no enthusiasm. Tone of a senior engineer triaging the week's work on Monday morning.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "SQL notebooks have been my only deliverable format for 8 years. Everything I produce goes out as a notebook — DDL, analysis, reports, documentation. My team and stakeholders all know they get a notebook link from me, never a slide deck, never a meeting, never a video call.",
+          "success_criteria": "Agent acknowledges the long-term SQL-notebook-only deliverable preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year professional identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_postmortem",
+          "aim_type": "info_scatter",
+          "description": "First one: our critical ETL pipeline failed silently for 6 hours last Friday, corrupted downstream dashboards. VP of Analytics wants me to walk the data platform team through what happened. I have a 55MB bundle — 12-minute screen recording of the cascading DAG failure, full execution logs, annotated screenshots of the corrupted states. Team needs to trace the failure path together in real time and agree on root cause before we scope any fix.",
+          "success_criteria": "Agent acknowledges the pipeline postmortem situation",
+          "required_info_keys": [
+            "situation_pipeline_postmortem"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (55MB artifacts + real-time collaborative root-cause tracing) as factual context, no format hint"
+        },
+        {
+          "aim_id": "aim_2_situation_migration",
+          "aim_type": "info_scatter",
+          "description": "Second one: I'm migrating our legacy Oracle schema to Snowflake. This week I need to deliver the DDL transformation scripts — 14 tables, type mappings, constraint translations, index strategy. DBA needs to review and sign off.",
+          "success_criteria": "Agent acknowledges the DDL migration deliverable",
+          "required_info_keys": [
+            "situation_migration_ddl"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (DDL scripts for DBA sign-off) — notebook-compatible by default"
+        },
+        {
+          "aim_id": "aim_3_situation_metrics",
+          "aim_type": "info_scatter",
+          "description": "Third one: Q2 data quality metrics for the governance committee. Standard quarterly — row counts, null rates, schema drift incidents, SLA compliance. Same format as last quarter, routine delivery.",
+          "success_criteria": "Agent acknowledges the quarterly metrics report situation",
+          "required_info_keys": [
+            "situation_quarterly_metrics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (routine quarterly metrics report) — notebook-compatible by default"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "All three are due this week. Help me plan how to deliver each of these.",
+          "success_criteria": "Agent differentiates delivery format per situation: Pipeline postmortem → synchronous video/screen-share session with the team (55MB artifacts exceed async notebook delivery, and real-time collaborative root-cause tracing cannot be done asynchronously — the team must trace the failure path together, pause, discuss, and agree on root cause interactively); DDL migration → SQL notebook is fine (code-centric, reviewable async by DBA); Q2 metrics → SQL notebook is fine (tabular data, routine format). Agent commits to concrete per-situation format assignments, does NOT blanket-approve SQL notebook for all three per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "pipeline",
+              "postmortem",
+              "DDL",
+              "migration",
+              "metrics",
+              "governance",
+              "first",
+              "second",
+              "third",
+              "situation 1",
+              "situation 2",
+              "situation 3",
+              "enumerate",
+              "list out",
+              "notebook for all"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan how to deliver each' without enumerating items — forces agent to self-differentiate across the three deliverables already disclosed"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation delivery plan: Pipeline postmortem (55MB artifacts + real-time collaborative root-cause tracing) → synchronous video/screen-share session with the data platform team. A SQL notebook cannot deliver a 12-minute screen recording for interactive viewing, the 55MB bundle exceeds typical async sharing limits for notebook attachments, and the core requirement — tracing the failure path together in real time to agree on root cause — is fundamentally synchronous and interactive. The team needs to pause, discuss, backtrack, and reach consensus live. DDL migration scripts → SQL notebook is ideal (code-centric DDL, DBA reviews async, comments inline). Q2 data quality metrics → SQL notebook is ideal (tabular output, routine quarterly format, governance committee reads at their own pace). The user's 8-year SQL-notebook-only preference is valid for 2 of 3 deliverables but must be overridden for the postmortem because the combination of large multimedia payload AND real-time collaborative analysis makes async notebook delivery physically inadequate.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the pipeline failure postmortem requires a synchronous session (video call or screen-share meeting) — a SQL notebook cannot support real-time collaborative root-cause tracing where the team must trace the failure path together and agree on root cause interactively",
+      "Agent acknowledges that the 55MB artifact bundle (12-minute screen recording + logs + screenshots) exceeds what can be delivered effectively through an async notebook format",
+      "Agent commits to SQL notebook as appropriate for the DDL migration scripts (code-centric, async DBA review)",
+      "Agent commits to SQL notebook as appropriate for the Q2 data quality metrics (tabular, routine, async committee review)",
+      "Agent provides concrete per-situation format differentiation rather than blanket notebook-for-all"
+    ],
+    "forbidden_elements": [
+      "Agent approves SQL notebook as the delivery format for all three situations without flagging any override",
+      "Agent recommends SQL notebook for the pipeline postmortem without flagging that real-time collaborative tracing requires a synchronous session",
+      "Agent suggests embedding or linking the 55MB recording in a notebook as a complete solution without acknowledging the synchronous collaboration requirement",
+      "Agent hedges generically without concrete format assignment per deliverable",
+      "Agent silently defers to the user's notebook-only preference without flagging any override need"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states SQL-notebook-only identity ONCE in Turn 2, then Turns 3-5 disclose three factual deliverable situations without any preference restatement. At Turn 6 probe, if agent applies notebook-only globally it ignores per-situation semantic necessity. The pipeline postmortem has a HARD override: (1) 55MB multimedia payload exceeds practical async notebook delivery, AND (2) the stated requirement is real-time collaborative root-cause tracing — the team must trace the failure path together, pause, discuss, and agree. This is fundamentally synchronous and interactive; no amount of notebook formatting can replicate a live collaborative debugging session. A 'link to cloud storage' workaround addresses the file-size issue but NOT the synchronous collaboration requirement — the review itself is not async. The DDL scripts and quarterly metrics are both naturally notebook-compatible (code and tabular data, async review). Correct behavior: override preference for postmortem (synchronous session), retain notebook for the other two."
+  },
+  "mechanism": "Large-payload-interactive override: preference is email-only but one situation has artifacts that exceed email limits AND require interactive walkthrough (50+MB video + logs bundle requiring synchronous review). Not stackable via 'link to storage' — the review itself is not-async."
+}

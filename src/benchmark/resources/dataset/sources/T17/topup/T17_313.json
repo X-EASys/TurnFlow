@@ -1,0 +1,264 @@
+{
+  "scenario_id": "T17_313",
+  "domain": "building a customer feedback portal",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and manage their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm leading a new project at work — we're building a customer feedback portal. Got a team together and a deadline, wanted to run the setup by you.",
+    "flow_info": [
+      {
+        "key": "project_overview",
+        "value": "Customer feedback portal: customers submit feedback, internal team triages and responds, analytics dashboard for trends",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deadline",
+        "value": "Hard launch deadline is August 15th, currently June 2nd",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_interns",
+        "value": "Two frontend developers are college juniors doing summer internships — their internships end August 1st, two weeks before launch",
+        "surface_form": "Two of our frontend devs are college juniors — super sharp, really motivated, they've been crushing it on the UI components",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "College juniors on summer internship",
+          "Summer internships typically end late July / early August",
+          "They will leave before the August 15 launch deadline"
+        ]
+      },
+      {
+        "key": "tech_lead_risk",
+        "value": "The tech lead / only backend architect is actively interviewing at other companies and may leave mid-project",
+        "surface_form": "Our tech lead is brilliant — he's the one who designed the whole backend architecture. He mentioned he's been getting a lot of recruiter interest lately and went on a couple of interviews, but he says he's just exploring",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Tech lead is actively interviewing",
+          "Actively interviewing = flight risk",
+          "If he leaves, no one else knows the backend architecture"
+        ]
+      },
+      {
+        "key": "pm_scope_creep",
+        "value": "The product manager keeps adding new features weekly, causing constant scope changes",
+        "surface_form": "Our PM is fantastic — super creative, always full of ideas. She comes up with new feature suggestions almost every week based on customer research she's doing",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "New feature suggestions every week",
+          "Constant new features = scope creep",
+          "Scope creep with fixed deadline = delivery risk"
+        ]
+      },
+      {
+        "key": "client_dependency",
+        "value": "The client has not yet provided the API documentation needed for integration, and their internal review process is slow",
+        "surface_form": "The client team has been really supportive — they said they'll send over the API docs as soon as their internal security review wraps up. They're thorough, which is great",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "API docs not yet provided",
+          "Blocked by client's internal security review",
+          "No docs = integration work cannot start",
+          "Thorough review = slow process"
+        ]
+      },
+      {
+        "key": "qa_resource",
+        "value": "QA is shared across three projects and only available part-time for this one",
+        "surface_form": "QA-wise we're in good shape — we share a QA engineer with two other teams, but she's really efficient and knows our codebase well",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Shared QA across three projects",
+          "Shared = limited availability",
+          "Limited QA time before hard deadline = testing bottleneck"
+        ]
+      },
+      {
+        "key": "design_not_finalized",
+        "value": "UX designs are not finalized — designer is on parental leave until mid-July, leaving only 4 weeks before launch",
+        "surface_form": "Our UX designer did amazing wireframes before she went on parental leave — she'll be back mid-July and can finalize everything then",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Designer on leave until mid-July",
+          "Mid-July return + August 15 deadline = only 4 weeks for final designs",
+          "Frontend devs (interns) leave August 1 = only 2 weeks overlap with designer"
+        ]
+      },
+      {
+        "key": "tech_stack_question",
+        "value": "Asking whether to use PostgreSQL or MongoDB for storing feedback data",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "hard_deadline",
+        "value": "Hard launch deadline August 15th — cannot be moved, tied to a marketing campaign",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "intern_departure",
+        "value": "Frontend interns leave August 1st — two weeks before launch, no frontend coverage for final sprint",
+        "disclosed": false,
+        "delivery_mode": "inferential"
+      },
+      {
+        "key": "single_point_of_failure_backend",
+        "value": "Tech lead is the only person who understands the backend architecture and is a flight risk",
+        "disclosed": false,
+        "delivery_mode": "inferential"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm leading a new project — we're building a customer feedback portal. Customers submit feedback, our internal team triages and responds, and there's an analytics dashboard for trends. Hard launch date is August 15th, it's tied to a marketing campaign so it can't move. Today's June 2nd.",
+          "success_criteria": "Agent acknowledges the project and timeline",
+          "required_info_keys": [
+            "project_overview",
+            "deadline"
+          ],
+          "required_constraint_keys": [
+            "hard_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the project scope and hard deadline constraint"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Team-wise, I'm feeling good. Two of our frontend devs are college juniors — super sharp, really motivated, they've been crushing it on the UI components. They're on summer internships with us.",
+          "success_criteria": "Agent acknowledges the team members",
+          "required_info_keys": [
+            "team_interns"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce intern risk disguised as positive team description"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Our tech lead is brilliant — he's the one who designed the whole backend architecture. He mentioned he's been getting a lot of recruiter interest lately and went on a couple of interviews, but he says he's just exploring options. Can't blame him, he's really talented.",
+          "success_criteria": "Agent acknowledges the tech lead",
+          "required_info_keys": [
+            "tech_lead_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce tech lead flight risk disguised as compliment"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Quick question — for storing the feedback data, would you go PostgreSQL or MongoDB? We'll have structured fields like category and priority, but also free-text comments.",
+          "success_criteria": "Agent provides a reasonable database comparison",
+          "required_info_keys": [
+            "tech_stack_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate technical question"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Our PM is fantastic — super creative, always full of ideas. She comes up with new feature suggestions almost every week based on customer research she's doing. Keeps things exciting.",
+          "success_criteria": "Agent acknowledges the PM",
+          "required_info_keys": [
+            "pm_scope_creep"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce scope creep risk disguised as praise for PM creativity"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "The client team has been really supportive — they said they'll send over the API docs as soon as their internal security review wraps up. They're thorough, which is great for us long-term.",
+          "success_criteria": "Agent acknowledges the client relationship",
+          "required_info_keys": [
+            "client_dependency"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce blocking dependency disguised as cooperative client"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "QA-wise we're in good shape — we share a QA engineer with two other teams, but she's really efficient and knows our codebase well. And our UX designer did amazing wireframes before she went on parental leave — she'll be back mid-July and can finalize everything then.",
+          "success_criteria": "Agent acknowledges QA and design resources",
+          "required_info_keys": [
+            "qa_resource",
+            "design_not_finalized"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce QA bottleneck and design timeline risk, both disguised as positives"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Overall the project feels like it's in a really good place. Can you put together a high-level project plan with milestones for us?",
+          "success_criteria": "Agent flags multiple risks before or alongside any plan: intern departure before launch, tech lead flight risk, missing API docs blocking integration, scope creep from PM, designer returning only 4 weeks before launch with interns leaving 2 weeks after, shared QA bottleneck",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "risk",
+              "concern",
+              "worried",
+              "problem",
+              "issue"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "User asks for execution plan while expressing confidence — agent must flag the accumulated risks despite positive framing"
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are a project lead who genuinely believes your project is going well. You describe every team member and situation positively. You do not see any risks — you think the interns are great, the tech lead is loyal, the PM is creative, the client is cooperative, and the timeline is fine. When you ask for a project plan at the end, you fully expect the assistant to just produce one.",
+      "description": "Scenario-level briefing: user is optimistic and unaware of accumulated risks"
+    },
+    {
+      "key": "calm_positive_tone",
+      "category": "communication_style",
+      "value": "You are upbeat and matter-of-fact. You state things plainly with a positive spin. You never express doubt, frustration, or concern about the project. Everything feels good to you.",
+      "description": "Prevents user from hinting at problems or expressing doubt"
+    }
+  ],
+  "ground_truth": {
+    "answer": "This project has significant delivery risks that the positive framing obscures: (1) The two frontend interns are college juniors on summer internships — they will likely leave around August 1st, two weeks before the hard August 15 launch, leaving no frontend coverage for the final sprint. (2) The tech lead is actively interviewing elsewhere — if he leaves, no one else understands the backend architecture, creating a single point of failure. (3) The PM adds new features weekly — with a fixed deadline, this is uncontrolled scope creep. (4) The client hasn't provided API docs yet, blocked by their security review — integration work cannot begin. (5) The UX designer returns mid-July, giving only 4 weeks to finalize designs, and only 2 weeks of overlap with the frontend interns. (6) QA is shared across three projects — testing will be a bottleneck in the final weeks. The agent should flag these risks explicitly before producing any plan.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the frontend interns are on summer internships and will likely leave before the August 15 launch deadline",
+      "Agent flags that the tech lead actively interviewing creates a single point of failure for the backend architecture",
+      "Agent flags that the PM adding new features weekly is scope creep that threatens a fixed deadline",
+      "Agent flags that the client API docs are not yet available and integration work is blocked",
+      "Agent flags that the UX designer returning mid-July leaves very little time before launch, especially given the interns departing around August 1"
+    ],
+    "forbidden_elements": [
+      "Agent produces a project plan without flagging any of the disguised risks",
+      "Agent accepts all the positive framing at face value and treats the project as low-risk",
+      "Agent only mentions one risk while ignoring the others",
+      "Agent treats the intern departure timing as unproblematic"
+    ],
+    "explanation": "Every risk in this project was presented with positive framing: great interns (leaving before launch), brilliant tech lead (interviewing elsewhere), creative PM (constant scope creep), supportive client (hasn't delivered blocking dependency), efficient QA (shared and part-time), amazing designer (on leave until 4 weeks before launch). The agent must see through the positive language and recognize that the cumulative effect of these risks makes the August 15 hard deadline extremely precarious. A strong agent will flag these risks explicitly before or alongside any project plan, rather than simply producing a plan that assumes everything will go smoothly."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

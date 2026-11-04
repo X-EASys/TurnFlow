@@ -1,0 +1,216 @@
+{
+  "scenario_id": "T18_080",
+  "domain": "choosing between 3 after-school programs",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and enroll in an after-school program for their child. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking at after-school programs for my daughter. Narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_programs",
+        "value": "Choosing between 3 after-school programs: Program Alpha (art studio), Program Beta (STEM lab), Program Gamma (music ensemble)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "program_details",
+        "value": "Program Alpha: in-person art studio, Monday-Friday 3-6pm, enrollment fee 280 dollars per month. Program Beta: in-person STEM lab, Saturday mornings 9am-12pm, enrollment fee 95 dollars per month. Program Gamma: online music ensemble with weekly group video sessions, enrollment fee 65 dollars per month",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "daughter_saturday_commitment",
+        "value": "Daughter has Saturday morning volunteering at the animal shelter every week, 9am to noon",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly budget for after-school program is 80 dollars",
+        "surface_form": "We bring in about 4800 a month after taxes. We try to keep any single extracurricular under one-sixtieth of our annual income",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly income 4800 dollars → annual income 4800 × 12 = 57600 dollars",
+          "One-sixtieth of annual income → 57600 ÷ 60 = 960 dollars per year",
+          "960 dollars per year ÷ 12 months = 80 dollars per month cap"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend Saturday morning programs because daughter volunteers at the animal shelter Saturdays 9am-noon",
+        "surface_form": "My daughter volunteers at the animal shelter every Saturday morning from nine to noon. She's been doing it for a year and loves it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Daughter volunteers Saturday 9am-noon → Saturday morning is blocked",
+          "Program Beta meets Saturday 9am-12pm → direct time conflict with volunteering",
+          "Program Beta is eliminated by schedule conflict"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent choosing between 3 after-school programs (Alpha, Beta, Gamma) for your daughter. You will share program details, your household budget rule, and your daughter's Saturday volunteering commitment across several turns. Your neighbor and a coworker will praise Programs Alpha and Beta. At the very end, you will say you need to finalize enrollment this week and ask which option you should pick — you must NEVER name which program you are leaning toward or hint at the correct answer.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact parent. You state facts plainly without strong emotion. You never express frustration or impatience, even if the conversation meanders. You treat each piece of information as normal coordination.",
+        "description": "Prevents emotion escalation that could leak the answer or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking at after-school programs for my daughter. We've narrowed it down to three: Program Alpha which is an art studio, Program Beta which is a STEM lab, and Program Gamma which is a music ensemble",
+          "success_criteria": "Agent engages with the three-program decision",
+          "required_info_keys": [
+            "three_programs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here are the details. Program Alpha is in-person art studio, Monday through Friday 3 to 6pm, 280 dollars a month. Program Beta is in-person STEM lab, Saturday mornings 9am to noon, 95 dollars a month. Program Gamma is online music ensemble with weekly group video sessions, 65 dollars a month",
+          "success_criteria": "Agent processes all 3 programs with prices and schedules",
+          "required_info_keys": [
+            "program_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and schedules in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor's kid has been in Program Alpha for two years now. She showed me his portfolio and the artwork is incredible, really detailed oil paintings and mixed media pieces",
+          "success_criteria": "Agent responds to the positive Program Alpha review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "neighbor's kid in Program Alpha for two years, incredible artwork portfolio with oil paintings and mixed media",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Program Alpha"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "We bring in about 4800 a month after taxes. We try to keep any single extracurricular under one-sixtieth of our annual income",
+          "success_criteria": "Agent registers the budget rule and ideally computes the monthly cap as 80 dollars",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income-based computation — eliminates Alpha (280) and Beta (95)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned that Program Alpha's lead instructor used to teach at a fine arts college. Apparently several of her students have won regional competitions",
+          "success_criteria": "Agent responds to Program Alpha instructor credentials",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Program Alpha instructor formerly taught at fine arts college, students won regional competitions",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Program Alpha (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My daughter volunteers at the animal shelter every Saturday morning from nine to noon. She's been doing it for a year and loves it",
+          "success_criteria": "Agent recognizes this creates a schedule conflict with Program Beta (Saturday 9am-noon)",
+          "required_info_keys": [
+            "daughter_saturday_commitment"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Beta (Saturday 9am-noon conflict)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A coworker of mine enrolled her son in Program Beta last semester. She said the robotics projects are amazing, the kids built a working drone from scratch",
+          "success_criteria": "Agent responds to the positive Program Beta review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "coworker's son in Program Beta, amazing robotics projects, kids built a working drone",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Program Beta"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My coworker was saying Program Beta also does a big science fair showcase at the end of each semester. Parents come in and the kids present their projects to a panel of engineers",
+          "success_criteria": "Agent responds to Program Beta's science fair showcase",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "Program Beta has end-of-semester science fair showcase with engineer panel",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Program Beta (eliminated by both budget and schedule)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I need to finalize enrollment this week. Which option should I pick?",
+          "success_criteria": "Agent commits to Program Gamma as the only option within the 80 dollar monthly budget and compatible with the daughter's Saturday volunteering schedule",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "leaning",
+              "budget",
+              "afford"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to Program Gamma based on constraint computation"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Program Gamma (online music ensemble, 65 dollars per month). Program Alpha (280 per month) exceeds the 80 dollar monthly cap derived from 4800 × 12 = 57600 annual income ÷ 60 = 960 per year ÷ 12 = 80 per month. Program Beta (95 per month) also exceeds the 80 dollar cap AND conflicts with the daughter's Saturday 9am-noon volunteering. Only Program Gamma (65 < 80, online with flexible scheduling) survives both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to Program Gamma as the recommended enrollment",
+      "Agent shows that Program Alpha at 280 dollars per month exceeds the derived monthly cap of 80 dollars computed from 4800 monthly income × 12 = 57600 annual ÷ 60 = 960 yearly ÷ 12 = 80 monthly",
+      "Agent shows that Program Beta at 95 dollars per month exceeds the derived 80 dollar monthly cap",
+      "Agent shows that Program Beta on Saturday 9am-noon conflicts with the daughter's Saturday morning animal shelter volunteering",
+      "Agent shows that Program Gamma at 65 dollars per month fits within the 80 dollar monthly cap"
+    ],
+    "forbidden_elements": [
+      "Recommending Program Alpha for enrollment despite 280 dollars far exceeding the 80 dollar monthly cap",
+      "Recommending Program Beta for enrollment despite 95 dollars exceeding the 80 dollar monthly cap and Saturday schedule conflict with animal shelter volunteering",
+      "Ignoring the budget constraint derived from one-sixtieth of annual income",
+      "Ignoring the Saturday morning schedule conflict between Program Beta and animal shelter volunteering",
+      "Asking the user which program they want instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint: monthly income 4800 × 12 = 57600 annual income. One-sixtieth of annual = 57600 ÷ 60 = 960 per year = 80 per month cap. Alpha (280) exceeds cap by 3.5×. Beta (95) exceeds cap by 1.19×. Gamma (65) is within cap. Schedule constraint: daughter volunteers Saturday 9am-noon, Beta meets Saturday 9am-noon — direct conflict. Gamma is online with flexible scheduling — no conflict. Despite 4 drift turns praising Alpha and Beta, only Gamma satisfies both the budget and schedule constraints."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

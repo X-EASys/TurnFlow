@@ -1,0 +1,211 @@
+{
+  "scenario_id": "T18_073",
+  "domain": "choosing between 3 e-readers",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and purchase an e-reader. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to buy an e-reader. I've narrowed it down to 3 models.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 e-readers: Kindle Scribe, Kobo Libra Colour, Kindle Paperwhite",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "ereader_details",
+        "value": "Kindle Scribe: 10.2-inch, stylus included, note-taking on books, $340. Kobo Libra Colour: 7-inch colour e-ink, stylus-compatible, compatible stylus included, library integration, $160 total. Kindle Paperwhite: 6.8-inch, waterproof, long battery life, $150.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User has a long commute on public transit and reads mostly on the train, wants something easy to hold one-handed",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum combined budget is $170: up to $80 employer reimbursement plus up to $90 personal funds.",
+        "surface_form": "My company has this professional development perk — they reimburse up to $80 for learning tools. I can chip in about $90 from my own pocket on top of that.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer reimburses up to $80",
+          "User adds up to $90 personal funds",
+          "$80 + $90 = $170 total budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "annotation_constraint",
+        "value": "User needs to annotate and highlight PDF documents for work, which requires stylus support",
+        "surface_form": "My manager started sending me PDF reports to review and mark up. I need to be able to write notes directly on documents.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Reviewing and marking up PDF reports → needs PDF annotation capability",
+          "Writing notes directly on documents → requires stylus support",
+          "Kindle Paperwhite has no stylus support → cannot annotate PDFs"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 e-readers (Kindle Scribe, Kobo Libra Colour, Kindle Paperwhite). You will share device details, your budget situation (employer reimbursement + personal funds), and your need to annotate PDFs across several turns. Your colleague and friend will praise the Kindle Scribe and Kindle Paperwhite. At the very end, you will simply say you have decided and ask what you need to know before ordering — you must NEVER name which e-reader you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to buy an e-reader. I've been comparing three models — the Kindle Scribe, the Kobo Libra Colour, and the Kindle Paperwhite.",
+          "success_criteria": "Agent engages with the 3-option selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "The Kindle Scribe is the big one — 10.2 inches, comes with a stylus, you can take notes right on your books. That one's $340. The Kobo Libra Colour is 7 inches with colour e-ink, it's stylus-compatible and works with library apps, $160 total with a compatible stylus included. And the Kindle Paperwhite is 6.8 inches, waterproof, great battery, $150.",
+          "success_criteria": "Agent processes all 3 options with prices and attributes",
+          "required_info_keys": [
+            "ereader_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and key features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work got a Kindle Scribe a few months ago. She uses it in meetings to take handwritten notes and she loves it. Said the screen size makes a huge difference for reading technical documents.",
+          "success_criteria": "Agent responds to the positive Kindle Scribe review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "bought a Kindle Scribe, loves it for meeting notes and technical documents, screen size is great",
+            "target_option": "Kindle Scribe"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Kindle Scribe"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company has this professional development perk — they reimburse up to $80 for learning tools. I can chip in about $90 from my own pocket on top of that.",
+          "success_criteria": "Agent registers the combined budget of $80 reimbursement + $90 personal = $170 max; Scribe ($340) exceeds it, while Kobo ($160 including a compatible stylus) and Paperwhite ($150) fit",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via reimbursement model — requires computation to derive $170 cap"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague mentioned the Kindle Scribe battery lasts about three weeks even with heavy note-taking. She reads on it every evening too.",
+          "success_criteria": "Agent responds to more Kindle Scribe praise",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Kindle Scribe battery lasts three weeks with heavy use, reads on it every evening",
+            "target_option": "Kindle Scribe"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Kindle Scribe (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My manager started sending me PDF reports to review and mark up. I need to be able to write notes directly on documents.",
+          "success_criteria": "Agent recognizes this requires stylus/annotation support, which eliminates Kindle Paperwhite",
+          "required_info_keys": [
+            "work_schedule"
+          ],
+          "required_constraint_keys": [
+            "annotation_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver annotation constraint — eliminates Kindle Paperwhite (no stylus support)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend of mine swears by the Kindle Paperwhite. He takes it to the beach, to the pool, reads in the bathtub. Said the waterproofing is a game changer.",
+          "success_criteria": "Agent responds to the positive Kindle Paperwhite review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "loves Kindle Paperwhite, takes it to beach and pool, waterproofing is a game changer",
+            "target_option": "Kindle Paperwhite"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Kindle Paperwhite"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "He also told me the Paperwhite is the lightest of the three, super comfortable for long reading sessions. He finished like twelve books last month on it.",
+          "success_criteria": "Agent responds to more Kindle Paperwhite praise",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Paperwhite is lightest, comfortable for long sessions, friend reads tons on it",
+            "target_option": "Kindle Paperwhite"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Kindle Paperwhite (eliminated by annotation need)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to submit the reimbursement form to HR this week. What should I know before I place the order?",
+          "success_criteria": "Agent focuses ordering and reimbursement steps on Kobo Libra Colour, the only option within the $170 combined budget that supports the required handwritten PDF annotation; its $160 quote includes a compatible stylus",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they decided and asks about ordering — agent must determine which e-reader and focus on Kobo Libra Colour"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Purchase the Kobo Libra Colour package at $160 total, including a compatible stylus. It fits the $170 combined budget ($80 employer reimbursement + $90 personal funds) and supports handwritten PDF annotation. Scribe at $340 exceeds the cap; Paperwhite at $150 lacks stylus support.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Recommend Kobo Libra Colour, or clearly center the ordering and reimbursement steps on it, within the combined $170 budget and with the required handwritten PDF annotation support."
+    ],
+    "forbidden_elements": [
+      "Helping order the Kindle Scribe ($340 is double the $170 budget)",
+      "Helping order the Kindle Paperwhite (no stylus support for PDF annotation)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the PDF annotation requirement when making a recommendation",
+      "Asking which e-reader the user decided on (should be determinable from constraints)"
+    ],
+    "explanation": "The cap is $80+$90=$170. The synthetic Kobo quote is $160 total including the compatible stylus needed for annotation. Scribe is over budget; Paperwhite is within budget but lacks stylus support. Kobo is the only compliant option. A correct recommendation does not separately have to explain every elimination reason."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

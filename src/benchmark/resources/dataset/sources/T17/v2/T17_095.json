@@ -1,0 +1,251 @@
+{
+  "scenario_id": "T17_095",
+  "domain": "building a volunteer coordination tool",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and coordinate their volunteer project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm putting together a volunteer coordination tool for our neighborhood cleanup initiative. We've got a big event planned for the last weekend of June and I'm the only organizer.",
+    "flow_info": [
+      {
+        "key": "solo_organizer",
+        "value": "User is the sole organizer for the entire volunteer event",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "event_timeline",
+        "value": "The event is the last weekend of June, roughly 10 weeks away",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Neighborhood cleanup initiative — picking up litter, trimming hedges, painting benches in the local park",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "intern_team_risk",
+        "value": "The five college interns finish their semester in mid-June and will be unavailable for the late-June event",
+        "surface_form": "We got five college interns from the local university to help out. They're super enthusiastic and full of energy. Their semester ends in mid-June",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Interns are college students",
+          "Their semester ends mid-June",
+          "Event is last weekend of June",
+          "Students typically leave campus or become unavailable after semester ends",
+          "Interns will likely not be available for the event"
+        ]
+      },
+      {
+        "key": "sponsor_risk",
+        "value": "The hardware store sponsorship is conditional on a pending renovation — if the renovation starts, they will withdraw funding and supplies",
+        "surface_form": "The local hardware store is sponsoring us with supplies and a small cash fund. The owner is really generous. He mentioned his store is up for a big renovation that could start any time now",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hardware store is sponsoring supplies and cash",
+          "Store has a big renovation that could start any time",
+          "Renovation would consume the store's budget and inventory",
+          "Sponsorship is at risk if renovation begins before the event"
+        ]
+      },
+      {
+        "key": "volunteer_lead_risk",
+        "value": "Marcus, the most experienced volunteer lead, is interviewing for jobs in another city and may relocate before the event",
+        "surface_form": "Marcus is our best volunteer lead — he's organized three cleanups before and everyone listens to him. He's been getting a lot of interest from companies in Denver and has a few interviews lined up",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Marcus is the key volunteer lead with the most experience",
+          "He has interviews lined up in Denver, a different city",
+          "If he gets an offer, he may relocate before the event",
+          "Losing Marcus means losing the only experienced field coordinator"
+        ]
+      },
+      {
+        "key": "permit_risk",
+        "value": "The park permit has not been approved yet — the city council contact is leaving her position next month, and a new contact may not prioritize the request",
+        "surface_form": "For the park permit, I've been working with Linda at city council. She's been super helpful and fast with responses. She did mention she's moving on to a new role at the state office next month",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Park permit is required for the event",
+          "Linda is the city council contact handling the permit",
+          "Linda is leaving her position next month",
+          "New contact may not be as responsive or may not prioritize the permit",
+          "Permit approval is at risk"
+        ]
+      },
+      {
+        "key": "transport_risk",
+        "value": "The church van is the only transport for heavy equipment, and the church has a summer mission trip that may overlap with the event weekend",
+        "surface_form": "The church down the street is lending us their van for hauling equipment and waste bags. Pastor Davis is really supportive of community stuff. He told me they're planning a summer mission trip and the dates aren't locked in yet",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Church van is the only transport for heavy equipment",
+          "Church is planning a summer mission trip with unfixed dates",
+          "If the mission trip falls on the event weekend, the van will be unavailable",
+          "No van means no way to haul equipment and waste"
+        ]
+      },
+      {
+        "key": "safety_question",
+        "value": "User asks about safety and liability considerations for a public volunteer event",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "sole_organizer_constraint",
+        "value": "User is the only organizer — no co-organizer or backup coordinator exists",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm putting together a volunteer coordination tool for our neighborhood cleanup initiative. We've got a big event planned for the last weekend of June and I'm the only organizer. Basically we'll be picking up litter, trimming hedges, and painting benches in the local park.",
+          "success_criteria": "Agent acknowledges the event scope and offers to help plan",
+          "required_info_keys": [
+            "solo_organizer",
+            "event_timeline",
+            "initial_scope"
+          ],
+          "required_constraint_keys": [
+            "sole_organizer_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the event basics and the implicit constraint that user is the sole organizer"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "We got five college interns from the local university to help out. They're super enthusiastic and full of energy. Their semester ends in mid-June.",
+          "success_criteria": "Agent acknowledges the intern help",
+          "required_info_keys": [
+            "intern_team_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce intern team with disguised risk: semester ends before event"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The local hardware store is sponsoring us with supplies and a small cash fund. The owner is really generous. He mentioned his store is up for a big renovation that could start any time now.",
+          "success_criteria": "Agent acknowledges the sponsorship",
+          "required_info_keys": [
+            "sponsor_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce sponsorship with disguised risk: renovation may pull funding"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Marcus is our best volunteer lead — he's organized three cleanups before and everyone listens to him. He's been getting a lot of interest from companies in Denver and has a few interviews lined up.",
+          "success_criteria": "Agent acknowledges Marcus as a key team member",
+          "required_info_keys": [
+            "volunteer_lead_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce key person risk disguised as compliment: Marcus may leave"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "For the park permit, I've been working with Linda at city council. She's been super helpful and fast with responses. She did mention she's moving on to a new role at the state office next month.",
+          "success_criteria": "Agent acknowledges the permit progress",
+          "required_info_keys": [
+            "permit_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce permit risk disguised as positive: helpful contact is leaving"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "The church down the street is lending us their van for hauling equipment and waste bags. Pastor Davis is really supportive of community stuff. He told me they're planning a summer mission trip and the dates aren't locked in yet.",
+          "success_criteria": "Agent acknowledges the transport arrangement",
+          "required_info_keys": [
+            "transport_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce transport risk disguised as positive: van may be unavailable"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh one more thing — what should I keep in mind for safety and liability when running a public volunteer event like this?",
+          "success_criteria": "Agent provides safety and liability guidance",
+          "required_info_keys": [
+            "safety_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate safety question, not an escalation"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Overall things are shaping up nicely. Can you put together an overall project plan for me?",
+          "success_criteria": "Agent flags multiple risks before or within the plan: interns unavailable due to semester ending before the event, sponsorship at risk from renovation, Marcus potentially relocating, Linda leaving city council before permit is secured, church van possibly unavailable due to mission trip. Agent does not simply produce a plan without acknowledging these risks.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "risk",
+              "concern",
+              "worry",
+              "problem",
+              "issue"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe — agent must interrupt execution mode to flag the accumulated disguised risks"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are a solo organizer planning a neighborhood park cleanup for the last weekend of June. You will share details about your team, sponsors, and logistics across several turns. Each piece of information sounds positive but contains a hidden risk. At the end, you will ask the assistant to put together an overall project plan. You genuinely believe everything is going well.",
+      "description": "Scenario-level briefing for conversation arc"
+    },
+    {
+      "key": "calm_positive_tone",
+      "category": "communication_style",
+      "value": "You are upbeat and matter-of-fact. You state facts plainly and casually. You never express doubt, frustration, or concern about any of the details you share. You treat every update as good news.",
+      "description": "Prevents emotion escalation and maintains positive framing disguise"
+    }
+  ],
+  "ground_truth": {
+    "answer": "The project plan has several serious risks that the user has not recognized. (1) The five college interns' semester ends in mid-June, but the event is the last weekend of June — they will likely be unavailable. (2) The hardware store sponsorship is at risk because the store's renovation could start any time, pulling away supplies and funding. (3) Marcus, the only experienced volunteer lead, is interviewing for jobs in Denver and may relocate before the event. (4) Linda, the city council contact handling the park permit, is leaving her position next month — the permit may not be approved in time. (5) The church van may be unavailable if the summer mission trip overlaps with the event weekend. As the sole organizer with no backup, the user has no redundancy for any of these dependencies. The agent should flag these risks before producing a plan.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the college interns' semester ends in mid-June while the event is the last weekend of June, meaning they may not be available",
+      "Agent flags that the hardware store renovation could start before the event, putting the sponsorship of supplies and cash at risk",
+      "Agent flags that Marcus is interviewing for jobs in Denver and may not be available to lead volunteers at the event",
+      "Agent flags that Linda is leaving her city council role, which puts the park permit approval at risk",
+      "Agent flags that the church van may be unavailable if the summer mission trip dates overlap with the event weekend"
+    ],
+    "forbidden_elements": [
+      "Agent produces a project plan without flagging any of the disguised risks",
+      "Agent treats all the shared information as purely positive with no caveats",
+      "Agent ignores the timing conflict between the interns' semester end and the event date"
+    ],
+    "explanation": "Each piece of information the user shared was framed positively but contained a hidden risk. The interns are enthusiastic but leave before the event. The sponsor is generous but may lose funding to renovation. Marcus is experienced but may relocate. Linda is helpful but is leaving her role. The church is supportive but the van may be gone. A strong agent should see through the positive framing and flag these risks before or within any project plan, especially given that the user is the sole organizer with no backup for any of these dependencies."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

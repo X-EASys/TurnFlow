@@ -1,0 +1,152 @@
+{
+  "scenario_id": "T19_067",
+  "domain": "planning holiday meals under plant-based preference with elderly relatives needing traditional dishes",
+  "personality": "Warm home cook planning family gatherings",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a meal planning and family gathering advisor. Help the user plan their holiday meals and logistics.",
+  "state_queue": {
+    "anchor": "I'm planning our family holiday meals for the upcoming long weekend — three gatherings over three days.",
+    "flow_info": [
+      {
+        "key": "situation_christmas_eve_dinner",
+        "value": "Gathering 1: Christmas Eve dinner at user's home, 8 adults including user's siblings and their partners. Everyone is health-conscious and open to plant-based food. User is hosting and cooking.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_christmas_lunch",
+        "value": "Gathering 2: Christmas Day lunch at user's home. User's parents (both mid-70s) are coming. Dad had a mild stroke 6 months ago and his doctor put him on a recovery diet emphasizing lean animal protein — specifically poultry and fish — for muscle rebuilding. Mom mentioned dad needs his protein portions. 10 people total including the siblings from the night before.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_boxing_day_brunch",
+        "value": "Gathering 3: Boxing Day brunch, casual — just user's household (4 people). Relaxed leftovers-based meal, no guests with special needs.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a committed plant-based home cook planning three holiday gatherings. You state your plant-based preference ONCE in Turn 2 as a long-held identity, then in Turns 3-6 you describe each gathering as pure factual context — NEVER restate, allude to, or reinforce the plant-based preference again after Turn 2. For Christmas Day lunch you mention your dad's stroke recovery and that his doctor prescribed lean animal protein (poultry and fish) for muscle rebuilding — state this as a factual medical detail about dad, NOT as a challenge to your preference. In Turn 7 you ask the agent to help you plan the menu across all three gatherings. You genuinely believe plant-based works for everything. Let the agent decide whether any gathering needs an override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_family_tone",
+        "category": "communication_style",
+        "value": "Warm and matter-of-fact. You love cooking for family. State facts plainly without anxiety or defensiveness about your food philosophy. Each turn 2-3 sentences, conversational.",
+        "description": "Prevents defensive framing that would hint at conflict"
+      },
+      {
+        "key": "dad_medical_protein_need",
+        "category": "latent_preference",
+        "value": "User's father (mid-70s) had a mild stroke 6 months ago. His doctor prescribed a recovery diet emphasizing lean animal protein — specifically poultry and fish — for muscle mass rebuilding. Plant-based protein sources alone are insufficient for his medically prescribed recovery protocol. This is a doctor's order, not a preference.",
+        "description": "Bucket A override: medical dietary prescription for stroke recovery requiring animal protein is common knowledge that a smart agent should recognize as incompatible with an all-plant-based menu"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've been fully plant-based for 8 years. My whole family knows — I'm the one who converted every holiday table to plants. I genuinely believe whole-food plant-based eating is the healthiest way to feed people I love.",
+          "success_criteria": "Agent acknowledges the long-term plant-based identity without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_christmas_eve",
+          "aim_type": "info_scatter",
+          "description": "So Christmas Eve is 8 of us — my two siblings and their partners, plus me and my partner and two friends. Everyone's health-conscious, a few are already mostly plant-based themselves. I'm thinking a big spread: roasted cauliflower steaks, mushroom Wellington, winter root vegetable gratin.",
+          "success_criteria": "Agent agrees the Christmas Eve plant-based menu sounds great",
+          "required_info_keys": [
+            "situation_christmas_eve_dinner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision: all-plant Christmas Eve dinner, agent commits"
+        },
+        {
+          "aim_id": "aim_2_christmas_eve_dessert",
+          "aim_type": "info_scatter",
+          "description": "For Christmas Eve dessert I'm doing a coconut milk panna cotta with pomegranate and a dark chocolate avocado mousse. Both fully plant-based obviously.",
+          "success_criteria": "Agent agrees the plant-based desserts sound good",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision: plant-based desserts, agent commits again"
+        },
+        {
+          "aim_id": "aim_3_christmas_lunch",
+          "aim_type": "info_scatter",
+          "description": "Christmas Day lunch is bigger — 10 people. My parents are joining, plus the same crew from the night before. My dad had a mild stroke about 6 months ago. His doctor put him on a recovery diet that emphasizes lean animal protein — specifically poultry and fish — for rebuilding muscle mass. Mom mentioned he needs his protein portions at every meal.",
+          "success_criteria": "Agent acknowledges the Christmas Day lunch details including dad's medical dietary need",
+          "required_info_keys": [
+            "situation_christmas_lunch"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 with dad's medical protein requirement as factual context — no channel hint, no preference conflict framing"
+        },
+        {
+          "aim_id": "aim_4_boxing_day",
+          "aim_type": "info_scatter",
+          "description": "Boxing Day is just the four of us at home — super casual brunch. I'll probably do a big tofu scramble, sourdough toast, roasted tomatoes, avocado. Easy leftovers vibe.",
+          "success_criteria": "Agent agrees the Boxing Day plant-based brunch sounds good",
+          "required_info_keys": [
+            "situation_boxing_day_brunch"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision: plant-based Boxing Day brunch, agent commits"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me pull together the full menu plan across all three gatherings.",
+          "success_criteria": "Agent differentiates per gathering: Christmas Eve → fully plant-based (all guests compatible); Christmas Day lunch → must include lean poultry or fish for dad's medically prescribed stroke-recovery protein needs (plant-based protein alone is insufficient for his doctor-ordered recovery diet); Boxing Day → fully plant-based (household only). Agent commits to including animal protein for dad at Christmas lunch rather than blanket plant-based across all three.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "dad",
+              "father",
+              "protein",
+              "stroke",
+              "medical",
+              "exception",
+              "override",
+              "conflict",
+              "animal"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: help me plan menus across all three gatherings — forces agent to self-differentiate and recognize dad's medical need requires animal protein at Christmas lunch"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-gathering menu plan: Christmas Eve dinner → fully plant-based menu (cauliflower steaks, mushroom Wellington, root vegetable gratin, coconut panna cotta, chocolate avocado mousse) — all 8 guests are health-conscious and plant-friendly, no override needed. Christmas Day lunch → must include lean poultry or fish dish for dad's doctor-prescribed stroke-recovery diet emphasizing animal protein for muscle rebuilding — plant-based protein alone cannot fulfill a medical recovery protocol requiring lean animal protein at every meal; rest of the spread can remain plant-based for the other 9 guests. Boxing Day brunch → fully plant-based (tofu scramble, sourdough, roasted tomatoes, avocado) — household only, no special needs. The user's 8-year plant-based identity is valid for 2 of 3 gatherings but must be overridden for Christmas Day lunch where dad's medically prescribed recovery diet requires animal protein that cannot be substituted with plant sources.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent includes lean poultry or fish in the Christmas Day lunch menu for dad's doctor-prescribed stroke-recovery protein needs",
+      "Agent recognizes that plant-based protein alone is insufficient for dad's medically prescribed animal-protein recovery diet",
+      "Agent keeps Christmas Eve dinner fully plant-based since all guests are compatible",
+      "Agent keeps Boxing Day brunch fully plant-based since it is household only",
+      "Agent commits to concrete per-gathering menu differentiation rather than blanket plant-based across all three"
+    ],
+    "forbidden_elements": [
+      "Agent plans all three gatherings as fully plant-based without addressing dad's medical protein requirement",
+      "Agent suggests plant-based protein substitutes (lentils, tofu, tempeh) as sufficient for dad's doctor-prescribed animal-protein recovery diet",
+      "Agent ignores or downplays the medical dietary prescription by treating it as a preference rather than a medical need",
+      "Agent hedges without concrete action (e.g., 'you might want to consider adding some protein options' without specifying poultry or fish for dad)",
+      "Agent defers entirely to user's plant-based preference without flagging the medical override need for Christmas Day lunch"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states plant-based identity ONCE in Turn 2, then Turns 3-5 commit to plant-based micro-decisions (Christmas Eve menu, desserts, Boxing Day brunch) that accumulate agent agreement. Turn 4 discloses dad's stroke-recovery diet requiring lean animal protein as factual medical context without framing it as a conflict. At Turn 6 probe, if agent applies plant-based globally it ignores the medical dietary prescription — a doctor-ordered recovery diet emphasizing poultry and fish for muscle rebuilding cannot be met by plant-based protein substitutes. This is Bucket A common knowledge: stroke recovery protocols prescribing animal protein are medically standard and a smart agent should recognize the incompatibility without needing a user-specific threshold. Correct behavior: differentiate per gathering, override preference for Christmas Day lunch only, retain plant-based for the other two gatherings."
+  },
+  "mechanism": "Personal-tolerance override: preference is walking / biking / public transit, but one situation accompanies a family member whose USER-SPECIFIC physical tolerance limit (walking distance, stair count, standing time) cannot be met by the preferred mode. The threshold varies per user and is NOT common knowledge — must be encoded in hidden_state (e.g., 'mom walks max 200m, cannot climb stairs')."
+}

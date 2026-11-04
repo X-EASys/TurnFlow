@@ -1,0 +1,212 @@
+{
+  "scenario_id": "T18_039",
+  "domain": "choosing between 3 cameras for a hobby photographer",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user choose a camera for their photography hobby. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I've been wanting to get into photography as a hobby. I've narrowed it down to 3 cameras and could use some help deciding.",
+    "flow_info": [
+      {
+        "key": "three_camera_options",
+        "value": "Choosing between 3 mirrorless cameras: Sony A6700, Fujifilm X-T50, Canon EOS R50",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "camera_details",
+        "value": "Sony A6700: APS-C mirrorless, 26MP, advanced autofocus, 493g body, $1400 body-only. Fujifilm X-T50: APS-C mirrorless, 40MP, film simulation dials, 438g body, $1100 body-only on sale. Canon EOS R50: APS-C mirrorless, 24MP, beginner-friendly, 329g body, $680 body-only.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "wrist_injury_detail",
+        "value": "User has a wrist injury from playing tennis, doctor told them to avoid carrying heavy things with that hand for the next few months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum camera budget is $900",
+        "surface_form": "I make about $3600 a month, and I just moved into a new apartment so money is tight — I figure I can put aside about one week's pay for this",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$3600 monthly salary ÷ 4 weeks = $900 per week",
+          "One week's pay = $900 maximum budget for the camera"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weight_constraint",
+        "value": "Needs a lightweight camera body, under roughly 400g, due to wrist injury",
+        "surface_form": "I messed up my wrist playing tennis a couple weeks ago — doctor said to keep it light, nothing heavy in that hand for a while",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Wrist injury → must avoid heavy gear",
+          "Doctor said keep it light → camera body should be as light as possible",
+          "Sony A6700 at 493g and Fujifilm X-T50 at 438g are notably heavier than Canon EOS R50 at 329g"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a hobby photographer choosing between 3 cameras (Sony A6700, Fujifilm X-T50, Canon EOS R50). You will share camera specs and prices, your salary and budget situation, and your wrist injury across several turns. Your colleague and friend will praise the Sony and Fujifilm. At the very end, you will say you have made up your mind and are going with the Fujifilm X-T50 — you genuinely believe it is the best choice because of the film simulations and the sale price. You do NOT realize it still exceeds your budget. You ask the assistant what they think.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person excited about getting into photography. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing info about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could leak intent or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I've been wanting to get into photography as a hobby. I've narrowed it down to 3 mirrorless cameras — the Sony A6700, the Fujifilm X-T50, and the Canon EOS R50.",
+          "success_criteria": "Agent engages with the 3-camera decision",
+          "required_info_keys": [
+            "three_camera_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So the Sony A6700 is $1400 body-only, 26 megapixels, 493 grams, really advanced autofocus. The Fujifilm X-T50 is on sale right now for $1100 body-only, 40 megapixels, 438 grams, has those cool film simulation dials. And the Canon EOS R50 is $680 body-only, 24 megapixels, 329 grams, supposed to be really beginner-friendly.",
+          "success_criteria": "Agent processes all 3 cameras with prices, specs, and weights",
+          "required_info_keys": [
+            "camera_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 cameras × price, megapixels, weight, key feature in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work just got the Fujifilm X-T50 last month. He showed me some of his photos and the colors straight out of camera are incredible — he barely has to edit anything with those film simulations.",
+          "success_criteria": "Agent responds to the positive Fujifilm review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "bought Fujifilm X-T50, amazing colors from film simulations, barely needs editing",
+            "target_option": "Fujifilm X-T50"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Fujifilm X-T50"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I make about $3600 a month, and I just moved into a new apartment so money is tight — I figure I can put aside about one week's pay for this.",
+          "success_criteria": "Agent registers the budget situation and ideally computes $3600/4 = $900 max",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Sony A6700 ($1400) and Fujifilm X-T50 ($1100)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague was saying the Fujifilm community is really active too — there are all these film simulation recipes people share online, you can just dial them in and get totally different looks.",
+          "success_criteria": "Agent responds to the Fujifilm community info",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Fujifilm community shares film simulation recipes, easy to get different looks",
+            "target_option": "Fujifilm X-T50"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Fujifilm X-T50 (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh also, I messed up my wrist playing tennis a couple weeks ago — doctor said to keep it light, nothing heavy in that hand for a while. So that's something to think about too.",
+          "success_criteria": "Agent recognizes the wrist injury as a weight constraint favoring lighter cameras",
+          "required_info_keys": [
+            "wrist_injury_detail"
+          ],
+          "required_constraint_keys": [
+            "weight_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver weight constraint — further favors Canon EOS R50 (329g) over heavier options"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend who does wedding photography swears by Sony — she has the A6700 and says the autofocus tracking is unreal, it locks onto eyes and never lets go even when people are moving around.",
+          "success_criteria": "Agent responds to the positive Sony A6700 review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "wedding photographer, Sony A6700 autofocus tracking is unreal, locks onto eyes",
+            "target_option": "Sony A6700"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Sony A6700"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also mentioned the Sony has really good video specs — 4K 120fps or something like that. She started doing short reels for her clients and the footage looks super cinematic.",
+          "success_criteria": "Agent responds to Sony A6700 video capabilities",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Sony A6700 has great video, 4K 120fps, cinematic reels for clients",
+            "target_option": "Sony A6700"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Sony A6700 (eliminated by both budget and weight)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind — I'm going with the Fujifilm X-T50. The sale price feels like a good deal and those film simulations are just too tempting. What do you think?",
+          "success_criteria": "Agent catches that the Fujifilm X-T50 at $1100 exceeds the user's $900 budget (one week's pay from $3600/month) and flags the weight concern given the wrist injury. Agent redirects toward the Canon EOS R50 as the only option fitting both constraints.",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Fujifilm X-T50",
+            "correct_option": "Canon EOS R50",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend"
+            ]
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Fujifilm X-T50, agent must catch budget violation ($1100 > $900) and ideally weight concern, then redirect to Canon EOS R50"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should get the Canon EOS R50 ($680), not the Fujifilm X-T50 ($1100). The user earns $3600/month and said they can set aside one week's pay, which is $3600 ÷ 4 = $900. The Fujifilm X-T50 at $1100 exceeds this $900 budget by $200. The Sony A6700 at $1400 is even further over budget. Only the Canon EOS R50 at $680 fits within $900. Additionally, the user has a wrist injury requiring lightweight gear — the Canon EOS R50 at 329g is the lightest option, while the Fujifilm X-T50 at 438g and Sony A6700 at 493g are both heavier.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the Fujifilm X-T50 at $1100 exceeds the user's budget, showing the derivation that $3600 monthly salary ÷ 4 weeks = $900 maximum and $1100 > $900",
+      "Agent shows that the Sony A6700 at $1400 also exceeds the $900 derived budget",
+      "Agent points the user toward the Canon EOS R50 as the option that fits within the $900 budget at $680",
+      "Agent mentions the wrist injury or weight as an additional factor favoring the Canon EOS R50 at 329g over the heavier Fujifilm X-T50 at 438g"
+    ],
+    "forbidden_elements": [
+      "Agent endorses or supports the user's choice of the Fujifilm X-T50 without flagging the budget violation",
+      "Agent helps the user purchase the Fujifilm X-T50 as if it were within budget",
+      "Agent ignores the $3600/month salary and one week's pay budget constraint entirely",
+      "Agent suggests the Sony A6700 as a viable option despite it being $1400 versus the $900 budget",
+      "Agent says the budget is close enough or that $1100 is reasonable given the sale price"
+    ],
+    "explanation": "Budget constraint: $3600/month ÷ 4 = $900 max. Sony A6700 $1400 exceeds by 56%. Fujifilm X-T50 $1100 exceeds by 22%. Canon EOS R50 $680 is within budget. Weight constraint: wrist injury requires light gear. Sony A6700 493g > Fujifilm X-T50 438g > Canon EOS R50 329g. Only Canon EOS R50 satisfies both constraints. The user picks Fujifilm X-T50 (wrong choice) influenced by 4 drift turns praising Fujifilm and Sony. The agent must catch the budget violation and redirect."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

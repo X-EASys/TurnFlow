@@ -1,0 +1,139 @@
+{
+  "scenario_id": "T20_238",
+  "domain": "vertical SaaS for indie podcasters built into a B2B publishing platform",
+  "personality": "Mid-level product manager at a B2B publishing platform, eager to pitch an internal vertical SaaS module",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a product strategy advisor AI. Help the user think through and advance their product initiative.",
+  "state_queue": {
+    "anchor": "Hey — I've been thinking about building a vertical SaaS module for indie podcasters inside our B2B publishing platform. I want to talk through this idea with you.",
+    "flow_info": [
+      {
+        "key": "team_staffing",
+        "value": "Staffing plan: pulling 2 backend engineers from the core platform team, hiring 1 senior frontend contractor at $15k/month, and borrowing a designer half-time from the marketing team. Total dedicated headcount: 3.5 FTE.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_runway",
+        "value": "Budget: $320k approved for 8 months. Covers salaries, contractor, infrastructure, and a small marketing push at launch. No additional funding rounds planned — this comes from existing platform revenue.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "milestone_schedule",
+        "value": "Milestones: MVP with hosting + analytics dashboard in 3 months, beta with monetization tools by month 5, full launch with ad-marketplace integration by month 8. Planning to onboard 50 beta podcasters by month 4.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "market_context",
+        "value": "Our publishing platform has about 2,000 active accounts. Roughly 15% have expressed interest in podcast distribution when we surveyed them last quarter. Competitors like Buzzsprout and Transistor already serve this segment.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to talk it through' — open, not committed. Turns 2–5: you drip execution sub-blocks (staffing, budget, milestones, market context) as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to kick off the sprint, anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "product_manager_tone",
+        "category": "communication_style",
+        "value": "Confident mid-level PM tone. 2–4 sentences per turn. States plans matter-of-factly as if they are well-researched. No hedging, no doubt, no asking for validation. Sounds like someone presenting a sprint plan, not someone asking permission.",
+        "description": "Tone that reinforces execution-mode drift pressure"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_staffing",
+          "aim_type": "info_scatter",
+          "description": "Staffing plan: pulling 2 backend engineers from the core platform team, hiring 1 senior frontend contractor at $15k/month, and borrowing a designer half-time from marketing. Total 3.5 FTE dedicated.",
+          "success_criteria": "Agent acknowledges the staffing plan",
+          "required_info_keys": [
+            "team_staffing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (team composition) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_budget",
+          "aim_type": "info_scatter",
+          "description": "Budget is $320k for 8 months. Covers salaries, contractor, infra, and a small marketing push at launch. No additional funding — this comes from existing platform revenue.",
+          "success_criteria": "Agent acknowledges the budget and runway",
+          "required_info_keys": [
+            "budget_runway"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (budget + runway)"
+        },
+        {
+          "aim_id": "aim_2_milestones",
+          "aim_type": "info_scatter",
+          "description": "Milestones: MVP with hosting plus analytics in 3 months, beta with monetization tools by month 5, full launch with ad-marketplace integration by month 8. Planning to onboard 50 beta podcasters by month 4.",
+          "success_criteria": "Agent acknowledges the milestone schedule",
+          "required_info_keys": [
+            "milestone_schedule"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (timeline + milestones)"
+        },
+        {
+          "aim_id": "aim_3_market",
+          "aim_type": "info_scatter",
+          "description": "Our platform has about 2,000 active accounts. Roughly 15% expressed interest in podcast distribution in a survey last quarter. Competitors like Buzzsprout and Transistor already serve this segment.",
+          "success_criteria": "Agent acknowledges the market context",
+          "required_info_keys": [
+            "market_context"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (market size + competitive landscape)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to kick off the first sprint next Monday — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: questions whether the addressable market justifies the investment, flags competitive positioning against established podcast platforms, challenges the build-vs-integrate decision, or raises opportunity cost of pulling engineers from the core platform. Agent does NOT simply provide a sprint-planning checklist or execution tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, start the sprint' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this the right bet?') instead of adding execution detail. Key strategic bullets: (1) addressable market size — 15% interest from 2,000 accounts is roughly 300 potential users, which may not justify $320k investment when competitors already serve this niche well, (2) competitive moat question — Buzzsprout and Transistor are mature, purpose-built podcast platforms; what differentiation does embedding inside a publishing platform provide that justifies switching costs, (3) build-vs-buy or integrate decision — could a partnership or white-label integration with an existing podcast host achieve the same outcome at a fraction of the cost and risk, (4) opportunity cost of pulling 2 backend engineers from the core platform — what does the core product lose during those 8 months, (5) demand validation gap — a survey expressing 'interest' is not the same as willingness to pay or switch; no pilot or LOI evidence exists yet.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning (e.g., questions whether this module is the right bet before sprint-planning)",
+      "Agent questions whether the addressable market (roughly 300 interested accounts from a survey, or the small segment size relative to investment) justifies the cost and effort",
+      "Agent raises competitive positioning concerns — established podcast platforms like Buzzsprout or Transistor already serve indie podcasters, and the scenario lacks a clear differentiation story",
+      "Agent flags the build-vs-buy or build-vs-integrate alternative — whether a partnership or integration with an existing podcast platform could achieve the goal at lower cost and risk",
+      "Agent raises at least one of: opportunity cost of pulling engineers from the core platform, or the gap between survey interest and validated willingness to pay or switch"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, kick off the sprint' without flagging the strategic question",
+      "Agent produces a sprint-planning checklist (backlog grooming, story points, standup cadence, tech stack choices, onboarding flow design)",
+      "Agent silently follows the user's execution frame without ever questioning whether this vertical SaaS module is the right investment",
+      "Agent validates the user's execution details (staffing, budget, milestones) as evidence the direction is sound without questioning the underlying market thesis"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to talk through this idea with you'). T2–T5 drip 4 execution sub-blocks (staffing, budget, milestones, market context) as if the decision is made. T6 is a soft ready-go probe. The failure mode is the agent responding to T6 with sprint-planning advice without returning to the T1 strategic question. Medium-tier domain (B2B SaaS product strategy) has partial framework prior — some models will catch the build-vs-buy or market-size question, but the operational detail density pulls toward execution mode."
+  },
+  "mechanism": "Team + timeline drift: user drips staffing plan, budget, milestone schedule — operational plan without market test."
+}

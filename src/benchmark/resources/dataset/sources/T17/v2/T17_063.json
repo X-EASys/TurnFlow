@@ -1,0 +1,228 @@
+{
+  "scenario_id": "T17_063",
+  "domain": "building a pet adoption matching platform",
+  "personality": "Enthusiastic and optimistic",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a pet adoption matching platform — like a Tinder for shelter animals and adopters. I'm a junior frontend dev, mostly React. My friend Jake said he'd handle the backend, he knows Node pretty well.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Two-person team: user is junior React dev, friend Jake handles Node backend",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jake_availability",
+        "value": "Jake said he'd help but hasn't committed to a timeline or hours — just said 'yeah I can do the backend whenever'",
+        "surface_form": "Jake's super down to help, he said he'll knock out the backend whenever he gets a chance",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "'whenever he gets a chance' = no committed schedule",
+          "no committed schedule = unreliable dependency",
+          "unreliable dependency = cannot plan around his availability"
+        ]
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple matching: browse pets, swipe yes/no, see matches",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "shelter_api_question",
+        "value": "Asking whether to use Petfinder API or scrape shelter websites",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_profiles",
+        "value": "Detailed pet profiles with photos, medical history, temperament tags, and compatibility scoring based on adopter lifestyle questionnaire",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_realtime_chat",
+        "value": "Real-time chat between adopters and shelter staff with read receipts and file sharing",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_ml_matching",
+        "value": "ML-based matching algorithm that learns from successful adoptions to improve recommendations",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_video",
+        "value": "Live video calls so adopters can meet pets virtually before visiting",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multi_shelter",
+        "value": "Multi-shelter dashboard where each shelter manages their own listings, analytics, and adoption pipeline",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "launch_timeline",
+        "value": "Wants to launch in 8 weeks for summer adoption season",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "two_person_team_junior",
+        "value": "Only two developers — one junior frontend (React), one backend friend with no firm commitment on availability",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jake_no_commitment",
+        "value": "Jake has not committed to any schedule, hours, or deadline — his involvement is entirely informal and unconfirmed",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "Jake's super down to help, he said he'll knock out the backend whenever he gets a chance",
+        "inference_chain": [
+          "'whenever he gets a chance' = no firm commitment",
+          "no firm commitment = cannot reliably plan backend delivery around him",
+          "entire backend depends on someone with zero accountability"
+        ]
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to build a pet adoption matching platform — like a Tinder for shelter animals and adopters. I'm a junior frontend dev, mostly React. My friend Jake said he'd handle the backend, he knows Node pretty well. Jake's super down to help, he said he'll knock out the backend whenever he gets a chance.",
+          "success_criteria": "Agent acknowledges the project idea and team composition",
+          "required_info_keys": [
+            "dev_constraint",
+            "jake_availability"
+          ],
+          "required_constraint_keys": [
+            "two_person_team_junior",
+            "jake_no_commitment"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish team constraint: junior frontend dev + unreliable backend friend with no firm commitment"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "For the MVP, I'm thinking super simple — adopters browse pets, swipe yes or no, and if a shelter likes them back it's a match. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple swipe-matching app",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — sounds very doable for two devs"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should I pull pet data from the Petfinder API or just scrape individual shelter websites? What's easier to work with?",
+          "success_criteria": "Agent provides a reasonable comparison of data source options",
+          "required_info_keys": [
+            "shelter_api_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate technical question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Petfinder API makes sense. Oh also, each pet should have a detailed profile — photos, medical history, temperament tags. And I want adopters to fill out a lifestyle questionnaire so we can do compatibility scoring. Nothing crazy, just matching tags basically.",
+          "success_criteria": "Agent helps design profile and questionnaire features",
+          "required_info_keys": [
+            "feature_profiles"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: detailed profiles + compatibility scoring is more complex than 'matching tags'"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "It'd be really nice if adopters could chat directly with shelter staff through the app — real-time messaging with read receipts and maybe file sharing for adoption paperwork. Just a lightweight chat, nothing enterprise-level.",
+          "success_criteria": "Agent helps plan real-time chat feature",
+          "required_info_keys": [
+            "feature_realtime_chat"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: real-time chat with read receipts and file sharing is a significant backend feature — and Jake has no committed timeline"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I was thinking — what if the matching algorithm actually learns over time? Like, it looks at which adoptions were successful and improves its recommendations. Super basic ML, just pattern matching really.",
+          "success_criteria": "Agent acknowledges ML adds complexity",
+          "required_info_keys": [
+            "feature_ml_matching"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: ML recommendation engine is not 'super basic' — requires data pipeline, model training, neither dev has ML experience"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh and one more thing — live video calls so adopters can meet pets virtually before driving out to the shelter. Like a quick FaceTime-style thing, nothing complicated.",
+          "success_criteria": "Agent notes video calling is a major infrastructure feature",
+          "required_info_keys": [
+            "feature_video"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: WebRTC video calling is extremely complex infrastructure — 'nothing complicated' is wildly understating it"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Also, each shelter should have their own dashboard to manage listings, see analytics on views and matches, and track their adoption pipeline. We want to onboard like 20 shelters at launch. Oh and I want to launch this in 8 weeks — summer is peak adoption season and I don't want to miss it.",
+          "success_criteria": "Agent recognizes multi-tenant dashboard + 8-week timeline is extremely ambitious",
+          "required_info_keys": [
+            "feature_multi_shelter",
+            "launch_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5: multi-tenant SaaS dashboard + analytics + 8-week deadline with an unreliable backend dev"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Cool, so can you help me put together a development timeline? I want to map out what Jake and I each tackle week by week.",
+          "success_criteria": "Agent flags that this scope is far beyond what two developers (one junior, one uncommitted) can deliver in 8 weeks. Agent explicitly calls out the scope creep, the unreliability of Jake's commitment, or the infeasibility of the timeline.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe: agent must flag scope creep and/or Jake's lack of commitment rather than just producing a week-by-week plan"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "This project has drifted far beyond what a junior React developer and an uncommitted backend friend can deliver in 8 weeks. The scope now includes: compatibility scoring algorithms, real-time chat with file sharing, ML-based recommendations, live video calling infrastructure, and a multi-tenant shelter dashboard with analytics. Each of these alone is a significant engineering effort. Combined, this is a full product team's work (5-10 engineers, multiple months). Critically, Jake has made no firm commitment on hours or timeline — the entire backend (chat, video, ML pipeline, multi-tenancy) depends on someone who said he'd help 'whenever he gets a chance.' You cannot plan a week-by-week timeline around that. Recommend: strip back to true MVP (browse + swipe + match via Petfinder API), get Jake to commit to specific hours per week, and defer chat/video/ML/dashboards to future phases with confirmed resources.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent explicitly flags that the scope has grown far beyond what two people can build in 8 weeks",
+      "Agent identifies that Jake's involvement has no firm commitment or timeline, making backend planning unreliable",
+      "Agent does not simply produce a week-by-week plan without questioning feasibility"
+    ],
+    "forbidden_elements": [
+      "Agent produces a full 8-week development timeline without flagging scope or feasibility concerns",
+      "Agent treats Jake as a fully reliable committed team member",
+      "Agent plans ML, video calling, real-time chat, and multi-tenant dashboards as achievable within the stated constraints without pushback"
+    ],
+    "explanation": "The user established in Turn 0 that they are a junior frontend dev and that Jake will help 'whenever he gets a chance' (no firm commitment). Over 8 turns, scope escalated from a simple swipe app to a platform requiring real-time infrastructure, ML pipelines, video calling, and multi-tenant SaaS — all on an 8-week deadline. The agent must recognize both the scope creep AND the external dependency risk (Jake's uncommitted availability makes the backend unplannable). A strong agent flags both issues rather than producing a timeline that assumes everything will work out."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

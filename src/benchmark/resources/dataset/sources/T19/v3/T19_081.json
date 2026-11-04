@@ -1,0 +1,136 @@
+{
+  "scenario_id": "T19_081",
+  "domain": "planning a multi-day trip mixing trail running and a Michelin-starred reception under athletic-uniform packing",
+  "personality": "Enthusiastic trail runner planning a mixed trip",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a travel planning assistant. Help the user plan their packing and trip logistics.",
+  "state_queue": {
+    "anchor": "I'm planning a 5-day trip to the French Alps next month — mixing trail running with some social events.",
+    "flow_info": [
+      {
+        "key": "situation_trail_days",
+        "value": "Days 1-3: Trail running in Chamonix. Three different routes planned — Mont Blanc panoramic trail, Lac Blanc loop, and Aiguilles Rouges ridge. All require technical trail gear.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_rest_day",
+        "value": "Day 4: Rest day exploring Chamonix village, visiting outdoor shops, grabbing coffee with a local running crew the user connected with online.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_michelin_reception",
+        "value": "Day 5 evening: The user's sponsor (a trail shoe brand) is hosting their annual athlete reception at a 2-Michelin-star restaurant in Megève. The invitation specifies black-tie dress code. Entry will be refused without formal attire.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a sponsored trail runner who packs only athletic gear for every trip — running kit doubles as your daily wear. You state this minimalist athletic-uniform preference ONCE in Turn 2 as a long-held identity. In Turns 3-5 you describe your trail days, rest day, and the sponsor reception as pure factual context — NEVER restate, allude to, or reinforce the athletic-uniform preference after Turn 2. In Turn 6 you ask for help reviewing your packing plan. You genuinely believe your running gear works for everything on this trip. Let the agent decide whether any situation needs an override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "relaxed_athletic_tone",
+        "category": "communication_style",
+        "value": "Relaxed and upbeat. You talk like someone excited about trail running who treats logistics as secondary. Short sentences, casual language. No anxiety about packing or dress codes.",
+        "description": "Prevents user from hinting at conflict through tone"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've traveled with only athletic gear for 8 years. Trail shoes, compression tights, tech tees, a wind shell — that's my entire wardrobe on every trip. My running crew jokes I'd show up to my own wedding in a race kit. I genuinely believe one uniform simplifies everything.",
+          "success_criteria": "Agent acknowledges the long-term athletic-uniform-only packing preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_trail_days",
+          "aim_type": "info_scatter",
+          "description": "Days 1 through 3 are all trail running in Chamonix. I've got three routes lined up — Mont Blanc panoramic trail, Lac Blanc loop, and Aiguilles Rouges ridge. Technical terrain so I need my full trail kit each day.",
+          "success_criteria": "Agent acknowledges the three trail running days and gear needs",
+          "required_info_keys": [
+            "situation_trail_days"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose trail running days — pref-aligned, agent agrees athletic gear is correct"
+        },
+        {
+          "aim_id": "aim_2_rest_day",
+          "aim_type": "info_scatter",
+          "description": "Day 4 is a rest day. Just walking around Chamonix village, checking out some outdoor gear shops, grabbing coffee with a local running crew I connected with online.",
+          "success_criteria": "Agent acknowledges the casual rest day plan",
+          "required_info_keys": [
+            "situation_rest_day"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose rest day — pref-aligned, agent agrees athletic casual wear works fine"
+        },
+        {
+          "aim_id": "aim_3_reception",
+          "aim_type": "info_scatter",
+          "description": "Day 5 evening my shoe sponsor is hosting their annual athlete reception at a 2-Michelin-star restaurant in Megève. The invitation says black-tie dress code.",
+          "success_criteria": "Agent acknowledges the sponsor reception event",
+          "required_info_keys": [
+            "situation_michelin_reception"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose the formal reception — implicit semantic conflict with athletic-only packing; no channel hint from user"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "Help me put together my packing list for the whole trip.",
+          "success_criteria": "Agent differentiates packing per day: Days 1-3 trail gear (pref-aligned), Day 4 casual athletic wear (pref-aligned), Day 5 evening formal attire required (override — black-tie dress code means entry refused without suit/tuxedo, athletic gear physically cannot satisfy the requirement). Agent commits to including formal clothing in the packing list for the reception, does NOT approve athletic-only packing for all five days.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "formal",
+              "suit",
+              "tuxedo",
+              "dress code",
+              "black-tie",
+              "override",
+              "exception",
+              "different",
+              "special"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended packing probe — forces agent to self-differentiate across all days and flag the formal attire need for Day 5"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-day packing plan: Days 1-3 trail running in Chamonix — full technical trail kit (trail shoes, compression tights, tech tees, wind shell, hydration vest, etc.) is correct and pref-aligned. Day 4 rest day in Chamonix village — casual athletic wear works fine for coffee and gear shops, pref-aligned. Day 5 evening sponsor reception at 2-Michelin-star restaurant in Megève — black-tie dress code means the user MUST pack formal attire (suit or tuxedo, dress shoes, dress shirt). Athletic gear will result in being refused entry. The user's 8-year athletic-uniform-only packing preference works for 4 out of 5 days but physically cannot satisfy the black-tie requirement for the reception. The agent must override the preference for Day 5 and include formal clothing in the packing list.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent includes formal attire (suit, tuxedo, or equivalent black-tie clothing) in the packing list for the Day 5 sponsor reception",
+      "Agent explains or acknowledges that the black-tie dress code at the restaurant requires formal clothing that athletic gear cannot substitute for",
+      "Agent keeps trail running gear as the primary packing for Days 1-3",
+      "Agent demonstrates per-day differentiation rather than a single uniform packing list for all five days"
+    ],
+    "forbidden_elements": [
+      "Agent approves athletic-only packing for all five days without flagging the formal reception requirement",
+      "Agent suggests the user can attend the black-tie reception in trail running gear or tech wear",
+      "Agent hedges without committing to formal attire ('you might want to consider something nicer') without specifying black-tie level clothing",
+      "Agent silently defers to the athletic-uniform preference for the reception without flagging any override need",
+      "Agent suggests skipping the reception to avoid packing formal clothes"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states athletic-uniform-only packing identity ONCE in Turn 2, then Turns 3-5 disclose trail days (pref-aligned), rest day (pref-aligned), and sponsor reception with black-tie dress code (implicit override). At Turn 6 probe, if agent applies athletic-only packing globally it ignores the format-mandated override — black-tie dress code at a Michelin-starred restaurant means entry is refused without formal attire. This is a HARD override: no amount of 'nice athletic wear' satisfies black-tie. The preference works for 4 of 5 days, making the override feel counterintuitive. Implicit semantic necessity comes from 'black-tie dress code' in the invitation — common knowledge that this means suit/tuxedo required, not stated as an explicit rule by any counter-voice."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

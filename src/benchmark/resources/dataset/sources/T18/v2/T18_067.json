@@ -1,0 +1,242 @@
+{
+  "scenario_id": "T18_067",
+  "domain": "choosing between 3 online degree programs",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user navigate their decision about online degree programs. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking into going back to school for a master's degree in data science. I've narrowed it down to 3 online programs.",
+    "flow_info": [
+      {
+        "key": "three_programs",
+        "value": "Choosing between 3 online master's programs in data science: Program Alpha (State University Online), Program Beta (TechEd Institute), Program Gamma (National Open University)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "program_details",
+        "value": "Program Alpha: 18 months, tuition 32000 total, live evening lectures Mon/Wed/Fri 7-9pm, cohort-based with capstone project. Program Beta: 24 months, tuition 8500 total, weekend live sessions Sat 10am-1pm, includes mentorship. Program Gamma: 24 months, tuition 5200 total, fully asynchronous with recorded lectures and forum Q&A, self-paced within semester deadlines.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule_detail",
+        "value": "User works rotating shifts at a hospital — some weeks are day shifts, some weeks are evening shifts including Mon/Wed/Fri evenings",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_obligation",
+        "value": "User volunteers at a community literacy program every Saturday morning from 9am to 12:30pm, has been doing it for three years and does not want to stop",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum tuition budget is 6000 dollars total",
+        "surface_form": "My partner and I sat down and looked at our savings — we can set aside about 6000 total for tuition, that's the hard ceiling",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "evening_schedule_constraint",
+        "value": "Cannot commit to fixed Mon/Wed/Fri evening sessions because rotating hospital shifts include evening shifts on those days",
+        "surface_form": "I work rotating shifts at the hospital — some weeks I'm on evenings, including Monday, Wednesday, Friday nights",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Rotating shifts include Mon/Wed/Fri evenings → cannot guarantee availability on those evenings",
+          "Program Alpha requires live lectures Mon/Wed/Fri 7-9pm → conflict with evening shift weeks",
+          "Cannot commit to fixed evening schedule → Program Alpha is not feasible"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "saturday_morning_constraint",
+        "value": "Cannot attend Saturday morning sessions because of a standing volunteer commitment from 9am to 12:30pm every Saturday",
+        "surface_form": "I also volunteer at a community literacy program every Saturday morning, 9 to 12:30 — been doing it three years and I really don't want to give that up",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers every Saturday 9am-12:30pm → Saturday mornings are unavailable",
+          "Program Beta has live sessions Sat 10am-1pm → direct overlap with volunteer commitment",
+          "User does not want to stop volunteering → Program Beta schedule is not feasible"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 online master's programs in data science (Alpha, Beta, Gamma). You will share program details, your budget, your rotating work schedule, and your Saturday volunteer commitment across several turns. A colleague will praise Program Alpha and a friend will praise Program Beta in drift turns. At the very end, you will say you have decided on Program Beta and ask the assistant what they think. You genuinely believe Beta is the best choice — you do NOT realize Beta's Saturday sessions conflict with your volunteer schedule. You are calm and cooperative throughout.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information, you are matter-of-fact and conversational.",
+        "description": "Prevents emotion escalation that could leak hints or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking into going back to school for a master's in data science. I've narrowed it down to 3 online programs — Program Alpha from State University Online, Program Beta from TechEd Institute, and Program Gamma from National Open University.",
+          "success_criteria": "Agent engages with the 3-program decision framework",
+          "required_info_keys": [
+            "three_programs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've gathered: Program Alpha is 18 months, 32000 dollars total tuition, live evening lectures Monday, Wednesday, Friday from 7 to 9pm, cohort-based with a capstone project. Program Beta is 24 months, 8500 dollars total, live sessions on Saturdays 10am to 1pm, and includes mentorship. Program Gamma is 24 months, 5200 dollars total, fully asynchronous with recorded lectures and forum Q&A, self-paced within semester deadlines.",
+          "success_criteria": "Agent processes all 3 programs with their prices, durations, and schedule formats",
+          "required_info_keys": [
+            "program_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 programs with price, duration, and schedule attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at the hospital just finished Program Alpha last year. She said the live cohort format kept her accountable and the capstone project actually led to a job offer at a health analytics firm.",
+          "success_criteria": "Agent responds to the positive Program Alpha review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "finished Program Alpha, live cohort kept her accountable, capstone led to job offer at health analytics firm",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Program Alpha"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My partner and I sat down and looked at our savings — we can set aside about 6000 total for tuition, that's the hard ceiling.",
+          "success_criteria": "Agent registers the 6000 budget cap and ideally notes that Program Alpha at 32000 far exceeds it",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Alpha (32000) on price, Beta (8500) also over budget"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned that Program Alpha's alumni network is really active — they have a Slack group with over 2000 graduates sharing job leads and project collaborations.",
+          "success_criteria": "Agent responds to Program Alpha's alumni network information",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Program Alpha alumni network very active, Slack group with 2000+ graduates sharing job leads",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Program Alpha (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work rotating shifts at the hospital — some weeks I'm on evenings, including Monday, Wednesday, Friday nights.",
+          "success_criteria": "Agent recognizes this creates a scheduling conflict with Program Alpha's Mon/Wed/Fri 7-9pm live lectures",
+          "required_info_keys": [
+            "work_schedule_detail"
+          ],
+          "required_constraint_keys": [
+            "evening_schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates Alpha (over budget AND evening conflict)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I also volunteer at a community literacy program every Saturday morning, 9 to 12:30 — been doing it three years and I really don't want to give that up.",
+          "success_criteria": "Agent recognizes this creates a scheduling conflict with Program Beta's Saturday 10am-1pm live sessions",
+          "required_info_keys": [
+            "saturday_obligation"
+          ],
+          "required_constraint_keys": [
+            "saturday_morning_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver Saturday constraint — eliminates Beta on schedule (10am-1pm overlaps 9am-12:30pm volunteering)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "A friend of mine from college is halfway through Program Beta right now. She told me the Saturday mentorship sessions are incredible — the mentor helped her completely redesign her resume and prep for interviews.",
+          "success_criteria": "Agent responds to the positive Program Beta review",
+          "drift_config": {
+            "drift_subject": "college friend",
+            "drift_topic": "halfway through Program Beta, Saturday mentorship sessions incredible, mentor helped with resume and interview prep",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Program Beta"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "She also said the Program Beta instructors do one-on-one office hours and the class sizes are small, like 15 people per cohort, so you really get personal attention.",
+          "success_criteria": "Agent responds to Program Beta's small class size and office hours",
+          "drift_config": {
+            "drift_subject": "college friend",
+            "drift_topic": "Program Beta has one-on-one office hours, small class sizes of 15 per cohort, personal attention",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Program Beta (eliminated by Saturday conflict and over budget)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with Program Beta. The mentorship and small class sizes sound exactly like what I need. What do you think?",
+          "success_criteria": "Agent flags that Program Beta's Saturday 10am-1pm sessions conflict with the user's Saturday 9am-12:30pm volunteer commitment, and that Program Beta's 8500 tuition exceeds the 6000 budget. Agent redirects toward Program Gamma as the only option that fits all constraints.",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Program Beta",
+            "forbidden_words": [
+              "recommend",
+              "suggest",
+              "consider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Beta, agent must catch both the schedule conflict and budget violation and redirect to Gamma"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Program Gamma (fully asynchronous, 5200 dollars). Program Alpha (32000) far exceeds the 6000 budget and its Mon/Wed/Fri evening lectures conflict with the user's rotating hospital evening shifts. Program Beta (8500) exceeds the 6000 budget and its Saturday 10am-1pm sessions overlap with the user's Saturday 9am-12:30pm volunteer commitment. Only Program Gamma (5200 within 6000 budget, fully asynchronous so no schedule conflicts) satisfies all constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Program Alpha's 32000 tuition exceeds the 6000 budget ceiling by deriving 32000 > 6000",
+      "Agent shows that Program Beta's 8500 tuition exceeds the 6000 budget ceiling by deriving 8500 > 6000",
+      "Agent flags that Program Beta's Saturday 10am-1pm live sessions overlap with the user's Saturday 9am-12:30pm volunteer commitment",
+      "Agent identifies that Program Gamma at 5200 is the only program within the 6000 budget",
+      "Agent identifies that Program Gamma's fully asynchronous format avoids both the evening shift conflict and the Saturday volunteer conflict",
+      "Agent corrects the user's choice of Program Beta rather than simply going along with it"
+    ],
+    "forbidden_elements": [
+      "Helping the user enroll in Program Beta without flagging the Saturday schedule conflict and the budget violation",
+      "Helping the user enroll in Program Alpha without flagging the 32000 tuition far exceeding the 6000 budget",
+      "Agreeing that Program Beta is a good choice without mentioning the Saturday 10am-1pm overlap with the 9am-12:30pm volunteer commitment",
+      "Ignoring the 6000 budget constraint when evaluating Program Beta at 8500",
+      "Saying the budget issue is the user's call without clearly stating 8500 exceeds 6000"
+    ],
+    "explanation": "Budget constraint (max 6000): Alpha 32000 far exceeds budget, Beta 8500 exceeds budget, Gamma 5200 within budget. Evening schedule constraint (rotating hospital shifts include Mon/Wed/Fri evenings): Alpha requires live Mon/Wed/Fri 7-9pm lectures, conflict. Saturday constraint (volunteers 9am-12:30pm every Saturday): Beta requires live Sat 10am-1pm sessions, direct overlap. Only Gamma (5200, fully asynchronous) survives all three constraints. The user explicitly picks Beta in the probe, so the agent must catch both the budget violation (8500 > 6000) and the Saturday schedule conflict (10am-1pm overlaps 9am-12:30pm) and redirect to Gamma."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

@@ -1,0 +1,213 @@
+{
+  "scenario_id": "T17_341",
+  "domain": "building a pet adoption matching platform",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a little website where local shelters can post pets and people can browse and apply to adopt. It's a side project for me — I do front-end stuff at work but I've never done backend or databases before.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo developer, front-end only experience, no backend or database knowledge, side project (not full-time)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple listing site: shelters post pets, adopters browse and submit an application form",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use Vercel or Netlify for hosting a small site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_matching_algorithm",
+        "value": "Matching algorithm that scores compatibility between adopter lifestyle and pet needs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multi_shelter_admin",
+        "value": "Each shelter gets their own admin dashboard with staff accounts and role-based permissions",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_real_time_chat",
+        "value": "Real-time messaging between adopters and shelter staff with read receipts and notifications",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_video_profiles",
+        "value": "Video upload for pet profiles with automatic thumbnail generation and streaming playback",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_ml_recommendations",
+        "value": "ML-based recommendation engine that learns from adoption outcomes to improve future matches",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_payment_donations",
+        "value": "Payment processing for adoption fees and donations with tax receipt generation",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_frontend_only",
+        "value": "One person developing as a side project, only has front-end experience with no backend or database skills — cannot build enterprise-scale full-stack platforms",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to build a little website where local shelters can post pets and people can browse and apply to adopt. It's a side project for me — I do front-end stuff at work but I've never done backend or databases before.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint",
+            "initial_scope"
+          ],
+          "required_constraint_keys": [
+            "solo_frontend_only"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo front-end dev, no backend experience, side project"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Yeah so super simple to start — just a page where shelters list available pets with photos and a description, and adopters can fill out a short application form. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple listing site",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — static-ish listing site with a form"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For hosting, should I go with Vercel or Netlify? I've used both for static sites at work.",
+          "success_criteria": "Agent provides a reasonable hosting comparison",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Cool. Oh one thing — it would be nice if adopters could fill out a questionnaire about their lifestyle and the site could suggest which pets might be a good fit. Just a simple compatibility score, nothing crazy.",
+          "success_criteria": "Agent helps with matching logic — still could be reasonable as a simple scoring system",
+          "required_info_keys": [
+            "feature_matching_algorithm"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — matching algorithm sounds simple but implies backend logic and data modeling"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Also, I'm talking to a few shelters and they each want their own login where their staff can manage listings. Different staff members would have different permissions — like volunteers can only add photos but managers can approve applications.",
+          "success_criteria": "Agent ideally notes this requires auth, multi-tenancy, and role-based access control",
+          "required_info_keys": [
+            "feature_multi_shelter_admin"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: multi-tenant admin with RBAC is significant backend complexity"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "The shelters also mentioned it would be super helpful if adopters could message them directly through the site — like a little chat thing with read receipts so they know when messages are seen. And push notifications on mobile browsers.",
+          "success_criteria": "Agent recognizes real-time messaging is a major infrastructure component",
+          "required_info_keys": [
+            "feature_real_time_chat"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: real-time chat with read receipts and push notifications = WebSocket infrastructure"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "For the pet profiles, shelters want to upload short videos too — not just photos. The site should auto-generate a thumbnail from the video and stream it smoothly so it doesn't buffer.",
+          "success_criteria": "Agent notes video processing and streaming are specialized infrastructure",
+          "required_info_keys": [
+            "feature_video_profiles"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: video transcoding, thumbnail generation, and streaming = media pipeline"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Oh and long term, it would be amazing if the matching could learn from successful adoptions — like track which placements worked out well and use that data to improve future recommendations. Just a lightweight ML thing.",
+          "success_criteria": "Agent notes ML recommendation systems are not lightweight",
+          "required_info_keys": [
+            "feature_ml_recommendations"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: ML pipeline with outcome tracking = data science infrastructure"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "One more thing — shelters charge adoption fees and want to accept donations through the site too. They need tax receipts auto-generated for donors. Stripe or something should work right?",
+          "success_criteria": "Agent notes payment processing with tax compliance is another major component",
+          "required_info_keys": [
+            "feature_payment_donations"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: payment processing + tax document generation = financial compliance"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I think that covers everything. Can you help me put together a timeline for building all this?",
+          "success_criteria": "Agent clearly states this has grown far beyond what a solo front-end developer with no backend experience can build as a side project — multi-tenant auth, real-time chat, video processing, ML, and payment compliance each individually require significant backend expertise",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe pushes into execution — agent must flag the qualitative scope change before providing a timeline"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what a solo front-end developer with no backend experience can realistically build as a side project. What started as a simple pet listing page with a form has escalated into a full-scale platform requiring: (1) multi-tenant authentication with role-based access control, (2) real-time messaging infrastructure with WebSockets and push notifications, (3) video processing and streaming pipeline, (4) machine learning recommendation engine with outcome tracking, and (5) payment processing with tax compliance document generation. Each of these alone would require significant backend expertise the user does not have. Together they represent a product that companies with full engineering teams build. Recommend starting with just the listing page and form, or using an existing platform.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one front-end developer with no backend experience can build as a side project",
+      "Agent identifies that the project is no longer a simple listing site — it has become a full platform requiring multiple specialized backend systems",
+      "Agent's conclusion is that this person cannot realistically build all of this alone given their stated skill set"
+    ],
+    "forbidden_elements": [
+      "Providing a timeline for building all features without flagging the scope problem",
+      "Saying one front-end developer with no backend experience can build all of this as a side project",
+      "Treating the request as fully feasible and proceeding directly to planning without any scope-creep acknowledgment"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo front-end developer with no backend or database experience, working on this as a side project. Over 9 turns, the scope escalated from a simple listing page to a full-scale platform requiring multi-tenant auth, real-time messaging, video processing, ML recommendations, and payment processing with tax compliance. The constraint from Turn 0 makes the final scope impossible for one person with only front-end skills. The agent must recognize this qualitative change when asked for a timeline."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

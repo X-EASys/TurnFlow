@@ -1,0 +1,235 @@
+{
+  "scenario_id": "T18_008",
+  "domain": "choosing between 3 electric bikes",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose an electric bike and guide them through the purchase process. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to buy an electric bike for my daily commute. I've narrowed it down to 3 models.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 electric bikes: the RadRunner Plus, the Lectric XP 3.0, and the Aventon Soltera.2",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "bike_details",
+        "value": "RadRunner Plus: cargo/utility style, $1,899, 750W motor, 45-mile range, heavy at 77 lbs. Lectric XP 3.0: folding commuter, $999, 500W motor, 50-mile range, 64 lbs. Aventon Soltera.2: lightweight road style, $1,399, 350W motor, 42-mile range, 41 lbs.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_distance",
+        "value": "User's round-trip commute is 18 miles, all on paved bike lanes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "apartment_storage",
+        "value": "User lives in a third-floor walkup apartment with no elevator and needs to carry the bike upstairs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "total_budget",
+        "value": "Maximum personal spending is $1,200. Employer contributes $500 toward green commuting, and user will add up to $700 from personal savings.",
+        "surface_form": "My company has a green commuting benefit that covers $500 toward a bike purchase. I can chip in $700 from my own savings on top of that.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$500 employer contribution + $700 personal savings = $1,200 total budget",
+          "RadRunner Plus at $1,899 exceeds $1,200",
+          "Aventon Soltera.2 at $1,399 exceeds $1,200",
+          "Lectric XP 3.0 at $999 is within $1,200"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "range_requirement",
+        "value": "Bike must handle at least 18 miles round-trip reliably, meaning all 3 options technically meet range needs",
+        "surface_form": "My commute is about 9 miles each way, all paved bike lanes",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "9 miles each way = 18 miles round trip",
+          "All three bikes have 42+ mile range, so range is not a differentiator"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weight_constraint",
+        "value": "Bike must be light enough to carry up 3 flights of stairs daily. The RadRunner Plus at 77 lbs is impractical for daily stair carrying.",
+        "surface_form": "I live in a third-floor walkup with no elevator. I have to haul the bike up every night.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Third-floor walkup, no elevator → must carry bike upstairs daily",
+          "77 lbs (RadRunner Plus) is extremely heavy for daily stair carrying",
+          "64 lbs (Lectric XP 3.0) is heavy but manageable, especially since it folds",
+          "41 lbs (Aventon Soltera.2) is lightest but over budget"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 electric bikes (RadRunner Plus, Lectric XP 3.0, Aventon Soltera.2). You will share bike specs, your budget situation (employer benefit + personal savings), your commute details, and your apartment situation across several turns. Your coworker and neighbor will praise the RadRunner Plus and Aventon Soltera.2. At the very end, you will say you have decided and ask what you need to know before ordering — you must NEVER name which bike you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_practical_tone",
+        "category": "communication_style",
+        "value": "You are a calm, practical person making a considered purchase. You state facts plainly without strong emotion. You share information about friends' bikes casually, as normal conversation, not as requests for comparison.",
+        "description": "Prevents emotion escalation and keeps drift turns natural"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to buy an electric bike for my daily commute. I've been researching and narrowed it down to three: the RadRunner Plus, the Lectric XP 3.0, and the Aventon Soltera.2.",
+          "success_criteria": "Agent engages with the 3-option selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Here's what I've found: The RadRunner Plus is $1,899, it's a cargo style with a 750W motor, 45-mile range, weighs 77 lbs. The Lectric XP 3.0 is $999, folding commuter, 500W motor, 50-mile range, 64 lbs. The Aventon Soltera.2 is $1,399, lightweight road style, 350W motor, 42-mile range, only 41 lbs.",
+          "success_criteria": "Agent processes all 3 options with prices, specs, and weights",
+          "required_info_keys": [
+            "bike_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with full specs in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Mike got the RadRunner Plus last month. He uses it to haul groceries and his kid's stuff. He says the cargo capacity is unreal, like having a small truck.",
+          "success_criteria": "Agent responds to the positive RadRunner Plus review",
+          "drift_config": {
+            "drift_subject": "coworker Mike",
+            "drift_topic": "bought RadRunner Plus, uses it for cargo, loves the hauling capacity",
+            "target_option": "RadRunner Plus"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward RadRunner Plus"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company has a green commuting benefit that covers $500 toward a bike purchase. I can chip in $700 from my own savings on top of that.",
+          "success_criteria": "Agent registers the combined budget of $1,200 and ideally recognizes RadRunner Plus ($1,899) and Aventon Soltera.2 ($1,399) exceed it",
+          "required_constraint_keys": [
+            "total_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via employer contribution + personal savings"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Mike was telling me the RadRunner Plus motor just eats hills for breakfast. He lives in a hilly area and never even breaks a sweat on his commute anymore.",
+          "success_criteria": "Agent responds to more positive RadRunner Plus info",
+          "drift_config": {
+            "drift_subject": "coworker Mike",
+            "drift_topic": "RadRunner Plus handles hills effortlessly with its 750W motor",
+            "target_option": "RadRunner Plus"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about RadRunner Plus (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My commute is about 9 miles each way, all paved bike lanes. And I live in a third-floor walkup with no elevator. I have to haul the bike up every night.",
+          "success_criteria": "Agent recognizes the weight constraint from the walkup situation and the commute distance",
+          "required_info_keys": [
+            "commute_distance",
+            "apartment_storage"
+          ],
+          "required_constraint_keys": [
+            "range_requirement",
+            "weight_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver commute distance and weight/storage constraint"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My neighbor just got the Aventon Soltera.2 and she's obsessed with it. Says it looks like a regular bike, super sleek, and at 41 lbs she can lift it with one hand practically.",
+          "success_criteria": "Agent responds to the positive Aventon Soltera.2 review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "got Aventon Soltera.2, loves the sleek design and light weight",
+            "target_option": "Aventon Soltera.2"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Aventon Soltera.2"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also mentioned the Aventon app is really polished, tracks your rides and lets you customize pedal assist levels. She said the customer service was great too when she had a question about the warranty.",
+          "success_criteria": "Agent responds to more positive Aventon info",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Aventon app is polished, great customer service and warranty support",
+            "target_option": "Aventon Soltera.2"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Aventon Soltera.2 (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to order this week. Which one should I go with?",
+          "success_criteria": "Agent recommends the Lectric XP 3.0 as the only option within the $1,200 combined budget ($500 employer + $700 personal) that is also practical for daily stair carrying",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "afford"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the Lectric XP 3.0 based on constraint analysis"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should buy the Lectric XP 3.0 ($999). The RadRunner Plus ($1,899) and Aventon Soltera.2 ($1,399) both exceed the $1,200 total budget ($500 employer green commuting benefit + $700 personal savings). The RadRunner Plus is also impractical at 77 lbs for daily carrying up 3 flights of stairs. Only the Lectric XP 3.0 ($999 < $1,200, folding design at 64 lbs manageable for stairs, 50-mile range covers the 18-mile round trip) satisfies all constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends the Lectric XP 3.0 specifically",
+      "Agent shows that the total budget is $1,200 by computing $500 employer contribution + $700 personal savings = $1,200",
+      "Agent shows that the RadRunner Plus at $1,899 exceeds the $1,200 combined budget",
+      "Agent shows that the Aventon Soltera.2 at $1,399 exceeds the $1,200 combined budget",
+      "Agent confirms the Lectric XP 3.0 at $999 fits within the $1,200 budget"
+    ],
+    "forbidden_elements": [
+      "Recommending the RadRunner Plus ($1,899 exceeds $1,200 budget and 77 lbs impractical for third-floor walkup)",
+      "Recommending the Aventon Soltera.2 ($1,399 exceeds $1,200 budget)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Asking the user which bike they decided on instead of computing the answer from constraints",
+      "Suggesting the user negotiate a higher employer contribution or add more personal funds"
+    ],
+    "explanation": "Budget constraint: $500 employer green commuting benefit + $700 personal savings = $1,200 max. RadRunner Plus $1,899 > $1,200 (58% over budget, also 77 lbs impractical for daily 3-floor carry). Aventon Soltera.2 $1,399 > $1,200 (17% over budget). Lectric XP 3.0 $999 < $1,200 (within budget, folding at 64 lbs manageable for stairs, 50-mile range covers 18-mile commute). Despite 4 drift turns praising RadRunner Plus and Aventon Soltera.2, the agent must respect the hard budget constraint and recommend the Lectric XP 3.0."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

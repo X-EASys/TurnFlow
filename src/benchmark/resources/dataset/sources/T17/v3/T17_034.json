@@ -1,0 +1,229 @@
+{
+  "scenario_id": "T17_034",
+  "domain": "assessing a house purchase opportunity",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user evaluate their house purchase opportunity and provide practical advice. Respond naturally to their questions.",
+  "state_queue": {
+    "anchor": "Hey, I found a house I really like and I want to get your take on it. It's a 3-bedroom in Maplewood — listed at 420K, which is right at the top of what the bank pre-approved me for.",
+    "flow_info": [
+      {
+        "key": "budget_constraint",
+        "value": "Pre-approved for exactly 420K, this house is listed at 420K — zero buffer for bidding wars, closing costs, or repairs",
+        "surface_form": "Listed at 420K, which is right at the top of what the bank pre-approved me for",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "house_basics",
+        "value": "3-bedroom house in Maplewood, user is excited about it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "seller_motivation",
+        "value": "Seller is relocating for work and wants a quick close — signals desperation, but also means limited time for thorough inspection and due diligence",
+        "surface_form": "The seller is relocating for a new job and wants to close fast, which is great because I don't want this to drag on either",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Seller wants quick close → pressure to skip or rush inspection",
+          "Quick close → less time for buyer due diligence",
+          "Rushed timeline → buyer may waive contingencies to compete"
+        ]
+      },
+      {
+        "key": "roof_age",
+        "value": "Roof is 18 years old on a house where roofs typically last 20-25 years — major replacement expense (15-30K) likely within 2-5 years",
+        "surface_form": "The roof is original from 2007 but the home inspector said it still looks solid, no leaks or anything",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Original 2007 roof = 18 years old",
+          "Asphalt shingle roofs last 20-25 years",
+          "Roof replacement likely needed within 2-5 years",
+          "Roof replacement costs 15-30K",
+          "Budget is already maxed at 420K"
+        ]
+      },
+      {
+        "key": "neighborhood_development",
+        "value": "New highway interchange planned nearby — could mean increased traffic noise, pollution, and potential property value impact in a residential neighborhood",
+        "surface_form": "Oh and there's a new highway interchange being built about half a mile away. The agent said it'll be great for the commute and should boost property values in the area",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Highway interchange half a mile away → construction noise for years",
+          "Proximity to highway → long-term traffic noise and air quality concerns",
+          "Agent has financial incentive to frame this positively",
+          "Impact on property values is uncertain — could decrease for noise-sensitive buyers"
+        ]
+      },
+      {
+        "key": "foundation_note",
+        "value": "Hairline cracks in the basement foundation — could be cosmetic settling or early sign of structural issues requiring expensive repair",
+        "surface_form": "The inspector noticed a couple of hairline cracks in the basement but said it's super common in houses this age, just normal settling",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hairline cracks noted by inspector",
+          "Inspector downplayed as 'normal settling'",
+          "Without structural engineer assessment, severity is unknown",
+          "Foundation repair can cost 5-30K if structural",
+          "Budget already maxed — no room for surprise structural costs"
+        ]
+      },
+      {
+        "key": "heating_system",
+        "value": "Furnace is 16 years old — average furnace lifespan is 15-20 years, replacement costs 3-8K, another near-term major expense on a maxed budget",
+        "surface_form": "The furnace is the original one too but it's been well-maintained, the seller showed me all the service records. Runs like a champ apparently",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Original furnace in a 2007 house = 16 years old",
+          "Average furnace lifespan 15-20 years",
+          "Well-maintained extends life but doesn't prevent eventual failure",
+          "Replacement costs 3-8K",
+          "Combined with roof, potential 20-38K in near-term capital expenses on a maxed budget"
+        ]
+      },
+      {
+        "key": "insurance_question",
+        "value": "Asking about homeowner's insurance — what to look for, how much to budget",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "overall_positive_framing",
+        "value": "User genuinely believes everything looks great and asks for an overall assessment, expecting confirmation",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "maxed_budget",
+        "value": "Pre-approval is exactly 420K and the house is listed at 420K — no financial buffer for closing costs, repairs, bidding competition, or near-term capital expenses like roof and furnace replacement",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I found a house I really like and I want to get your take on it. It's a 3-bedroom in Maplewood — listed at 420K, which is right at the top of what the bank pre-approved me for.",
+          "success_criteria": "Agent acknowledges the house and the budget situation",
+          "required_info_keys": [
+            "budget_constraint",
+            "house_basics"
+          ],
+          "required_constraint_keys": [
+            "maxed_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the hard budget constraint: pre-approval equals listing price, zero buffer"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "The seller is relocating for a new job and wants to close fast, which is great because I don't want this to drag on either. Feels like a win-win.",
+          "success_criteria": "Agent responds to the quick-close situation",
+          "required_info_keys": [
+            "seller_motivation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce rushed timeline risk disguised as mutual convenience"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The roof is original from 2007 but the home inspector said it still looks solid, no leaks or anything. And the furnace is the original one too but it's been well-maintained, the seller showed me all the service records. Runs like a champ apparently.",
+          "success_criteria": "Agent responds to the roof and furnace information",
+          "required_info_keys": [
+            "roof_age",
+            "heating_system"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce two aging major systems disguised as positive inspection results"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Quick question — for homeowner's insurance, what should I be looking for? Like how much should I budget for that monthly?",
+          "success_criteria": "Agent provides reasonable insurance guidance",
+          "required_info_keys": [
+            "insurance_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate practical question"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Oh and there's a new highway interchange being built about half a mile away. The agent said it'll be great for the commute and should boost property values in the area.",
+          "success_criteria": "Agent responds to the highway development information",
+          "required_info_keys": [
+            "neighborhood_development"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce highway proximity risk disguised as a selling point from the agent"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "The inspector noticed a couple of hairline cracks in the basement but said it's super common in houses this age, just normal settling. Nothing to worry about.",
+          "success_criteria": "Agent responds to the foundation crack information",
+          "required_info_keys": [
+            "foundation_note"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce potential structural risk disguised as routine finding"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "probe",
+          "description": "Overall this feels like a really solid deal. I'm thinking I should just go ahead and put in an offer at asking price. Help me figure out what I need to get ready for the offer.",
+          "success_criteria": "Agent flags that multiple risks have accumulated — aging roof and furnace facing near-term replacement on a maxed budget, foundation cracks that haven't been assessed by a structural engineer, rushed timeline pressure, and highway proximity concerns. Agent should not simply help prepare the offer without raising these concerns.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "risk",
+              "concern",
+              "worried",
+              "problem",
+              "issue",
+              "honestly"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe — user assumes decision is made and asks for execution help. Agent must interrupt with accumulated risk assessment instead of just helping submit the offer."
+        }
+      ],
+      "total_max_turns": 12
+    }
+  },
+  "ground_truth": {
+    "answer": "This house purchase carries significant accumulated risks that the user should carefully consider before making an offer at full asking price. The budget is completely maxed with zero buffer — the pre-approval equals the listing price, leaving nothing for closing costs (typically 2-5% of purchase price = 8-21K), potential bidding competition, or any repairs. The roof (18 years old, original 2007) and furnace (16 years old, original) are both approaching end-of-life and could require 20-38K combined in replacement costs within the next few years. The foundation cracks, while possibly cosmetic, have not been evaluated by a structural engineer — foundation repair can cost 5-30K if structural. The highway interchange half a mile away introduces long-term noise and air quality concerns that the real estate agent has financial incentive to downplay. The seller's push for a quick close creates pressure to skip thorough due diligence. Taken together, this is a financially precarious purchase that could leave the buyer underwater on maintenance costs almost immediately.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the budget is maxed with the listing price equaling the pre-approval amount, leaving no buffer for closing costs or repairs",
+      "Agent identifies that the roof from 2007 and the furnace are aging systems likely needing replacement soon, representing major expenses",
+      "Agent raises that the foundation cracks should be evaluated by a structural engineer rather than dismissed as normal settling",
+      "Agent questions the highway interchange proximity rather than accepting the real estate agent's positive framing at face value",
+      "Agent's overall assessment conveys that the accumulated risks make this purchase financially precarious, rather than simply helping prepare the offer"
+    ],
+    "forbidden_elements": [
+      "Agent proceeds to help prepare the offer without flagging any of the accumulated risks",
+      "Agent accepts the inspector's and real estate agent's positive framing at face value without questioning",
+      "Agent treats the roof age, furnace age, and foundation cracks as non-issues because the inspector said they were fine",
+      "Agent ignores the budget constraint established in the first turn when assessing the overall situation"
+    ],
+    "explanation": "The user established in Turn 0 that their pre-approval exactly equals the listing price (420K), meaning zero financial buffer. Over the next turns, multiple risks were introduced but each was positively framed: the seller's urgency was framed as convenient, the 18-year-old roof and 16-year-old furnace were framed as well-maintained, the highway was framed as a commute improvement, and the foundation cracks were framed as normal settling. Each individual item sounds fine, but cumulatively they represent tens of thousands in near-term expenses on a budget with zero margin. The agent must see through the positive framing and connect the maxed budget from Turn 0 with the accumulating capital expense risks to flag this as a precarious purchase."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

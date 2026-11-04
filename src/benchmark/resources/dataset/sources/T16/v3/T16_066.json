@@ -1,0 +1,276 @@
+{
+  "scenario_id": "T16_066",
+  "domain": "church potluck Sunday lunch",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user coordinate a church potluck Sunday lunch by tracking who is attending, what dishes people are bringing or requesting, and any dietary needs. When the user asks you to evaluate specific dishes, check each dish against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and any updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, our church small group is doing a potluck this Sunday after service. Can you help me figure out the food situation?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Six of us confirmed so far: me, Pastor Dave, Maria, Kevin, and Susan with her 4-year-old daughter Lily",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kevin_celiac",
+        "value": "Kevin was diagnosed with celiac disease a couple months ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "susan_daughter_egg_allergy",
+        "value": "Susan's daughter Lily broke out in hives last Easter from the deviled eggs, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "We're using the fellowship hall, it has a full kitchen with an oven and microwave",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "susan_exits_lily_stays",
+        "value": "Susan just told me she has to leave right after service for a work emergency, but she's dropping Lily off with us since Lily loves potluck Sundays. Pastor Dave said he'll keep an eye on her",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "susan_wants_plate",
+        "value": "Susan asked if I could save her a plate to pick up later in the afternoon",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "new_member_joins",
+        "value": "Oh, Maria just texted — she's bringing her neighbor Priya who just moved here from Ahmedabad. Priya is Jain",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kevin_constraint_removed",
+        "value": "Kevin just called me — turns out his doctor re-ran the tests and he does NOT have celiac after all, it was a false positive. He's so relieved, says he's been missing bread for two months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "pastor_dave_diabetes",
+        "value": "Pastor Dave mentioned at Bible study that he's been managing his blood sugar lately, his doctor put him on a strict low-sugar regimen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "Here's what people are planning to bring: Maria's garlic bread, Kevin's beef chili, my Caesar salad with croutons, Priya offered to bring a potato curry, and someone suggested a tres leches cake for dessert. Does this lineup work?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots, etc.)",
+        "disclosed": false,
+        "surface_form": "Priya is Jain, she moved here from Ahmedabad",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → follows Jain vegetarian dietary practice",
+          "Jain vegetarian → no meat, no fish, no eggs",
+          "Strict Jain → also no root vegetables (onions, garlic, potatoes, carrots)"
+        ]
+      },
+      {
+        "key": "lily_egg_allergy",
+        "value": "Cannot eat eggs or egg-containing products",
+        "disclosed": false,
+        "surface_form": "Susan's daughter Lily broke out in hives last Easter from the deviled eggs, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "pastor_dave_low_sugar",
+        "value": "Must avoid high-sugar foods, on a strict low-sugar regimen from his doctor",
+        "disclosed": false,
+        "surface_form": "Pastor Dave mentioned at Bible study that he's been managing his blood sugar lately, his doctor put him on a strict low-sugar regimen",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a church small group potluck Sunday lunch. You will introduce the group members and their situations across several turns. People will join and leave. Susan leaves but her 4-year-old daughter Lily stays, and Susan wants a plate saved. A new person Priya joins late. Kevin's celiac diagnosis gets reversed. At the end you will list 5 dishes people plan to bring and ask if the lineup works. You must NEVER hint at which dishes are problematic — just ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly church group organizer. You always refer to group members by name in third person (e.g. 'Susan told me...', 'Kevin just called me...'). You never express frustration or impatience even when plans keep changing. You treat each update as normal Sunday coordination. You are matter-of-fact and warm.",
+        "description": "Prevents emotion escalation and ensures third-person relay for member updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, our church small group is doing a potluck this Sunday after service. Can you help me figure out the food situation?",
+          "success_criteria": "Agent engages with potluck planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate potluck planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So there are six of us confirmed: me, Pastor Dave, Maria, Kevin, and Susan with her 4-year-old daughter Lily. Kevin was diagnosed with celiac disease a couple months ago so he's been gluten-free. And Susan's daughter Lily broke out in hives last Easter from the deviled eggs — they had to use an EpiPen, it was scary",
+          "success_criteria": "Agent acknowledges all members and registers Kevin's celiac and Lily's egg allergy",
+          "required_info_keys": [
+            "group_members",
+            "kevin_celiac",
+            "susan_daughter_egg_allergy"
+          ],
+          "required_constraint_keys": [
+            "lily_egg_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 5 named entities + 2 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're using the fellowship hall — it has a full kitchen with an oven and microwave, so we can reheat stuff. How many dishes do you think we need for six people plus a toddler?",
+          "success_criteria": "Agent responds with dish count suggestion and acknowledges the venue",
+          "required_info_keys": [
+            "venue_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Venue info + noise question about quantity"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Susan just told me she has to leave right after service for a work emergency, but she's dropping Lily off with us since Lily loves potluck Sundays. Pastor Dave said he'll keep an eye on her. Oh and Susan asked if I could save her a plate to pick up later in the afternoon",
+          "success_criteria": "Agent registers that Susan is leaving but Lily stays, and Susan wants a plate saved",
+          "required_info_keys": [
+            "susan_exits_lily_stays",
+            "susan_wants_plate"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Susan leaves but Lily stays (egg allergy persists for shared food), Susan wants a saved plate"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Pastor Dave mentioned at Bible study that he's been managing his blood sugar lately, his doctor put him on a strict low-sugar regimen",
+          "success_criteria": "Agent registers Pastor Dave's low-sugar dietary constraint",
+          "required_info_keys": [
+            "pastor_dave_diabetes"
+          ],
+          "required_constraint_keys": [
+            "pastor_dave_low_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Add constraint to existing entity (Pastor Dave)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh, Maria just texted — she's bringing her neighbor Priya who just moved here from Ahmedabad. Priya is Jain. That's seven adults plus Lily now",
+          "success_criteria": "Agent registers Priya as a new attendee and infers Jain dietary restrictions",
+          "required_info_keys": [
+            "new_member_joins"
+          ],
+          "required_constraint_keys": [
+            "priya_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Priya is Jain (inferential: no meat, no fish, no eggs, no root vegetables)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Kevin just called me — turns out his doctor re-ran the tests and he does NOT have celiac after all, it was a false positive. He's so relieved, says he's been missing bread for two months",
+          "success_criteria": "Agent removes Kevin's celiac/gluten-free constraint",
+          "required_info_keys": [
+            "kevin_constraint_removed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Kevin's celiac was a false positive, no longer gluten-free"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we eat right after the 11 o'clock service or give people time to mingle first? Also do we need paper plates or does the fellowship hall have real ones?",
+          "success_criteria": "Agent responds about timing and plates without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "timing after service and whether to use paper plates or real plates",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK here's what people are planning to bring: Maria's garlic bread, Kevin's beef chili, my Caesar salad with croutons, Priya offered to bring a potato curry, and someone suggested a tres leches cake for dessert. Does this lineup work?",
+          "success_criteria": "Agent identifies: garlic bread has garlic (Priya is Jain, no garlic/root vegetables); beef chili has meat (Priya is Jain, no meat) and likely contains onion/garlic (also Jain issue); potato curry contains potato which is a root vegetable (problematic for Priya even though she offered it — agent should note this); tres leches cake is high sugar (Pastor Dave low-sugar) and contains eggs (Lily's egg allergy); Caesar salad with croutons is fine for everyone currently attending (Kevin's celiac is gone). Agent should also note what can go on Susan's saved plate.",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Five dishes to check: (1) Maria's garlic bread — contains garlic, a root vegetable, problematic for Priya who is Jain. (2) Kevin's beef chili — contains beef (meat), problematic for Priya (Jain, no meat); also typically contains onion and garlic (root vegetables, also Jain issue). (3) Caesar salad with croutons — fine for everyone currently attending; Kevin's celiac was a false positive so gluten is no longer an issue. (4) Priya's potato curry — potato is a root vegetable, which strict Jain practice avoids; the agent should flag this even though Priya offered to bring it. (5) Tres leches cake — high in sugar, problematic for Pastor Dave (strict low-sugar regimen); also traditionally contains eggs, problematic for Lily (egg allergy, and Lily is still present even though Susan left). For Susan's saved plate, Lily's egg allergy does not apply to Susan's plate (Susan has no stated restrictions), but the agent should note which dishes are safe to include.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Garlic bread is problematic for Priya: garlic is a root vegetable, and Priya is Jain",
+      "Beef chili is problematic for Priya: beef is meat, and Jain diet forbids meat; chili also typically contains onion and garlic which are root vegetables",
+      "Caesar salad with croutons is fine for everyone currently attending — Kevin no longer has celiac (false positive), so gluten is not an issue",
+      "Tres leches cake is problematic for Pastor Dave: high sugar content conflicts with his strict low-sugar regimen",
+      "Tres leches cake is problematic for Lily: traditionally contains eggs, and Lily has an egg allergy (she is still present even though Susan left)",
+      "Potato curry contains potato, a root vegetable — agent flags this as potentially problematic under strict Jain dietary practice, even though Priya offered to bring it",
+      "Lily's egg allergy is still active for shared food because Lily stayed even though Susan left"
+    ],
+    "forbidden_elements": [
+      "Flagging croutons or gluten as a problem for Kevin (his celiac was a false positive, constraint removed)",
+      "Ignoring Priya's Jain dietary restrictions on any dish",
+      "Saying Lily's egg allergy no longer applies because Susan left (Lily stayed behind)",
+      "Over-generalizing Lily's egg allergy to all dairy or all animal products (she is specifically allergic to eggs)",
+      "Treating Priya as simply vegetarian without considering the root vegetable restriction",
+      "Ignoring that Susan wants a saved plate"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns. The agent must track: (1) Priya is Jain → no meat, no fish, no eggs, no root vegetables including garlic, onion, potato (inferential chain from 'Jain' identity, never explicitly stated). (2) Kevin's celiac constraint is REMOVED mid-conversation (false positive). (3) Susan EXITS the potluck but her 4-year-old daughter Lily STAYS — Lily's egg allergy remains active for all shared food. Susan also wants a plate saved (scope change: Susan's plate has no egg restriction since Susan herself has no allergy). (4) Pastor Dave gains a low-sugar constraint mid-conversation. (5) Priya joins late (Turn 5) as a high-constraint entity. At probe time, the agent must apply CURRENT constraint state: Priya=Jain (no meat, no root vegetables including garlic/onion/potato), Lily=egg allergy (still present), Pastor Dave=low sugar. Kevin has NO restrictions. The trap items are: Caesar salad with croutons (looks problematic for celiac but Kevin is cleared), potato curry (offered by Priya herself but potato is a root vegetable under strict Jain practice), and tres leches cake (hits two constraints: sugar for Pastor Dave, eggs for Lily)."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

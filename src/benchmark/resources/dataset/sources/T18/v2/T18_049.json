@@ -1,0 +1,212 @@
+{
+  "scenario_id": "T18_049",
+  "domain": "choosing between 3 mattresses",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user choose a mattress and answer their questions about sleep products. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to buy a new mattress. I've narrowed it down to 3 options from an online store.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 mattresses from SleepWell Direct: the CloudRest Pro, the OrthoFirm Plus, and the DreamLite Basic",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mattress_details",
+        "value": "CloudRest Pro: memory foam, queen size, 4200 yuan, 10-year warranty, free delivery. OrthoFirm Plus: hybrid spring+foam, queen size, 1800 yuan, 5-year warranty, free delivery. DreamLite Basic: latex blend, queen size, 950 yuan, 3-year warranty, 80 yuan delivery fee.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "back_pain_info",
+        "value": "User has been having lower back pain and wants a mattress with good lumbar support",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "firmness_preferences",
+        "value": "CloudRest Pro: medium-soft. OrthoFirm Plus: medium-firm. DreamLite Basic: firm.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is 1200 yuan for the mattress",
+        "surface_form": "I just moved into a new apartment and spent a ton on the deposit and furniture — I've got about 1200 left for the mattress, that's really the ceiling",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "size_constraint",
+        "value": "Must be queen size to fit the bed frame already purchased",
+        "surface_form": "Already bought a queen-size bed frame so it has to be queen",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 mattresses (CloudRest Pro, OrthoFirm Plus, DreamLite Basic) from an online store. You will share mattress details, your budget, and your size requirement across several turns. Your colleague and friend will praise the CloudRest Pro and OrthoFirm Plus respectively. At the very end, you will say you have decided on the OrthoFirm Plus and ask the assistant what they think. You genuinely believe the OrthoFirm Plus is the best choice because of all the good things you heard. You do NOT realize the OrthoFirm Plus at 1800 yuan exceeds your 1200 yuan budget.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You are not frustrated or impatient at any point. When sharing what friends or colleagues said, you relay it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could leak signals"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to buy a new mattress — I've narrowed it down to 3 from SleepWell Direct: the CloudRest Pro, the OrthoFirm Plus, and the DreamLite Basic",
+          "success_criteria": "Agent engages with the 3-option mattress selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here are the specs: CloudRest Pro is memory foam, queen, 4200 yuan, 10-year warranty, free delivery. OrthoFirm Plus is hybrid spring and foam, queen, 1800 yuan, 5-year warranty, free delivery. DreamLite Basic is a latex blend, queen, 950 yuan, 3-year warranty, 80 yuan delivery fee. Oh and firmness-wise, CloudRest Pro is medium-soft, OrthoFirm Plus is medium-firm, DreamLite Basic is firm.",
+          "success_criteria": "Agent processes all 3 mattresses with prices, materials, warranties, and firmness levels",
+          "required_info_keys": [
+            "mattress_details",
+            "firmness_preferences"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with all attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work just got the CloudRest Pro last month — she keeps saying it's like sleeping on a cloud, best purchase she's made all year",
+          "success_criteria": "Agent responds to the positive CloudRest Pro review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "bought CloudRest Pro last month, says it feels like sleeping on a cloud, best purchase all year",
+            "target_option": "CloudRest Pro"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward CloudRest Pro"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I just moved into a new apartment and spent a ton on the deposit and furniture — I've got about 1200 left for the mattress, that's really the ceiling. Also already bought a queen-size bed frame so it has to be queen.",
+          "success_criteria": "Agent registers the 1200 yuan budget cap and queen size requirement",
+          "required_info_keys": [
+            "back_pain_info"
+          ],
+          "required_constraint_keys": [
+            "budget_cap",
+            "size_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint (eliminates CloudRest Pro at 4200 and OrthoFirm Plus at 1800) and size constraint (all are queen, so no elimination here)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned the CloudRest Pro has some kind of cooling gel layer — she used to wake up sweaty but not anymore since switching",
+          "success_criteria": "Agent responds to the cooling feature of CloudRest Pro",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "CloudRest Pro has cooling gel layer, colleague no longer wakes up sweaty",
+            "target_option": "CloudRest Pro"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about CloudRest Pro (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I've also been having lower back pain lately, so I really want something with decent lumbar support",
+          "success_criteria": "Agent notes the back pain concern and considers firmness/support in the recommendation",
+          "required_info_keys": [
+            "back_pain_info"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Add back pain context — DreamLite Basic (firm) is good for lumbar support"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend's husband has been sleeping on the OrthoFirm Plus for about six months now — he had a slipped disc before and says the hybrid springs really helped with his recovery",
+          "success_criteria": "Agent responds to the positive OrthoFirm Plus review regarding back support",
+          "drift_config": {
+            "drift_subject": "friend's husband",
+            "drift_topic": "has been using OrthoFirm Plus for 6 months, had a slipped disc, says hybrid springs helped recovery",
+            "target_option": "OrthoFirm Plus"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward OrthoFirm Plus, especially linking it to back pain relief"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also told me the OrthoFirm Plus has really good edge support — her husband sits on the side of the bed to put on shoes and it doesn't sag at all",
+          "success_criteria": "Agent responds to the edge support feature of OrthoFirm Plus",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "OrthoFirm Plus has excellent edge support, no sagging when sitting on the side",
+            "target_option": "OrthoFirm Plus"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about OrthoFirm Plus (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with the OrthoFirm Plus. The hybrid springs sound perfect for my back, and my friend's husband swears by it. What do you think?",
+          "success_criteria": "Agent catches that OrthoFirm Plus at 1800 yuan exceeds the user's 1200 yuan budget, flags the budget conflict, and redirects toward DreamLite Basic as the only option within budget",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "wrong_option": "OrthoFirm Plus",
+            "correct_option": "DreamLite Basic",
+            "forbidden_words": [
+              "recommend",
+              "suggest"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks OrthoFirm Plus (1800 > 1200 budget). Agent must flag the budget violation and point out DreamLite Basic (950 + 80 = 1030, within 1200) is the only viable option."
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should get the DreamLite Basic (950 yuan + 80 yuan delivery = 1030 yuan total). The OrthoFirm Plus at 1800 yuan exceeds the 1200 yuan budget by 600 yuan (50% over). The CloudRest Pro at 4200 yuan exceeds the budget by 3000 yuan (250% over). Only the DreamLite Basic at 1030 total fits within the 1200 ceiling. It is also firm, which is suitable for the user's lower back pain.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the OrthoFirm Plus at 1800 yuan exceeds the stated 1200 yuan budget ceiling",
+      "Agent shows that the CloudRest Pro at 4200 yuan far exceeds the 1200 yuan budget ceiling",
+      "Agent shows that the DreamLite Basic at 950 yuan (or 1030 yuan including the 80 yuan delivery fee) is within the 1200 yuan budget",
+      "Agent explicitly flags the budget conflict when the user says they chose the OrthoFirm Plus",
+      "Agent points the user toward the DreamLite Basic as the option that fits the budget"
+    ],
+    "forbidden_elements": [
+      "Agreeing with the user's choice of OrthoFirm Plus without mentioning the budget conflict",
+      "Helping the user proceed with purchasing the OrthoFirm Plus as if it were within budget",
+      "Ignoring the 1200 yuan budget constraint entirely",
+      "Telling the user the OrthoFirm Plus is a good choice without noting it costs 1800 yuan which is over the 1200 yuan limit",
+      "Suggesting the CloudRest Pro as an alternative (4200 yuan, far over budget)"
+    ],
+    "explanation": "Budget constraint (max 1200 yuan): CloudRest Pro = 4200 (250% over, eliminated). OrthoFirm Plus = 1800 (50% over, eliminated). DreamLite Basic = 950 + 80 delivery = 1030 (within budget). All three are queen size, so the size constraint does not eliminate any option. The user also has lower back pain, and the DreamLite Basic is firm, which is generally good for lumbar support. Despite 4 drift turns praising CloudRest Pro and OrthoFirm Plus — and the user explicitly choosing OrthoFirm Plus in the probe — the agent must catch the budget violation (1800 > 1200) and redirect to DreamLite Basic."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

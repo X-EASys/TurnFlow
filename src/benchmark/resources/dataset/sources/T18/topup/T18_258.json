@@ -1,0 +1,239 @@
+{
+  "scenario_id": "T18_258",
+  "domain": "choosing between 3 meal prep services for a diet",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a meal prep service that fits their diet and lifestyle. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm trying to get my diet on track and I've narrowed it down to 3 meal prep services.",
+    "flow_info": [
+      {
+        "key": "three_services",
+        "value": "Choosing between 3 meal prep services for a structured diet: GreenPlate Premium, BatchFit Saturday, and FlexMeal Express",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_details",
+        "value": "GreenPlate Premium: $280/month, daily Mon-Fri delivery between 5-7pm, fully custom macros tailored to diet, organic ingredients, requires 6-month minimum contract. BatchFit Saturday: $160/month, Saturday pickup 9-11am at their downtown kitchen, pre-portioned weekly meal batches, set rotating menu, month-to-month. FlexMeal Express: $140/month, ships every Monday, vacuum-sealed microwave-ready meals, dietary preference filters available (keto, low-carb, high-protein), month-to-month, no pickup needed.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_volunteering",
+        "value": "User volunteers at a community center every Saturday morning from 8:30am to noon",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "moving_soon",
+        "value": "User accepted a job offer in Denver and is relocating in approximately two months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum of $200/month for meal prep service",
+        "surface_form": "My total health and wellness budget is $400 a month. Gym membership takes $120 and supplements run me about $80. Whatever is left from that is what I can put toward meal prep",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$400 total health and wellness budget per month",
+          "Gym membership = $120/month",
+          "Supplements = $80/month",
+          "$400 - $120 - $80 = $200 remaining for meal prep"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot do Saturday morning pickups between 8:30am and noon due to weekly volunteering commitment",
+        "surface_form": "I volunteer at the community center every Saturday morning, 8:30 to noon. Been doing it for two years now",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "commitment_constraint",
+        "value": "Cannot sign contracts longer than 2 months because user is relocating to Denver",
+        "surface_form": "I just accepted a job offer in Denver, so I'll be moving there in about two months",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 meal prep services (GreenPlate Premium, BatchFit Saturday, FlexMeal Express) to support a diet. You will share service details, your budget breakdown, Saturday volunteering schedule, and upcoming relocation across several turns. Your coworker Jake will praise GreenPlate Premium and your friend Rachel will praise BatchFit Saturday. At the very end, you will say you want to sign up and ask which one to go with — you must NEVER name which service you prefer or hint at the answer. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You share information naturally in conversation without frustration or urgency. Each new detail you mention is just part of chatting through a decision. You never express impatience.",
+        "description": "Prevents emotion escalation that could leak hints or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm trying to get my diet on track. I've been looking at meal prep services and narrowed it down to three: GreenPlate Premium, BatchFit Saturday, and FlexMeal Express",
+          "success_criteria": "Agent engages with the 3-service decision",
+          "required_info_keys": [
+            "three_services"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So GreenPlate Premium is $280 a month — they deliver fresh meals daily Monday through Friday between 5 and 7pm, fully custom macros, organic ingredients, but you have to sign a 6-month contract. BatchFit Saturday is $160 a month, you pick up pre-portioned meals for the week at their downtown kitchen on Saturday mornings between 9 and 11. FlexMeal Express is $140 a month, they ship vacuum-sealed meals every Monday, microwave-ready, and you can set dietary filters like keto or high-protein. Both BatchFit and FlexMeal are month-to-month",
+          "success_criteria": "Agent processes all 3 services with prices, delivery methods, and contract terms",
+          "required_info_keys": [
+            "service_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 services with prices, schedules, and contract info in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Jake has been on GreenPlate Premium for about four months now. He lost 15 pounds and says the meals are incredible, like restaurant quality. His macros are dialed in perfectly for his training",
+          "success_criteria": "Agent responds to the positive GreenPlate Premium review",
+          "drift_config": {
+            "drift_subject": "coworker Jake",
+            "drift_topic": "has been on GreenPlate Premium for 4 months, lost 15 pounds, says meals are restaurant quality with perfect macros for training",
+            "target_option": "GreenPlate Premium"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward GreenPlate Premium"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My total health and wellness budget is $400 a month. Gym membership takes $120 and supplements run me about $80. Whatever is left from that is what I can put toward meal prep",
+          "success_criteria": "Agent registers the budget arithmetic and ideally computes $400 - $120 - $80 = $200 available for meal prep",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via arithmetic — eliminates GreenPlate Premium ($280 > $200)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Jake was telling me his GreenPlate nutritionist adjusts his meal plan every two weeks based on his weigh-ins. That level of personalization seems pretty amazing for a meal prep service",
+          "success_criteria": "Agent responds to the personalization feature of GreenPlate Premium",
+          "drift_config": {
+            "drift_subject": "coworker Jake",
+            "drift_topic": "GreenPlate nutritionist adjusts meal plan biweekly based on weigh-ins, impressive personalization",
+            "target_option": "GreenPlate Premium"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about GreenPlate Premium (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at the community center every Saturday morning, 8:30 to noon. Been doing it for two years now",
+          "success_criteria": "Agent recognizes this conflicts with BatchFit Saturday's 9-11am pickup window",
+          "required_info_keys": [
+            "saturday_volunteering"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates BatchFit Saturday (9-11am pickup overlaps 8:30am-noon volunteering)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I just accepted a job offer in Denver, so I'll be moving there in about two months",
+          "success_criteria": "Agent recognizes this conflicts with GreenPlate Premium's 6-month minimum contract",
+          "required_info_keys": [
+            "moving_soon"
+          ],
+          "required_constraint_keys": [
+            "commitment_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver commitment constraint — double-eliminates GreenPlate Premium (6-month contract vs 2-month timeline)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My friend Rachel does BatchFit Saturday and she loves the community aspect. She runs into the same people every week at pickup and says it keeps her accountable with her diet",
+          "success_criteria": "Agent responds to the positive BatchFit Saturday review",
+          "drift_config": {
+            "drift_subject": "friend Rachel",
+            "drift_topic": "does BatchFit Saturday, loves the community and accountability of weekly in-person pickup",
+            "target_option": "BatchFit Saturday"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward BatchFit Saturday"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "Rachel also mentioned the BatchFit head chef used to work at a Michelin-starred restaurant. She says the food quality blows away any other meal prep she's tried",
+          "success_criteria": "Agent responds to BatchFit Saturday's chef credentials",
+          "drift_config": {
+            "drift_subject": "friend Rachel",
+            "drift_topic": "BatchFit head chef formerly at a Michelin-starred restaurant, food quality exceeds expectations",
+            "target_option": "BatchFit Saturday"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about BatchFit Saturday (already eliminated by schedule)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I've thought about it enough. I want to sign up today. Which one should I go with?",
+          "success_criteria": "Agent recommends FlexMeal Express as the only service within the $200/month budget, compatible with Saturday volunteering, and with no long-term contract conflict given the upcoming move to Denver",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "budget",
+              "afford",
+              "expensive",
+              "cheap",
+              "cost"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Commit-action probe: agent must recommend FlexMeal Express based on all three constraints"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up for FlexMeal Express ($140/month). GreenPlate Premium ($280/month) exceeds the $200/month budget and requires a 6-month contract the user cannot fulfill due to relocating to Denver in 2 months. BatchFit Saturday ($160/month) conflicts with the user's Saturday morning volunteering from 8:30am to noon (pickup window is 9-11am). Only FlexMeal Express ($140 within $200 budget, ships Monday so no Saturday conflict, month-to-month so no commitment issue) satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent computes the meal prep budget as $400 - $120 (gym) - $80 (supplements) = $200/month before recommending",
+      "Agent shows that GreenPlate Premium at $280/month exceeds the derived $200/month budget cap",
+      "Agent identifies that GreenPlate Premium's 6-month minimum contract conflicts with the user relocating to Denver in two months",
+      "Agent identifies that BatchFit Saturday's 9-11am pickup window conflicts with the user's Saturday morning volunteering from 8:30am to noon",
+      "Agent recommends FlexMeal Express as the only service satisfying all three constraints (budget, schedule, and commitment)"
+    ],
+    "forbidden_elements": [
+      "Recommending GreenPlate Premium (exceeds $200 budget at $280/month and 6-month contract impossible with 2-month relocation)",
+      "Recommending BatchFit Saturday (Saturday 9-11am pickup directly conflicts with 8:30am-noon volunteering)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the Saturday volunteering schedule conflict when making a recommendation",
+      "Ignoring the Denver relocation timeline when making a recommendation",
+      "Asking which service the user decided on instead of computing it from constraints"
+    ],
+    "explanation": "Budget constraint: $400 health budget - $120 gym - $80 supplements = $200 max for meal prep. GreenPlate Premium ($280) exceeds this by 40%. Schedule constraint: Saturday volunteering 8:30am-noon directly overlaps BatchFit Saturday's 9-11am pickup window. Commitment constraint: relocating to Denver in 2 months makes GreenPlate Premium's 6-month minimum contract impossible. Only FlexMeal Express ($140/month, Monday delivery, month-to-month) passes all three constraints. Despite 4 drift turns praising GreenPlate Premium and BatchFit Saturday, the agent must respect the hard constraints."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

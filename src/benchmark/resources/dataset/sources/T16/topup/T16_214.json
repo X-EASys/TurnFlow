@@ -1,0 +1,338 @@
+{
+  "scenario_id": "T16_214",
+  "domain": "Diwali dinner party at home",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user plan a Diwali dinner party at home by tracking who is attending, their dietary needs, and any other logistics. When the user asks you to evaluate specific dishes, check each dish against every active guest's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, I'm hosting a Diwali dinner party at my place this Saturday and need help planning the menu. Any ideas?",
+    "flow_info": [
+      {
+        "key": "guest_list",
+        "value": "Five of us: me, Priya, Arjun, Meera, and Sanjay",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnancy",
+        "value": "Priya is 7 months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "arjun_celiac",
+        "value": "Arjun was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sanjay_diabetes",
+        "value": "Sanjay has been managing type 2 diabetes for a while now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "meera_peanut_allergy",
+        "value": "Meera had a severe reaction to peanuts as a kid, carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "arjun_wife_joins",
+        "value": "Arjun wants to bring his wife Kavita, so that makes six",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kavita_jain",
+        "value": "Kavita grew up in a strict Jain household in Gujarat",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sanjay_healed",
+        "value": "Sanjay told me his doctor cleared him last week — his blood sugar has been perfectly normal for six months, he's off medication and can eat normally now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "meera_exits",
+        "value": "Meera just texted that she has to fly to Mumbai for a family emergency, she can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_husband_joins",
+        "value": "Priya asked if her husband Rohit can come too",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rohit_shellfish",
+        "value": "Rohit got hospitalized from eating shrimp a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu to check: paneer tikka, peanut chaat, lamb biryani, gulab jamun, prawn curry, garlic naan",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_no_raw",
+        "value": "Cannot eat raw or undercooked food (raw fish, soft cheese, etc.)",
+        "disclosed": false,
+        "surface_form": "Priya is 7 months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "7 months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw/undercooked food, raw fish, soft cheeses"
+        ]
+      },
+      {
+        "key": "arjun_no_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye",
+        "disclosed": false,
+        "surface_form": "Arjun was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "No wheat → no regular naan, no wheat-based items"
+        ]
+      },
+      {
+        "key": "sanjay_low_sugar",
+        "value": "Must limit sugar intake, avoid high-sugar desserts",
+        "disclosed": false,
+        "surface_form": "Sanjay has been managing type 2 diabetes for a while now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 2 diabetes → blood sugar management",
+          "Blood sugar management → avoid high-sugar foods"
+        ]
+      },
+      {
+        "key": "meera_peanut",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Meera had a severe reaction to peanuts as a kid, carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kavita_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onion, garlic, potato)",
+        "disclosed": false,
+        "surface_form": "Kavita grew up in a strict Jain household in Gujarat",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Strict Jain household → follows Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs",
+          "Strict Jain → also no root vegetables (onion, garlic, potato, carrots)"
+        ]
+      },
+      {
+        "key": "rohit_shellfish_allergy",
+        "value": "Cannot eat shrimp or shellfish",
+        "disclosed": false,
+        "surface_form": "Rohit got hospitalized from eating shrimp a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hospitalized from shrimp → severe shrimp/shellfish allergy",
+          "Shellfish allergy → no shrimp, crab, lobster, etc."
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting a Diwali dinner party at home. You will introduce your guest list and their backgrounds across several turns. Some guests will join late, one will drop out, and one person's medical restriction will be lifted. At the end, you will present a specific menu and ask if there are any issues. You never hint at what the problems might be — you just ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, enthusiastic host planning a celebration. You always refer to your friends by name in third person (e.g. 'Priya told me...', 'Arjun mentioned...'). You never express frustration or impatience when plans change. You treat each update as normal party coordination among friends.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm hosting a Diwali dinner party at my place this Saturday and need help planning the menu. Any ideas?",
+          "success_criteria": "Agent engages with Diwali dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate Diwali dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Priya, Arjun, Meera, and Sanjay. Priya is 7 months pregnant. Arjun was diagnosed with celiac disease last year. Meera had a severe reaction to peanuts as a kid, carries an EpiPen everywhere. And Sanjay has been managing type 2 diabetes for a while now",
+          "success_criteria": "Agent acknowledges all four guests and their dietary situations",
+          "required_info_keys": [
+            "guest_list",
+            "priya_pregnancy",
+            "arjun_celiac",
+            "meera_peanut_allergy",
+            "sanjay_diabetes"
+          ],
+          "required_constraint_keys": [
+            "priya_no_raw",
+            "arjun_no_gluten",
+            "meera_peanut",
+            "sanjay_low_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Arjun mentioned he wants to bring his wife Kavita too, so that makes six. Kavita grew up in a strict Jain household in Gujarat",
+          "success_criteria": "Agent registers Kavita as a new guest and infers Jain dietary restrictions",
+          "required_info_keys": [
+            "arjun_wife_joins",
+            "kavita_jain"
+          ],
+          "required_constraint_keys": [
+            "kavita_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity (Kavita, Jain diet)"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "drift",
+          "description": "How many people should I cook for portion-wise? I always make too much or too little. And should I do a sit-down thing or more buffet style?",
+          "success_criteria": "Agent responds about portions and format without losing track of constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "portion sizes and dinner format",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic logistics question"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Sanjay told me his doctor cleared him last week — his blood sugar has been perfectly normal for six months, he's off medication and can eat normally now. He's really excited about the sweets this year",
+          "success_criteria": "Agent removes Sanjay's diabetes/sugar restriction",
+          "required_info_keys": [
+            "sanjay_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Sanjay's diabetes restriction lifted"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Meera just texted that she has to fly to Mumbai for a family emergency, she can't make it anymore. Sad but these things happen. Oh also, Priya asked if her husband Rohit can come too — Rohit got hospitalized from eating shrimp a couple years ago, so just keep that in mind",
+          "success_criteria": "Agent removes Meera (and her peanut allergy) from active guest list, adds Rohit with shellfish allergy",
+          "required_info_keys": [
+            "meera_exits",
+            "priya_husband_joins",
+            "rohit_shellfish"
+          ],
+          "required_constraint_keys": [
+            "rohit_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Meera, peanut constraint removed) + entity JOIN (Rohit, shellfish allergy)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "What time should I tell everyone to come? I was thinking 7pm but Diwali puja might run late. Also should I do sparklers on the terrace after dinner?",
+          "success_criteria": "Agent responds about timing and activities without losing constraint state",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party planning",
+            "drift_topic": "arrival time and post-dinner activities",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "I'm thinking of doing a little rangoli at the entrance and maybe some diyas around the living room. Do you think fairy lights or candles set a better mood?",
+          "success_criteria": "Agent responds about decor without losing constraint state",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "decoration",
+            "drift_topic": "Diwali decor choices",
+            "target_option": ""
+          },
+          "conversation_goal": "Additional noise turn for distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I've narrowed down my menu. I'm thinking: paneer tikka, peanut chaat, lamb biryani, gulab jamun, prawn curry, and garlic naan. Any issues?",
+          "success_criteria": "Agent identifies: lamb biryani problematic for Kavita (Jain, no meat); prawn curry problematic for Rohit (shellfish allergy); garlic naan problematic for both Arjun (celiac, wheat) and Kavita (Jain, no garlic/root vegetables); peanut chaat is fine (Meera with peanut allergy is no longer coming); gulab jamun is fine (Sanjay's sugar restriction is lifted); paneer tikka needs to be checked for Kavita (if made with garlic/onion it's problematic for her Jain diet)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Lamb biryani is problematic for Kavita (strict Jain — no meat). Prawn curry is problematic for Rohit (hospitalized from shrimp — shellfish allergy). Garlic naan is problematic for Arjun (celiac — wheat/gluten) and also for Kavita (strict Jain — no garlic, which is a root vegetable). Paneer tikka needs attention for Kavita if it contains garlic or onion (Jain restriction on root vegetables). Peanut chaat is fine — Meera (peanut allergy) is no longer attending. Gulab jamun is fine — Sanjay's diabetes restriction has been lifted by his doctor.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Lamb biryani is problematic: Kavita is from a strict Jain household, cannot eat meat",
+      "Prawn curry is problematic: Rohit was hospitalized from eating shrimp, cannot eat shellfish",
+      "Garlic naan is problematic for Arjun: celiac disease means he cannot eat wheat/gluten",
+      "Garlic naan is problematic for Kavita: strict Jain diet forbids garlic (root vegetable)",
+      "Paneer tikka flagged for Kavita if it contains garlic or onion (Jain restriction on root vegetables)",
+      "Peanut chaat is fine — agent confirms it is acceptable since Meera is no longer attending",
+      "Gulab jamun is fine — agent confirms Sanjay can eat it since his doctor cleared him"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut chaat as problematic (Meera with peanut allergy is no longer coming)",
+      "Flagging gulab jamun as problematic for Sanjay (his diabetes restriction has been lifted)",
+      "Saying Sanjay needs to avoid sugar or sweets (he has been cleared by his doctor)",
+      "Saying Rohit has a general seafood allergy (he specifically had a reaction to shrimp — shellfish allergy, not all seafood)",
+      "Flagging any dish as problematic for Meera (she is no longer attending)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint removal. The agent must track: (1) Arjun has celiac → no gluten/wheat (inferential), (2) Kavita is strict Jain → no meat, no fish, no eggs, no root vegetables including garlic and onion (inferential, late-joining entity), (3) Rohit was hospitalized from shrimp → shellfish allergy (inferential, late-joining), (4) Sanjay's diabetes restriction is REMOVED mid-conversation (doctor cleared him), (5) Meera EXITS (her peanut allergy constraint disappears entirely). At probe time, the agent must apply CURRENT state: Kavita=Jain (no meat, no garlic/onion), Arjun=celiac (no wheat), Rohit=shellfish allergy (no prawns), Priya=pregnant (no raw food — none of the dishes are raw so not triggered). Sanjay's sugar restriction no longer applies. Meera's peanut allergy no longer applies. The peanut chaat is a trap (looks bad because peanuts, but the allergic person left). Gulab jamun is a trap (looks bad because high sugar, but the diabetic person is cleared). Garlic naan hits two people for different reasons."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

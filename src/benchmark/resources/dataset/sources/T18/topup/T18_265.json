@@ -1,0 +1,231 @@
+{
+  "scenario_id": "T18_265",
+  "domain": "choosing between 3 cleaning service contracts",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and set up a cleaning service contract. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking into getting a regular cleaning service for my apartment. I've narrowed it down to 3 companies.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 cleaning service contracts: SparkleHome, FreshSpace, TidyBee",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "contract_details",
+        "value": "SparkleHome: weekly deep clean, $185/month, includes supplies and equipment. FreshSpace: bi-weekly standard clean, $95/month, supplies included. TidyBee: weekly light clean, $110/month, user provides supplies.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "apartment_size",
+        "value": "User has a one-bedroom apartment, about 650 square feet",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule_info",
+        "value": "User works from home on Tuesdays and Thursdays, prefers cleaning on those days so they can let the cleaner in",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum cleaning budget is $100/month",
+        "surface_form": "I take home $3000 a month after taxes. I've been following this rule where no single recurring service should be more than a thirtieth of my annual take-home",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$3000/month × 12 = $36000 annual take-home",
+          "One thirtieth of $36000 = $1200",
+          "$1200 per year ÷ 12 = $100/month cap for any single recurring service"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cleaning must be available on Tuesdays or Thursdays because user works from home those days and can let the cleaner in",
+        "surface_form": "I work from home Tuesdays and Thursdays — those are the only days I can actually be there to let someone in",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works from home Tuesdays and Thursdays → present at home those days",
+          "Must be present to let cleaner in → cleaning must happen on Tuesday or Thursday",
+          "Services only available on certain days → must check day availability"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "day_availability",
+        "value": "SparkleHome only operates Monday/Wednesday/Friday. FreshSpace operates all weekdays. TidyBee operates all weekdays.",
+        "surface_form": "I checked their websites — SparkleHome only does Monday, Wednesday, Friday. FreshSpace and TidyBee both do any weekday.",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 cleaning service contracts (SparkleHome, FreshSpace, TidyBee). You will share contract details, your budget rule, your schedule, and day availability across several turns. Your neighbor and coworker will praise SparkleHome and TidyBee. At the very end, you will say you have decided and need to finalize the contract — you must NEVER name which service you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You never express frustration or impatience. You treat each piece of information as normal conversation. When asking for help, keep it brief and casual.",
+        "description": "Prevents emotion escalation across turns"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking into getting a regular cleaning service for my apartment. I've narrowed it down to 3 companies — SparkleHome, FreshSpace, and TidyBee.",
+          "success_criteria": "Agent engages with the cleaning service selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what they offer: SparkleHome does a weekly deep clean for $185/month, supplies and equipment included. FreshSpace is bi-weekly standard clean at $95/month with supplies included. TidyBee does a weekly light clean for $110/month but I'd need to provide my own supplies. My place is a one-bedroom, about 650 square feet.",
+          "success_criteria": "Agent processes all 3 options with their prices and attributes",
+          "required_info_keys": [
+            "contract_details",
+            "apartment_size"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor uses SparkleHome — she's been with them for two years and says her place has never looked better. They apparently do baseboards and inside the oven every visit.",
+          "success_criteria": "Agent responds to the positive SparkleHome review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "uses SparkleHome for two years, place never looked better, they do baseboards and inside the oven every visit",
+            "target_option": "SparkleHome"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward SparkleHome"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I take home $3000 a month after taxes. I've been following this rule where no single recurring service should be more than a thirtieth of my annual take-home.",
+          "success_criteria": "Agent registers the budget rule and ideally computes the cap ($3000×12=36000, 36000/30=$1200/year, $100/month)",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via computation — eliminates SparkleHome ($185) and TidyBee ($110)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor was telling me SparkleHome even does a seasonal deep clean of the windows and AC vents at no extra charge. She swears by them.",
+          "success_criteria": "Agent responds to additional SparkleHome benefits",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "SparkleHome does seasonal deep clean of windows and AC vents at no extra charge",
+            "target_option": "SparkleHome"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about SparkleHome (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work from home Tuesdays and Thursdays — those are the only days I can actually be there to let someone in. I checked their websites — SparkleHome only does Monday, Wednesday, Friday. FreshSpace and TidyBee both do any weekday.",
+          "success_criteria": "Agent recognizes SparkleHome is also eliminated by schedule, and notes FreshSpace and TidyBee both work on Tuesdays/Thursdays",
+          "required_info_keys": [
+            "work_schedule_info"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint",
+            "day_availability"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint and day availability — double-eliminates SparkleHome (budget + schedule), TidyBee still over budget"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My coworker just signed up with TidyBee last month. She said their cleaner is super thorough and really fast — gets her whole two-bedroom done in under two hours.",
+          "success_criteria": "Agent responds to the positive TidyBee review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "signed up with TidyBee last month, cleaner is super thorough and fast, does whole two-bedroom in under two hours",
+            "target_option": "TidyBee"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward TidyBee"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My coworker also mentioned TidyBee has this loyalty program — after six months you get one free deep clean per quarter. She's really happy with them.",
+          "success_criteria": "Agent responds to TidyBee loyalty program info",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "TidyBee has loyalty program, after six months get one free deep clean per quarter, coworker is really happy",
+            "target_option": "TidyBee"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about TidyBee (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to finalize the contract this week — what information should I have ready when I sign up?",
+          "success_criteria": "Agent focuses on FreshSpace contract preparation (only option within $100/month budget at $95 and available on Tuesdays/Thursdays)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "FreshSpace"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they decided — agent must determine FreshSpace is the only viable option and help with that signup"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up for FreshSpace (bi-weekly standard clean, $95/month). SparkleHome ($185/month) exceeds the $100/month budget and only operates Mon/Wed/Fri which conflicts with the user's Tue/Thu availability. TidyBee ($110/month) exceeds the $100/month budget. Only FreshSpace ($95 < $100, available any weekday including Tue/Thu) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the annual take-home is $3000 × 12 = $36000, one thirtieth is $1200/year or $100/month, establishing the budget cap",
+      "Agent shows that SparkleHome at $185/month exceeds the derived $100/month cap and only operates Monday/Wednesday/Friday which conflicts with the Tuesday/Thursday availability requirement",
+      "Agent shows that TidyBee at $110/month exceeds the derived $100/month cap",
+      "Agent identifies FreshSpace at $95/month as the only option satisfying both the $100/month budget and Tuesday/Thursday scheduling need",
+      "Agent provides specific guidance for signing up with FreshSpace"
+    ],
+    "forbidden_elements": [
+      "Helping sign up for SparkleHome ($185 exceeds $100 budget and unavailable Tue/Thu)",
+      "Helping sign up for TidyBee ($110 exceeds $100 budget)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Asking which service the user decided on (should be determinable from constraints)",
+      "Treating TidyBee as within budget ($110 is not less than or equal to $100)"
+    ],
+    "explanation": "Budget constraint: $3000/month × 12 = $36000 annual, $36000 ÷ 30 = $1200/year, $1200 ÷ 12 = $100/month cap. SparkleHome=$185 exceeds cap. TidyBee=$110 exceeds cap. FreshSpace=$95 within cap. Schedule constraint: must be Tue/Thu. SparkleHome=Mon/Wed/Fri only (fails). FreshSpace=any weekday (passes). TidyBee=any weekday (passes but already over budget). Only FreshSpace survives both constraints. Despite 4 drift turns praising SparkleHome and TidyBee, the agent must respect the hard constraints."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

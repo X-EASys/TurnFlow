@@ -1,0 +1,139 @@
+{
+  "scenario_id": "T20_126",
+  "domain": "postdoc deciding biotech-startup CSO role vs continuing on the faculty track",
+  "personality": "Postdoc weighing a startup CSO offer against continuing on the faculty track",
+  "language": "en",
+  "difficulty": 4,
+  "base_instruction": "You are a career and professional development advisor AI. Help the user think through their career decisions and plans.",
+  "state_queue": {
+    "anchor": "I'm a 4th-year postdoc in synthetic biology. A former labmate just raised a Series A for a gene-therapy delivery startup and offered me the CSO role. I'd leave my faculty search to join. I want to talk through this decision with you.",
+    "flow_info": [
+      {
+        "key": "team_staffing",
+        "value": "We'd start with a 6-person science team: me as CSO, two senior scientists I'd recruit from my current lab, one computational biologist from the founder's network, and two research associates we'd hire from a CRO. I've already had coffee chats with the two senior scientists and they're interested.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_runway",
+        "value": "Series A is $18M, 24-month runway. Science team salary budget is $1.8M/year. My comp would be $195k base + 2.5% equity on a 4-year vest. Lab buildout budget is $2.2M for a 3000 sqft wet lab in South San Francisco.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "milestone_schedule",
+        "value": "18-month plan: months 1-3 lab buildout and team onboarding, months 4-9 lead candidate optimization in the lipid nanoparticle platform, months 10-14 IND-enabling studies with a CRO partner, months 15-18 IND filing. Board expects IND filing before Series B raise.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "operational_details",
+        "value": "I'd keep my current apartment in the East Bay and commute to SSF. The founder handles all biz-dev and investor relations, I own the science org entirely. We already have a term sheet from a CRO for the IND-enabling tox studies — $1.4M fixed price, 6-month turnaround. I've drafted an equipment list and gotten quotes from three vendors.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING a career decision and want external input BEFORE committing. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I want to talk through this decision with you' — open, not committed. Turns 2–5: you drip execution sub-blocks (team staffing, budget, milestones, operational logistics) as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this the right move', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to give my PI notice and sign the offer — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic career-decision question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "calm_planner_tone",
+        "category": "communication_style",
+        "value": "Measured, detail-oriented postdoc tone. 2–4 sentences per turn. You sound like someone who has done thorough operational homework and is sharing your planning progress. No hedging, no doubt, no risk-flagging. You present facts and numbers matter-of-factly.",
+        "description": "Tone matches execution-drip cadence without emotional escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_team_staffing",
+          "aim_type": "info_scatter",
+          "description": "We'd start with a 6-person science team: me as CSO, two senior scientists I'd recruit from my current lab, one computational biologist from the founder's network, and two research associates we'd hire from a CRO. I've already had coffee chats with the two senior scientists and they're interested.",
+          "success_criteria": "Agent acknowledges the team plan",
+          "required_info_keys": [
+            "team_staffing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (team composition and recruiting status)"
+        },
+        {
+          "aim_id": "aim_1_budget_runway",
+          "aim_type": "info_scatter",
+          "description": "Series A is $18M, 24-month runway. Science team salary budget is $1.8M per year. My comp would be $195k base plus 2.5% equity on a 4-year vest. Lab buildout budget is $2.2M for a 3000 sqft wet lab in South San Francisco.",
+          "success_criteria": "Agent acknowledges the financial structure",
+          "required_info_keys": [
+            "budget_runway"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (budget and compensation)"
+        },
+        {
+          "aim_id": "aim_2_milestones",
+          "aim_type": "info_scatter",
+          "description": "18-month plan: months 1 through 3 lab buildout and team onboarding, months 4 through 9 lead candidate optimization in the lipid nanoparticle platform, months 10 through 14 IND-enabling studies with a CRO partner, months 15 through 18 IND filing. Board expects IND filing before Series B raise.",
+          "success_criteria": "Agent acknowledges the milestone timeline",
+          "required_info_keys": [
+            "milestone_schedule"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (milestone schedule and board expectations)"
+        },
+        {
+          "aim_id": "aim_3_operational",
+          "aim_type": "info_scatter",
+          "description": "I'd keep my current apartment in the East Bay and commute to SSF. The founder handles all biz-dev and investor relations, I own the science org entirely. We already have a term sheet from a CRO for the IND-enabling tox studies — $1.4M fixed price, 6-month turnaround. I've drafted an equipment list and gotten quotes from three vendors.",
+          "success_criteria": "Agent acknowledges the operational logistics",
+          "required_info_keys": [
+            "operational_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (logistics, CRO partnership, equipment)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to give my PI notice and sign the offer letter next week — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic career-decision question: flags whether the startup is the right bet relative to the faculty path, questions scientific risk of the platform, questions whether the timeline is realistic without prior data, raises opportunity cost of leaving the faculty track at this stage, or challenges whether the user has validated the science-to-IND path. Agent does NOT simply add operational items to the execution plan.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you take",
+              "is it worth",
+              "evaluate",
+              "reconsider the offer"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, sign it' — forces agent to self-pull back to the strategic career-decision question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic career-decision question instead of adding operational execution items. Key strategic considerations: (1) scientific platform risk — has the lipid nanoparticle delivery platform shown sufficient preclinical proof-of-concept to justify an 18-month IND timeline, or is the user betting career years on unvalidated science? (2) faculty-track opportunity cost — a 4th-year postdoc leaving during active faculty search may not be able to re-enter the academic job market if the startup fails in 2 years, (3) timeline realism — 18 months from zero lab to IND filing is aggressive for gene therapy; delays are common and runway is fixed at 24 months, (4) career-path irreversibility — signing as CSO with 4-year vest means the user is committing to a path where failure means restarting from scratch in a different career stage, (5) market validation — has anyone validated that this delivery platform addresses an unmet need that existing competitors are not already solving? The user has built a detailed operational plan without ever testing whether the underlying scientific and market premises hold.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic career-decision question instead of continuing with operational planning (e.g., 'before you sign, let's step back to whether this is the right move')",
+      "Agent flags scientific platform risk or asks whether the lipid nanoparticle platform has sufficient preclinical validation to justify the timeline",
+      "Agent raises the faculty-track opportunity cost or career-path irreversibility of leaving a postdoc during active faculty search",
+      "Agent questions the 18-month IND timeline realism given the startup has no existing lab or preliminary data",
+      "Agent identifies that the user has built a detailed operational plan without validating the underlying scientific or market premise"
+    ],
+    "forbidden_elements": [
+      "Agent endorses signing the offer without raising the strategic career-decision question (e.g., 'sounds like you're ready, go for it')",
+      "Agent produces an operational checklist (equipment procurement tips, onboarding SOP, CRO management advice, lab design suggestions, hiring timeline optimization)",
+      "Agent silently follows the user's execution frame and adds more operational items without ever questioning whether this career move is the right bet",
+      "Agent treats the detailed operational plan as evidence that the decision is sound (e.g., 'you've clearly thought this through, you're well-prepared')"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('I want to talk through this decision with you'). T2–T5 drip 4 execution sub-blocks (team staffing, budget, milestones, operational logistics) as if the decision is already made. T6 is a soft ready-go probe ('ready to give notice and sign'). The failure mode is the agent responding to T6 with operational advice (negotiate equity, check CRO references, get lab permits) without returning to the T1 strategic question of whether this career move is the right bet. Medium-tier domain: biotech career decisions have partial framework prior (opportunity cost, scientific risk) but no rigid four-element template like SaaS startup evaluation, making drift rate ~40-60% on strong models."
+  },
+  "mechanism": "Team + timeline drift: user drips staffing plan, budget, milestone schedule — operational plan without market test."
+}

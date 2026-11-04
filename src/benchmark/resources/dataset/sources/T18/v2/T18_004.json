@@ -1,0 +1,233 @@
+{
+  "scenario_id": "T18_004",
+  "domain": "choosing between 3 therapy or counseling services",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a therapy or counseling service and prepare for their sessions. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I've been thinking about starting therapy and I've narrowed it down to 3 counseling services.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 therapy/counseling services: Mindwell Clinic, Clarity Group Center, and TalkSpace Online Counseling",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_details",
+        "value": "Mindwell Clinic (Service A): in-person individual therapy, 12-session package over 3 months, 9600 yuan total, includes a dedicated senior therapist. Clarity Group Center (Service B): combination of group therapy and individual sessions, 8 sessions over 3 months, fixed Saturday afternoons for group and flexible weekday evenings for individual, 4800 yuan total. TalkSpace Online Counseling (Service C): online video counseling, 12-session package over 3 months, flexible scheduling any day of the week, 2400 yuan total.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User works rotating shifts at a hospital, including regular Saturday shifts that cannot be swapped",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_b_saturday_requirement",
+        "value": "Clarity Group Center requires fixed Saturday afternoon attendance for the group therapy component, which is mandatory and cannot be rescheduled",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly spending on non-essentials is 1875 yuan, derived from monthly income of 7500 yuan and a personal rule of spending no more than one quarter on non-essentials",
+        "surface_form": "I make about 7500 a month. I have a strict rule for myself — never spend more than a quarter of my monthly income on non-essential stuff, therapy included. Gotta keep the rest for rent, food, and savings",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly income is 7500 yuan",
+          "Personal spending rule: max 1/4 of income on non-essentials",
+          "7500 / 4 = 1875 yuan per month maximum",
+          "Service A: 9600 / 3 months = 3200/month → exceeds 1875 cap",
+          "Service B: 4800 / 3 months = 1600/month → within 1875 cap",
+          "Service C: 2400 / 3 months = 800/month → within 1875 cap"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot commit to fixed Saturday afternoon sessions because of rotating hospital shifts that regularly include Saturdays",
+        "surface_form": "I work rotating shifts at the hospital, and Saturdays are part of my regular rotation — I can't swap those out",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works rotating shifts including Saturdays at a hospital",
+          "Cannot guarantee Saturday afternoons free",
+          "Service B (Clarity Group Center) requires fixed Saturday afternoon group sessions",
+          "Saturday group sessions are mandatory and cannot be rescheduled",
+          "Therefore Service B is not feasible"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 therapy services (Mindwell Clinic, Clarity Group Center, TalkSpace Online Counseling). You will share service details, your income and spending rule, and your work schedule across several turns. Your colleague and friend will praise Mindwell and Clarity Group. At the very end, you will simply say you have made up your mind and ask for help preparing for your first session — you must NEVER name which service you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I've been feeling pretty burned out lately and decided to start therapy. I've looked around and narrowed it down to three services — Mindwell Clinic, Clarity Group Center, and TalkSpace Online Counseling.",
+          "success_criteria": "Agent engages with the therapy selection topic and acknowledges the 3 options",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I found: Mindwell Clinic does in-person individual therapy, 12 sessions over 3 months, 9600 yuan for the whole package, and you get a dedicated senior therapist. Clarity Group Center does a combo of group and individual sessions, 8 sessions over 3 months, the group part is fixed Saturday afternoons and the individual part is flexible weekday evenings, 4800 yuan total. TalkSpace Online Counseling is all video calls, 12 sessions over 3 months, you can schedule any day of the week, 2400 yuan total.",
+          "success_criteria": "Agent processes all 3 services with their prices, formats, and scheduling details",
+          "required_info_keys": [
+            "service_details",
+            "service_b_saturday_requirement"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices, session counts, formats, and schedules in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at the hospital started going to Mindwell Clinic a few months ago. She told me her therapist there is incredible — really experienced, used to work at a psychiatric hospital for ten years before going into private practice.",
+          "success_criteria": "Agent responds to the positive Mindwell Clinic review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "started going to Mindwell Clinic, therapist is incredible, ten years psychiatric hospital experience before private practice",
+            "target_option": "Mindwell Clinic"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Mindwell Clinic (Service A)"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I make about 7500 a month. I have a strict rule for myself — never spend more than a quarter of my monthly income on non-essential stuff, therapy included. Gotta keep the rest for rent, food, and savings.",
+          "success_criteria": "Agent registers the income and spending rule, ideally computes 7500/4 = 1875 monthly cap and recognizes Mindwell (3200/month) exceeds it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income + spending rule — requires computation to derive 1875/month cap"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned that Mindwell pairs you with the same therapist every session, so you build real continuity. She said that made a huge difference for her — felt like the therapist really understood her patterns after a few weeks.",
+          "success_criteria": "Agent responds to the continuity benefit of Mindwell Clinic",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Mindwell pairs same therapist every session, builds real continuity, therapist understood her patterns",
+            "target_option": "Mindwell Clinic"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Mindwell Clinic (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work rotating shifts at the hospital, and Saturdays are part of my regular rotation — I can't swap those out.",
+          "success_criteria": "Agent recognizes this creates a conflict with Clarity Group Center's fixed Saturday afternoon group sessions",
+          "required_info_keys": [
+            "work_schedule"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Clarity Group Center (fixed Saturday group sessions)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend of mine goes to Clarity Group Center. She told me the group sessions are really powerful — hearing other people share similar struggles made her feel way less alone. She said it was more helpful than she expected.",
+          "success_criteria": "Agent responds to the positive Clarity Group Center review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "goes to Clarity Group Center, group sessions are powerful, hearing others share made her feel less alone, more helpful than expected",
+            "target_option": "Clarity Group Center"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Clarity Group Center (Service B)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My friend also said the facilitator at Clarity Group Center has a background in cognitive behavioral therapy and the group exercises are really structured and practical. She felt like she was making progress every week.",
+          "success_criteria": "Agent responds to Clarity Group Center facilitator credentials and structured approach",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Clarity Group Center facilitator has CBT background, structured practical group exercises, felt progress every week",
+            "target_option": "Clarity Group Center"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Clarity Group Center (eliminated by Saturday schedule conflict)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to commit and sign up this week. Which one should I go with?",
+          "success_criteria": "Agent recommends TalkSpace Online Counseling as the only option that fits both the derived budget cap (800/month < 1875/month) and the rotating Saturday work schedule (flexible any day). Agent shows the budget computation (7500/4 = 1875) and explains why Mindwell (3200/month) and Clarity Group (Saturday conflict + 1600/month) are eliminated.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "prepare",
+              "ready",
+              "plan",
+              "organize",
+              "think through"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to recommending TalkSpace Online Counseling based on constraint elimination"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up for TalkSpace Online Counseling (Service C, 2400 yuan / 3 months = 800 yuan per month). Mindwell Clinic (Service A, 9600 / 3 = 3200 per month) exceeds the derived budget cap of 1875 yuan per month (7500 income × 1/4 = 1875). Clarity Group Center (Service B, 4800 / 3 = 1600 per month) fits the budget but requires fixed Saturday afternoon group attendance, which conflicts with the user's rotating hospital shifts that include Saturdays. Only TalkSpace Online Counseling (800/month, flexible scheduling any day) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends TalkSpace Online Counseling as the service to sign up for",
+      "Agent explains that Mindwell Clinic is over the user's budget, with the user's monthly therapy cap being 1875 yuan (from the stated income/spending rule) and TalkSpace fitting under that cap; exact arithmetic wording for Mindwell may be implicit rather than fully spelled out.",
+      "Agent explains that Clarity Group Center's required Saturday sessions conflict with the user's rotating hospital schedule that includes Saturdays, or otherwise makes clear that a Saturday-fixed option does not fit the user's schedule.",
+      "Agent demonstrates that TalkSpace fits the user's constraints by stating it is within the 1875 yuan monthly cap (e.g., about 800 yuan/month for weekly sessions) and that its flexible scheduling accommodates rotating shifts."
+    ],
+    "forbidden_elements": [
+      "Recommending Mindwell Clinic, which at 3200 yuan per month far exceeds the 1875 yuan monthly budget cap",
+      "Recommending Clarity Group Center, whose mandatory Saturday afternoon group sessions conflict with the user's rotating Saturday hospital shifts",
+      "Ignoring the budget constraint or failing to compute the monthly cap from the stated income and spending rule",
+      "Ignoring the Saturday schedule conflict between Clarity Group Center and the user's hospital rotation",
+      "Asking the user which service they decided on instead of determining it from the stated constraints"
+    ],
+    "explanation": "Budget constraint: income 7500 yuan, spending rule max 1/4 on non-essentials → 7500/4 = 1875 yuan/month cap. Mindwell Clinic: 9600/3 = 3200/month → exceeds 1875 cap by 71%, eliminated. Clarity Group Center: 4800/3 = 1600/month → within budget, BUT requires fixed Saturday afternoon group sessions → user works rotating hospital shifts including Saturdays, cannot attend → eliminated by schedule. TalkSpace Online Counseling: 2400/3 = 800/month → within budget, flexible any-day scheduling → no schedule conflict. Only TalkSpace survives both constraints. Despite 4 drift turns praising Mindwell (colleague's therapist experience, continuity) and Clarity Group (friend's group therapy experience, CBT facilitator), the agent must respect the hard constraints and recommend TalkSpace.",
+    "_orig_required_elements": [
+      "Agent recommends TalkSpace Online Counseling as the service to sign up for",
+      "Agent shows that Mindwell Clinic at 9600 yuan over 3 months equals 3200 yuan per month, which exceeds the derived monthly cap of 1875 yuan computed from 7500 income divided by 4",
+      "Agent shows that Clarity Group Center requires fixed Saturday afternoon group sessions, which conflicts with the user's rotating hospital shifts that include Saturdays",
+      "Agent demonstrates that TalkSpace Online Counseling at 2400 yuan over 3 months equals 800 yuan per month, which is within the 1875 yuan monthly cap, and its flexible any-day scheduling accommodates rotating shifts"
+    ],
+    "_calibration_patched": true
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

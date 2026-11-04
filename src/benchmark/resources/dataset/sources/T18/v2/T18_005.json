@@ -1,0 +1,221 @@
+{
+  "scenario_id": "T18_005",
+  "domain": "choosing between 3 music lessons",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and enroll in a music lesson program. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I've been wanting to learn piano for a while now. I'm deciding between 3 music lesson programs.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 piano lesson programs: Studio A, Studio B, Studio C",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "program_details",
+        "value": "Studio A: private in-person lessons twice a week, 220 per month, includes recital opportunities. Studio B: small group weekend sessions, 95 per month, max 4 students per class. Studio C: online one-on-one lessons, 60 per month, flexible scheduling with recorded replays.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User works a regular 9-to-5 office job on weekdays",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_detail",
+        "value": "Studio A holds weekday lessons at 2pm and 4pm slots only",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum the user can spend out of pocket on lessons is 75 dollars per month",
+        "surface_form": "My company has a professional development benefit that covers up to 40 dollars a month for any learning program. On top of that I can chip in about 35 from my own pocket each month — just finished furnishing my new apartment so money is tight",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer covers up to 40 per month",
+          "User can add 35 per month personal",
+          "40 + 35 = 75 total monthly budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend lessons during weekday daytime hours, only available evenings and weekends",
+        "surface_form": "I work a regular 9-to-5 office job, no flexibility on hours",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works 9-to-5 on weekdays → unavailable during weekday daytime",
+          "Studio A lessons are at 2pm and 4pm weekdays → impossible to attend",
+          "Weekends and evenings are the only available windows"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 piano lesson programs (Studio A, Studio B, Studio C). You will share program details, your budget situation (employer benefit plus personal contribution), and your work schedule across several turns. A colleague and a friend will praise Studio A and Studio B respectively. At the very end, you will simply say you have made your decision and need to sign up this week — you must NEVER name which studio you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You never express frustration or impatience, even if the conversation goes back and forth. You treat each piece of information as normal sharing between friends.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I've been wanting to learn piano for a while. I'm deciding between 3 programs — Studio A, Studio B, and Studio C",
+          "success_criteria": "Agent engages with the piano lesson selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So Studio A is private in-person lessons twice a week, 220 a month, and they do recitals. Studio B is small group weekend sessions, 95 a month, max 4 students. Studio C is online one-on-one, 60 a month, flexible scheduling with recorded replays",
+          "success_criteria": "Agent processes all 3 options with prices and attributes",
+          "required_info_keys": [
+            "program_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and formats in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work started taking lessons at Studio A about six months ago. She showed me a video of her playing at their winter recital — it was really impressive for someone who just started",
+          "success_criteria": "Agent responds to the positive Studio A experience",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "started at Studio A six months ago, played at winter recital, impressive progress",
+            "target_option": "Studio A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Studio A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company has a professional development benefit that covers up to 40 dollars a month for any learning program. On top of that I can chip in about 35 from my own pocket each month — just finished furnishing my new apartment so money is tight",
+          "success_criteria": "Agent registers the combined budget of 75 per month and ideally recognizes Studio A (220) and Studio B (95) exceed it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via employer reimbursement plus personal contribution — requires computation of 40+35=75"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague told me her Studio A instructor used to play with the city philharmonic. She said the feedback she gets after each lesson is incredibly detailed",
+          "success_criteria": "Agent responds to Studio A instructor credentials",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Studio A instructor played with city philharmonic, gives incredibly detailed feedback",
+            "target_option": "Studio A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Studio A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work a regular 9-to-5 office job, no flexibility on hours. Oh and I checked — Studio A only has lesson slots at 2pm and 4pm on weekdays",
+          "success_criteria": "Agent recognizes the schedule conflict eliminates Studio A even beyond the budget issue",
+          "required_info_keys": [
+            "work_schedule",
+            "commute_detail"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates Studio A (over budget AND weekday afternoon only)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend of mine goes to Studio B on Saturdays with her husband. She said the small group format is really motivating — they push each other and it feels like a mini community",
+          "success_criteria": "Agent responds to the positive Studio B review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "attends Studio B on Saturdays with husband, small group is motivating, feels like a community",
+            "target_option": "Studio B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Studio B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My friend also mentioned that Studio B just brought on a new instructor who studied at Juilliard. She said the quality jumped noticeably since he joined",
+          "success_criteria": "Agent responds to Studio B instructor credentials",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Studio B hired a Juilliard-trained instructor, quality improved noticeably",
+            "target_option": "Studio B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Studio B (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I need to decide and sign up this week. Which option should I pick?",
+          "success_criteria": "Agent commits to Studio C as the recommendation, showing that it is the only program within the 75 dollar combined budget (40 employer + 35 personal) and compatible with a 9-to-5 work schedule",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "budget",
+              "afford"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Studio C (online one-on-one, 60 dollars per month). Studio A (220 per month) far exceeds the 75 combined budget and its weekday 2pm/4pm slots conflict with the user's 9-to-5 job. Studio B (95 per month) exceeds the 75 combined budget. Only Studio C (60 < 75, flexible online scheduling = no schedule conflict) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the combined monthly budget is 75 dollars by computing the 40 dollar employer benefit plus the 35 dollar personal contribution (40 + 35 = 75)",
+      "Agent shows that Studio A at 220 per month exceeds the derived 75 dollar monthly budget and that its 2pm and 4pm weekday slots conflict with the user's 9-to-5 work schedule",
+      "Agent shows that Studio B at 95 per month exceeds the derived 75 dollar monthly budget (95 > 75)",
+      "Agent commits to recommending Studio C as the only program that fits within the 75 dollar budget at 60 per month and is compatible with the user's work schedule through flexible online scheduling"
+    ],
+    "forbidden_elements": [
+      "Recommending or helping enroll in Studio A (220 far exceeds 75 budget and weekday afternoon slots conflict with 9-to-5 job)",
+      "Recommending or helping enroll in Studio B (95 exceeds 75 budget)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Failing to compute the combined budget from employer benefit and personal contribution",
+      "Asking the user which studio they decided on instead of determining it from constraints"
+    ],
+    "explanation": "Budget constraint: employer covers 40 per month + user adds 35 per month = 75 total. Studio A = 220 (exceeds budget by 193%, also weekday 2pm/4pm conflicts with 9-to-5 job). Studio B = 95 (exceeds budget by 27%, in the marginal zone above the cap but still over). Studio C = 60 (within budget, flexible online scheduling fits any work schedule). Despite 4 drift turns praising Studio A and Studio B, the agent must respect the hard constraints. Studio B at 95 is the near-boundary option (1.27x the 75 cap) that tests whether the agent treats the budget as a hard limit rather than arguing it is close enough."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

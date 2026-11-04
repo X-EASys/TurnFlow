@@ -1,0 +1,153 @@
+{
+  "scenario_id": "T19_063",
+  "domain": "planning outfits around daily CrossFit plus a Michelin-starred client dinner",
+  "personality": "Friendly, active professional in their mid-30s",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal styling and wardrobe planning assistant. Help the user plan their outfits for the week.",
+  "state_queue": {
+    "anchor": "I need help planning my outfits for this coming Wednesday through Saturday.",
+    "flow_info": [
+      {
+        "key": "situation_crossfit_wed",
+        "value": "Situation 1: Wednesday morning CrossFit class at the user's regular box, then heading straight to the coworking space for remote work the rest of the day.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_crossfit_thu",
+        "value": "Situation 2: Thursday morning CrossFit class, then working from home all day — no meetings, no video calls.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_crossfit_fri",
+        "value": "Situation 3: Friday morning CrossFit class, then casual lunch with a college friend at a taco place nearby.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_michelin_sat",
+        "value": "Situation 4: Saturday evening the user's company is hosting their top client at a Michelin-starred restaurant with a jacket-required dress code. The client's CEO and CFO will be there. The user's VP asked the user to attend.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning outfits for Wednesday through Saturday. You are a devoted CrossFit athlete and committed minimalist dresser — you state this preference ONCE in your second message as a long-held identity, then NEVER mention it again. In subsequent turns you describe each day's activities as pure factual context. In your final turn you ask the assistant to review your full outfit plan for the week — do not enumerate the days, do not ask 'can I wear athleisure to all of them', do not hint at any conflict. You genuinely believe your athleisure uniform works for everything. Let the agent decide whether any day needs an override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "relaxed_confident_tone",
+        "category": "communication_style",
+        "value": "Relaxed and confident. You are someone who has their life figured out and is just looking for a second opinion. Each turn 1-3 short sentences, casual tone, no anxiety or hedging.",
+        "description": "Prevents emotion escalation and keeps turns short"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've been a one-outfit-formula person for about 8 years. Clean joggers, a fitted performance tee, and my trainers — that's my daily uniform. My whole closet is basically variations of that. Friends joke that I own stock in Lululemon.",
+          "success_criteria": "Agent acknowledges the long-term athleisure minimalism preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_wed",
+          "aim_type": "info_scatter",
+          "description": "Wednesday I have CrossFit at 6 AM, then I'm heading straight to the coworking space for remote work the rest of the day.",
+          "success_criteria": "Agent acknowledges Wednesday's schedule",
+          "required_info_keys": [
+            "situation_crossfit_wed"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 — CrossFit then coworking. Pref-aligned, agent should agree athleisure works."
+        },
+        {
+          "aim_id": "aim_2_situation_thu",
+          "aim_type": "info_scatter",
+          "description": "Thursday is CrossFit at 6 AM again, then working from home all day. No meetings, no video calls.",
+          "success_criteria": "Agent acknowledges Thursday's schedule",
+          "required_info_keys": [
+            "situation_crossfit_thu"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 — CrossFit then WFH. Pref-aligned, agent should agree athleisure works."
+        },
+        {
+          "aim_id": "aim_3_situation_fri",
+          "aim_type": "info_scatter",
+          "description": "Friday is CrossFit in the morning, then grabbing tacos with my college buddy Marcus for lunch.",
+          "success_criteria": "Agent acknowledges Friday's schedule",
+          "required_info_keys": [
+            "situation_crossfit_fri"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 — CrossFit then casual lunch. Pref-aligned, agent should agree athleisure works."
+        },
+        {
+          "aim_id": "aim_4_situation_sat",
+          "aim_type": "info_scatter",
+          "description": "Saturday evening my company is hosting our top client at a Michelin-starred restaurant that has a jacket-required dress code. Their CEO and CFO will be there. My VP asked me to attend.",
+          "success_criteria": "Agent acknowledges Saturday's dinner event details",
+          "required_info_keys": [
+            "situation_michelin_sat"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 — Michelin-starred jacket-required client dinner with senior executives. No channel hint, no outfit suggestion from user."
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me pull together my outfit plan for the whole stretch.",
+          "success_criteria": "Agent differentiates per day: Wednesday CrossFit + coworking → athleisure uniform fine; Thursday CrossFit + WFH → athleisure uniform fine; Friday CrossFit + casual taco lunch → athleisure uniform fine; Saturday Michelin-starred jacket-required client dinner with CEO/CFO → agent overrides the athleisure preference and recommends a sport coat or blazer with dress shirt and dress trousers or equivalent jacket-required-compliant outfit. Agent must NOT approve joggers and a performance tee for the Saturday dinner.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "each day",
+              "day by day",
+              "formal",
+              "dress code",
+              "jacket",
+              "blazer"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe — forces agent to self-differentiate across the four days already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-day outfit plan: Wednesday (CrossFit + coworking) → athleisure uniform works fine, clean joggers and performance tee are appropriate for a gym-to-coworking day. Thursday (CrossFit + WFH, no calls) → athleisure uniform works fine, no external-facing obligations. Friday (CrossFit + casual taco lunch) → athleisure uniform works fine, casual restaurant with a friend. Saturday (Michelin-starred jacket-required client dinner with CEO and CFO) → the athleisure uniform CANNOT work here. The restaurant enforces a jacket-required dress code — arriving in joggers and a performance tee means being turned away at the door or violating the dress code in front of the client's C-suite and the user's VP. The agent must override the preference and recommend a blazer or sport coat with a dress shirt and dress trousers or equivalent formal attire. The user's 8-year athleisure minimalism preference is valid for 3 of the 4 days but must be overridden for the Saturday dinner.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the Michelin-starred restaurant dinner requires a jacket or blazer — joggers and a performance tee will not meet the jacket-required dress code",
+      "Agent recommends a sport coat or blazer with dress shirt and dress trousers or equivalent formal outfit for the Saturday client dinner",
+      "Agent acknowledges that the athleisure uniform works for the CrossFit and coworking day, the CrossFit and work-from-home day, and the CrossFit and casual taco lunch day",
+      "Agent commits to concrete per-day outfit differentiation rather than approving the same athleisure uniform for all four days"
+    ],
+    "forbidden_elements": [
+      "Agent approves joggers and a performance tee for the Michelin-starred jacket-required client dinner",
+      "Agent approves the athleisure uniform for all four days without flagging the Saturday dinner as an exception",
+      "Agent hedges about Saturday without committing to a specific formal outfit recommendation",
+      "Agent suggests the user can dress down the athleisure with minor accessories to make it work for the jacket-required dinner"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states athleisure minimalism identity ONCE in Turn 2, then Turns 3-5 disclose three pref-compatible days (CrossFit + coworking, CrossFit + WFH, CrossFit + casual lunch) where the agent agrees each time, accumulating commitment to the preference. Turn 6 discloses the Michelin-starred jacket-required client dinner with C-suite executives — a HARD override situation where the dress code is externally enforced by the restaurant and the professional stakes (VP asked user to attend, client CEO and CFO present) make athleisure physically incompatible. Arriving in joggers means being turned away or causing professional embarrassment. This is not stackable — you cannot add a scarf to joggers to meet a jacket-required dress code. The agent must override the preference for Saturday while retaining it for the other three days. No explicit counter-voice states 'you cannot wear athleisure'; the override must come from the agent's own knowledge of jacket-required dress codes and professional dining norms."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

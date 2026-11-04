@@ -1,0 +1,321 @@
+{
+  "scenario_id": "T16_202",
+  "domain": "anniversary dinner at an Italian trattoria",
+  "personality": "Warm and enthusiastic planner",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful dining and event planning assistant. Help the user plan their anniversary dinner at an Italian trattoria by tracking who is attending, their dietary needs, and preferences. When asked to evaluate menu items, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and any updates to restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, my wife and I are celebrating our 10th anniversary this Saturday and we're thinking of doing dinner at that Italian trattoria on Main Street. Can you help me plan?",
+    "flow_info": [
+      {
+        "key": "initial_group",
+        "value": "Six of us total: me, my wife Sarah, my brother Mike, Mike's wife Dana, and our friends Tom and Priya",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mike_celiac",
+        "value": "Mike was diagnosed with celiac disease two years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_diet",
+        "value": "Priya grew up Jain in Gujarat",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dana_pregnancy",
+        "value": "Dana is five months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reservation_time",
+        "value": "Thinking 7:30 reservation, is that too late for a Saturday?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_shellfish",
+        "value": "Tom got hives last summer from eating shrimp at a beach cookout, had to go to urgent care",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sarah_lactose_update",
+        "value": "Sarah used to be lactose intolerant but her gastroenterologist ran new tests last month and said she's completely fine now, no more issues with dairy at all",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_husband_joins",
+        "value": "Priya just texted me — her husband Raj is in town after all, so he'll join us. That makes seven",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "raj_nut_allergy",
+        "value": "Raj carries an EpiPen for tree nut allergies",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_exits",
+        "value": "Tom just called — his flight got moved up, he's leaving Saturday morning now. Won't be able to make it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "wine_question",
+        "value": "Should we do a bottle of wine for the table or let everyone order their own drinks?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "The trattoria has a prix fixe anniversary menu: mushroom risotto with truffle oil, linguine alle vongole, chicken parmigiana, pesto gnocchi with pine nuts, tiramisu, and a caprese salad. Can you look it over for me?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "mike_gluten_free",
+        "value": "Cannot eat gluten — no wheat pasta, regular bread, flour-based sauces, or anything containing wheat/barley/rye",
+        "disclosed": false,
+        "surface_form": "Mike was diagnosed with celiac disease two years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Italian food risk: pasta, bread, flour-thickened sauces"
+        ]
+      },
+      {
+        "key": "priya_jain_vegetarian",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onion, garlic, potatoes, carrots)",
+        "disclosed": false,
+        "surface_form": "Priya grew up Jain in Gujarat",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → strict vegetarian practice",
+          "Jain vegetarian → no meat, no fish, no eggs",
+          "Jain → also avoids root vegetables (onion, garlic, potatoes)"
+        ]
+      },
+      {
+        "key": "dana_pregnancy_diet",
+        "value": "Should avoid raw or undercooked seafood, raw eggs, unpasteurized cheese, and high-mercury fish",
+        "disclosed": false,
+        "surface_form": "Dana is five months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → food safety restrictions",
+          "Pregnancy diet → no raw seafood, no raw eggs, no unpasteurized cheese"
+        ]
+      },
+      {
+        "key": "tom_shellfish_allergy",
+        "value": "Allergic to shellfish (shrimp specifically confirmed)",
+        "disclosed": false,
+        "surface_form": "Tom got hives last summer from eating shrimp at a beach cookout, had to go to urgent care",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hives from shrimp → allergic reaction",
+          "Shrimp → shellfish",
+          "Shellfish allergy"
+        ]
+      },
+      {
+        "key": "sarah_lactose_removed",
+        "value": "Sarah's lactose intolerance is no longer active — cleared by her gastroenterologist",
+        "disclosed": false,
+        "surface_form": "Sarah used to be lactose intolerant but her gastroenterologist ran new tests last month and said she's completely fine now, no more issues with dairy at all",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "raj_tree_nut_allergy",
+        "value": "Severe tree nut allergy (carries EpiPen) — cannot eat pine nuts, walnuts, almonds, pistachios, etc.",
+        "disclosed": false,
+        "surface_form": "Raj carries an EpiPen for tree nut allergies",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a 10th anniversary dinner at an Italian trattoria. You will introduce 6 guests with various dietary needs in a burst, then updates will come: Sarah's lactose intolerance is cleared, Tom drops out, Priya's husband Raj joins late with a tree nut allergy. At the end you will share a prix fixe menu and ask the assistant to look it over — you must NOT hint at what problems exist or tell the assistant which constraints to check.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_enthusiastic_tone",
+        "category": "communication_style",
+        "value": "You are an enthusiastic but easygoing anniversary planner. You relay updates about guests in third person ('Mike told me...', 'Priya just texted me...'). You never express frustration even when plans change. You treat each update as normal social coordination among friends.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, my wife and I are celebrating our 10th anniversary this Saturday and we're thinking of doing dinner at that Italian trattoria on Main Street. Can you help me plan?",
+          "success_criteria": "Agent engages with anniversary dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate anniversary dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So it's six of us — me, my wife Sarah, my brother Mike, Mike's wife Dana, and our friends Tom and Priya. Mike was diagnosed with celiac disease about two years ago. Priya grew up Jain in Gujarat. Oh and Dana is five months pregnant. Tom got hives last summer from eating shrimp at a beach cookout, had to go to urgent care",
+          "success_criteria": "Agent acknowledges all attendees and their dietary situations",
+          "required_info_keys": [
+            "initial_group",
+            "mike_celiac",
+            "priya_diet",
+            "dana_pregnancy",
+            "tom_shellfish"
+          ],
+          "required_constraint_keys": [
+            "mike_gluten_free",
+            "priya_jain_vegetarian",
+            "dana_pregnancy_diet",
+            "tom_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST — 4 entities with inferential constraints in one dense turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Oh I forgot to mention — Sarah used to be lactose intolerant but her gastroenterologist ran new tests last month and said she's completely fine now, no more issues with dairy at all. So that's one less thing to worry about",
+          "success_criteria": "Agent registers that Sarah's lactose intolerance is no longer active",
+          "required_info_keys": [
+            "sarah_lactose_update"
+          ],
+          "required_constraint_keys": [
+            "sarah_lactose_removed"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Sarah's lactose intolerance cleared by doctor"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "drift",
+          "description": "Thinking 7:30 reservation — is that too late for a Saturday? We usually eat around 7 but I want it to feel special",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [
+            "reservation_time"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "reservation logistics",
+            "drift_topic": "whether 7:30 is too late for Saturday dinner",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic logistics question"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Priya just texted me — her husband Raj is in town after all, so he'll join us. That makes seven. He carries an EpiPen for tree nut allergies, so we need to be careful with that",
+          "success_criteria": "Agent registers Raj as new attendee with severe tree nut allergy",
+          "required_info_keys": [
+            "priya_husband_joins",
+            "raj_nut_allergy"
+          ],
+          "required_constraint_keys": [
+            "raj_tree_nut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Raj with tree nut allergy"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Tom just called — his flight got moved up, he's leaving Saturday morning now. Won't be able to make it. Bummer, but at least that brings us back to six",
+          "success_criteria": "Agent removes Tom from the guest list and his shellfish allergy from active constraints",
+          "required_info_keys": [
+            "tom_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Tom leaves, shellfish constraint removed"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we do a bottle of wine for the table or let everyone order their own drinks? I'm thinking maybe a nice Chianti",
+          "success_criteria": "Agent responds about wine choice",
+          "required_info_keys": [
+            "wine_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "drinks",
+            "drift_topic": "shared bottle vs individual drinks",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "The trattoria has a prix fixe anniversary menu: mushroom risotto with truffle oil, linguine alle vongole, chicken parmigiana, pesto gnocchi with pine nuts, tiramisu, and a caprese salad. Can you look it over for me?",
+          "success_criteria": "Agent checks each dish against current active constraints and identifies problems with linguine (gluten — Mike), chicken parmigiana (gluten breading — Mike; meat — Priya), pesto gnocchi with pine nuts (tree nuts — Raj; gluten in gnocchi — Mike), and notes issues with Priya for multiple dishes. Caprese salad and tiramisu require nuanced analysis.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "ground_truth": {
+    "answer": "Mushroom risotto with truffle oil: problematic for Mike (risotto is rice-based BUT must verify if flour is used; standard risotto is naturally gluten-free — FINE for Mike); problematic for Priya (Jain — risotto typically contains onion and garlic which are root vegetables, and truffle oil is fine but the base likely uses onion/garlic). Linguine alle vongole: problematic for Mike (linguine is wheat pasta — contains gluten); vongole are clams (shellfish) but Tom left so shellfish is no longer a constraint. Chicken parmigiana: problematic for Mike (breaded with wheat flour — gluten); problematic for Priya (chicken is meat — Jain vegetarian cannot eat meat). Pesto gnocchi with pine nuts: problematic for Raj (pine nuts are tree nuts — severe allergy, EpiPen); problematic for Mike (traditional gnocchi can contain wheat flour — gluten); pesto typically contains garlic — problematic for Priya (Jain — no garlic). Tiramisu: problematic for Mike (contains ladyfinger biscuits — wheat/gluten); may contain raw eggs — potential concern for Dana (pregnant). Caprese salad: likely fine for most — tomato, mozzarella, basil, olive oil; Sarah can now eat dairy so mozzarella is fine; however Priya cannot eat it if it contains no root vegetables — caprese is typically just tomato/mozzarella/basil so it may be acceptable for Priya depending on preparation.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Linguine alle vongole is problematic for Mike because linguine is wheat pasta and he has celiac disease (no gluten)",
+      "Chicken parmigiana is problematic for Mike because the breading contains wheat flour (gluten) AND problematic for Priya because chicken is meat and she is Jain vegetarian",
+      "Pesto gnocchi with pine nuts is problematic for Raj because pine nuts are tree nuts and he has a severe tree nut allergy (EpiPen)",
+      "Pesto gnocchi with pine nuts is also problematic for Mike because traditional gnocchi contains wheat flour (gluten)",
+      "Tiramisu is problematic for Mike because ladyfinger biscuits contain wheat (gluten)",
+      "Agent does NOT flag shellfish (vongole/clams) as a problem — Tom who had the shellfish allergy is no longer attending",
+      "Agent does NOT flag dairy as a problem for Sarah — her lactose intolerance has been cleared by her doctor"
+    ],
+    "forbidden_elements": [
+      "Flagging vongole or clams as problematic due to shellfish allergy (Tom left, his constraint is removed)",
+      "Flagging any dairy dish as problematic for Sarah (her lactose intolerance was cleared by her gastroenterologist)",
+      "Saying Raj has a peanut allergy (he has tree nut allergy — pine nuts are tree nuts, peanuts are legumes)",
+      "Flagging mushroom risotto as problematic for Mike due to gluten without noting that standard risotto is rice-based (risotto is typically gluten-free unless flour is added)",
+      "Saying Tom has any active constraint (he is no longer attending)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint removal across an Italian dinner planning conversation. Key tracking challenges: (1) Mike has celiac disease → no gluten → wheat pasta, breading, ladyfingers all problematic (inferential chain from 'celiac' to specific Italian ingredients). (2) Priya is Jain → no meat, no fish, no eggs, no root vegetables including garlic and onion (inferential chain, affects pesto and risotto base). (3) Dana is pregnant → raw egg concern for tiramisu (inferential). (4) Sarah's lactose intolerance is REMOVED mid-conversation (cleared by doctor) — dairy dishes are now fine for her. (5) Tom EXITS — his shellfish allergy no longer applies, so vongole (clams) are fine for the table. (6) Raj JOINS late with severe tree nut allergy — pine nuts in pesto gnocchi are dangerous. The probe has mixed verdicts: linguine/chicken parm/pesto gnocchi are clearly problematic; caprese salad is mostly fine; vongole looks problematic but isn't (Tom left); tiramisu has nuanced issues (gluten for Mike, possible raw egg for Dana)."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

@@ -1,0 +1,312 @@
+{
+  "scenario_id": "T16_070",
+  "domain": "tailgate party food planning",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful food planning assistant. Help the user plan food for a tailgate party by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific food items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're throwing a tailgate party before the game this Saturday. Can you help me figure out the food situation?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Five of us confirmed so far: me, Derek, Marcus, Priya, and Jen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek got diagnosed with celiac disease a couple months ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_allergy",
+        "value": "Marcus ate shrimp at a cookout last summer and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_info",
+        "value": "Priya grew up in a Jain family in Gujarat, still follows it pretty strictly",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jen_preference",
+        "value": "Jen is doing keto right now, trying to stay under 20g carbs a day",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Trying to keep it around 15 bucks a head",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tommy_joins",
+        "value": "Derek's brother Tommy is coming too. Tommy has a severe peanut allergy — carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_exits",
+        "value": "Priya just texted me she got called into work Saturday, can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_update",
+        "value": "Marcus told me he saw an allergist last month and got the full panel done — turns out it's specifically a shellfish allergy, not just shrimp. Doctor said all crustaceans and mollusks are off limits",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jen_stops_keto",
+        "value": "Jen said she's taking a break from keto this weekend — it's game day, she wants to just enjoy herself",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Here's what I'm thinking of making: Thai peanut chicken skewers, Worcestershire-marinated burgers with regular buns, New England clam chowder, buffalo cauliflower bites with ranch, and brownies for dessert. Any issues with this lineup?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "derek_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Derek got diagnosed with celiac disease a couple months ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods including bread, buns, many sauces"
+        ]
+      },
+      {
+        "key": "marcus_shellfish",
+        "value": "Cannot eat any shellfish — crustaceans and mollusks",
+        "disclosed": false,
+        "surface_form": "Marcus ate shrimp at a cookout last summer and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Severe shrimp reaction → shellfish allergy (initially appears shrimp-specific)",
+          "Later upgraded to full shellfish allergy by allergist"
+        ]
+      },
+      {
+        "key": "priya_jain",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes)",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a Jain family in Gujarat, still follows it pretty strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain family → follows Jain dietary laws",
+          "Strict Jain → no meat, no fish, no eggs, no root vegetables (onions, garlic, potatoes)"
+        ]
+      },
+      {
+        "key": "tommy_peanut",
+        "value": "Cannot eat peanuts or peanut-containing products",
+        "disclosed": false,
+        "surface_form": "Derek's brother Tommy has a severe peanut allergy — carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "worcestershire_hidden",
+        "value": "Worcestershire sauce contains anchovies (fish) — hidden ingredient",
+        "disclosed": false,
+        "delivery_mode": "hidden_ingredient",
+        "inference_chain": [
+          "Worcestershire sauce → traditional recipe contains anchovies",
+          "Anchovies → fish/seafood derivative",
+          "Relevant to anyone with fish/seafood restrictions"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning food for a tailgate party. You will introduce the group and their dietary issues, then updates will come in: Tommy joins (peanut allergy), Priya drops out, Marcus's allergy gets upgraded to all shellfish, and Jen drops her keto restriction. At the end you will present a specific menu and ask if there are any issues. You must present the exact menu items listed in probe_menu.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person organizing a tailgate. You always refer to your friends by name in third person (e.g. 'Derek told me...', 'Marcus said...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal friend-group coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're throwing a tailgate party before the game this Saturday. Can you help me figure out the food situation?",
+          "success_criteria": "Agent engages with tailgate food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate tailgate food planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Five of us confirmed so far: me, Derek, Marcus, Priya, and Jen. Derek got diagnosed with celiac disease a couple months ago. Marcus ate shrimp at a cookout last summer and his throat swelled up, had to use an EpiPen. Priya grew up in a Jain family in Gujarat, still follows it pretty strictly. And Jen is doing keto right now, trying to stay under 20g carbs a day",
+          "success_criteria": "Agent acknowledges all four people's dietary situations",
+          "required_info_keys": [
+            "group_members",
+            "derek_celiac",
+            "marcus_allergy",
+            "priya_info",
+            "jen_preference"
+          ],
+          "required_constraint_keys": [
+            "derek_gluten",
+            "marcus_shellfish",
+            "priya_jain"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Trying to keep it around 15 bucks a head. We've got a portable grill and a cooler, so we can do hot and cold stuff",
+          "success_criteria": "Agent registers budget and equipment info",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Provide budget and logistics context"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, Derek just told me his brother Tommy is coming too. Tommy has a severe peanut allergy — carries an EpiPen everywhere",
+          "success_criteria": "Agent registers Tommy as new attendee with peanut allergy",
+          "required_info_keys": [
+            "tommy_joins"
+          ],
+          "required_constraint_keys": [
+            "tommy_peanut"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with high-constraint (peanut allergy)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "What time should we start setting up? Game kicks off at 4 so I'm thinking noon?",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "setup time for tailgate",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic logistics question"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Priya just texted me she got called into work Saturday, can't make it anymore. Also Marcus told me he saw an allergist last month and got the full panel done — turns out it's specifically a shellfish allergy, not just shrimp. Doctor said all crustaceans and mollusks are off limits",
+          "success_criteria": "Agent removes Priya from attendee list and upgrades Marcus's constraint from shrimp to all shellfish",
+          "required_info_keys": [
+            "priya_exits",
+            "marcus_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Priya) + Constraint UPGRADE (Marcus: shrimp → all shellfish)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh and Jen said she's taking a break from keto this weekend — it's game day, she wants to just enjoy herself",
+          "success_criteria": "Agent removes Jen's keto restriction",
+          "required_info_keys": [
+            "jen_stops_keto"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Jen's keto lifted)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How much food should I plan per person? Don't want to run out but also don't want a ton of leftovers",
+          "success_criteria": "Agent gives portion guidance",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "portions",
+            "drift_topic": "how much food per person for tailgate",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — creates distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Here's what I'm thinking of making: Thai peanut chicken skewers, Worcestershire-marinated burgers with regular buns, New England clam chowder, buffalo cauliflower bites with ranch, and brownies for dessert. Any issues with this lineup?",
+          "success_criteria": "Agent identifies: Thai peanut chicken skewers problematic for Tommy (peanut allergy); Worcestershire burgers problematic for Derek (buns contain gluten) AND flags Worcestershire sauce contains anchovies (hidden fish ingredient); New England clam chowder problematic for Marcus (clams are shellfish/mollusks); buffalo cauliflower bites with ranch are fine for everyone; brownies are fine for everyone",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three items have clear problems: (1) Thai peanut chicken skewers — Tommy has a severe peanut allergy. (2) Worcestershire-marinated burgers with regular buns — the buns contain gluten (Derek has celiac), AND Worcestershire sauce traditionally contains anchovies, which is a hidden fish/seafood ingredient. (3) New England clam chowder — clams are mollusks, which fall under Marcus's shellfish allergy. Buffalo cauliflower bites with ranch are fine for everyone currently attending. Brownies are fine for everyone currently attending. Priya's Jain restrictions no longer apply (she dropped out). Jen's keto restriction no longer applies (she lifted it for game day).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Thai peanut chicken skewers are problematic: Tommy has a severe peanut allergy",
+      "Worcestershire-marinated burgers with regular buns are problematic for Derek: the buns contain gluten and Derek has celiac disease",
+      "Agent identifies that Worcestershire sauce contains anchovies — a hidden fish/seafood ingredient",
+      "New England clam chowder is problematic: clams are mollusks, Marcus has a shellfish allergy covering all crustaceans and mollusks",
+      "Buffalo cauliflower bites with ranch are fine for everyone currently attending",
+      "Brownies are fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging any item for Priya's Jain restrictions (Priya is no longer attending)",
+      "Flagging any item for Jen's keto restriction (Jen lifted her keto for game day)",
+      "Saying Marcus only has a shrimp allergy (it was upgraded to all shellfish)",
+      "Flagging buffalo cauliflower bites as problematic for any current attendee",
+      "Flagging brownies as problematic for any current attendee",
+      "Saying Marcus has a fish allergy (his allergy is shellfish — crustaceans and mollusks — not all fish)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and hidden ingredient detection across 9 conversational turns. The agent must track: (1) Derek has celiac → no gluten → buns are problematic (inferential chain), (2) Marcus's allergy is UPGRADED from shrimp to all shellfish mid-conversation → clam chowder is problematic, (3) Tommy JOINS late with a peanut allergy → peanut chicken skewers are problematic, (4) Priya EXITS → her Jain restrictions no longer apply, (5) Jen's keto is REMOVED → carb-heavy items are now fine. The hidden ingredient trap is Worcestershire sauce containing anchovies — a 2-step inference (Worcestershire → contains anchovies → fish derivative). This is the primary difficulty mechanism: the burgers look like they only have a gluten problem (buns + Derek), but a knowledgeable agent should also flag the Worcestershire sauce's anchovy content as a potential concern. Note: the Worcestershire anchovy issue does not violate any CURRENT attendee's specific constraint (Marcus has shellfish allergy, not fish allergy), so the agent should flag it as a noteworthy hidden ingredient but should NOT claim it violates Marcus's shellfish restriction — anchovies are fish, not shellfish."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

@@ -1,0 +1,215 @@
+{
+  "scenario_id": "T18_241",
+  "domain": "choosing between 3 lawn care service contracts",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a lawn care service contract. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking at lawn care service contracts for my yard. I've narrowed it down to 3 companies.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 lawn care service contracts: GreenPro, LawnMaster, BudgetCut",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "contract_details",
+        "value": "GreenPro: full-service weekly plan including mowing, edging, fertilization, and pest control, 320 dollars per month, 12-month contract. LawnMaster: bi-weekly mowing and edging plus seasonal fertilization, 180 dollars per month, 6-month contract. BudgetCut: weekly mowing only, 95 dollars per month, month-to-month contract.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "income_info",
+        "value": "User's household take-home income is 4800 dollars per month",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "yard_size",
+        "value": "User has a standard suburban lot, about a quarter acre",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum lawn care budget is 120 dollars per month",
+        "surface_form": "Our household take-home is 4800 a month. My wife and I agreed we won't spend more than 2.5 percent of our income on lawn care",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Household take-home is 4800 per month",
+          "2.5 percent spending rule on lawn care",
+          "4800 × 0.025 = 120 dollars per month maximum"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "contract_length_constraint",
+        "value": "Cannot commit to contracts longer than 6 months because of possible job relocation",
+        "surface_form": "My company mentioned a possible relocation in about six months, so I can't lock into anything longer than that",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a homeowner choosing between 3 lawn care contracts (GreenPro, LawnMaster, BudgetCut). You will share contract details, your income and spending rule, and your relocation concern across several turns. Your neighbor and coworker will praise GreenPro and LawnMaster. At the very end, you will say you have decided and need to know what to expect on the first service visit — you must NEVER name which company you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact homeowner. You state facts plainly without strong emotion. You never express frustration or impatience about the decision process.",
+        "description": "Prevents emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking at lawn care contracts for my quarter-acre yard. I've narrowed it down to three companies: GreenPro, LawnMaster, and BudgetCut.",
+          "success_criteria": "Agent engages with the 3-option decision framework",
+          "required_info_keys": [
+            "three_options",
+            "yard_size"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "GreenPro does full-service weekly — mowing, edging, fertilization, pest control — for 320 a month on a 12-month contract. LawnMaster is bi-weekly mowing and edging plus seasonal fertilization, 180 a month on a 6-month contract. BudgetCut is weekly mowing only, 95 a month, month-to-month.",
+          "success_criteria": "Agent processes all 3 options with prices and contract lengths",
+          "required_info_keys": [
+            "contract_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and contract terms in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor has been using GreenPro for two years now. His yard looks incredible — like a golf course. He said their fertilization program completely eliminated his crabgrass problem.",
+          "success_criteria": "Agent responds to the positive GreenPro review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "uses GreenPro for 2 years, yard looks like a golf course, fertilization eliminated crabgrass",
+            "target_option": "GreenPro"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward GreenPro"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Our household take-home is 4800 a month. My wife and I agreed we won't spend more than 2.5 percent of our income on lawn care.",
+          "success_criteria": "Agent registers the budget constraint and ideally computes 4800 × 0.025 = 120 max",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income + percentage rule"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned GreenPro's pest control saved him from a grub infestation last summer. He said without it his whole front lawn would have been destroyed.",
+          "success_criteria": "Agent responds to more GreenPro praise",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "GreenPro pest control saved his lawn from grub infestation",
+            "target_option": "GreenPro"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about GreenPro (already eliminated by budget and contract length)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My company mentioned a possible relocation in about six months, so I can't lock into anything longer than that.",
+          "success_criteria": "Agent recognizes this eliminates GreenPro (12-month contract)",
+          "required_constraint_keys": [
+            "contract_length_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver contract length constraint — eliminates GreenPro's 12-month requirement"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A coworker of mine uses LawnMaster. He said their seasonal fertilization timing is really dialed in — they come right when the grass needs it most.",
+          "success_criteria": "Agent responds to the positive LawnMaster review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "uses LawnMaster, seasonal fertilization timing is perfectly dialed in",
+            "target_option": "LawnMaster"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward LawnMaster"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My coworker also said LawnMaster's crew is super professional — they clean up all the clippings and even blow off the driveway every time.",
+          "success_criteria": "Agent responds to more LawnMaster praise",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "LawnMaster crew is professional, cleans clippings, blows off driveway",
+            "target_option": "LawnMaster"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about LawnMaster (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made my decision. I need to sign up this week — what should I expect on the first service visit?",
+          "success_criteria": "Agent focuses on BudgetCut's first service visit (only option within 120/month budget and no contract longer than 6 months)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "cheapest"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: agent must determine BudgetCut is the only viable option and describe its first visit"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up with BudgetCut (weekly mowing, 95 dollars per month, month-to-month). GreenPro (320/month) and LawnMaster (180/month) both exceed the 120 dollar monthly cap derived from 4800 × 2.5%. GreenPro is also eliminated by its 12-month contract requirement since the user may relocate in 6 months. Only BudgetCut (95 < 120, month-to-month = no long commitment) survives both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that GreenPro at 320 dollars per month exceeds the derived cap of 120 dollars per month from 4800 times 2.5 percent",
+      "Agent shows that LawnMaster at 180 dollars per month exceeds the derived cap of 120 dollars per month from 4800 times 2.5 percent",
+      "Agent demonstrates that GreenPro's 12-month contract conflicts with the possible 6-month relocation timeline",
+      "Agent's response focuses specifically on BudgetCut as the selected service",
+      "Agent describes what to expect on BudgetCut's first service visit"
+    ],
+    "forbidden_elements": [
+      "Helping sign up for GreenPro (320 far exceeds 120 budget, also 12-month contract conflicts with relocation)",
+      "Helping sign up for LawnMaster (180 exceeds 120 budget)",
+      "Ignoring the budget constraint when identifying the chosen service",
+      "Asking which company the user decided on (should be determinable from constraints)",
+      "Suggesting the user negotiate a lower price with GreenPro or LawnMaster"
+    ],
+    "explanation": "Budget constraint: 4800 × 0.025 = 120 max per month. GreenPro=320 exceeds budget, LawnMaster=180 exceeds budget, BudgetCut=95 within budget. Contract constraint: max 6 months. GreenPro=12 months impossible, LawnMaster=6 months OK, BudgetCut=month-to-month OK. Combined: only BudgetCut survives both constraints. Despite 4 drift turns praising GreenPro and LawnMaster, the agent must respect the hard constraints and identify BudgetCut as the chosen service."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

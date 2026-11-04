@@ -1,0 +1,295 @@
+{
+  "scenario_id": "T16_240",
+  "domain": "team dinner at a Vietnamese pho restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and any corrections or updates to constraints throughout the conversation.",
+  "state_queue": {
+    "anchor": "We're planning a team dinner this Friday at that new Vietnamese pho place on 5th Street — can you help me figure out the menu?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us: me, Rachel, Marcus, and Linh",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_initial_constraint",
+        "value": "Rachel is lactose intolerant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_allergy_event",
+        "value": "Marcus had a bad reaction at a Thai place last month, ate the satay sauce and ended up using his EpiPen in the parking lot",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "linh_background",
+        "value": "Linh grew up at a Buddhist temple in Hue, still follows the temple diet to this day",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Around $30 per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_upgrade",
+        "value": "Rachel texted the group chat to clarify — she went back to her doctor and it turns out it's actually a milk protein allergy, not just lactose intolerance. Even butter and whey set her off",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_exits",
+        "value": "Marcus just told me he has to fly out for a client meeting Friday morning, so he's out",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_joins",
+        "value": "Sophie from accounting wants to join",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_celiac",
+        "value": "Sophie was diagnosed with celiac last year, needs everything gluten-free",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu items to check: beef pho with rice noodles, fresh spring rolls with peanut dipping sauce, bánh mì with grilled tofu, shaking beef sautéed in butter, coconut tapioca dessert",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "marcus_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Marcus had a bad reaction at that Thai place last month — he ate the satay sauce and ended up using his EpiPen in the parking lot",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Satay sauce → peanut-based sauce",
+          "Bad allergic reaction requiring EpiPen → severe peanut allergy",
+          "Severe allergy → must avoid all peanut and peanut-derived products"
+        ]
+      },
+      {
+        "key": "linh_vegan",
+        "value": "Cannot eat meat, fish, eggs, or animal-derived products — strict vegan following Buddhist temple diet",
+        "disclosed": false,
+        "surface_form": "Linh grew up at a Buddhist temple in Hue, still follows the temple diet to this day",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Buddhist temple in Vietnam → follows strict Buddhist vegetarian practice",
+          "Vietnamese Buddhist temple diet → no meat, no fish, no eggs, no animal products (vegan)"
+        ]
+      },
+      {
+        "key": "rachel_milk_protein",
+        "value": "Cannot eat any cow's milk protein including butter, whey, casein, cheese, cream, or condensed milk",
+        "disclosed": false,
+        "surface_form": "Rachel texted the group chat to clarify — she went back to her doctor and it turns out it's actually a milk protein allergy, not just lactose intolerance. Even butter and whey set her off",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_celiac_constraint",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing these grains",
+        "disclosed": false,
+        "surface_form": "Sophie was diagnosed with celiac last year, needs everything gluten-free",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at a Vietnamese pho restaurant. You will introduce 4 colleagues with dietary issues, then relay updates: Rachel's constraint gets upgraded from lactose intolerance to milk protein allergy, Marcus drops out, and Sophie joins late with celiac. At the end you will list 5 menu items and ask how they look — you do NOT evaluate the items yourself, you just ask the assistant.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative team organizer. You always refer to your colleagues by name in third person (e.g. 'Rachel texted me...', 'Marcus told me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal workplace coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "We're planning a team dinner this Friday at that new Vietnamese pho place on 5th Street — can you help me figure out the menu?",
+          "success_criteria": "Agent engages with Vietnamese dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "There's four of us going — me, Rachel, Marcus, and Linh. Rachel mentioned she's lactose intolerant so we need to watch the dairy. Marcus had a bad reaction at that Thai place last month — he ate the satay sauce and ended up using his EpiPen in the parking lot. And Linh grew up at a Buddhist temple in Hue, she still follows the temple diet to this day.",
+          "success_criteria": "Agent acknowledges all three colleagues and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "rachel_initial_constraint",
+            "marcus_allergy_event",
+            "linh_background"
+          ],
+          "required_constraint_keys": [
+            "marcus_peanut_allergy",
+            "linh_vegan"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "We're thinking around $30 per person — does that sound reasonable for Vietnamese?",
+          "success_criteria": "Agent responds about budget without losing track of dietary constraints",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "budget",
+            "drift_topic": "whether $30 per person is reasonable for Vietnamese food",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn about budget"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh wait — Rachel just texted the group chat to clarify. She went back to her doctor and it turns out it's actually a milk protein allergy, not just lactose intolerance. She said even butter and whey set her off.",
+          "success_criteria": "Agent updates Rachel's constraint from lactose intolerance to the broader milk protein allergy",
+          "required_info_keys": [
+            "rachel_upgrade"
+          ],
+          "required_constraint_keys": [
+            "rachel_milk_protein"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE — Rachel's restriction broadens from lactose intolerance to milk protein allergy"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we do family style sharing or individual bowls? I feel like family style is more fun but individual pho bowls are kind of the point.",
+          "success_criteria": "Agent responds about dining format",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "dining format",
+            "drift_topic": "family style vs individual bowls at a pho restaurant",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance between constraint update and next lifecycle event"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Bad news — Marcus just told me he has to fly out for a client meeting Friday morning, so he's out. Just three of us plus me now.",
+          "success_criteria": "Agent removes Marcus from the dinner guest list",
+          "required_info_keys": [
+            "marcus_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Marcus leaves, his peanut allergy constraint should be removed"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Actually, Sophie from accounting wants to join! She mentioned she was diagnosed with celiac last year so she needs everything gluten-free.",
+          "success_criteria": "Agent registers Sophie as a new diner with celiac/gluten-free constraint",
+          "required_info_keys": [
+            "sophie_joins",
+            "sophie_celiac"
+          ],
+          "required_constraint_keys": [
+            "sophie_celiac_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with high constraint — Sophie with celiac"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "What time should we book — 6:30 or 7? I know Linh usually stays late at the office on Fridays.",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "reservation time",
+            "drift_topic": "whether to book at 6:30 or 7 given Linh's schedule",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so looking at their menu, I'm thinking: beef pho with rice noodles, fresh spring rolls with peanut dipping sauce, bánh mì with grilled tofu, shaking beef sautéed in butter, and coconut tapioca dessert. How does that look?",
+          "success_criteria": "Agent checks each item against current constraint state and identifies problems with beef pho (Linh vegan), bánh mì (Sophie celiac), shaking beef in butter (Linh vegan + Rachel milk protein), and confirms spring rolls with peanut sauce and coconut tapioca are fine",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three dishes have clear problems: (1) Beef pho — Linh follows Buddhist temple diet (vegan), cannot eat beef. (2) Bánh mì with grilled tofu — the bread is wheat-based, problematic for Sophie who has celiac. (3) Shaking beef sautéed in butter — two issues: beef is meat so Linh cannot eat it, AND butter contains milk protein so Rachel cannot eat it (her constraint was upgraded from lactose intolerance to milk protein allergy). Two dishes are fine: Fresh spring rolls with peanut dipping sauce are fine for everyone — Marcus who had the peanut allergy is no longer coming. Coconut tapioca dessert is fine — coconut milk is not cow's milk, so Rachel's milk protein allergy is not triggered.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Beef pho is problematic for Linh because she follows Buddhist temple diet and cannot eat meat",
+      "Bánh mì is problematic for Sophie because wheat bread contains gluten and she has celiac",
+      "Shaking beef in butter is problematic for Linh because beef is meat, AND problematic for Rachel because butter contains milk protein",
+      "Agent identifies butter as a milk protein issue for Rachel, reflecting the upgraded constraint from lactose intolerance to milk protein allergy",
+      "Fresh spring rolls with peanut dipping sauce are fine — agent does not flag peanut as an issue since Marcus is no longer attending",
+      "Coconut tapioca dessert is fine — agent recognizes coconut milk is not cow's milk and does not flag it for Rachel"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut dipping sauce as problematic — Marcus who has the peanut allergy is no longer coming",
+      "Flagging coconut tapioca dessert as a dairy issue for Rachel — coconut milk is not cow's milk protein",
+      "Treating Rachel as only lactose intolerant — her constraint was upgraded to milk protein allergy",
+      "Saying Rachel can have butter because it is low in lactose — she has milk protein allergy not just lactose intolerance",
+      "Flagging any dish for Marcus — he is no longer attending the dinner"
+    ],
+    "explanation": "This scenario tests constraint UPGRADE tracking and entity lifecycle management across 9 turns. Key challenges: (1) Rachel's constraint is UPGRADED from lactose intolerance to milk protein allergy — the shaking beef in butter specifically tests this because butter is low-lactose (often tolerated by lactose intolerant people) but contains milk proteins (casein/whey), making it problematic only AFTER the upgrade. (2) Marcus EXITS — his peanut allergy no longer applies, so peanut dipping sauce is fine (tests removed-entity constraint ghost). (3) Sophie JOINS late with celiac — tests late-joiner tracking against the bánh mì item. (4) Linh's constraint is inferential (Buddhist temple in Hue → temple diet → strict vegan). (5) Coconut milk is NOT cow's milk — tests over-generalization of Rachel's dairy restriction to all 'milk' products."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

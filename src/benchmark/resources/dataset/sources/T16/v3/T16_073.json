@@ -1,0 +1,277 @@
+{
+  "scenario_id": "T16_073",
+  "domain": "road trip food packing for a group",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful trip planning assistant. Help the user plan what food and snacks to pack for a group road trip. Track who is going, their dietary needs, and any changes to the group. When the user asks you to evaluate a specific list of items, check each item against every active traveler's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a road trip this Saturday — about 6 hours of driving. I need help figuring out what food to pack for the car.",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Four of us going: me, Derek, Priya, and Sam",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek was diagnosed with celiac disease last year, has to be super careful",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_diabetes",
+        "value": "Sam has type 2 diabetes, has to watch his sugar intake",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "cooler_available",
+        "value": "We have a big cooler so cold stuff is fine",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_drops_out",
+        "value": "Sam just texted me — his kid is sick so he can't come anymore. But he asked if we could drop off some snacks at his place on the way since we pass right by his house",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_medication_done",
+        "value": "Derek told me his gastro cleared him last week — apparently his gut healed up really well and he doesn't need to avoid gluten anymore. Doctor said he can eat normally now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "maya_joins",
+        "value": "Oh also, my cousin Maya is joining us now — she's riding with us from the start",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "trip_duration",
+        "value": "We're leaving at 7am and probably won't stop for a real meal until lunch around 1pm, so we need substantial snacks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_items",
+        "value": "Packing list to check: peanut butter sandwiches on white bread, string cheese sticks, trail mix with almonds and cashews, hummus with pita chips, chocolate chip granola bars, clementines",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_diet",
+        "value": "Cannot eat any meat, fish, or eggs — strict vegetarian who also avoids eggs",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a Jain family in Gujarat, still follows it pretty strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain family → practices Jainism",
+          "Strict Jain → vegetarian, no meat, no fish, no eggs",
+          "Also typically avoids root vegetables but core restriction is no animal products"
+        ]
+      },
+      {
+        "key": "sam_low_sugar",
+        "value": "Must avoid high-sugar snacks, needs low-glycemic options",
+        "disclosed": false,
+        "surface_form": "Sam has type 2 diabetes, has to watch his sugar intake",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "maya_peanut_allergy",
+        "value": "Severe peanut allergy — cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Maya carries an EpiPen everywhere because of peanuts — she had anaphylaxis once as a kid",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "maya_tree_nut_safe",
+        "value": "Maya's allergy is specifically peanuts only, not tree nuts — almonds and cashews are fine for her",
+        "disclosed": false,
+        "surface_form": "Her allergist confirmed it's just peanuts though, other nuts are totally fine for her",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning food for a group road trip. You will introduce the group (you, Derek, Priya, Sam), share their dietary issues, then update the group: Sam drops out but wants snacks dropped off, Derek's celiac clears up, and your cousin Maya joins late with a peanut allergy. At the end you will share a packing list and ask if there are any issues. You must NEVER hint at what the problems are — just ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing trip organizer. You always refer to your friends and family by name in third person (e.g. 'Derek told me...', 'Sam texted me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal trip coordination among friends.",
+        "description": "Prevents emotion escalation and ensures third-person relay for friend updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a road trip this Saturday — about 6 hours of driving. I need help figuring out what food to pack for the car.",
+          "success_criteria": "Agent engages with road trip food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate road trip food planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Derek, Priya, and Sam. Derek was diagnosed with celiac disease last year, has to be super careful. Priya grew up in a Jain family in Gujarat, still follows it pretty strictly. And Sam has type 2 diabetes, has to watch his sugar intake.",
+          "success_criteria": "Agent acknowledges dietary constraints of all three friends",
+          "required_info_keys": [
+            "group_members",
+            "derek_celiac",
+            "sam_diabetes"
+          ],
+          "required_constraint_keys": [
+            "priya_diet",
+            "sam_low_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We have a big cooler so cold stuff is fine. We're leaving at 7am and probably won't stop for a real meal until lunch around 1pm, so we need substantial snacks.",
+          "success_criteria": "Agent registers cooler availability and time window for snacks",
+          "required_info_keys": [
+            "cooler_available",
+            "trip_duration"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Add logistics context — cooler and timing"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "drift",
+          "description": "How much food do you think we need for four people over 6 hours? I don't want to over-pack but also don't want anyone hangry.",
+          "success_criteria": "Agent gives quantity guidance without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "quantity planning",
+            "drift_topic": "how much food for 4 people over 6 hours",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic quantity question"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Sam just texted me — his kid is sick so he can't come anymore. But he asked if we could drop off some snacks at his place on the way since we pass right by his house.",
+          "success_criteria": "Agent notes Sam is no longer in the car but still needs snacks dropped off, so his diabetes constraint applies to the drop-off portion",
+          "required_info_keys": [
+            "sam_drops_out"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Sam's low-sugar constraint now applies to drop-off snacks only"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Derek told me his gastro cleared him last week — apparently his gut healed up really well and he doesn't need to avoid gluten anymore. Doctor said he can eat normally now.",
+          "success_criteria": "Agent removes Derek's celiac/gluten restriction",
+          "required_info_keys": [
+            "derek_medication_done"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Derek's celiac restriction lifted"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh also, my cousin Maya is joining us now — she's riding with us from the start. She carries an EpiPen everywhere because of peanuts — she had anaphylaxis once as a kid. Her allergist confirmed it's just peanuts though, other nuts are totally fine for her.",
+          "success_criteria": "Agent registers Maya as new traveler with peanut allergy (not tree nut allergy)",
+          "required_info_keys": [
+            "maya_joins"
+          ],
+          "required_constraint_keys": [
+            "maya_peanut_allergy",
+            "maya_tree_nut_safe"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Maya with peanut allergy (NOT tree nut)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we get a playlist going too? Derek always hogs the aux cord. Anyway, what about drinks — just water bottles or should we grab some other stuff?",
+          "success_criteria": "Agent responds about drinks/playlist without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "trip logistics",
+            "drift_topic": "playlist and drinks for the road trip",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK here's what I'm thinking of packing: peanut butter sandwiches on white bread, string cheese sticks, trail mix with almonds and cashews, hummus with pita chips, chocolate chip granola bars, clementines. Any issues?",
+          "success_criteria": "Agent identifies peanut butter sandwiches as dangerous for Maya (peanut allergy), notes trail mix is fine (her allergy is peanuts only, almonds and cashews are tree nuts), notes chocolate chip granola bars should not be dropped off for Sam (high sugar), and confirms string cheese, hummus with pita chips, and clementines are fine for everyone in the car",
+          "required_info_keys": [
+            "probe_items"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Peanut butter sandwiches are dangerous — Maya has a severe peanut allergy (anaphylaxis risk). Trail mix with almonds and cashews is fine — Maya's allergy is specifically peanuts, not tree nuts; her allergist confirmed other nuts are safe. String cheese sticks are fine for everyone in the car. Hummus with pita chips is fine for everyone. Chocolate chip granola bars are fine for the car but should NOT be included in Sam's drop-off snacks (high sugar, he has type 2 diabetes). Clementines are fine for everyone. Derek can eat everything — his celiac was cleared by his doctor. The white bread in the sandwiches is not a problem for Derek anymore.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Peanut butter sandwiches are problematic: Maya has a severe peanut allergy, peanut butter contains peanuts",
+      "Trail mix with almonds and cashews is fine for Maya: her allergy is specifically peanuts only, tree nuts like almonds and cashews are safe per her allergist",
+      "Chocolate chip granola bars should not be included in Sam's drop-off snacks: Sam has type 2 diabetes and needs to avoid high-sugar items",
+      "Derek has no dietary restrictions anymore: his gastroenterologist cleared him, he can eat normally including gluten",
+      "String cheese sticks, hummus with pita chips, and clementines are fine for everyone currently in the car"
+    ],
+    "forbidden_elements": [
+      "Flagging trail mix as problematic for Maya (her allergy is peanuts only, not tree nuts — almonds and cashews are confirmed safe)",
+      "Flagging white bread or sandwiches as problematic for Derek (his celiac has been cleared by his doctor)",
+      "Saying Sam's diabetes constraint applies to the car snacks (Sam is not coming on the trip, only getting a drop-off)",
+      "Flagging granola bars as problematic for the car travelers (only problematic for Sam's drop-off)",
+      "Over-generalizing Maya's peanut allergy to all nuts or all legumes"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 turns. The agent must track: (1) Priya is from a Jain family → strict vegetarian, no meat/fish/eggs (inferential chain, never explicitly stated as 'vegetarian'), (2) Derek's celiac restriction is REMOVED mid-conversation (doctor cleared him), (3) Sam EXITS the trip but still needs snacks dropped off (his diabetes constraint changes scope from car to drop-off only), (4) Maya JOINS late with a severe peanut allergy but explicitly NOT a tree nut allergy (over-generalization trap). At probe time, the agent must apply the CURRENT constraint state: Maya = peanut allergy only (peanut butter sandwiches are dangerous, but trail mix with almonds/cashews is fine), Sam = low sugar for drop-off only (granola bars shouldn't be in his portion), Priya = Jain vegetarian (all listed items happen to be vegetarian-friendly), Derek = no restrictions (cleared). The key traps are: (a) over-generalizing Maya's peanut allergy to tree nuts, (b) keeping Derek's gluten restriction active after removal, (c) applying Sam's sugar restriction to the car snacks rather than only the drop-off, (d) forgetting Maya entirely as a late-joiner."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

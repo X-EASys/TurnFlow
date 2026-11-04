@@ -1,0 +1,216 @@
+{
+  "scenario_id": "T18_224",
+  "domain": "choosing between 3 hospice service providers",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a hospice service provider for their parent. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to pick a hospice care provider for my dad. I've narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_providers",
+        "value": "Choosing between 3 hospice service providers: Sunrise Hospice, Comfort Care, and Gentle Passage",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "provider_details",
+        "value": "Sunrise Hospice: full in-home palliative team with 24/7 nurse on-call, $8500/month. Comfort Care: daytime nurse visits plus weekend family counselor, $4200/month. Gentle Passage: daily nurse visits with on-call overnight support and family counseling sessions, $2800/month",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "family_counseling_need",
+        "value": "User needs a provider that includes family counseling sessions because siblings are struggling emotionally",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly budget for hospice is $3200",
+        "surface_form": "My dad's pension is $4800 a month. We agreed as a family that we'd put no more than two-thirds of his pension toward hospice care",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$4800 pension × two-thirds = $3200 maximum monthly budget",
+          "$3200 cap eliminates Sunrise ($8500) and Comfort Care ($4200)"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "coverage_constraint",
+        "value": "Needs overnight on-call coverage because dad has episodes at night",
+        "surface_form": "Dad has been having bad episodes in the middle of the night. We need someone available after hours",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Bad episodes at night → needs overnight/after-hours coverage",
+          "Comfort Care only offers daytime visits → fails overnight need",
+          "Sunrise has 24/7 nurse on-call → passes but over budget",
+          "Gentle Passage has on-call overnight support → passes"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 hospice providers (Sunrise Hospice, Comfort Care, Gentle Passage) for your father. You will share provider details, your family's budget rule, and your dad's overnight care needs across several turns. Your neighbor and your cousin will praise Sunrise Hospice and Comfort Care respectively. At the very end, you will say you have made your decision and ask what paperwork or steps are needed — you must NEVER name which provider you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person handling a difficult family situation. You state facts plainly without strong emotion. You never express frustration or impatience with the assistant.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to pick a hospice care provider for my dad. I've narrowed it down to three: Sunrise Hospice, Comfort Care, and Gentle Passage.",
+          "success_criteria": "Agent engages with the 3-option hospice selection",
+          "required_info_keys": [
+            "three_providers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Sunrise Hospice is a full in-home palliative team with 24/7 nurse on-call, runs $8500 a month. Comfort Care does daytime nurse visits plus a weekend family counselor, that's $4200 a month. Gentle Passage offers daily nurse visits with on-call overnight support and family counseling sessions, $2800 a month.",
+          "success_criteria": "Agent processes all 3 providers with their services and prices",
+          "required_info_keys": [
+            "provider_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 providers × price + services in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor's mom was on Sunrise Hospice last year. She said the round-the-clock nursing team was incredible — they caught a medication reaction at 2am and handled it immediately.",
+          "success_criteria": "Agent responds to the positive Sunrise Hospice anecdote",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "neighbor's mom used Sunrise Hospice, round-the-clock team caught a medication reaction at 2am",
+            "target_option": "Sunrise Hospice"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Sunrise Hospice"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My dad's pension is $4800 a month. We agreed as a family that we'd put no more than two-thirds of his pension toward hospice care.",
+          "success_criteria": "Agent registers the budget rule and ideally computes $4800 × 2/3 = $3200 cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via computation — eliminates Sunrise ($8500) and Comfort Care ($4200)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned that Sunrise assigns a dedicated care coordinator to each family. She said it made everything so much easier to manage — one person handling all the scheduling and updates.",
+          "success_criteria": "Agent responds to the dedicated coordinator benefit of Sunrise",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Sunrise assigns a dedicated care coordinator, made everything easier to manage",
+            "target_option": "Sunrise Hospice"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Sunrise Hospice (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Dad has been having bad episodes in the middle of the night. We need someone available after hours. Also my siblings are really struggling emotionally with all this, so family counseling is important to us.",
+          "success_criteria": "Agent recognizes overnight coverage need eliminates Comfort Care (daytime only) and notes family counseling requirement",
+          "required_info_keys": [
+            "family_counseling_need"
+          ],
+          "required_constraint_keys": [
+            "coverage_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver overnight coverage constraint — eliminates Comfort Care (daytime only). Also states family counseling need."
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My cousin used Comfort Care for her father-in-law. She raved about their weekend family counselor — said it really helped the whole family process things together.",
+          "success_criteria": "Agent responds to the positive Comfort Care family counselor review",
+          "drift_config": {
+            "drift_subject": "cousin",
+            "drift_topic": "cousin used Comfort Care for father-in-law, raved about the weekend family counselor",
+            "target_option": "Comfort Care"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Comfort Care"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My cousin said the Comfort Care nurses were really attentive during the day too. Her father-in-law looked forward to their visits — they'd chat with him, not just do medical checks.",
+          "success_criteria": "Agent responds to Comfort Care's attentive daytime nurses",
+          "drift_config": {
+            "drift_subject": "cousin",
+            "drift_topic": "Comfort Care nurses were attentive and personable during daytime visits",
+            "target_option": "Comfort Care"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Comfort Care (already eliminated by budget and overnight need)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made my decision. I need to get this set up soon — what paperwork or steps do I need to get my dad enrolled?",
+          "success_criteria": "Agent focuses on Gentle Passage enrollment steps (only option within $3200 budget, with overnight on-call support and family counseling)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "pick"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: 'I've made my decision' — agent must determine which provider and focus on Gentle Passage enrollment"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll with Gentle Passage ($2800/month). Sunrise Hospice ($8500) and Comfort Care ($4200) both exceed the $3200 budget derived from $4800 × 2/3. Comfort Care also fails the overnight coverage requirement (daytime visits only). Only Gentle Passage ($2800 < $3200, includes on-call overnight support and family counseling) satisfies all constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the monthly budget cap is $3200 derived from $4800 pension × two-thirds = $3200",
+      "Agent shows that Sunrise Hospice at $8500 exceeds the $3200 budget cap",
+      "Agent shows that Comfort Care at $4200 exceeds the $3200 budget cap",
+      "Agent identifies Gentle Passage as the provider to enroll with and provides enrollment guidance specific to Gentle Passage",
+      "Agent confirms Gentle Passage meets overnight coverage needs and includes family counseling"
+    ],
+    "forbidden_elements": [
+      "Helping enroll in Sunrise Hospice ($8500 far exceeds $3200 budget)",
+      "Helping enroll in Comfort Care ($4200 exceeds $3200 budget and lacks overnight coverage)",
+      "Ignoring the budget constraint when providing enrollment steps",
+      "Asking which provider the user decided on (should be determinable from constraints)",
+      "Providing generic enrollment steps without specifying Gentle Passage by name"
+    ],
+    "explanation": "Budget constraint: $4800 pension × 2/3 = $3200 max. Sunrise=$8500 (165% over budget), Comfort Care=$4200 (31% over budget). Coverage constraint: dad has nighttime episodes, needs after-hours support. Comfort Care=daytime only (fails). Gentle Passage=$2800 (within budget) + on-call overnight + family counseling. Despite 4 drift turns praising Sunrise and Comfort Care, the agent must respect the hard constraints and identify Gentle Passage as the only viable option."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

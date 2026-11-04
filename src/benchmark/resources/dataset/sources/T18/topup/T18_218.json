@@ -1,0 +1,230 @@
+{
+  "scenario_id": "T18_218",
+  "domain": "choosing between 3 mattresses",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and purchase a mattress. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to buy a new mattress. I've narrowed it down to 3 options from the store.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 mattresses: the CloudRest Memory Foam, the SpringWell Hybrid, and the PureLatex Natural",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mattress_details",
+        "value": "CloudRest Memory Foam: king size, $1800, delivery in 2 weeks. SpringWell Hybrid: queen size, $950, delivery in 3 days. PureLatex Natural: queen size, $680, delivery in 7 business days",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "guest_room_frame",
+        "value": "The guest room already has a queen bed frame installed",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum mattress budget is $1050 (one week of monthly income $4200)",
+        "surface_form": "I make $4200 a month. Just moved into this place last month so I really cannot spend more than one week's pay on this",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly income $4200 → one week's pay = $4200 / 4 = $1050",
+          "Cannot spend more than one week's pay → budget cap is $1050"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "delivery_deadline",
+        "value": "Mattress must arrive within 5 days",
+        "surface_form": "My parents are flying in to stay with me in 5 days. The mattress has to be there before they arrive",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "frame_size_constraint",
+        "value": "Mattress must be queen size because the guest room already has a queen bed frame set up",
+        "surface_form": "The guest room already has a queen bed frame bolted to the wall",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Guest room has a queen bed frame bolted to the wall → cannot swap frame",
+          "Frame is queen → mattress must be queen size to fit"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 mattresses (CloudRest Memory Foam, SpringWell Hybrid, PureLatex Natural). You will share mattress details, your budget, delivery deadline, and room constraints across several turns. Your colleague and friend will praise the CloudRest and PureLatex. At the very end you will say you have decided and ask about delivery day preparation — you must NEVER name which mattress you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You never express frustration or impatience, even if the assistant asks clarifying questions.",
+        "description": "Prevents emotion escalation that could leak answer or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to buy a new mattress for my guest room. I've been looking at 3 options from SleepWorld: the CloudRest Memory Foam, the SpringWell Hybrid, and the PureLatex Natural",
+          "success_criteria": "Agent engages with the mattress selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what they have: the CloudRest Memory Foam is king size, $1800, but delivery takes about 2 weeks. The SpringWell Hybrid is queen size, $950, and they can deliver in 3 days. The PureLatex Natural is queen size, $680, delivery takes 7 business days",
+          "success_criteria": "Agent processes all 3 options with prices, sizes, and delivery times",
+          "required_info_keys": [
+            "mattress_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with price, size, and delivery attributes"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work got the CloudRest last year. He keeps saying it completely fixed his back pain, like sleeping on a cloud. He went king size for his master bedroom",
+          "success_criteria": "Agent responds to the positive CloudRest review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "bought CloudRest king size last year, fixed his back pain, loves it",
+            "target_option": "CloudRest Memory Foam"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: positive recency bias toward CloudRest"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I make $4200 a month. Just moved into this place last month so I really cannot spend more than one week's pay on this",
+          "success_criteria": "Agent registers the budget constraint and ideally computes $4200/4 = $1050 cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates CloudRest ($1800 > $1050)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned the CloudRest has a 10-year warranty and the foam density is really premium. He said his wife wanted to get a second one for the guest room too",
+          "success_criteria": "Agent responds to additional CloudRest information",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "CloudRest has 10-year warranty, premium foam density, colleague's wife wants another one",
+            "target_option": "CloudRest Memory Foam"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about CloudRest (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My parents are flying in to stay with me in 5 days. The mattress has to be there before they arrive",
+          "success_criteria": "Agent recognizes the 5-day delivery deadline",
+          "required_constraint_keys": [
+            "delivery_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates PureLatex (7 business days > 5 days)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "The guest room already has a queen bed frame bolted to the wall",
+          "success_criteria": "Agent recognizes mattress must be queen size",
+          "required_info_keys": [
+            "guest_room_frame"
+          ],
+          "required_constraint_keys": [
+            "frame_size_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver size constraint — double-eliminates CloudRest (king won't fit queen frame)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My friend just got the PureLatex for her apartment. She told me latex is way better for hot sleepers and the natural material doesn't off-gas at all",
+          "success_criteria": "Agent responds to the positive PureLatex review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "got PureLatex, great for hot sleepers, no off-gassing, natural material",
+            "target_option": "PureLatex Natural"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: positive recency bias toward PureLatex"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "She also said the PureLatex is hypoallergenic and her partner who has dust mite allergies hasn't had a single flare-up since they switched",
+          "success_criteria": "Agent responds to more PureLatex benefits",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "PureLatex is hypoallergenic, partner's dust mite allergies gone since switching",
+            "target_option": "PureLatex Natural"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about PureLatex (eliminated by delivery timeline)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright I've made my decision. I need to finalize the order this week. Which one should I go with?",
+          "success_criteria": "Agent recommends the SpringWell Hybrid as the only option satisfying all three constraints: under $1050 budget, delivers within 5 days, and queen size fits the existing frame",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which one do you prefer",
+              "any of them",
+              "depends on"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should purchase the SpringWell Hybrid ($950, queen, 3-day delivery). CloudRest Memory Foam ($1800) exceeds the $1050 budget and is king size which does not fit the queen frame. PureLatex Natural (7 business days) cannot arrive within the 5-day deadline. Only the SpringWell Hybrid satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends the SpringWell Hybrid specifically",
+      "Agent shows that CloudRest at $1800 exceeds the derived budget cap of $4200 divided by 4 equals $1050",
+      "Agent shows that CloudRest is king size which does not fit the queen bed frame in the guest room",
+      "Agent shows that PureLatex Natural delivery of 7 business days exceeds the 5-day deadline before parents arrive",
+      "Agent confirms SpringWell Hybrid meets all three constraints: $950 is under $1050 budget, 3-day delivery is within 5 days, and queen size fits the existing frame"
+    ],
+    "forbidden_elements": [
+      "Recommending the CloudRest Memory Foam ($1800 far exceeds $1050 budget and king size does not fit queen frame)",
+      "Recommending the PureLatex Natural (7 business day delivery exceeds the 5-day deadline)",
+      "Ignoring the budget constraint derived from one week of $4200 monthly income",
+      "Ignoring the delivery deadline of 5 days before parents arrive",
+      "Ignoring the queen frame size requirement",
+      "Asking the user which mattress they decided on instead of computing it from constraints"
+    ],
+    "explanation": "Budget constraint: $4200/month, max one week's pay = $1050. CloudRest $1800 > $1050 (eliminated). SpringWell $950 < $1050 (passes). PureLatex $680 < $1050 (passes). Delivery constraint: must arrive within 5 days. CloudRest 2 weeks (eliminated). SpringWell 3 days (passes). PureLatex 7 business days (eliminated). Size constraint: must be queen. CloudRest is king (eliminated). SpringWell is queen (passes). PureLatex is queen (passes). Only SpringWell Hybrid survives all three constraints. Despite 4 drift turns praising CloudRest and PureLatex, the agent must respect the hard constraints and recommend SpringWell."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

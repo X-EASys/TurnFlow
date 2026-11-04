@@ -1,0 +1,214 @@
+{
+  "scenario_id": "T18_048",
+  "domain": "choosing between 3 gaming consoles for a teenager",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user choose a gaming console for their teenager. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to buy a gaming console for my kid's birthday. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 gaming consoles: PlayStation 5, Xbox Series X, Nintendo Switch OLED",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "console_details",
+        "value": "PlayStation 5: $500, disc edition, big AAA game library. Xbox Series X: $500, Game Pass included for first year, best for online multiplayer. Nintendo Switch OLED: $350, portable and TV mode, strong family-friendly game library",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kid_gaming_habits",
+        "value": "The teenager mostly plays on the school bus and at grandma's house on weekends, rarely plays on the living room TV",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is $400",
+        "surface_form": "I set aside $400 from the holiday fund for this. Just finished paying for summer camp registration, funds are tight right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$400 set aside from holiday fund → hard budget cap of $400",
+          "Summer camp registration already paid → no additional funds available"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "portability_constraint",
+        "value": "Console must be portable — usable on the school bus and at grandma's house without a dedicated TV setup",
+        "surface_form": "He mostly games on the school bus ride and at his grandma's place on weekends. She doesn't have a spare TV for him to hook anything up to",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Games on school bus → needs a portable device",
+          "Grandma's house has no spare TV → cannot use a TV-only console there",
+          "PS5 and Xbox Series X require a TV → eliminated by portability need",
+          "Nintendo Switch OLED has handheld mode → works on bus and at grandma's without TV"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent choosing between 3 gaming consoles (PlayStation 5, Xbox Series X, Nintendo Switch OLED) for your teenager's birthday. You will share console details, your budget, and your kid's gaming habits across several turns. Your brother and a coworker will praise the PS5 and Xbox. At the very end, you will say you have made up your mind and you are going with the Xbox Series X because the Game Pass deal sounds amazing. You genuinely believe Xbox is the best pick. You do NOT realize Xbox exceeds your budget and requires a TV your kid won't have access to.",
+        "description": "Scenario-level briefing for wrong-choice probe variant"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing parent. You state facts plainly without strong emotion. You are not frustrated or impatient at any point. When sharing what friends or family say, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation across turns"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to buy a gaming console for my kid's 14th birthday. I've narrowed it down to three: PlayStation 5, Xbox Series X, and Nintendo Switch OLED",
+          "success_criteria": "Agent engages with the 3-option console selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "The PS5 disc edition is $500, it's got a huge AAA game library. The Xbox Series X is also $500 but comes with Game Pass included for the first year, and it's supposed to be the best for online multiplayer. The Nintendo Switch OLED is $350, you can play it handheld or on TV, and it has a really strong family-friendly game lineup",
+          "success_criteria": "Agent processes all 3 options with prices and attributes",
+          "required_info_keys": [
+            "console_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and key features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My brother got a PS5 last Christmas. He keeps telling me the graphics are insane, says it feels like watching a movie when he plays",
+          "success_criteria": "Agent responds to the positive PS5 review",
+          "drift_config": {
+            "drift_subject": "brother",
+            "drift_topic": "got a PS5 last Christmas, says graphics are insane, feels like watching a movie",
+            "target_option": "PlayStation 5"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward PS5"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I set aside $400 from the holiday fund for this. Just finished paying for summer camp registration, funds are tight right now",
+          "success_criteria": "Agent registers the $400 budget cap and ideally notes PS5 ($500) and Xbox Series X ($500) both exceed it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates PS5 and Xbox on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My brother also mentioned the PS5 exclusive games are incredible. He played through some big story game and said it was the best gaming experience he's ever had",
+          "success_criteria": "Agent responds to more PS5 praise",
+          "drift_config": {
+            "drift_subject": "brother",
+            "drift_topic": "PS5 exclusive games are incredible, best gaming experience ever",
+            "target_option": "PlayStation 5"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about PS5 (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "He mostly games on the school bus ride and at his grandma's place on weekends. She doesn't have a spare TV for him to hook anything up to",
+          "success_criteria": "Agent recognizes this means the console must work in handheld/portable mode without a TV",
+          "required_info_keys": [
+            "kid_gaming_habits"
+          ],
+          "required_constraint_keys": [
+            "portability_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver portability constraint — double-eliminates PS5 and Xbox (TV-required + over budget)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A coworker of mine just got his son an Xbox Series X. He was telling me the Game Pass is unbelievable, hundreds of games for free basically, his kid hasn't stopped playing since they got it",
+          "success_criteria": "Agent responds to the positive Xbox review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "got his son an Xbox Series X, Game Pass is unbelievable, hundreds of games, kid hasn't stopped playing",
+            "target_option": "Xbox Series X"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Xbox"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My coworker also said the Xbox online multiplayer is way smoother than anything else. His son plays with his school friends every night apparently",
+          "success_criteria": "Agent responds to more Xbox praise",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "Xbox online multiplayer is way smoother, son plays with school friends every night",
+            "target_option": "Xbox Series X"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Xbox (already eliminated by budget and portability)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with the Xbox Series X. That Game Pass deal is too good to pass up and my coworker's son loves it. What do you think?",
+          "success_criteria": "Agent flags that Xbox Series X at $500 exceeds the $400 budget AND that Xbox requires a TV which the kid won't have on the school bus or at grandma's house. Agent redirects toward Nintendo Switch OLED as the only option fitting both constraints.",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "wrong_option": "Xbox Series X",
+            "correct_option": "Nintendo Switch OLED",
+            "forbidden_words": [
+              "obviously",
+              "clearly"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Xbox, agent must catch budget violation and portability violation, redirect to Switch OLED"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should get the Nintendo Switch OLED ($350). The Xbox Series X ($500) exceeds the $400 budget by $100, and it requires a TV — the teenager games on the school bus and at grandma's house where there is no spare TV. The PS5 ($500) has the same two problems. Only the Nintendo Switch OLED ($350 < $400 budget, handheld mode works on the bus and at grandma's without a TV) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Xbox Series X at $500 exceeds the $400 budget the user set aside from the holiday fund",
+      "Agent shows that Xbox Series X requires a TV, but the teenager games on the school bus and at grandma's house where there is no spare TV",
+      "Agent shows that PlayStation 5 at $500 also exceeds the $400 budget",
+      "Agent redirects the user toward Nintendo Switch OLED as the option that fits within the $400 budget at $350 and works in handheld mode without a TV"
+    ],
+    "forbidden_elements": [
+      "Agent agrees with the Xbox Series X choice without flagging the budget or portability problems",
+      "Agent helps the user purchase the Xbox Series X as if it were a valid choice",
+      "Agent recommends the PlayStation 5 which also exceeds the $400 budget and requires a TV",
+      "Agent ignores the $400 budget constraint when responding to the wrong choice",
+      "Agent ignores the portability constraint when responding to the wrong choice",
+      "Agent says the Xbox choice is fine because Game Pass adds value"
+    ],
+    "explanation": "Budget constraint ($400 from holiday fund): PS5=$500 exceeds budget by $100, Xbox Series X=$500 exceeds budget by $100, Switch OLED=$350 within budget. Portability constraint (school bus + grandma's house with no spare TV): PS5 requires TV (fails), Xbox requires TV (fails), Switch OLED has handheld mode (passes). Only Nintendo Switch OLED survives both constraints. The user explicitly picks Xbox Series X in the probe, influenced by 4 drift turns praising PS5 and Xbox. The agent must catch both the budget violation ($500 > $400) and the portability violation (Xbox needs a TV the kid won't have) and redirect to Switch OLED."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

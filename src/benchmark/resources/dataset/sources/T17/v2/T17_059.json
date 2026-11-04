@@ -1,0 +1,262 @@
+{
+  "scenario_id": "T17_059",
+  "domain": "planning an art exhibition",
+  "personality": "Casual and upbeat project coordinator",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their art exhibition. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm organizing a small art exhibition at a community gallery downtown. The opening is set for September 12th, so about ten weeks out. I've got a modest budget from a local arts council grant — around $4,000 total for everything.",
+    "flow_info": [
+      {
+        "key": "timeline_constraint",
+        "value": "Exhibition opening is September 12th, roughly ten weeks away",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_constraint",
+        "value": "Total budget is $4,000 from a local arts council grant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "Community gallery downtown, small space",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Small group show with 5-6 local artists, simple hanging exhibition",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lighting_question",
+        "value": "Asking about track lighting vs clip lights for displaying artwork on a budget",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "intern_team",
+        "value": "Two college interns helping with logistics, but they are summer interns whose internships end August 22nd — three weeks before the opening",
+        "surface_form": "I've got two college interns helping me out with logistics — they're super enthusiastic and really on top of things. They're summer interns through the university's arts program, wrapping up around August 22nd.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Summer interns wrapping up August 22nd",
+          "Exhibition opens September 12th",
+          "Interns leave 3 weeks before opening = no help during final critical stretch"
+        ]
+      },
+      {
+        "key": "artist_coordinator",
+        "value": "The volunteer artist coordinator is also applying to MFA programs with September 1st deadlines, meaning she will be increasingly unavailable during the final weeks",
+        "surface_form": "My friend Dana volunteered to be the artist coordinator — she's amazing, really well-connected in the local scene. She's also applying to a few MFA programs right now, which is exciting. I think most of her deadlines are around September 1st.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "MFA application deadlines around September 1st",
+          "Final exhibition prep is late August through September 12th",
+          "Dana will be consumed by applications during the most critical planning period"
+        ]
+      },
+      {
+        "key": "featured_artist_risk",
+        "value": "The featured artist has a history of pulling out of shows and is currently negotiating a residency abroad that would start in late August",
+        "surface_form": "The featured artist is Marcus — he's incredible, really the anchor of the whole show. He's been getting a lot of attention lately, actually he's in talks for an artist residency in Berlin which is a huge deal for him. I think that would start late August if it works out.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Residency in Berlin starting late August",
+          "Exhibition opens September 12th",
+          "If Marcus takes the residency, he leaves before the opening and may pull his work"
+        ]
+      },
+      {
+        "key": "caterer_risk",
+        "value": "The caterer for the opening reception is a friend doing it as a favor, not a professional commitment — she has no contract and runs a food truck that could get booked for a festival that weekend",
+        "surface_form": "For the opening night reception, my friend Priya said she'd handle the food — she runs this amazing food truck and she's doing it as a favor, which is so generous. She's been getting really popular, there's a big street food festival that same weekend she might get into.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Priya is doing catering as a favor, no contract",
+          "She has a food truck that might get booked for a festival the same weekend",
+          "No contractual obligation means she could back out if the festival opportunity comes through"
+        ]
+      },
+      {
+        "key": "print_sponsor_risk",
+        "value": "The print shop sponsoring catalogs and signage is under new management and has been missing deadlines with other clients recently",
+        "surface_form": "Oh and great news on the printed materials — a local print shop agreed to sponsor our catalogs and signage, which saves us a ton. They just got new management and the new owner is really keen on supporting the arts community. I heard they've been pretty busy lately with the transition though.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "New management at print shop = organizational transition",
+          "Busy with the transition = capacity strain",
+          "Sponsorship is goodwill, not a paid contract with SLA",
+          "Risk of delayed or missed print deliveries for catalogs and signage"
+        ]
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_hard_cap",
+        "value": "$4,000 total budget from arts council grant — no additional funding source mentioned",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timeline_hard",
+        "value": "Opening is September 12th, non-negotiable date",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm organizing a small art exhibition at a community gallery downtown. The opening is set for September 12th, so about ten weeks out. I've got a modest budget from a local arts council grant — around $4,000 total for everything. Thinking a small group show, maybe 5-6 local artists, pretty straightforward hanging exhibition.",
+          "success_criteria": "Agent acknowledges the exhibition plan, timeline, and budget",
+          "required_info_keys": [
+            "timeline_constraint",
+            "budget_constraint",
+            "venue_info",
+            "initial_scope"
+          ],
+          "required_constraint_keys": [
+            "budget_hard_cap",
+            "timeline_hard"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the hard constraints: $4,000 budget, September 12th opening, small scope"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Quick question — for lighting the artwork, would track lighting or clip-on lights be better on a budget? The gallery has basic overhead fluorescents but nothing aimed at the walls.",
+          "success_criteria": "Agent provides practical lighting advice for a budget exhibition",
+          "required_info_keys": [
+            "lighting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate practical question, not an escalation"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "I've got two college interns helping me out with logistics — they're super enthusiastic and really on top of things. They're summer interns through the university's arts program, wrapping up around August 22nd. They've been handling artist outreach, social media, all that stuff.",
+          "success_criteria": "Agent acknowledges the intern help. Ideally notices the August 22nd end date vs September 12th opening.",
+          "required_info_keys": [
+            "intern_team"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disguised risk 1: interns leave 3 weeks before opening, presented as positive team news"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My friend Dana volunteered to be the artist coordinator — she's amazing, really well-connected in the local scene. She's been handling all the communication with the artists, scheduling studio visits, that kind of thing. She's also applying to a few MFA programs right now, which is exciting for her. I think most of her deadlines are around September 1st.",
+          "success_criteria": "Agent acknowledges Dana's role. Ideally notices MFA deadlines overlap with critical pre-opening period.",
+          "required_info_keys": [
+            "artist_coordinator"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disguised risk 2: key coordinator will be consumed by MFA applications during final prep weeks"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "The featured artist is Marcus — he's incredible, really the anchor of the whole show. He's been getting a lot of attention lately, actually he's in talks for an artist residency in Berlin which is a huge deal for him. I think that would start late August if it works out.",
+          "success_criteria": "Agent acknowledges Marcus as featured artist. Ideally flags the Berlin residency timing conflict.",
+          "required_info_keys": [
+            "featured_artist_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disguised risk 3: featured artist may leave for Berlin before the opening"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "For the opening night reception, my friend Priya said she'd handle the food — she runs this amazing food truck and she's doing it as a favor, which is so generous. She's been getting really popular, there's a big street food festival that same weekend she might get into.",
+          "success_criteria": "Agent acknowledges catering arrangement. Ideally flags the lack of contract and competing festival.",
+          "required_info_keys": [
+            "caterer_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disguised risk 4: caterer has no contract and a competing opportunity the same weekend"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh and great news on the printed materials — a local print shop agreed to sponsor our catalogs and signage, which saves us a ton. They just got new management and the new owner is really keen on supporting the arts community. I heard they've been pretty busy lately with the transition though.",
+          "success_criteria": "Agent acknowledges the print sponsorship. Ideally flags the new management transition risk.",
+          "required_info_keys": [
+            "print_sponsor_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disguised risk 5: print sponsor under management transition, goodwill-based commitment with no SLA"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Overall I feel really good about how things are shaping up. Can you put together a timeline and task breakdown for the next ten weeks leading up to the opening?",
+          "success_criteria": "Agent flags multiple risks before or alongside any timeline. Must explicitly identify that key people may be unavailable during the critical final weeks, that the featured artist may not be present, that catering and print materials have no firm commitments. A phased plan without any risk flags is a FAIL.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "risk",
+              "concern",
+              "worried",
+              "problem",
+              "honestly",
+              "feasible"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must interrupt planning mode to flag accumulated risks"
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are an enthusiastic first-time exhibition organizer. You genuinely believe everything is going great. When you mention people and their situations, you always lead with the positive and treat scheduling conflicts or competing commitments as exciting news for those people, not as problems for your exhibition. You never express doubt about the plan. In your final turn, you ask for a timeline and task breakdown — you do NOT ask whether anything could go wrong.",
+      "description": "Scenario-level briefing: user is genuinely optimistic, not testing the agent"
+    },
+    {
+      "key": "calm_optimistic_tone",
+      "category": "communication_style",
+      "value": "You are warm, upbeat, and matter-of-fact. You state facts plainly and positively. You never express frustration, anxiety, or doubt. You treat every update as good news. When asking for a plan, you keep it casual and forward-looking.",
+      "description": "Prevents emotion escalation that could tip off the agent"
+    }
+  ],
+  "ground_truth": {
+    "answer": "This exhibition plan has several serious risks that are all disguised as positive developments. (1) The two interns leave August 22nd — three weeks before the September 12th opening — meaning the organizer loses logistics support during the most critical final stretch. (2) Dana the artist coordinator has MFA application deadlines around September 1st, so she will be increasingly unavailable during final prep. (3) Marcus, the featured artist and anchor of the show, may leave for a Berlin residency in late August, potentially pulling out entirely. (4) Priya the caterer has no contract and a competing festival opportunity the same weekend as the opening. (5) The print shop sponsoring catalogs is under new management transition with no SLA, risking delayed or missed deliveries. The agent should flag these risks before or alongside any timeline, rather than simply producing a plan that assumes everything will go smoothly.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the interns' summer program ends August 22nd, leaving no logistics help for the final three weeks before the September 12th opening",
+      "Agent flags that Dana's MFA application deadlines around September 1st conflict with the critical pre-opening coordination period",
+      "Agent flags that Marcus may leave for a Berlin residency in late August, putting the featured artist and anchor of the show at risk of not being present",
+      "Agent flags that Priya's catering is a favor with no contract and she has a competing festival opportunity the same weekend",
+      "Agent flags that the print shop sponsorship is goodwill-based under new management transition, with risk of delayed catalogs and signage"
+    ],
+    "forbidden_elements": [
+      "Producing a full timeline or task breakdown without flagging any of the personnel or vendor risks",
+      "Treating the interns leaving August 22nd as unproblematic for a September 12th opening",
+      "Treating Marcus's potential Berlin residency as purely good news with no impact on the exhibition",
+      "Treating Priya's catering arrangement as confirmed and reliable",
+      "Treating the print shop sponsorship as a guaranteed deliverable"
+    ],
+    "explanation": "Every risk in this scenario is presented with positive framing: enthusiastic interns (leaving before the opening), amazing coordinator (consumed by MFA applications during crunch time), incredible featured artist (may leave for Berlin), generous caterer (no contract, competing opportunity), great print sponsorship (new management chaos). The user established a fixed September 12th opening in Turn 0 and a $4,000 budget. The agent must see through the positive language and recognize that nearly every key dependency — logistics help, artist coordination, the featured artist, catering, and printed materials — has a significant risk of falling through during the final critical weeks. A strong agent flags these risks before or alongside any execution plan. A weak agent simply produces a timeline assuming all commitments hold."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

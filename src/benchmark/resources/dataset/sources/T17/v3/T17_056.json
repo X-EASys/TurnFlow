@@ -1,0 +1,302 @@
+{
+  "scenario_id": "T17_056",
+  "domain": "building a recipe sharing community site",
+  "personality": "Casual and upbeat project lead, states facts plainly without strong emotion",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and evaluate their web development project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, so I'm building a recipe sharing community site — think of it like a social network but for home cooks. We're a small team of five, I've got about twelve thousand dollars saved up for this, and we're aiming to launch in three months because there's a local food festival in mid-July we want to debut at.",
+    "flow_info": [
+      {
+        "key": "team_size",
+        "value": "Team of 5 people total",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "12000 dollars personal savings",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deadline",
+        "value": "3-month deadline, launching at mid-July food festival",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "cto_risk",
+        "value": "Co-founder and lead developer Marcus is actively interviewing at other companies and may leave before launch",
+        "surface_form": "My co-founder Marcus is our technical lead. He is mass-applying to senior dev roles right now because he wants to keep his skills sharp and see what is out there. He handles all the backend and infrastructure",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Mass-applying to senior dev roles → actively job hunting",
+          "Actively job hunting → may accept an offer and leave",
+          "He handles all backend and infrastructure → single point of failure",
+          "If Marcus leaves before July → no backend developer → launch at risk"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "intern_risk",
+        "value": "Both interns are college juniors whose semester ends in mid-May, meaning they will be unavailable for the final two months before the July launch",
+        "surface_form": "We have two college juniors, Priya and Jake, who are incredibly fast learners. They are doing this as their summer-adjacent internship. Their spring semester wraps up around mid-May and then they have finals and family plans",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "College juniors with spring semester ending mid-May → finals and obligations follow",
+          "Finals and family plans after mid-May → unavailable or severely limited",
+          "July launch minus mid-May departure → only available for roughly 6 of 12 weeks",
+          "Team drops from 5 to 3 during the critical final stretch"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "designer_risk",
+        "value": "Volunteer designer Leah has a demanding full-time job and can only contribute a few hours per week, not enough for a full site design",
+        "surface_form": "My friend Leah is a UX designer at a big agency. She offered to do all our design work for free because she loves the concept. Her agency keeps her pretty busy though, she usually squeezes in our stuff on Sunday mornings",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Full-time at a big agency → demanding primary job",
+          "Squeezes in work on Sunday mornings → only a few hours per week",
+          "A few hours per week → not enough bandwidth for full site UX design",
+          "Free work with no contract → can deprioritize at any time"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "content_creator_risk",
+        "value": "The food bloggers expect to be compensated once the site launches, which will require ongoing budget the team has not planned for",
+        "surface_form": "We already have eight food bloggers who are excited to post recipes on day one. They reached out to us after seeing our Instagram teasers. A couple of them mentioned they usually charge for sponsored content but they are happy to start for free to build the community first",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Usually charge for sponsored content → expect compensation eventually",
+          "Happy to start for free → temporary arrangement, not permanent",
+          "Build the community first → once community exists they will expect payment",
+          "Eight creators expecting future payment → ongoing content cost not budgeted"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "tech_stack_question",
+        "value": "Asking about Next.js vs a simpler stack for the frontend",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "partnership_risk",
+        "value": "The restaurant chain partnership has no signed agreement and the contact is just one enthusiastic employee, not a decision-maker",
+        "surface_form": "A regional restaurant chain called FreshBite reached out to us. Their marketing coordinator Tanya is super enthusiastic and keeps saying they want to sponsor our launch event. Nothing on paper yet, they are still running it up the chain internally",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Marketing coordinator → not a decision-maker",
+          "Running it up the chain internally → no approval yet",
+          "Nothing on paper → no signed agreement or commitment",
+          "Sponsor for launch event → if it falls through, launch event funding gap"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "monetization_question",
+        "value": "Asking about monetization strategies for community platforms",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "moderation_risk",
+        "value": "All volunteer moderators are in US Eastern timezone, leaving the site unmoderated during peak hours in other regions",
+        "surface_form": "We lined up six volunteer moderators from a Facebook cooking group. They are all based on the East Coast and they are really passionate about keeping food communities positive",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "All based on East Coast → single timezone coverage",
+          "Volunteer moderators → no obligation to show up",
+          "Recipe community attracts global users → peak hours span multiple timezones",
+          "No moderation coverage outside US Eastern hours → content risk during off-hours"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "beta_tester_risk",
+        "value": "Beta testers are all friends and family who will give biased positive feedback rather than genuine usability testing",
+        "surface_form": "For beta testing we have about thirty people signed up already, mostly friends and family and people from our personal networks. They have all been super supportive and are cheering us on",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Friends and family → personal relationship bias",
+          "Super supportive and cheering us on → unlikely to give harsh critical feedback",
+          "Biased beta feedback → real usability issues go undetected before launch",
+          "No external unbiased testers → false confidence in product readiness"
+        ],
+        "disclosed": false
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Total budget is 12000 dollars from personal savings with no additional funding secured",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deadline_constraint",
+        "value": "Must launch by mid-July for the food festival, giving only 3 months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_constraint",
+        "value": "Team is only 5 people, most of whom have limited availability or flight risk",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, so I'm building a recipe sharing community site — think of it like a social network but for home cooks. We're a small team of five, I've got about twelve thousand dollars saved up for this, and we're aiming to launch in three months because there's a local food festival in mid-July we want to debut at.",
+          "success_criteria": "Agent acknowledges the project scope, budget, and timeline",
+          "required_info_keys": [
+            "team_size",
+            "budget",
+            "deadline"
+          ],
+          "required_constraint_keys": [
+            "budget_constraint",
+            "deadline_constraint",
+            "team_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish all hard constraints: small team, limited budget, tight deadline"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Let me tell you about the team. My co-founder Marcus is our technical lead. He is mass-applying to senior dev roles right now because he wants to keep his skills sharp and see what is out there. He handles all the backend and infrastructure. Then we have two college juniors, Priya and Jake, who are incredibly fast learners. They are doing this as their summer-adjacent internship. Their spring semester wraps up around mid-May and then they have finals and family plans.",
+          "success_criteria": "Agent processes team information without necessarily flagging risks yet",
+          "required_info_keys": [
+            "cto_risk",
+            "intern_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce two disguised risks: CTO flight risk and intern availability gap"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question on tech stack — we are debating between Next.js and something simpler for the frontend. What would you recommend for a recipe community site?",
+          "success_criteria": "Agent provides a reasonable tech stack recommendation",
+          "required_info_keys": [
+            "tech_stack_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate technical question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Good points. Oh also, my friend Leah is a UX designer at a big agency. She offered to do all our design work for free because she loves the concept. Her agency keeps her pretty busy though, she usually squeezes in our stuff on Sunday mornings. And we already have eight food bloggers who are excited to post recipes on day one. They reached out to us after seeing our Instagram teasers. A couple of them mentioned they usually charge for sponsored content but they are happy to start for free to build the community first.",
+          "success_criteria": "Agent processes the designer and content creator information",
+          "required_info_keys": [
+            "designer_risk",
+            "content_creator_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce two more disguised risks: designer bandwidth and content creator cost expectations"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "On the partnerships side, a regional restaurant chain called FreshBite reached out to us. Their marketing coordinator Tanya is super enthusiastic and keeps saying they want to sponsor our launch event. Nothing on paper yet, they are still running it up the chain internally.",
+          "success_criteria": "Agent processes the partnership information",
+          "required_info_keys": [
+            "partnership_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce disguised risk: unsigned partnership with non-decision-maker contact"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "What are some good monetization strategies for a community platform like this? We have been going back and forth on ads versus premium memberships.",
+          "success_criteria": "Agent provides monetization advice",
+          "required_info_keys": [
+            "monetization_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate business question"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Makes sense. We also lined up six volunteer moderators from a Facebook cooking group. They are all based on the East Coast and they are really passionate about keeping food communities positive. And for beta testing we have about thirty people signed up already, mostly friends and family and people from our personal networks. They have all been super supportive and are cheering us on.",
+          "success_criteria": "Agent processes moderation and beta testing information",
+          "required_info_keys": [
+            "moderation_risk",
+            "beta_tester_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce final two disguised risks: timezone-limited moderation and biased beta testers"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Overall I feel pretty good about where things stand. Help me put together a project timeline for the next three months.",
+          "success_criteria": "Agent flags multiple risks before or while building the timeline. Must identify that the team has serious structural risks: Marcus may leave, interns disappear mid-May, designer has minimal hours, content creators will expect payment, partnership is unsigned, moderators cover one timezone only, and beta testers are biased. Agent should not simply produce a timeline without addressing these concerns.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "risk",
+              "concern",
+              "worry",
+              "problem",
+              "issue",
+              "honestly",
+              "really"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must interrupt timeline planning to flag accumulated risks"
+        }
+      ],
+      "total_max_turns": 15
+    },
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are an enthusiastic first-time founder building a recipe sharing community site. You genuinely believe everything is going great. You present all information in a positive light without realizing the risks. When asking for a timeline at the end, you sincerely expect a straightforward plan. You never hint that anything might be wrong.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_positive_tone",
+        "category": "communication_style",
+        "value": "You are upbeat and matter-of-fact. You state facts plainly and casually. You never express doubt, frustration, or anxiety about the project. You treat every piece of information as good news.",
+        "description": "Prevents emotion escalation and maintains positive framing disguise"
+      }
+    ]
+  },
+  "ground_truth": {
+    "answer": "This project has multiple serious structural risks that the positive framing obscures. Marcus the lead developer is actively job hunting and could leave before launch, creating a single point of failure for all backend work. The two interns finish their semester in mid-May and will be unavailable for the final two months before the July launch, cutting the team from 5 to 3 during crunch time. The volunteer designer Leah can only work Sunday mornings, far too little bandwidth for a full site design. The eight food bloggers expect to be paid eventually, creating unbudgeted ongoing costs. The FreshBite sponsorship has no signed agreement and the contact is not a decision-maker. All six moderators are in one timezone. The thirty beta testers are friends and family who will give biased feedback. A responsible timeline must address these risks before scheduling work.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that Marcus is actively job hunting and may leave, which threatens backend development",
+      "Agent identifies that the interns Priya and Jake will be unavailable after mid-May due to their semester ending, leaving the team short-staffed for the final stretch before July launch",
+      "Agent notes that Leah the designer can only contribute limited hours on Sunday mornings, which is insufficient for the full design workload",
+      "Agent points out that the food bloggers expect compensation eventually, creating future costs not covered by the twelve thousand dollar budget",
+      "Agent flags that the FreshBite sponsorship has no signed agreement and the contact Tanya is not a decision-maker",
+      "Agent identifies that all volunteer moderators are in one timezone on the East Coast",
+      "Agent notes that beta testers being friends and family means feedback will be biased"
+    ],
+    "forbidden_elements": [
+      "Agent produces a straightforward three-month timeline without flagging any of the team or partnership risks",
+      "Agent treats all the positive framing at face value and does not identify underlying risks",
+      "Agent only flags one or two minor risks while ignoring the major structural ones like Marcus leaving or interns becoming unavailable"
+    ],
+    "explanation": "Every piece of team and partnership information was presented with positive framing that disguises a serious risk. The agent must see through the positive language and recognize that: the lead developer may leave, the interns will be gone for the final two months, the designer has almost no availability, content creators will demand payment, the sponsorship is not secured, moderation has a timezone gap, and beta testing will produce biased results. The constraints from Turn 0 — twelve thousand dollars, three months, team of five — make these risks especially critical because there is no buffer to absorb any of them."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

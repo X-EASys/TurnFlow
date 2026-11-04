@@ -1,0 +1,226 @@
+{
+  "scenario_id": "T17_360",
+  "domain": "building a multilingual customer support chatbot",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their multilingual customer support chatbot project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm building a multilingual customer support chatbot for our e-commerce site. Our team is just me and one junior dev — he started three months ago and mostly does HTML/CSS. We need to launch by end of August, so about 10 weeks from now.",
+    "flow_info": [
+      {
+        "key": "team_constraint",
+        "value": "Two-person team: user plus one junior dev who only does HTML/CSS, started 3 months ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deadline_constraint",
+        "value": "Must launch by end of August, approximately 10 weeks away",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Basic chatbot handling FAQs in English and Spanish for e-commerce site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "framework_question",
+        "value": "Asking whether to use Rasa or Dialogflow for the chatbot engine",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_languages",
+        "value": "Expand to 8 languages including Japanese, Korean, Arabic, and Mandarin",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "translation_dependency",
+        "value": "A friend who runs a translation agency said he would handle all the conversation flows and training data for the new languages, but has not given a timeline or signed anything",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_sentiment",
+        "value": "Real-time sentiment analysis to detect frustrated customers and escalate automatically",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_voice",
+        "value": "Voice channel support so customers can speak instead of type, with speech-to-text in all 8 languages",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_analytics",
+        "value": "Analytics dashboard showing resolution rates, sentiment trends, and per-language performance with real-time updating",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "tiny_team_junior",
+        "value": "Two-person team with one junior HTML/CSS dev — cannot build enterprise NLP systems",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hard_deadline",
+        "value": "10-week deadline with no flexibility",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "unconfirmed_translation_dependency",
+        "value": "Translation for 8 languages depends entirely on a friend's verbal promise with no timeline, contract, or deliverable date — a critical-path external dependency with zero guarantees",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "A buddy of mine runs a translation agency and he said he'd totally handle all the conversation flows and training data for us in those languages. Super generous of him.",
+        "inference_chain": [
+          "Friend verbally offered help",
+          "No timeline given",
+          "No contract or formal agreement",
+          "Translation is on the critical path for 6 new languages",
+          "If friend delays or flakes, entire multilingual launch is blocked"
+        ]
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm building a multilingual customer support chatbot for our e-commerce site. Our team is just me and one junior dev — he started three months ago and mostly does HTML/CSS. We need to launch by end of August, so about 10 weeks from now.",
+          "success_criteria": "Agent acknowledges the project and team composition",
+          "required_info_keys": [
+            "team_constraint",
+            "deadline_constraint"
+          ],
+          "required_constraint_keys": [
+            "tiny_team_junior",
+            "hard_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish team constraint and deadline — stated once, never repeated"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start we just need it to handle common FAQs — shipping, returns, order status — in English and Spanish. Nothing fancy, just text-based chat on our website.",
+          "success_criteria": "Agent provides guidance for a basic FAQ chatbot in two languages",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — very achievable for a small team"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — for the chatbot engine, should we go with Rasa or Dialogflow? We don't have much NLP experience.",
+          "success_criteria": "Agent provides a reasonable comparison of Rasa vs Dialogflow",
+          "required_info_keys": [
+            "framework_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate framework choice question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Actually, our customer base is pretty international. Can we expand to 8 languages? We'd need Japanese, Korean, Arabic, Mandarin, French, and German on top of English and Spanish.",
+          "success_criteria": "Agent helps plan multilingual expansion",
+          "required_info_keys": [
+            "feature_languages"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: jump from 2 to 8 languages including complex scripts"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "For the translations, no worries there — a buddy of mine runs a translation agency and he said he'd totally handle all the conversation flows and training data for us in those languages. Super generous of him.",
+          "success_criteria": "Agent acknowledges the translation plan",
+          "required_info_keys": [
+            "translation_dependency"
+          ],
+          "required_constraint_keys": [
+            "unconfirmed_translation_dependency"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce critical external dependency disguised as positive news — verbal promise, no timeline, no contract"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Would be cool to add real-time sentiment analysis too — like if a customer is getting frustrated, the bot automatically escalates to a human agent. Just a lightweight layer on top.",
+          "success_criteria": "Agent discusses sentiment analysis integration",
+          "required_info_keys": [
+            "feature_sentiment"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: sentiment analysis across 8 languages is not lightweight"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh also — some of our customers prefer voice. Can we add a voice channel? Speech-to-text in all 8 languages, then the bot processes it same as text. Should be straightforward with existing APIs right?",
+          "success_criteria": "Agent discusses voice integration complexity",
+          "required_info_keys": [
+            "feature_voice"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: voice + STT in 8 languages including Arabic and Japanese is major infrastructure"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Last thing — we need an analytics dashboard. Resolution rates, sentiment trends over time, per-language performance metrics, all updating in real time. My manager wants to see how the bot is performing across markets.",
+          "success_criteria": "Agent discusses analytics dashboard requirements",
+          "required_info_keys": [
+            "feature_analytics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: real-time analytics dashboard is a full product on its own"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, can you put together a 10-week implementation timeline for all of this?",
+          "success_criteria": "Agent flags that this scope is infeasible for a two-person team (one junior HTML/CSS dev) in 10 weeks, AND flags the unconfirmed translation dependency as a critical risk",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe asks for execution plan — agent must interrupt with feasibility concerns instead of just producing the timeline"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "This project has grown far beyond what a two-person team (one of whom is a junior HTML/CSS developer) can deliver in 10 weeks. The scope now includes: 8-language NLP chatbot, real-time sentiment analysis across those languages, voice channel with speech-to-text in 8 languages, and a real-time analytics dashboard. Additionally, the entire multilingual component depends on a friend's verbal promise with no timeline or contract — this is an unmanaged critical-path dependency that could block the entire project. The agent should flag both the scope-vs-capacity mismatch and the translation dependency risk.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the overall scope has grown far beyond what two people (one junior HTML/CSS dev) can build in 10 weeks",
+      "Agent identifies the translation dependency as a risk — a verbal promise from a friend with no confirmed timeline or contract is not a reliable plan for a critical-path deliverable",
+      "Agent does not simply produce a 10-week timeline as if everything is feasible"
+    ],
+    "forbidden_elements": [
+      "Producing a complete 10-week implementation timeline without flagging feasibility concerns",
+      "Treating the friend's verbal translation promise as a solved problem with no risk",
+      "Saying the two-person team can deliver all features (8-language chatbot, sentiment analysis, voice channel, real-time analytics dashboard) in 10 weeks"
+    ],
+    "explanation": "The user established in Turn 0 that the team is two people (one junior HTML/CSS dev) with a 10-week deadline. Over turns 3-7, the scope escalated from a 2-language FAQ bot to an 8-language system with voice, sentiment analysis, and real-time analytics. In Turn 4, the translation for 6 new languages was placed on an external dependency with zero formal commitment. The agent must recognize both the scope-capacity mismatch and the unmanaged dependency risk rather than simply building the requested timeline."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

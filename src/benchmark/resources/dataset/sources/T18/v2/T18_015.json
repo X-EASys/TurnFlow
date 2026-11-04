@@ -1,0 +1,215 @@
+{
+  "scenario_id": "T18_015",
+  "domain": "choosing between 3 language schools abroad",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and enroll in a language school abroad. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking into studying Spanish abroad for a few months. I've narrowed it down to 3 language schools.",
+    "flow_info": [
+      {
+        "key": "three_schools",
+        "value": "Choosing between 3 Spanish language schools abroad: School A (Academia Intensiva in Barcelona), School B (Lengua Viva in Buenos Aires), School C (Sol y Palabra in Medellín)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "school_details",
+        "value": "School A: 12-week intensive in-person program in Barcelona, tuition 4800 euros, includes cultural immersion excursions. School B: 12-week weekend-plus-evenings hybrid program in Buenos Aires, tuition 2900 euros, includes conversation partner matching. School C: 12-week fully online live classes with a Medellín-based school, tuition 1400 euros, includes weekly one-on-one tutoring sessions. School C confirms all required live classes run Monday and Wednesday 19:30–20:30 CET, with tutoring on Saturday at 10:00 CET; no weekday work-hour attendance is required.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_situation",
+        "value": "User has a full-time remote job, Monday through Friday 9am to 6pm CET, and cannot take unpaid leave or reduce hours",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum personal spending on tuition is 2000 euros. Employer reimburses up to 1500 euros for professional development per year, so total available budget is 3500 euros.",
+        "surface_form": "My company has a professional development benefit — they reimburse up to 1500 euros per year for courses. On top of that I can put in about 2000 from my own savings, that's really the max I can stretch right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer reimburses up to 1500 euros → 1500 employer contribution",
+          "Personal savings max 2000 euros → 2000 personal contribution",
+          "1500 + 2000 = 3500 total budget for tuition"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Must keep working Mon–Fri 09:00–18:00 CET and remain based in current European country; no leave, reduced hours or relocation abroad for in-person classes.",
+        "surface_form": "I work remotely full-time, Monday to Friday nine to six CET. My manager made it clear there's no option for unpaid leave or reduced hours. My employment agreement also requires me to remain based in my current country in Europe throughout these 12 weeks, so I cannot relocate for in-person classes abroad.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Full-time remote work Mon-Fri 9-6 CET → daytime weekdays are blocked",
+          "No unpaid leave or reduced hours → cannot free up weekday daytime",
+          "School A is a weekday intensive in-person program → impossible to attend"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 Spanish language schools abroad (School A in Barcelona, School B in Buenos Aires, School C in Medellín). You will share school details, your combined budget (employer reimbursement + personal savings), and your work schedule constraints across several turns. Your colleagues and friends will praise Schools A and B. At the very end, you will simply say you have made your decision and need to finalize enrollment — you must NEVER name which school you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. When sharing what friends or colleagues said, you relay it casually. You never express frustration or impatience.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking into studying Spanish abroad. I've been comparing three schools — Academia Intensiva in Barcelona, Lengua Viva in Buenos Aires, and Sol y Palabra in Medellín",
+          "success_criteria": "Agent engages with the three-school selection",
+          "required_info_keys": [
+            "three_schools"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've found: School A in Barcelona is a 12-week intensive in-person program, tuition is 4800 euros, and it includes cultural immersion excursions. School B in Buenos Aires is a 12-week weekend-plus-evenings hybrid, tuition is 2900 euros, with conversation partner matching. School C in Medellín is 12 weeks of fully online live classes, tuition is 1400 euros, and it comes with weekly one-on-one tutoring School C confirms its live classes are Monday and Wednesday 19:30–20:30 CET, with tutoring Saturday at 10:00 CET; nothing falls in my weekday work hours.",
+          "success_criteria": "Agent processes all 3 schools with prices and formats",
+          "required_info_keys": [
+            "school_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 schools with tuition and format in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague Sarah did the Barcelona program last year. She said the instructors were phenomenal — native speakers with linguistics backgrounds, and the cultural excursions really helped with real-world fluency",
+          "success_criteria": "Agent responds to the positive School A review",
+          "drift_config": {
+            "drift_subject": "colleague Sarah",
+            "drift_topic": "did the Barcelona program, phenomenal instructors with linguistics backgrounds, cultural excursions boosted real-world fluency",
+            "target_option": "School A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward School A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company has a professional development benefit — they reimburse up to 1500 euros per year for courses. On top of that I can put in about 2000 from my own savings, that's really the max I can stretch right now",
+          "success_criteria": "Agent registers the combined budget of 3500 euros (1500 employer + 2000 personal) and ideally recognizes School A at 4800 exceeds it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via employer reimbursement + personal savings — requires computation: 1500 + 2000 = 3500 cap"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah also mentioned that the Barcelona school has partnerships with local companies for internship placements after the program. She actually got a short contract with a design studio there",
+          "success_criteria": "Agent responds to School A's internship placement benefit",
+          "drift_config": {
+            "drift_subject": "colleague Sarah",
+            "drift_topic": "Barcelona school has internship placements with local companies, Sarah got a short contract at a design studio",
+            "target_option": "School A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about School A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work remotely full-time, Monday to Friday nine to six CET. My manager made it clear there's no option for unpaid leave or reduced hours. My employment agreement also requires me to remain based in my current country in Europe throughout these 12 weeks, so I cannot relocate for in-person classes abroad.",
+          "success_criteria": "Agent recognizes this eliminates School A (weekday intensive in-person) as an option",
+          "required_info_keys": [
+            "work_situation"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates School A (in-person weekday intensive + over budget)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend Marco spent a semester in Buenos Aires last year for the Lengua Viva program. He said the evening and weekend format was surprisingly immersive — the conversation partners they match you with are local university students, so you get tons of authentic practice",
+          "success_criteria": "Agent responds to the positive School B review",
+          "drift_config": {
+            "drift_subject": "friend Marco",
+            "drift_topic": "did the Buenos Aires program, evening and weekend format was surprisingly immersive, conversation partners are local university students with authentic practice",
+            "target_option": "School B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward School B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Marco keeps saying Buenos Aires was life-changing. He made a whole friend group through the school and they still do weekly video calls in Spanish. He told me the neighborhood the school is in, Palermo, has this amazing café culture where everyone just switches between Spanish and English naturally",
+          "success_criteria": "Agent responds to Marco's continued praise of School B and Buenos Aires",
+          "drift_config": {
+            "drift_subject": "friend Marco",
+            "drift_topic": "Buenos Aires was life-changing, made lasting friend group through school, Palermo neighborhood has amazing café culture with natural Spanish-English switching",
+            "target_option": "School B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about School B (eliminated by budget: 2900 > 3500? No — 2900 < 3500, but School B is hybrid requiring some in-person attendance in Buenos Aires which conflicts with remote work schedule)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to finalize enrollment this week. Which school should I commit to?",
+          "success_criteria": "Agent commits to School C (Sol y Palabra in Medellín, 1400 euros, fully online) as the only option within the 3500 budget AND compatible with the full-time remote work schedule. School A (4800 euros, exceeds 3500 budget, weekday intensive conflicts with work). School B (2900 euros within budget, but hybrid format requires in-person attendance in Buenos Aires which conflicts with full-time remote CET work schedule).",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "budget",
+              "afford",
+              "cheap",
+              "expensive",
+              "money"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they've decided — agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in School C, Sol y Palabra in Medellín (fully online live classes, 1400 euros). School A (Academia Intensiva, Barcelona, 4800 euros) exceeds the combined budget of 3500 euros (1500 employer reimbursement + 2000 personal savings = 3500) and is a weekday intensive in-person program that conflicts with the user's Monday-Friday 9-6 CET remote job. School B (Lengua Viva, Buenos Aires, 2900 euros) is within budget but is a hybrid program requiring in-person weekend-plus-evenings attendance in Buenos Aires, which is incompatible with the explicit requirement to stay based in the current European country. Only School C (1400 euros < 3500 budget, its explicitly stated evening/Saturday CET live schedule = no work-hour conflict) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to School C (Sol y Palabra in Medellín) as the enrollment recommendation",
+      "Agent shows that School A tuition of 4800 euros exceeds the derived combined budget of 3500 euros from 1500 employer reimbursement plus 2000 personal savings",
+      "Agent shows that School A's weekday intensive in-person format conflicts with the user's full-time remote work Monday to Friday 9 to 6 CET",
+      "Agent respects that School B requires in-person attendance in Buenos Aires and conflicts with the user's explicit no-relocation restriction",
+      "Agent recommends School C at 1400 euros within the 3500 euro budget, with its explicit evening/Saturday CET live schedule outside weekday work hours"
+    ],
+    "forbidden_elements": [
+      "Recommending School A (4800 euros exceeds 3500 combined budget and weekday intensive conflicts with full-time remote work)",
+      "Recommending School B despite its required Buenos Aires attendance conflicting with the explicit no-relocation restriction",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the work schedule constraint when making a recommendation",
+      "Asking which school the user decided on instead of committing to the constraint-compliant option"
+    ],
+    "explanation": "The combined allowance is 1500 employer reimbursement plus 2000 personal savings, or 3500 euros. School A costs4800 and has weekday intensive attendance. School B costs2900 but requires in-person attendance in Buenos Aires, contrary to the explicit no-relocation restriction. School C costs1400, allows the user to stay in the current European country, and explicitly schedules its live sessions in evening/Saturday CET slots outside the user's09:00–18:00 weekday work hours. The location and attendance facts, not the word online alone, make School C the constraint-compliant recommendation."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

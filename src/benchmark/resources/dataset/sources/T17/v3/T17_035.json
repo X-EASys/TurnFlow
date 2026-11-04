@@ -1,0 +1,277 @@
+{
+  "scenario_id": "T17_035",
+  "domain": "planning a wedding on a tight timeline",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their wedding. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, so my partner and I just decided we're getting married! We're thinking late August — so about four months from now. It's going to be pretty small, maybe 30 people, mostly close family.",
+    "flow_info": [
+      {
+        "key": "timeline_constraint",
+        "value": "Wedding is in approximately four months, late August, starting from late April",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_guest_count",
+        "value": "Around 30 guests, mostly close family",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_situation",
+        "value": "Partner's uncle owns a vineyard property and said we could use it for the wedding, but he hasn't confirmed an exact date yet because he needs to check the harvest schedule",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "catering_question",
+        "value": "Asking whether to hire a caterer or do a potluck-style dinner for a small wedding",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "guest_increase_1",
+        "value": "Partner's parents want to invite their extended family, bringing the count to around 50",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "photographer_friend",
+        "value": "A friend who does photography as a hobby offered to shoot the wedding for free, but she hasn't committed to a date yet either — she's waiting to hear back about a work trip in August",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "guest_increase_2",
+        "value": "User's own parents also want to add people — coworkers, old neighbors — now looking at around 75 guests",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "live_band_idea",
+        "value": "Partner's college friend has a band and said they'd love to play at the wedding, super casual nothing fancy, but they're on a summer tour and won't know their August availability until July",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "custom_decor",
+        "value": "Partner's mom offered to handle all the floral arrangements and table decor herself — she's really talented with that stuff — but she's recovering from knee surgery and her physical therapy runs through mid-July",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "guest_increase_3",
+        "value": "A few friends from abroad want to come too, so now it's probably closer to 90-100 people",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "four_month_timeline",
+        "value": "Only four months to plan the entire wedding — late August deadline from late April",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_unconfirmed",
+        "value": "The vineyard venue has no confirmed date — uncle is waiting on harvest schedule with no firm commitment timeline",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "photographer_unconfirmed",
+        "value": "The photographer friend has not committed to a date — waiting on a possible work trip in August",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "band_unconfirmed",
+        "value": "The band won't know August availability until July — only one month before the wedding",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "decor_person_recovering",
+        "value": "The person handling floral arrangements and decor is in physical therapy through mid-July after knee surgery — may not be physically able to do the work",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, so my partner and I just decided we're getting married! We're thinking late August — so about four months from now. It's going to be pretty small, maybe 30 people, mostly close family.",
+          "success_criteria": "Agent acknowledges the timeline and small guest count",
+          "required_info_keys": [
+            "timeline_constraint",
+            "initial_guest_count"
+          ],
+          "required_constraint_keys": [
+            "four_month_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the four-month timeline and initial small scope"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Good news on the venue — my partner's uncle owns this beautiful vineyard property outside of town and he said we could use it for free! He just needs to check the harvest schedule before he can confirm an exact date. He's super generous though, I'm sure it'll work out.",
+          "success_criteria": "Agent acknowledges the venue offer",
+          "required_info_keys": [
+            "venue_situation"
+          ],
+          "required_constraint_keys": [
+            "venue_unconfirmed"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce the venue dependency — no confirmed date, positive framing hides the risk"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For food — since it's small and casual, should we hire a caterer or just do a potluck-style thing? What's easier for like 30 people?",
+          "success_criteria": "Agent provides reasonable catering advice for a small wedding",
+          "required_info_keys": [
+            "catering_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate planning question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "So my partner's parents are really excited and they want to invite their extended family too. That bumps us up to maybe 50 people — nothing crazy, just aunts and uncles and cousins.",
+          "success_criteria": "Agent adjusts planning for 50 guests",
+          "required_info_keys": [
+            "guest_increase_1"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First guest count escalation — 30 to 50, still sounds manageable"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Oh also, my friend Sara does photography as a hobby and she offered to shoot the whole wedding for free! She's really good actually. She just needs to check — her company might send her on a work trip sometime in August, so she's waiting to hear back on that. But she said she's 90% sure she can make it.",
+          "success_criteria": "Agent acknowledges the photographer offer",
+          "required_info_keys": [
+            "photographer_friend"
+          ],
+          "required_constraint_keys": [
+            "photographer_unconfirmed"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Second unconfirmed dependency — photographer waiting on work trip, positive framing"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My parents got wind of the guest list expanding and now they want to add some people too — a few coworkers, some old neighbors we grew up with. So we're probably looking at around 75 now. It's still manageable though, right?",
+          "success_criteria": "Agent adjusts for 75 guests",
+          "required_info_keys": [
+            "guest_increase_2"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Second guest count escalation — 50 to 75, user minimizes with 'still manageable'"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "This is exciting — my partner's college friend has a band and they said they'd love to play at our wedding! Super casual, nothing fancy, just some live music during dinner. Only thing is they're doing a summer tour so they won't know their August dates until sometime in July. But they're really into it.",
+          "success_criteria": "Agent acknowledges the band offer",
+          "required_info_keys": [
+            "live_band_idea"
+          ],
+          "required_constraint_keys": [
+            "band_unconfirmed"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Third unconfirmed dependency — band availability unknown until one month before wedding"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "My partner's mom offered to do all the floral arrangements and table decorations herself — she's honestly so talented, she used to do it semi-professionally. She had knee surgery a couple months ago and she's doing physical therapy through mid-July, but she said she'll be totally fine by then and wants to do it as her gift to us.",
+          "success_criteria": "Agent acknowledges the decor offer",
+          "required_info_keys": [
+            "custom_decor"
+          ],
+          "required_constraint_keys": [
+            "decor_person_recovering"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Fourth dependency — decor person recovering from surgery, positive framing hides physical risk"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "A few of our friends from college who moved abroad — London, Tokyo, one in Melbourne — they all want to come too! So we're probably looking at 90 to 100 people now. It's grown a bit but honestly everyone's been so supportive, it feels like it's all coming together.",
+          "success_criteria": "Agent adjusts for 90-100 guests",
+          "required_info_keys": [
+            "guest_increase_3"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Final guest escalation — 30 to 100, tripled from original, user frames it positively"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I think we've got a pretty solid picture now. Can you put together an overall timeline and checklist for us? Like what needs to happen when between now and the wedding.",
+          "success_criteria": "Agent flags that the wedding plan has critical unconfirmed dependencies — the venue, photographer, band, and decor person all have no firm commitments, and with only four months and a guest list that has tripled, the plan is built on assumptions that could all fall through simultaneously. Agent should not simply produce a checklist as if everything is confirmed.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "feasible",
+              "realistic",
+              "concerned",
+              "worried",
+              "risky"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize that nearly every major element depends on unconfirmed promises with no firm dates, and the scope has tripled"
+        }
+      ],
+      "total_max_turns": 18
+    },
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone planning a wedding in four months. You started with 30 guests and a casual vibe. Over the conversation, the guest list grows to 100, and you accumulate multiple vendor commitments from friends and family — none of whom have actually confirmed a date. You frame everything positively and genuinely believe it's all coming together. At the end you ask for a planning timeline, fully expecting the assistant to just make one. You do NOT think anything is wrong with the plan.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_optimistic_tone",
+        "category": "communication_style",
+        "value": "You are genuinely optimistic and easygoing. You see every offer of help as a gift and every update as good news. You never express doubt, frustration, or anxiety. When you mention that someone hasn't confirmed yet, you treat it as a minor detail that will obviously work out. Your tone is warm and casual throughout.",
+        "description": "Prevents the user from hinting that something is wrong — the agent must see through the optimism"
+      }
+    ]
+  },
+  "ground_truth": {
+    "answer": "This wedding plan has serious structural problems despite sounding like everything is falling into place. The venue has no confirmed date — the uncle is checking the harvest schedule with no timeline for a decision, and without a venue date, nothing else can be locked in. The photographer is waiting on a possible work trip in August. The band won't know their availability until July, leaving only one month to find a replacement if they can't make it. The person doing floral arrangements and decor is in physical therapy through mid-July after knee surgery, leaving barely six weeks to physically prepare decorations for 90-100 people. Meanwhile the guest list has tripled from 30 to 100, which fundamentally changes the scale of catering, seating, logistics, and cost — and none of the vendor arrangements were made for that size. Nearly every critical element of this wedding depends on someone else's unconfirmed promise with no firm date, and there is no backup plan for any of them. With four months total and the venue still unconfirmed, the user needs to either get firm commitments immediately or line up professional backup options.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the venue has no confirmed date and that without a locked venue date, other planning cannot proceed reliably",
+      "Agent identifies that multiple critical elements — photographer, band, decor — are all unconfirmed promises with no firm commitment dates",
+      "Agent notes that the guest list has grown from 30 to around 100, which changes the scale and complexity of the event",
+      "Agent warns that relying on unconfirmed offers without backup plans is a significant risk given the four-month timeline"
+    ],
+    "forbidden_elements": [
+      "Producing a straightforward checklist or timeline as if all vendors and the venue are confirmed",
+      "Treating the unconfirmed offers as settled arrangements that just need scheduling",
+      "Not mentioning the risk of having no backup plan for any of the unconfirmed dependencies",
+      "Ignoring that the guest count tripled from the original 30"
+    ],
+    "explanation": "The user established a four-month timeline in Turn 0 and a small 30-person wedding. Over 9 turns, the guest list tripled to 100 and four major wedding elements — venue, photographer, band, and decor — were all offered by friends or family with no confirmed dates. Each offer was framed positively, hiding the fact that the entire wedding depends on promises that could all fall through. The venue has no date because of harvest scheduling. The photographer might be on a work trip. The band won't know until July. The decor person is recovering from knee surgery. With four months and no confirmed anything, the agent must flag that this plan is built on unconfirmed dependencies rather than simply producing a timeline as requested."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

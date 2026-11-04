@@ -1,0 +1,316 @@
+{
+  "scenario_id": "T16_223",
+  "domain": "children's allergy-aware birthday party food",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful party planning assistant. Help the user plan food for a children's birthday party by tracking which children are attending, their dietary restrictions and allergies, and any updates. When the user asks you to evaluate specific food items, check each item against every attending child's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, my daughter Emma is turning 6 next Saturday and we're throwing a birthday party. Can you help me figure out the food?",
+    "flow_info": [
+      {
+        "key": "guest_list_initial",
+        "value": "Five kids coming: Emma (birthday girl), Noah, Lily, Mason, and Zoe",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noah_peanut_info",
+        "value": "Noah's mom mentioned he broke out in hives after eating a granola bar with peanuts last month",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_celiac_info",
+        "value": "Lily was diagnosed with celiac disease earlier this year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mason_lactose_info",
+        "value": "Mason's dad said Mason gets a stomachache every time he has milk or ice cream",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "party_time",
+        "value": "Party is 2pm to 5pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "zoe_leaves_early",
+        "value": "Zoe's mom just texted — she has a dance recital at 3:30 so Zoe needs to leave by 3",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mason_upgrade",
+        "value": "Mason's dad called back and corrected himself — the pediatrician actually confirmed it's a milk protein allergy, not just lactose intolerance. Apparently even baked goods with milk in them cause a reaction",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "oliver_joins",
+        "value": "Emma's cousin Oliver is coming too, his mom just confirmed. He's 4 and has a severe egg allergy — carries an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noah_leaves",
+        "value": "Noah's mom just called — Noah woke up with a fever so he can't come anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_food_list",
+        "value": "Food list to check: cheese pizza, peanut butter cookies, gluten-free chocolate cupcakes with buttercream frosting, fruit skewers, rice crispy treats made with marshmallows and butter",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "noah_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Noah's mom mentioned he broke out in hives after eating a granola bar with peanuts last month",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hives after eating peanut-containing food → allergic reaction to peanuts",
+          "Peanut allergy → must avoid peanuts and peanut-derived products"
+        ]
+      },
+      {
+        "key": "lily_celiac",
+        "value": "Cannot eat gluten — no wheat, barley, or rye products",
+        "disclosed": false,
+        "surface_form": "Lily was diagnosed with celiac disease earlier this year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods"
+        ]
+      },
+      {
+        "key": "mason_initial_constraint",
+        "value": "Initially reported as lactose intolerant (stomachache from milk/ice cream)",
+        "disclosed": false,
+        "surface_form": "Mason's dad said Mason gets a stomachache every time he has milk or ice cream",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Stomachache from milk and ice cream → digestive reaction to dairy",
+          "Pattern of reaction to liquid dairy → likely lactose intolerance"
+        ]
+      },
+      {
+        "key": "mason_upgraded_constraint",
+        "value": "Cannot eat any milk protein — includes all dairy products, baked goods containing milk, butter, cheese, whey, casein",
+        "disclosed": false,
+        "surface_form": "Mason's dad called back and corrected himself — the pediatrician actually confirmed it's a milk protein allergy, not just lactose intolerance. Apparently even baked goods with milk in them cause a reaction",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "oliver_egg_allergy",
+        "value": "Cannot eat eggs or egg-containing products — severe allergy requiring EpiPen",
+        "disclosed": false,
+        "surface_form": "Emma's cousin Oliver is coming too, his mom just confirmed. He's 4 and has a severe egg allergy — carries an EpiPen",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent planning your daughter Emma's 6th birthday party. You will share the guest list and their dietary issues in a burst, then updates will come in: Zoe leaves early, Mason's constraint gets upgraded from lactose intolerance to milk protein allergy, Oliver (late joiner with egg allergy) is added, and Noah drops out due to illness. At the end you will present a food list and ask if there are any issues. You never hint at what the problems are — you just ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly parent organizing a party. You relay information from other parents in third person (e.g., 'Mason's dad called and said...'). You never express frustration or impatience when plans change — you treat updates as normal party coordination. Keep tone warm but matter-of-fact.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, my daughter Emma is turning 6 next Saturday and we're throwing a birthday party. Can you help me figure out the food?",
+          "success_criteria": "Agent engages with party food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate birthday party food planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So there are five kids coming: Emma obviously, plus Noah, Lily, Mason, and Zoe. Noah's mom mentioned he broke out in hives after eating a granola bar with peanuts last month. Lily was diagnosed with celiac disease earlier this year. And Mason's dad said Mason gets a stomachache every time he has milk or ice cream.",
+          "success_criteria": "Agent acknowledges all five children and registers the three dietary constraints",
+          "required_info_keys": [
+            "guest_list_initial",
+            "noah_peanut_info",
+            "lily_celiac_info",
+            "mason_lactose_info"
+          ],
+          "required_constraint_keys": [
+            "noah_peanut_allergy",
+            "lily_celiac",
+            "mason_initial_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 5 entities + 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The party is 2pm to 5pm. I'm thinking a mix of sweet and savory snacks rather than a full meal. What kinds of things work well for a group of 5- and 6-year-olds?",
+          "success_criteria": "Agent provides age-appropriate snack suggestions while noting the dietary constraints",
+          "required_info_keys": [
+            "party_time"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Additional context about party format"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, Zoe's mom just texted me — Zoe has a dance recital at 3:30 so she needs to leave by 3. So she'll only be there for the first hour.",
+          "success_criteria": "Agent notes Zoe's early departure",
+          "required_info_keys": [
+            "zoe_leaves_early"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity partial exit — Zoe leaves early (no dietary constraint, just scheduling)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Mason's dad just called me back actually — he said he talked to the pediatrician and it turns out Mason actually has a milk protein allergy, not just lactose intolerance. Apparently even baked goods with milk in them cause a reaction.",
+          "success_criteria": "Agent updates Mason's constraint from lactose intolerance to the broader milk protein allergy",
+          "required_info_keys": [
+            "mason_upgrade"
+          ],
+          "required_constraint_keys": [
+            "mason_upgraded_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE: lactose intolerance → milk protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Great news — Emma's cousin Oliver is coming too, his mom just confirmed. He's 4 and has a severe egg allergy, carries an EpiPen and everything.",
+          "success_criteria": "Agent registers Oliver as a new attendee with severe egg allergy",
+          "required_info_keys": [
+            "oliver_joins"
+          ],
+          "required_constraint_keys": [
+            "oliver_egg_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity (Oliver, egg allergy)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Noah's mom just called — poor kid woke up with a fever this morning so he can't come anymore. Hope he feels better soon.",
+          "success_criteria": "Agent removes Noah from the guest list and his peanut allergy constraint",
+          "required_info_keys": [
+            "noah_leaves"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Noah leaves, peanut constraint should be removed"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How many of each thing should I make, roughly? There'll be 5 kids total now plus a few parents hanging around.",
+          "success_criteria": "Agent provides quantity guidance",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "quantity planning",
+            "drift_topic": "how much food to prepare for 5 kids and some parents",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "Should I set up the food all at once or bring things out in stages? I don't want everything sitting out for 3 hours.",
+          "success_criteria": "Agent provides food service timing advice",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "food logistics",
+            "drift_topic": "whether to serve all food at once or in stages",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "OK so I found some recipes and here's what I'm thinking: cheese pizza, peanut butter cookies, gluten-free chocolate cupcakes with buttercream frosting, fruit skewers, and rice crispy treats made with marshmallows and butter. Any issues?",
+          "success_criteria": "Agent identifies: cheese pizza problematic for Mason (milk protein in cheese) and Lily (gluten in crust); peanut butter cookies are actually fine now (Noah left); gluten-free cupcakes with buttercream problematic for Mason (butter = milk protein) and Oliver (cupcakes typically contain eggs); fruit skewers fine for everyone; rice crispy treats with butter problematic for Mason (butter = milk protein)",
+          "required_info_keys": [
+            "probe_food_list"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 food items against current constraint state"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "Cheese pizza: problematic for Mason (milk protein allergy — cheese contains milk protein) and Lily (celiac — pizza crust contains gluten). Peanut butter cookies: actually fine — Noah (the child with peanut allergy) is no longer coming due to illness. Gluten-free chocolate cupcakes with buttercream frosting: problematic for Mason (buttercream contains butter, which is a dairy product with milk protein) and Oliver (cupcakes typically require eggs in the batter, and Oliver has a severe egg allergy). Fruit skewers: fine for everyone. Rice crispy treats made with marshmallows and butter: problematic for Mason (butter contains milk protein).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Cheese pizza is problematic for Mason because cheese contains milk protein, and Mason has a milk protein allergy",
+      "Cheese pizza is problematic for Lily because standard pizza crust contains gluten, and Lily has celiac disease",
+      "Gluten-free chocolate cupcakes with buttercream frosting are problematic for Mason because buttercream contains butter which is a dairy product with milk protein",
+      "Gluten-free chocolate cupcakes with buttercream frosting are problematic for Oliver because cupcakes typically contain eggs, and Oliver has a severe egg allergy",
+      "Fruit skewers are fine for all attending children",
+      "Rice crispy treats with butter are problematic for Mason because butter contains milk protein",
+      "Peanut butter cookies are acceptable because Noah (the child with peanut allergy) is no longer attending"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut butter cookies as problematic (Noah is no longer coming, his peanut allergy constraint is removed)",
+      "Treating Mason's constraint as only lactose intolerance (it was upgraded to milk protein allergy — broader scope that includes baked goods with milk, butter, cheese)",
+      "Saying Mason can have baked goods with milk as long as they are cooked (milk protein allergy is not resolved by cooking, unlike lactose which partially breaks down)",
+      "Missing Oliver entirely when evaluating the cupcakes (late-joining entity with egg allergy)",
+      "Flagging any item for Zoe (she has no dietary constraints, only leaves early)",
+      "Over-generalizing Mason's allergy to all animal products or all fats (it is specifically milk protein)"
+    ],
+    "explanation": "This scenario tests constraint UPGRADE tracking as its primary difficulty mechanism. Mason's constraint starts as lactose intolerance (cannot digest lactose sugar in milk — but can often tolerate baked goods, hard cheese, butter in small amounts) and is UPGRADED to milk protein allergy (cannot tolerate ANY milk protein including casein and whey — butter, cheese, baked goods with milk are ALL problematic). The agent must apply the UPGRADED constraint, not the original. Secondary tests: (1) Noah exits — his peanut allergy constraint should be REMOVED, so peanut butter cookies become acceptable (trap item that looks bad but isn't). (2) Oliver joins late with severe egg allergy — agent must remember to check cupcakes against his constraint. (3) Gluten-free cupcakes with buttercream is a compound item requiring checking against multiple constraints (Mason's milk protein via butter, Oliver's egg allergy via eggs in batter, and noting it IS gluten-free so Lily is fine with it). Current attending children at probe time: Emma (no restrictions), Lily (celiac), Mason (milk protein allergy), Zoe (no restrictions, leaves early but no dietary issue), Oliver (egg allergy). Noah is NOT attending."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

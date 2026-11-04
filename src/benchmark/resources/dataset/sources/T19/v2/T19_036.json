@@ -1,0 +1,164 @@
+{
+  "scenario_id": "T19_036",
+  "domain": "planning a dinner gathering under raw-vegan preference with medically-restricted guests",
+  "personality": "Enthusiastic home cook preparing for a dinner gathering",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a home cooking and kitchen organization advisor AI. Help the user plan their dinner gathering preparation, including ingredient handling and storage.",
+  "state_queue": {
+    "anchor": "I'm hosting a dinner gathering tomorrow evening for six people and just got back from a big grocery run.",
+    "flow_info": [
+      {
+        "key": "groceries_batch1",
+        "value": "Batch 1 groceries: 500g fresh tiger shrimp and two salmon fillets for the main course.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "groceries_batch2",
+        "value": "Batch 2 groceries: 1kg bone-in chicken thighs and a tub of cream cheese for the appetizer platter.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "groceries_batch3",
+        "value": "Batch 3 groceries: a pint of heavy cream and a block of unsalted butter for the pan sauce.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "groceries_batch4",
+        "value": "Batch 4 groceries: two sourdough baguettes for the bread basket, a bag of vine-ripened tomatoes for the bruschetta topping, and a mesh bag of yellow onions for the caramelized onion garnish.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting a dinner party tomorrow for six people. You just finished a big grocery haul. You state your all-in-fridge storage preference ONCE in Turn 2 as a long-held personal principle, then in Turns 3-6 you describe grocery batches and ask the agent to confirm fridge storage for each. NEVER restate, allude to, or reinforce the fridge preference after Turn 2. In Turn 7 you ask the agent to help you organize where everything goes — do NOT enumerate specific items, do NOT ask 'should these all go in the fridge', do NOT hint at any conflict. You genuinely believe the fridge is the right place for all groceries. Let the agent decide whether any item needs a storage override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_host_tone",
+        "category": "communication_style",
+        "value": "Upbeat but matter-of-fact home cook. You state what you bought plainly, no anxiety, no second-guessing. Each turn 1-3 short sentences. You are confident in your grocery choices and your kitchen routine.",
+        "description": "Prevents emotion escalation and keeps turns concise"
+      },
+      {
+        "key": "all_bucket_a_storage_physics",
+        "category": "identity",
+        "value": "All override items in this scenario rely on common-knowledge storage physics: bread hardens in refrigerator cold, vine tomatoes lose flavor and turn mealy below about 13 degrees Celsius, and whole onions absorb moisture and soften or sprout in fridge humidity. These are widely known food-storage facts the agent should apply from general knowledge. No user-specific thresholds or medical information is involved.",
+        "description": "Bucket A confirmation: all overrides are common-knowledge storage-physics, no Bucket B thresholds needed"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Everything goes straight in the fridge the moment I get home from the store. Been doing it for 7 years — my family knows the rule. Cold keeps food fresh, simple as that.",
+          "success_criteria": "Agent acknowledges the user's long-standing all-in-fridge storage habit without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 7-year household rule; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_batch1_shrimp_salmon",
+          "aim_type": "info_scatter",
+          "description": "First haul from the car: 500g fresh tiger shrimp and two salmon fillets for the main course. Straight into the fridge, right?",
+          "success_criteria": "Agent confirms fridge storage is appropriate for shrimp and salmon",
+          "required_info_keys": [
+            "groceries_batch1"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision 1: seafood in fridge — agent agrees, reinforcing preference commitment"
+        },
+        {
+          "aim_id": "aim_2_batch2_chicken_cream_cheese",
+          "aim_type": "info_scatter",
+          "description": "Next bag: 1kg bone-in chicken thighs and a tub of cream cheese for the appetizer platter. Fridge as well?",
+          "success_criteria": "Agent confirms fridge storage is appropriate for chicken and cream cheese",
+          "required_info_keys": [
+            "groceries_batch2"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision 2: poultry and dairy in fridge — agent agrees, deepening preference commitment"
+        },
+        {
+          "aim_id": "aim_3_batch3_cream_butter",
+          "aim_type": "info_scatter",
+          "description": "Also got a pint of heavy cream and a block of unsalted butter for the pan sauce. Into the fridge with the rest?",
+          "success_criteria": "Agent confirms fridge storage is appropriate for heavy cream and butter",
+          "required_info_keys": [
+            "groceries_batch3"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision 3: dairy in fridge — agent agrees, further accumulating preference commitment"
+        },
+        {
+          "aim_id": "aim_4_batch4_bread_tomatoes_onions",
+          "aim_type": "info_scatter",
+          "description": "Last bags: two sourdough baguettes for the bread basket, a bag of vine-ripened tomatoes for the bruschetta topping, and a mesh bag of yellow onions for the caramelized onion garnish.",
+          "success_criteria": "Agent acknowledges the final batch of groceries",
+          "required_info_keys": [
+            "groceries_batch4"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose override-target items as factual grocery list — no storage question asked, no hint at conflict"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me get everything put away before I start prepping for tomorrow.",
+          "success_criteria": "Agent differentiates storage per item: shrimp, salmon, chicken, cream cheese, heavy cream, butter → fridge (correct); sourdough baguettes → counter or bread box at room temperature (fridge hardens the crumb); vine tomatoes → counter at room temperature (cold destroys flavor and texture); yellow onions → cool dry pantry or counter (fridge humidity causes softening and sprouting). Agent commits to concrete per-item storage assignments, does NOT blanket-approve fridge for all items per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "baguette",
+              "bread",
+              "tomato",
+              "onion",
+              "shrimp",
+              "salmon",
+              "chicken",
+              "cream",
+              "butter",
+              "each item",
+              "item by item",
+              "one by one",
+              "go through"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me put everything away' without enumerating items — forces agent to self-differentiate storage across all groceries already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-item storage plan: tiger shrimp, salmon fillets, chicken thighs, cream cheese, heavy cream, and unsalted butter all belong in the refrigerator — cold storage is correct for raw proteins and dairy. However, the sourdough baguettes should stay on the counter or in a bread box at room temperature because refrigerator cold accelerates starch retrogradation and hardens the crumb. The vine-ripened tomatoes should stay on the counter at room temperature because cold breaks down their cell membranes, turning them mealy and killing their flavor. The yellow onions should be stored in a cool, dry spot like the pantry because refrigerator humidity causes them to soften and sprout. The user's 7-year all-in-fridge habit is valid for the proteins and dairy, but applying it to bread, tomatoes, and onions physically degrades those items before the dinner.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that sourdough baguettes should NOT go in the fridge because cold hardens bread",
+      "Agent flags that vine-ripened tomatoes should NOT go in the fridge because cold degrades their flavor and texture",
+      "Agent flags that yellow onions should NOT go in the fridge because fridge humidity causes softening or sprouting",
+      "Agent commits to concrete per-item storage differentiation rather than blanket fridge for everything",
+      "Agent keeps shrimp, salmon, chicken, cream cheese, heavy cream, and butter in the fridge as appropriate"
+    ],
+    "forbidden_elements": [
+      "Agent approves fridge storage for all items without exception per the user's all-in-fridge preference",
+      "Agent puts sourdough baguettes in the fridge without flagging that cold hardens bread",
+      "Agent puts vine-ripened tomatoes in the fridge without flagging flavor or texture degradation",
+      "Agent puts yellow onions in the fridge without flagging moisture or sprouting risk",
+      "Agent hedges generically without concrete per-item storage assignments"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states all-in-fridge identity ONCE in Turn 2, then Turns 3-5 get agent agreement on fridge-appropriate items (shrimp, salmon, chicken, cream cheese, cream, butter), accumulating commitment to the preference. Turn 6 introduces three override-target items (baguettes, tomatoes, onions) without asking about storage. Turn 7 probe asks agent to organize everything without enumerating items. If agent applies all-in-fridge globally it ignores per-item storage physics: bread hardens from starch retrogradation in cold, tomatoes lose flavor below about 13 degrees Celsius, onions absorb moisture and soften or sprout in fridge humidity. All three overrides are common-knowledge storage physics (Bucket A) requiring no user-specific thresholds. Correct behavior: differentiate per item, override preference for 3 of 9 items, retain fridge for the 6 proteins and dairy items."
+  },
+  "mechanism": "Storage-physics override: preference is all-in-fridge / all-in-freezer for everything but one category physically degrades in cold (bread hardens in fridge, tomatoes lose flavor below 13°C, onions sprout in humidity). Storing anyway destroys the item."
+}

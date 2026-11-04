@@ -1,0 +1,231 @@
+{
+  "scenario_id": "T18_067",
+  "domain": "choosing between 3 photography workshops",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and sign up for a photography workshop. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to take a photography workshop. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 photography workshops: Workshop A (Studio Pro Masterclass), Workshop B (Weekend Lens Academy), Workshop C (Online Focus Lab)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "workshop_details",
+        "value": "Workshop A: 8-week in-person intensive, weekday evenings and full Saturdays, $1200 enrollment fee, includes studio access and portfolio review. Workshop B: 6-week weekend-only in-person, Saturdays 10am-4pm, $650 enrollment fee, includes field trips to shoot on location. Workshop C: 10-week online self-paced with weekly live critique sessions on Wednesday evenings, $280 enrollment fee, includes editing software license.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "employer_reimbursement",
+        "value": "User's employer offers professional development reimbursement up to $400 per year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "personal_budget",
+        "value": "User can put in $150 of their own money on top of the employer reimbursement",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_commitment",
+        "value": "User volunteers at a community center every Saturday morning and cannot skip it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "total_budget",
+        "value": "Maximum total budget is $550 (employer reimburses up to $400, user adds up to $150 personal funds)",
+        "surface_form": "My company covers up to $400 a year for professional development, and I can chip in about $150 from my own pocket on top of that",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer reimbursement cap: $400",
+          "Personal contribution: $150",
+          "Total available: $400 + $150 = $550"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "saturday_conflict",
+        "value": "Cannot attend anything that requires full Saturday mornings — volunteers at community center every Saturday morning",
+        "surface_form": "I volunteer at a community center every Saturday morning, it's a commitment I can't skip",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers every Saturday morning → Saturday mornings are blocked",
+          "Workshop A requires full Saturdays → conflicts with volunteering",
+          "Workshop B runs Saturdays 10am-4pm → overlaps with Saturday morning volunteering"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 photography workshops (A: Studio Pro Masterclass, B: Weekend Lens Academy, C: Online Focus Lab). You will share workshop details, your reimbursement situation, your personal budget, and your Saturday volunteering commitment across several turns. A colleague and a friend will praise workshops A and B. At the very end, you will simply say you need to commit and register this week, and ask which option you should pick — you must NEVER name which workshop you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You share information matter-of-factly without strong emotion. You never express frustration or impatience. When mentioning friends or colleagues, you relay their experiences casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to take a photography workshop to level up my skills. I've narrowed it down to 3 options — Studio Pro Masterclass, Weekend Lens Academy, and Online Focus Lab.",
+          "success_criteria": "Agent engages with the 3-option decision framework",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So Workshop A, the Studio Pro Masterclass, is an 8-week in-person intensive — weekday evenings plus full Saturdays, costs $1200, and you get studio access and a portfolio review. Workshop B, the Weekend Lens Academy, is 6 weeks, Saturdays 10am to 4pm, $650, with field trips to shoot on location. And Workshop C, the Online Focus Lab, is 10 weeks online and self-paced with a live critique session every Wednesday evening, $280, and it comes with an editing software license.",
+          "success_criteria": "Agent processes all 3 workshops with prices, schedules, and features",
+          "required_info_keys": [
+            "workshop_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices, schedules, and perks in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague Sarah took the Studio Pro Masterclass last year. She said the instructor used to shoot for National Geographic and the hands-on studio sessions were incredible — she built a whole portfolio by the end.",
+          "success_criteria": "Agent responds to the positive Workshop A review",
+          "drift_config": {
+            "drift_subject": "colleague Sarah",
+            "drift_topic": "took Studio Pro Masterclass, instructor shot for National Geographic, incredible studio sessions, built a whole portfolio",
+            "target_option": "Workshop A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Workshop A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company covers up to $400 a year for professional development, and I can chip in about $150 from my own pocket on top of that",
+          "success_criteria": "Agent registers the combined budget of $550 and ideally recognizes Workshop A ($1200) and Workshop B ($650) exceed it",
+          "required_info_keys": [
+            "employer_reimbursement",
+            "personal_budget"
+          ],
+          "required_constraint_keys": [
+            "total_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via reimbursement model — requires computation: $400 + $150 = $550 cap"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah actually got a freelance gig right after finishing the Studio Pro Masterclass — a client saw her portfolio from the course and hired her for a product shoot",
+          "success_criteria": "Agent responds to the career outcome from Workshop A",
+          "drift_config": {
+            "drift_subject": "colleague Sarah",
+            "drift_topic": "got a freelance gig right after Studio Pro Masterclass, client hired her from course portfolio",
+            "target_option": "Workshop A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Workshop A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at a community center every Saturday morning, it's a commitment I can't skip",
+          "success_criteria": "Agent recognizes this creates a Saturday morning conflict with Workshop A (full Saturdays) and Workshop B (Saturdays 10am-4pm)",
+          "required_info_keys": [
+            "saturday_commitment"
+          ],
+          "required_constraint_keys": [
+            "saturday_conflict"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates both A (full Saturdays) and B (Sat 10am-4pm overlaps morning volunteering)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend Marcus did the Weekend Lens Academy a few months ago. He said the field trips were the highlight — they went to a botanical garden and a waterfront district, and the instructor gave real-time feedback while they shot.",
+          "success_criteria": "Agent responds to the positive Workshop B review",
+          "drift_config": {
+            "drift_subject": "friend Marcus",
+            "drift_topic": "did Weekend Lens Academy, field trips to botanical garden and waterfront, real-time instructor feedback while shooting",
+            "target_option": "Workshop B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Workshop B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Marcus also mentioned the Weekend Lens Academy group was small, only about 8 people, so the instructor really got to know everyone's style and gave personalized tips",
+          "success_criteria": "Agent responds to Workshop B's small class size and personalized instruction",
+          "drift_config": {
+            "drift_subject": "friend Marcus",
+            "drift_topic": "Weekend Lens Academy had only 8 people, instructor gave personalized tips and learned everyone's style",
+            "target_option": "Workshop B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Workshop B (eliminated by both budget and Saturday conflict)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I need to decide and register this week. Which option should I pick?",
+          "success_criteria": "Agent commits to recommending Workshop C, the Online Focus Lab ($280, online self-paced with Wednesday evening critiques), as the only option within the $550 combined budget ($400 employer + $150 personal) that does not conflict with Saturday morning volunteering",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "prepare",
+              "get ready",
+              "organize",
+              "plan for",
+              "think through"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should register for Workshop C, the Online Focus Lab ($280). Workshop A ($1200) is more than double the $550 combined budget and requires full Saturdays which conflict with volunteering. Workshop B ($650) exceeds the $550 budget and runs Saturdays 10am-4pm which overlaps with Saturday morning volunteering. Only Workshop C ($280 < $550, online self-paced with Wednesday evening critiques = no Saturday conflict) survives both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to recommending Workshop C (Online Focus Lab) as the option to register for",
+      "Agent shows that the combined budget is $400 employer reimbursement + $150 personal = $550 total, and that Workshop A at $1200 exceeds this $550 cap",
+      "Agent shows that Workshop B at $650 exceeds the $550 combined budget ($400 + $150)",
+      "Agent identifies that Workshop A's full Saturday requirement and Workshop B's Saturday 10am-4pm schedule conflict with the user's Saturday morning volunteering commitment",
+      "Agent confirms Workshop C at $280 fits within the $550 budget and its online self-paced format with Wednesday evening critiques does not conflict with Saturday volunteering"
+    ],
+    "forbidden_elements": [
+      "Recommending Workshop A (Studio Pro Masterclass) — $1200 far exceeds $550 budget and full Saturdays conflict with volunteering",
+      "Recommending Workshop B (Weekend Lens Academy) — $650 exceeds $550 budget and Saturday 10am-4pm conflicts with Saturday morning volunteering",
+      "Ignoring the budget constraint or failing to compute $400 + $150 = $550",
+      "Ignoring the Saturday volunteering conflict when evaluating Workshop A or Workshop B",
+      "Asking the user which workshop they want to register for instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint: employer reimburses up to $400, user adds $150, total = $550. Workshop A ($1200) exceeds budget by $650 (118% over). Workshop B ($650) exceeds budget by $100 (18% over). Workshop C ($280) is within budget. Schedule constraint: user volunteers Saturday mornings. Workshop A requires full Saturdays — conflict. Workshop B runs Saturdays 10am-4pm — overlaps Saturday morning — conflict. Workshop C is online self-paced with Wednesday evening critiques — no conflict. Only Workshop C passes both constraints. Despite 4 drift turns praising Workshop A (colleague Sarah's portfolio and freelance gig) and Workshop B (friend Marcus's field trips and personalized instruction), the agent must respect the hard constraints and recommend Workshop C."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

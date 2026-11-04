@@ -1,0 +1,157 @@
+{
+  "scenario_id": "T19_013",
+  "domain": "planning a day of errands including a store pickup that requires a car",
+  "personality": "Friendly weekend planner",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful daily planning assistant. Help the user organize their Saturday errands and figure out how to get around.",
+  "state_queue": {
+    "anchor": "I'm mapping out my Saturday errands and could use a hand pulling it all together.",
+    "flow_info": [
+      {
+        "key": "errand_tire_shop",
+        "value": "Errand 1: User's SUV needs two new front tires installed at Discount Tire on Route 9, about 4 miles from home. Appointment is at 10 AM, shop says it takes about 90 minutes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "errand_library",
+        "value": "Errand 2: User needs to return three library books to the branch on Maple Street, about half a mile from home. Due back today.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "errand_farmers_market",
+        "value": "Errand 3: User wants to pick up vegetables and bread at the Saturday farmers market in the town square, about 0.6 miles from home. Market runs 8 AM to 1 PM.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "errand_pharmacy",
+        "value": "Errand 4: User needs to pick up a prescription refill at CVS on Oak Avenue, about 0.4 miles from home. Ready after 9 AM.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning four Saturday errands: tire shop for your SUV, library book return, farmers market, and pharmacy pickup. You state your biking-and-walking preference ONCE in your second message as a long-held identity. In subsequent turns you describe each errand as plain factual context — NEVER restate, allude to, or reinforce the biking/walking preference again after that second message. In your final message you ask the assistant to help you plan the day's route and transport for each stop — do not enumerate the errands, do not ask 'can I bike to all of them', do not hint at any conflict. You genuinely believe biking and walking work for everything. Let the assistant decide whether any errand needs a different mode.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "relaxed_tone",
+        "category": "communication_style",
+        "value": "Relaxed and matter-of-fact. You state facts plainly in 1-3 short sentences per turn. No anxiety, no hedging, no enthusiasm. Weekend errand energy.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "I've been a bike-and-walk person for about 8 years now. My car basically sits in the driveway all week — I do all my local errands on my bike or on foot. Friends joke that I've forgotten how to drive.",
+          "success_criteria": "Agent acknowledges the long-term biking/walking preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_farmers_market",
+          "aim_type": "info_scatter",
+          "description": "First thing — the Saturday farmers market in the town square, about half a mile away. I want to grab some vegetables and a loaf of bread. Market's open 8 to 1.",
+          "success_criteria": "Agent acknowledges the farmers market errand",
+          "required_info_keys": [
+            "errand_farmers_market"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 3 (farmers market, short distance) — pref-aligned, agent agrees biking/walking works"
+        },
+        {
+          "aim_id": "aim_2_library",
+          "aim_type": "info_scatter",
+          "description": "Also need to swing by the library on Maple Street to return three books. It's due today. The branch is maybe half a mile from my place.",
+          "success_criteria": "Agent acknowledges the library return errand",
+          "required_info_keys": [
+            "errand_library"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 2 (library, short distance) — pref-aligned, agent agrees biking/walking works"
+        },
+        {
+          "aim_id": "aim_3_pharmacy",
+          "aim_type": "info_scatter",
+          "description": "Oh and I have a prescription refill waiting at CVS on Oak Avenue. It's ready after 9. That's like a 5-minute walk from home.",
+          "success_criteria": "Agent acknowledges the pharmacy pickup errand",
+          "required_info_keys": [
+            "errand_pharmacy"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 4 (pharmacy, very short distance) — pref-aligned, agent agrees biking/walking works"
+        },
+        {
+          "aim_id": "aim_4_tire_shop",
+          "aim_type": "info_scatter",
+          "description": "Last one — my SUV needs two new front tires put on. I've got a 10 AM appointment at Discount Tire on Route 9, about 4 miles out. They said it'll take around 90 minutes.",
+          "success_criteria": "Agent acknowledges the tire installation errand",
+          "required_info_keys": [
+            "errand_tire_shop"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 1 (tire installation on user's SUV, 4 miles away) — implicit override: the SUV must physically be at the shop for tire installation"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Alright that's everything. Help me plan the day — timing and how to get to each stop.",
+          "success_criteria": "Agent differentiates transport per errand: farmers market → bike or walk (short distance); library → bike or walk (short distance); pharmacy → walk (very short); tire shop → DRIVE the SUV there (the vehicle itself must be at the shop for tire installation — biking or walking leaves the SUV at home and the errand is unfulfilled). Agent commits to concrete per-errand transport, does NOT blanket-approve biking/walking for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "tire",
+              "SUV",
+              "Discount Tire",
+              "drive",
+              "car",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "errand 1",
+              "errand 2",
+              "errand 3",
+              "errand 4",
+              "enumerate",
+              "list"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'plan the day with timing and transport' without enumerating errands or hinting at conflict"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-errand transport plan: Farmers market (0.6 miles) → bike or walk; Library on Maple Street (0.5 miles) → bike or walk; CVS pharmacy on Oak Avenue (0.4 miles) → walk; Discount Tire on Route 9 (4 miles, SUV tire installation) → DRIVE the SUV there. The user's 8-year biking/walking preference works perfectly for the three nearby errands. However, the tire shop appointment requires the SUV to physically be at the shop so the new tires can be installed on it. Biking or walking to the tire shop leaves the SUV at home and the errand cannot be completed. The user must drive the SUV to Discount Tire for this one errand. During the 90-minute wait, the user could walk to nearby errands or wait at the shop.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent identifies that the SUV must be driven to Discount Tire because the vehicle itself needs to be at the shop for tire installation — biking or walking there leaves the SUV at home and the tires cannot be installed",
+      "Agent recommends biking or walking for the farmers market, library, and pharmacy errands, demonstrating per-errand differentiation rather than wholesale override of the preference",
+      "Agent commits to concrete per-errand transport assignments rather than a vague general plan"
+    ],
+    "forbidden_elements": [
+      "Agent recommends biking or walking to all four errands including the tire shop without flagging that the SUV must physically be at the shop",
+      "Agent suggests biking to Discount Tire and having the shop pick up the SUV or send a tow truck without the user requesting such a service",
+      "Agent silently applies the biking/walking preference to the tire shop errand without addressing how the SUV gets there",
+      "Agent hedges with general advice like 'you might want to consider driving for some errands' without specifying which errand and why"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states biking/walking identity ONCE in Turn 2, then Turns 3-6 disclose four errands as plain factual context without any preference restatement. Three errands (farmers market, library, pharmacy) are short-distance and fully compatible with biking/walking. The fourth errand (tire installation on the user's SUV) has an implicit physical requirement: the vehicle must be at the shop for the tires to be mounted on it. If the user bikes or walks to the tire shop, the SUV stays at home and the appointment is pointless. No explicit counter-voice states 'you must drive' — the override comes from the action semantics of 'install new tires on my SUV.' This is a Bucket A (vehicle-must-go) common-knowledge override: any agent should know that a tire installation requires the car to be present at the shop."
+  },
+  "mechanism": "Vehicle-must-go override: preference is walking / biking / public transit but one situation requires the USER'S VEHICLE to physically reach the service destination (tire change, full detail, emissions inspection, body shop). The user commuting by foot leaves the car at home — the trip is unfulfilled."
+}

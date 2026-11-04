@@ -1,0 +1,307 @@
+{
+  "scenario_id": "T16_209",
+  "domain": "halal-strict community gathering meal",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user coordinate food for a community gathering by tracking attendees, their dietary needs, and any changes to the guest list or restrictions. When asked to evaluate specific dishes, check each one against every active attendee's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, I'm organizing a potluck-style gathering for our neighborhood community group this Saturday. Can you help me figure out the food situation?",
+    "flow_info": [
+      {
+        "key": "initial_group",
+        "value": "Five households confirmed: mine, the Ahmeds, the Chens, the Petersons, and old Mrs. Kowalski",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "ahmed_background",
+        "value": "The Ahmeds moved here from Jordan two years ago, the whole family is quite devout",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "chen_daughter_allergy",
+        "value": "The Chens' daughter Mei had a really scary incident with peanuts at school last month — ambulance came and everything",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mrs_kowalski_health",
+        "value": "Mrs. Kowalski has been on a strict low-sodium diet since her heart episode in January, doctor's orders",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "peterson_celiac",
+        "value": "Tom Peterson was diagnosed celiac about six months ago, still getting used to it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "We're using the community center hall, they have a full kitchen we can use",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Everyone's chipping in about $30 per household for shared dishes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kowalski_healed",
+        "value": "Mrs. Kowalski told me yesterday her doctor cleared her — her sodium levels are back to normal and she doesn't need to restrict anymore. She's thrilled, says she missed proper seasoning",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nguyen_joins",
+        "value": "Oh, the Nguyens from down the street want to join too. Their son Bao is severely allergic to shellfish — his mom mentioned he carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "chen_family_exits",
+        "value": "The Chens just told me they can't make it — Mei's got a piano recital that afternoon. But they asked if we could save them a plate to pick up later",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "Dish list to check: lamb kofta with tahini sauce, shrimp pad thai, Caesar salad with croutons, peanut butter brownies, marinated chicken skewers with soy glaze, fruit salad",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "ahmed_halal",
+        "value": "Cannot eat pork or non-halal meat; no alcohol in food",
+        "disclosed": false,
+        "surface_form": "The Ahmeds moved here from Jordan two years ago, the whole family is quite devout",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jordanian family → likely Muslim",
+          "Described as 'quite devout' → strictly observant",
+          "Observant Muslim → halal dietary laws",
+          "Halal → no pork, no alcohol, meat must be halal-slaughtered"
+        ]
+      },
+      {
+        "key": "mei_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "The Chens' daughter Mei had a really scary incident with peanuts at school last month — ambulance came and everything",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kowalski_sodium",
+        "value": "Must avoid high-sodium foods, strict low-sodium diet",
+        "disclosed": false,
+        "surface_form": "Mrs. Kowalski has been on a strict low-sodium diet since her heart episode in January, doctor's orders",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "peterson_celiac",
+        "value": "Cannot eat gluten — no wheat, barley, rye",
+        "disclosed": false,
+        "surface_form": "Tom Peterson was diagnosed celiac about six months ago, still getting used to it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods"
+        ]
+      },
+      {
+        "key": "bao_shellfish_allergy",
+        "value": "Cannot eat shellfish of any kind — severe allergy",
+        "disclosed": false,
+        "surface_form": "Their son Bao is severely allergic to shellfish — his mom mentioned he carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a neighborhood potluck gathering. You will introduce 5 households with various dietary needs, then update the guest list: Mrs. Kowalski's sodium restriction gets lifted by her doctor, the Nguyens join late with a shellfish allergy, and the Chens drop out but want a saved plate. At the end you will present a list of dishes and ask if there are any issues. You must NEVER hint at which dishes are problematic or tell the assistant what to check for.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly neighborhood organizer. You relay information about your neighbors in third person ('Mrs. Kowalski told me...', 'The Ahmeds are...'). You never express frustration or impatience. You treat guest list changes as perfectly normal.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm organizing a potluck-style gathering for our neighborhood community group this Saturday. Can you help me figure out the food situation?",
+          "success_criteria": "Agent engages with meal planning for the community gathering",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate community meal planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Five households confirmed so far: mine, the Ahmeds, the Chens, the Petersons, and old Mrs. Kowalski. The Ahmeds moved here from Jordan two years ago, the whole family is quite devout. The Chens' daughter Mei had a really scary incident with peanuts at school last month — ambulance came and everything. Mrs. Kowalski has been on a strict low-sodium diet since her heart episode in January, doctor's orders. And Tom Peterson was diagnosed celiac about six months ago, still getting used to it.",
+          "success_criteria": "Agent acknowledges all households and their dietary situations",
+          "required_info_keys": [
+            "initial_group",
+            "ahmed_background",
+            "chen_daughter_allergy",
+            "mrs_kowalski_health",
+            "peterson_celiac"
+          ],
+          "required_constraint_keys": [
+            "ahmed_halal",
+            "mei_peanut_allergy",
+            "kowalski_sodium",
+            "peterson_celiac"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 5 households + 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're using the community center hall — they have a full kitchen we can use. Everyone's chipping in about $30 per household for shared dishes. Thinking maybe 6-8 dishes total so there's variety?",
+          "success_criteria": "Agent acknowledges venue and budget details",
+          "required_info_keys": [
+            "venue_info",
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Provide venue and budget context"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Mrs. Kowalski told me yesterday her doctor cleared her — her sodium levels are back to normal and she doesn't need to restrict anymore. She's thrilled, says she missed proper seasoning.",
+          "success_criteria": "Agent registers that Mrs. Kowalski's low-sodium restriction is removed",
+          "required_info_keys": [
+            "kowalski_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Mrs. Kowalski's sodium restriction lifted"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we do a sign-up sheet so people don't all bring the same thing, or just let everyone bring whatever?",
+          "success_criteria": "Agent responds with coordination advice",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "coordination",
+            "drift_topic": "sign-up sheet vs free-for-all for dish assignments",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic logistics question"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh, the Nguyens from down the street want to join too — great people. Their son Bao is severely allergic to shellfish though, his mom mentioned he carries an EpiPen everywhere.",
+          "success_criteria": "Agent registers new household joining with shellfish allergy constraint",
+          "required_info_keys": [
+            "nguyen_joins"
+          ],
+          "required_constraint_keys": [
+            "bao_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with high-severity constraint"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "The Chens just told me they can't make it — Mei's got a piano recital that afternoon. But they asked if we could save them a plate to pick up later.",
+          "success_criteria": "Agent notes Chens are out but need a saved plate, so Mei's peanut allergy applies to the saved plate",
+          "required_info_keys": [
+            "chen_family_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Chens leave but peanut allergy applies to saved plate"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think paper plates are fine or should I ask people to bring their own dishes? Trying to keep cleanup easy.",
+          "success_criteria": "Agent responds about plate logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "paper plates vs reusable for cleanup",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "So I've been looking at what people want to bring. Here's the current list: lamb kofta with tahini sauce, shrimp pad thai, Caesar salad with croutons, peanut butter brownies, marinated chicken skewers with soy glaze, and a fruit salad. Any issues?",
+          "success_criteria": "Agent identifies: shrimp pad thai problematic for Bao (shellfish allergy), Caesar salad with croutons problematic for Tom Peterson (celiac — croutons contain gluten), peanut butter brownies cannot go on the Chens' saved plate (Mei's peanut allergy). Agent confirms lamb kofta is fine (halal meat, no pork), chicken skewers are fine (halal-compatible, no problematic ingredients for active attendees), fruit salad is fine for everyone.",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three dishes have issues: (1) Shrimp pad thai — shrimp is shellfish, Bao Nguyen has a severe shellfish allergy. (2) Caesar salad with croutons — croutons are made from bread (wheat/gluten), Tom Peterson is celiac and cannot eat gluten. (3) Peanut butter brownies — fine for the table since the Chens aren't attending, but MUST NOT be included on the Chens' saved plate because Mei has a severe peanut allergy. Lamb kofta with tahini sauce is fine — lamb is halal-compatible for the Ahmeds, no problematic allergens. Marinated chicken skewers with soy glaze are fine — chicken is halal-compatible, soy is not a listed allergen for anyone. Fruit salad is fine for everyone. Mrs. Kowalski's sodium restriction no longer applies — her doctor cleared her.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Shrimp pad thai is problematic: shrimp is shellfish, Bao Nguyen has a severe shellfish allergy",
+      "Caesar salad with croutons is problematic: croutons contain gluten (wheat), Tom Peterson is celiac and cannot eat gluten",
+      "Peanut butter brownies must not be included on the Chens' saved plate because Mei has a peanut allergy",
+      "Lamb kofta with tahini sauce is fine for everyone currently attending — agent confirms it is acceptable",
+      "Chicken skewers with soy glaze are fine for everyone currently attending — agent confirms they are acceptable",
+      "Fruit salad is fine for everyone — agent confirms it is acceptable"
+    ],
+    "forbidden_elements": [
+      "Flagging sodium content as a problem for Mrs. Kowalski (her restriction was lifted by her doctor)",
+      "Flagging lamb kofta as non-halal or problematic for the Ahmeds (lamb is halal-compatible)",
+      "Flagging chicken skewers as non-halal or problematic for the Ahmeds (chicken is halal-compatible)",
+      "Completely rejecting peanut butter brownies for the whole gathering (only problematic for the Chens' saved plate, fine for the table since Chens are not attending)",
+      "Saying Bao has a general seafood allergy (he specifically has shellfish allergy — fish would be fine)",
+      "Flagging any dish for the Chens as if they are attending in person (they are not present, only getting a saved plate)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint state management across a community meal planning conversation. Key tracking challenges: (1) The Ahmeds are Jordanian and devout → Muslim → halal (inferential chain) — but lamb and chicken are halal-compatible, so kofta and chicken skewers are FINE. This is an over-generalization trap: agents may incorrectly flag all meat as problematic for the Ahmeds. (2) Mrs. Kowalski's low-sodium restriction is REMOVED mid-conversation (doctor cleared her) — agents must not flag sodium as an issue. (3) The Nguyens join LATE with Bao's shellfish allergy — agents often forget late-joining entities. (4) The Chens EXIT but want a saved plate — Mei's peanut allergy applies ONLY to the saved plate, not to the shared table. (5) Tom Peterson's celiac diagnosis requires recognizing that croutons = bread = wheat = gluten. The probe includes 6 items: 2 clearly problematic (shrimp pad thai, Caesar salad), 1 scope-dependent (peanut butter brownies — fine for table, not for saved plate), 1 trap (lamb kofta — looks like it might violate halal but doesn't), 1 secondary trap (chicken skewers — same halal trap), and 1 clearly fine (fruit salad)."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

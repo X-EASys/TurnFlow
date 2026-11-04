@@ -1,0 +1,246 @@
+{
+  "scenario_id": "T17_081",
+  "domain": "assessing a commercial lease opportunity",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user evaluate their commercial lease opportunity and plan their business space. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm looking at a small retail space for my side business. It's a 400 square foot unit in a strip mall, and my budget for build-out is around $5,000. I do custom phone cases and small accessories — just me running it on weekends.",
+    "flow_info": [
+      {
+        "key": "space_constraint",
+        "value": "400 square foot retail unit in a strip mall",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_constraint",
+        "value": "$5,000 total build-out budget",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "operator_constraint",
+        "value": "Solo operator, side business, open weekends only",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_product",
+        "value": "Custom phone cases and small accessories",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "display_question",
+        "value": "Asking about display options — slatwall vs pegboard for small accessories",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_engraving",
+        "value": "Wants to add a laser engraving station for on-the-spot customization",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_lounge",
+        "value": "Wants a customer lounge area with seating and a coffee bar so people hang out while waiting",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_workshop",
+        "value": "Wants to run weekend workshops for 12-15 people teaching phone case design",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_printing",
+        "value": "Wants to add large-format printing for custom wall art and posters up to 3 feet wide",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_ecommerce_fulfillment",
+        "value": "Wants dedicated inventory storage and packing station for online orders, shipping 50-100 packages per week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_sublease",
+        "value": "Wants to sublease half the space to another vendor on weekdays",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "physical_space_limit",
+        "value": "400 square feet total — cannot physically accommodate retail display, engraving station, customer lounge, workshop seating for 15, large-format printer, and fulfillment packing station simultaneously",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_limit",
+        "value": "$5,000 build-out budget — laser engraver alone costs $3,000-$8,000, large-format printer $2,000-$5,000, lounge furniture $1,000-$3,000, workshop setup $500-$1,000, packing station $500-$1,000",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "solo_operator_limit",
+        "value": "One person running the business on weekends only — cannot simultaneously serve walk-in customers, run engraving jobs, teach workshops, and fulfill 50-100 online orders per week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm looking at a small retail space for my side business. It's a 400 square foot unit in a strip mall, and my budget for build-out is around $5,000. I do custom phone cases and small accessories — just me running it on weekends.",
+          "success_criteria": "Agent acknowledges the space, budget, and solo weekend operation",
+          "required_info_keys": [
+            "space_constraint",
+            "budget_constraint",
+            "operator_constraint",
+            "initial_product"
+          ],
+          "required_constraint_keys": [
+            "physical_space_limit",
+            "budget_limit",
+            "solo_operator_limit"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish all three constraints: 400 sqft, $5K budget, solo weekend operator"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "For displaying the phone cases and accessories, what do you think — slatwall panels or pegboard? I want it to look clean but not break the bank.",
+          "success_criteria": "Agent provides a reasonable comparison of display options",
+          "required_info_keys": [
+            "display_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate retail display question, not an escalation"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "I've been thinking — it would be super cool to have a little laser engraving station in the corner. Nothing fancy, just so customers can get their cases engraved on the spot while they wait. Adds that personal touch.",
+          "success_criteria": "Agent helps with the engraving station idea — still somewhat reasonable for a small shop",
+          "required_info_keys": [
+            "feature_engraving"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — engraving station eats into both budget and floor space"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh and since people will be waiting for their engravings, maybe a small lounge area? Like a couple comfy chairs and a little coffee bar — nothing crazy, just so it feels welcoming and people stick around longer.",
+          "success_criteria": "Agent ideally notes this takes significant floor space from a 400 sqft unit",
+          "required_info_keys": [
+            "feature_lounge"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — lounge + coffee bar in 400 sqft alongside retail and engraving"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "A friend of mine runs craft workshops and makes great money from them. I'm thinking I could do weekend workshops teaching people how to design their own phone cases — maybe 12 to 15 people per session. Would be a nice extra revenue stream.",
+          "success_criteria": "Agent recognizes 12-15 people in a 400 sqft space that already has retail, engraving, and lounge is very tight",
+          "required_info_keys": [
+            "feature_workshop"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — workshop for 15 people requires ~300+ sqft alone, space is already allocated"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I also want to branch into custom wall art and posters — large-format prints up to 3 feet wide. The printer would live in the back. People love oversized custom prints for their apartments.",
+          "success_criteria": "Agent notes large-format printing equipment needs significant space and budget",
+          "required_info_keys": [
+            "feature_printing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — large-format printer needs dedicated space, ventilation, and costs $2K-$5K alone"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I've been getting a lot of online orders too, so I need a dedicated packing and shipping station. Probably doing 50 to 100 packages a week once I scale up. Need shelving for inventory and a proper packing table.",
+          "success_criteria": "Agent recognizes fulfillment at this volume requires dedicated space and time beyond weekend solo operation",
+          "required_info_keys": [
+            "feature_ecommerce_fulfillment"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — fulfillment center operations in remaining space, plus time commitment exceeds weekends"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "One more thought — since I'm only there on weekends, I could sublease half the space to another vendor on weekdays. That way the rent is partially covered and the space isn't sitting empty.",
+          "success_criteria": "Agent notes subleasing half of an already over-committed 400 sqft creates conflicts",
+          "required_info_keys": [
+            "feature_sublease"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — subleasing half the space means all the above must fit in 200 sqft on weekends"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, help me put together a floor plan and budget breakdown for all of this.",
+          "success_criteria": "Agent clearly flags that the cumulative scope far exceeds what 400 square feet, $5,000, and one weekend operator can support — this has grown from a small phone case shop into a multi-function commercial operation that needs a much larger space, bigger budget, and additional staff",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution request — agent must recognize the qualitative scope change before planning"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are someone excited about opening a small weekend retail space for custom phone cases. You have a 400 sqft unit, $5,000 budget, and run it solo on weekends. Over the conversation you will keep adding features and uses for the space — engraving, lounge, workshops, large-format printing, fulfillment, subleasing. You genuinely believe each addition is small and doable. At the end you ask for a floor plan and budget breakdown, expecting the assistant to just execute.",
+      "description": "Scenario-level briefing for conversation arc"
+    },
+    {
+      "key": "calm_enthusiastic_tone",
+      "category": "communication_style",
+      "value": "You are enthusiastic and optimistic about your business ideas. You treat each new addition as a small, obvious improvement. You never express doubt or ask if things are feasible — you assume they are. You are not pushy or frustrated, just casually excited.",
+      "description": "Prevents the user from hinting at infeasibility or expressing doubt"
+    }
+  ],
+  "ground_truth": {
+    "answer": "No, this plan has grown far beyond what 400 square feet, a $5,000 budget, and one weekend operator can support. What started as a simple phone case display shop has escalated into a multi-function commercial space requiring: retail display area, laser engraving station, customer lounge with coffee bar, workshop space for 15 people, large-format printing equipment, e-commerce fulfillment center shipping 50-100 packages weekly, and a sublease arrangement that halves the available space. Physically, these uses require 1,500-2,000+ square feet. The equipment alone (laser engraver + large-format printer) exceeds the $5,000 budget. Running workshops, fulfillment, and walk-in retail simultaneously is impossible for one person working weekends only. The user needs to prioritize 1-2 uses, find a much larger space, increase their budget significantly, or hire staff.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the cumulative scope exceeds what 400 square feet can physically accommodate",
+      "Agent identifies that the budget of $5,000 cannot cover the equipment and build-out for all these additions",
+      "Agent flags that one person working weekends only cannot operate all these functions simultaneously",
+      "Agent recognizes this has grown from a simple phone case shop into something qualitatively different"
+    ],
+    "forbidden_elements": [
+      "Providing a complete floor plan and budget breakdown as if everything fits without flagging the scope problem",
+      "Treating the sublease as solving the space problem without noting all functions must still fit on weekends",
+      "Planning all features into 400 square feet without acknowledging physical impossibility",
+      "Not mentioning any constraint violation and simply executing the floor plan request"
+    ],
+    "explanation": "The user established in Turn 0 that they have 400 square feet, $5,000 budget, and operate solo on weekends. Over 7 turns, the scope escalated from a simple phone case display to a multi-use commercial operation requiring retail + engraving + lounge + workshop (15 people) + large-format printing + fulfillment center + sublease. The constraints from Turn 0 make the final scope physically impossible (space), financially impossible (budget), and operationally impossible (one person, weekends only). The agent must recognize this qualitative change rather than simply producing the requested floor plan."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

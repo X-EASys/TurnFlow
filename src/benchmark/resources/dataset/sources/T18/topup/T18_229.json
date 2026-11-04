@@ -1,0 +1,212 @@
+{
+  "scenario_id": "T18_229",
+  "domain": "choosing between 3 hearing aid models for elderly parent",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a hearing aid for their elderly parent. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking at hearing aids for my dad. He's 72 and his hearing has gotten noticeably worse this past year. I've narrowed it down to 3 models.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 hearing aid models: Model A (Phonak Audeo), Model B (Oticon More), Model C (Signia Silk)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "model_details",
+        "value": "Model A (Phonak Audeo): premium rechargeable behind-the-ear, Bluetooth streaming, $4800 per pair. Model B (Oticon More): mid-range rechargeable behind-the-ear, smartphone app, $3200 per pair. Model C (Signia Silk): basic in-the-canal, disposable batteries, $1800 per pair.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dad_tech_comfort",
+        "value": "Dad is not tech-savvy, doesn't use a smartphone, prefers simple devices",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is 2500 dollars for the hearing aids",
+        "surface_form": "My monthly take-home is about 5000 dollars. I told myself I'd spend no more than half a month's pay on this since I'm also covering his other medical bills",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly take-home is 5000 dollars",
+          "Half a month's pay = 5000 / 2 = 2500 dollars",
+          "Budget cap for hearing aids is 2500 dollars"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "simplicity_constraint",
+        "value": "Dad cannot use smartphone-dependent features, needs a simple device he can operate independently",
+        "surface_form": "My dad doesn't even own a smartphone, he still uses a flip phone. He needs something he can just put in and forget about",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Dad uses a flip phone, no smartphone",
+          "Model B's key feature is smartphone app control → less useful for dad",
+          "Dad needs a device that works independently without phone pairing"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 hearing aid models (A: Phonak Audeo $4800, B: Oticon More $3200, C: Signia Silk $1800) for your elderly father. You will share model details, your budget rule (half a month's pay from $5000 income = $2500 cap), and your dad's tech limitations across several turns. Your colleague and neighbor will praise Models A and B. At the very end, you will say you have decided and need to commit to a purchase this week — you must NEVER name which model you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You are not frustrated or impatient — you treat each piece of information as normal conversation.",
+        "description": "Prevents emotion escalation that could leak the answer"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking at hearing aids for my dad. He's 72 and his hearing has gotten noticeably worse. I've narrowed it down to 3 models.",
+          "success_criteria": "Agent engages with hearing aid selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So Model A is the Phonak Audeo — premium rechargeable behind-the-ear, has Bluetooth streaming, runs $4800 for the pair. Model B is the Oticon More — mid-range rechargeable behind-the-ear with a smartphone app, $3200 for the pair. And Model C is the Signia Silk — basic in-the-canal style, uses disposable batteries, $1800 for the pair.",
+          "success_criteria": "Agent processes all 3 models with prices and features",
+          "required_info_keys": [
+            "model_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and key features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work got the Phonak Audeo for his mom last year. He said the sound quality is incredible and the rechargeable battery lasts all day without any hassle.",
+          "success_criteria": "Agent responds to the positive Model A review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "bought Phonak Audeo for his mom, incredible sound quality, rechargeable battery lasts all day",
+            "target_option": "Model A (Phonak Audeo)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Model A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My monthly take-home is about 5000 dollars. I told myself I'd spend no more than half a month's pay on this since I'm also covering his other medical bills.",
+          "success_criteria": "Agent registers the budget constraint and ideally computes 5000/2 = 2500 cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates A ($4800) and B ($3200) on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned the Phonak connects directly to his mom's TV so she can hear shows clearly without cranking the volume. His whole family is happier.",
+          "success_criteria": "Agent responds to additional Phonak Audeo benefits",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Phonak connects to TV, mom hears shows clearly, whole family happier",
+            "target_option": "Model A (Phonak Audeo)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Model A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My dad doesn't even own a smartphone, he still uses a flip phone. He needs something he can just put in and forget about.",
+          "success_criteria": "Agent recognizes this makes Model B's smartphone app feature less useful and reinforces need for simplicity",
+          "required_info_keys": [
+            "dad_tech_comfort"
+          ],
+          "required_constraint_keys": [
+            "simplicity_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver simplicity constraint — further weakens Model B's value proposition"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My neighbor got the Oticon More for her husband. She said the app lets you fine-tune the settings for different environments — restaurants, outdoors, everything. She's really impressed with how adaptable it is.",
+          "success_criteria": "Agent responds to the positive Model B review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "got Oticon More for husband, app fine-tunes settings for different environments, very adaptable",
+            "target_option": "Model B (Oticon More)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Model B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor also said the Oticon More has this neural network thing that processes sound more naturally. Her husband said it feels like real hearing again, not like wearing a device.",
+          "success_criteria": "Agent responds to Model B's advanced technology features",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Oticon More has neural network sound processing, husband says it feels like real hearing",
+            "target_option": "Model B (Oticon More)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Model B (eliminated by budget and simplicity)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I need to commit and place the order this week. Which model should I go with?",
+          "success_criteria": "Agent recommends Model C (Signia Silk) as the only option within the $2500 budget (computed from $5000/2) that also matches dad's need for a simple device without smartphone dependency",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "decide"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to Model C based on constraint computation"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should purchase Model C (Signia Silk, $1800 per pair). Model A (Phonak Audeo, $4800) and Model B (Oticon More, $3200) both exceed the $2500 budget derived from half of $5000 monthly income. Model B is also a poor fit because its key feature (smartphone app) is useless for a dad who only has a flip phone. Only Model C ($1800 < $2500, simple in-the-canal design with no smartphone dependency) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Model A at $4800 exceeds the derived budget cap of $2500 (from $5000 monthly income divided by 2)",
+      "Agent shows that Model B at $3200 exceeds the derived budget cap of $2500 (from $5000 monthly income divided by 2)",
+      "Agent recommends Model C (Signia Silk) as the fitting option",
+      "Agent acknowledges that Model C's simple operation suits a user who does not have a smartphone"
+    ],
+    "forbidden_elements": [
+      "Recommending Model A (Phonak Audeo) which at $4800 is nearly double the $2500 budget cap",
+      "Recommending Model B (Oticon More) which at $3200 exceeds the $2500 budget cap and relies on smartphone app the dad cannot use",
+      "Ignoring the budget constraint derived from half of monthly income",
+      "Asking the user which model they want instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint: $5000 monthly take-home / 2 = $2500 max. Model A ($4800) = 92% over budget. Model B ($3200) = 28% over budget. Model C ($1800) = within budget. Simplicity constraint: dad has no smartphone, uses flip phone. Model B's smartphone app is its key differentiator — useless for dad. Model C (in-the-canal, disposable batteries, no app needed) is simple to use. Despite 4 drift turns praising Models A and B, only Model C satisfies both the budget cap and the simplicity requirement."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

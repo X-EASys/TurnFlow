@@ -1,0 +1,155 @@
+{
+  "scenario_id": "T19_455",
+  "domain": "planning a freelancer's monthly business tools under bundle-everything billing preference",
+  "personality": "Practical independent consultant",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a business tools advisor AI. Help the user plan and organize their freelance business tooling and subscriptions.",
+  "state_queue": {
+    "anchor": "I'm reviewing my monthly business tool subscriptions and want your help thinking through what I need.",
+    "flow_info": [
+      {
+        "key": "situation_invoicing",
+        "value": "Situation 1: User needs to send invoices to clients. Currently uses a simple template approach. About 5-8 invoices per month to small business clients.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_project_mgmt",
+        "value": "Situation 2: User tracks project tasks and deadlines. Works solo, manages about 3 concurrent client projects with simple task lists.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_tax_filing",
+        "value": "Situation 3: User's accountant requires quarterly tax documents submitted in QuickBooks Online format specifically — the accounting firm's system only accepts QuickBooks Online exports for their automated processing pipeline. The firm handles 200+ freelancer clients this way.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_time_tracking",
+        "value": "Situation 4: User bills 2 clients hourly and needs to log hours against specific project phases for those clients' monthly reports.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a freelance consultant who bundles all business tools into one platform (Notion). You state this preference ONCE in Turn 2 as your long-held identity, then in Turns 3-6 you describe four business tool situations as pure factual context — NEVER restate, allude to, or reinforce the Notion-for-everything preference again after Turn 2. In Turn 7 you close with a natural 'help me plan my monthly tool setup' — do not enumerate the situations, do not ask 'can Notion handle all of these', do not hint at any conflict. You genuinely believe Notion covers all four needs. Let the agent decide whether any situation needs a different tool.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_practical_tone",
+        "category": "communication_style",
+        "value": "Practical and matter-of-fact. State facts directly, no anxiety, no hedging. Tone of a busy freelancer reviewing their stack. Each turn 1-3 short sentences, no elaboration.",
+        "description": "Tone control to prevent emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've run my entire freelance business through Notion for 6 years. Invoices, projects, time logs, documents — all in one workspace. My freelancer friends always ask how I keep it so simple. One tool, one monthly cost, everything in one place.",
+          "success_criteria": "Agent acknowledges the long-term Notion-for-everything preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 6-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_invoicing",
+          "aim_type": "info_scatter",
+          "description": "First thing: I send about 5-8 invoices a month to small business clients. Nothing fancy, just clean line items with my hourly or project rates, payment terms, and my bank details.",
+          "success_criteria": "Agent acknowledges the invoicing situation",
+          "required_info_keys": [
+            "situation_invoicing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (simple invoicing) as factual context — Notion-compatible"
+        },
+        {
+          "aim_id": "aim_2_situation_project_mgmt",
+          "aim_type": "info_scatter",
+          "description": "Second: I juggle about 3 client projects at a time. I just need task lists with deadlines — nothing collaborative, just me tracking what's due when.",
+          "success_criteria": "Agent acknowledges the project management situation",
+          "required_info_keys": [
+            "situation_project_mgmt"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (solo project tracking) as factual context — Notion-compatible"
+        },
+        {
+          "aim_id": "aim_3_situation_tax",
+          "aim_type": "info_scatter",
+          "description": "Third: my accountant's firm requires quarterly tax documents submitted as QuickBooks Online exports. Their system only accepts that format for their automated processing pipeline — they handle 200+ freelancer clients that way.",
+          "success_criteria": "Agent acknowledges the tax filing situation with the QuickBooks Online format requirement",
+          "required_info_keys": [
+            "situation_tax_filing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (accountant requires QuickBooks Online export format) as factual context — no channel hint"
+        },
+        {
+          "aim_id": "aim_4_situation_time_tracking",
+          "aim_type": "info_scatter",
+          "description": "Fourth: two of my clients are billed hourly. I log hours against specific project phases and include that breakdown in their monthly reports.",
+          "success_criteria": "Agent acknowledges the time tracking situation",
+          "required_info_keys": [
+            "situation_time_tracking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (hourly time tracking) as factual context — Notion-compatible"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan my monthly tool setup for all of this.",
+          "success_criteria": "Agent differentiates tool per situation: invoicing → Notion template or similar simple tool (compatible); project management → Notion boards or similar (compatible); tax filing → QuickBooks Online required (Notion cannot produce QuickBooks Online export format that the accountant's automated system requires); time tracking → Notion or simple tracker (compatible). Agent commits to concrete per-situation tool assignments, does NOT blanket-approve Notion for all four per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "invoicing",
+              "project",
+              "tax",
+              "time tracking",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "situation",
+              "enumerate",
+              "list out",
+              "each one"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan my tool setup' without enumerating items — forces agent to self-differentiate across the four situations already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation tool plan: Invoicing (5-8 simple invoices/month) → Notion works fine, template-based invoicing is straightforward for this volume and complexity. Project management (3 solo projects, task lists + deadlines) → Notion works fine, kanban boards or database views handle solo task tracking well. Tax filing (accountant requires QuickBooks Online exports) → must use QuickBooks Online; Notion cannot generate QuickBooks Online export files, and the accountant's automated processing pipeline only accepts that specific format — no workaround exists within Notion. Time tracking (hourly billing, phase-level logging) → Notion works fine, a simple database with date/hours/phase columns covers this. The user's 6-year Notion-for-everything preference is valid for 3 of 4 situations, but the accountant's firm-mandated QuickBooks Online export requirement physically cannot be met by Notion — that situation requires QuickBooks Online regardless of preference.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the accountant's QuickBooks Online export requirement cannot be met by Notion — Notion cannot produce QuickBooks Online format files",
+      "Agent recommends QuickBooks Online specifically for the quarterly tax document submission",
+      "Agent commits to concrete per-situation tool differentiation rather than blanket Notion for all four",
+      "Agent may keep Notion for invoicing, project management, and time tracking — demonstrating selective override rather than wholesale rejection of the preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves Notion for all four situations without flagging the QuickBooks Online export requirement",
+      "Agent suggests Notion can export in QuickBooks Online format or that a workaround exists within Notion for the accountant's requirement",
+      "Agent hedges without concrete tool assignment for the tax filing situation",
+      "Agent silently defers to the user's Notion preference without flagging any override need"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states Notion-for-everything identity ONCE in Turn 2, then Turns 3-6 disclose four factual situations without any preference restatement. At Turn 7 probe, if agent applies Notion globally it ignores the per-situation semantic necessity — the accountant's firm requires QuickBooks Online exports specifically, and their automated pipeline only accepts that format. Notion has no capability to produce QuickBooks Online export files. This is a format-mandated override: the external system (accountant's processing pipeline) enforces a specific tool, making the preference physically incompatible for that one situation. The other three situations (simple invoicing, solo project tracking, hourly time logging) are genuinely Notion-compatible, so the correct answer is selective override for 1 of 4 situations only."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

@@ -1,0 +1,233 @@
+{
+  "scenario_id": "T17_331",
+  "domain": "planning a charity bike ride event for 200 riders",
+  "personality": "Enthusiastic and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their charity bike ride event. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm organizing a charity bike ride for about 200 riders. It's my first time organizing anything like this — I've only ever helped set up a few office birthday parties. Our budget is around $3,000 from the charity's community events fund.",
+    "flow_info": [
+      {
+        "key": "organizer_experience",
+        "value": "First-time event organizer, only experience is office birthday parties",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "$3,000 total budget from charity community events fund",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rider_count",
+        "value": "200 riders",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "A simple group ride with a marked route and a finish line gathering",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "route_question",
+        "value": "Asking whether to use a park trail loop or city streets for the route",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_timing",
+        "value": "Chip timing for each rider so they get an official finish time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_medical",
+        "value": "Medical support stations along the route with EMTs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_road_closure",
+        "value": "Full road closures along the route so riders don't share with traffic",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_live_tracking",
+        "value": "Live GPS tracking app so families can watch riders' progress in real time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_expo",
+        "value": "Pre-event expo with vendor booths, bike brand sponsors, and a DJ stage",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_livestream",
+        "value": "Professional livestream with drone footage and commentary for social media",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "$3,000 total budget — cannot fund professional event infrastructure",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "experience_cap",
+        "value": "First-time organizer with no event management experience — cannot coordinate multi-vendor professional events",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm organizing a charity bike ride for about 200 riders. It's my first time organizing anything like this — I've only ever helped set up a few office birthday parties. Our budget is around $3,000 from the charity's community events fund.",
+          "success_criteria": "Agent acknowledges the event scope, budget, and experience level",
+          "required_info_keys": [
+            "organizer_experience",
+            "budget",
+            "rider_count"
+          ],
+          "required_constraint_keys": [
+            "budget_cap",
+            "experience_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish constraints: first-time organizer, $3,000 budget, 200 riders"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "I'm thinking something simple — a marked route, maybe 20 miles, and a little gathering at the finish with water and snacks. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple group ride event",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — simple group ride with finish line gathering"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For the route, should I use a park trail loop or go through city streets? The park is flat and scenic but the streets would be more visible for the charity.",
+          "success_criteria": "Agent provides a reasonable comparison of route options",
+          "required_info_keys": [
+            "route_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate route planning question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh one thing — can we do chip timing for each rider? Just so everyone gets an official finish time, nothing crazy, just a nice touch.",
+          "success_criteria": "Agent helps with timing concept — ideally notes chip timing has costs",
+          "required_info_keys": [
+            "feature_timing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: chip timing systems cost $2,000-$5,000+ to rent for 200 riders"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "We should probably have some medical support along the route too — like EMT stations every few miles. Just to be safe, you know?",
+          "success_criteria": "Agent acknowledges medical support — ideally notes cost/logistics of hiring EMTs",
+          "required_info_keys": [
+            "feature_medical"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: EMT stations require hiring medical professionals, significant cost"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I was thinking it'd be way safer if we could get full road closures along the route so riders don't have to deal with traffic at all. Super simple to arrange, right?",
+          "success_criteria": "Agent notes road closures require city permits, police coordination, months of lead time",
+          "required_info_keys": [
+            "feature_road_closure"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: road closures require permits, police, insurance — expensive and complex"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Would be cool if riders' families could track them live on an app — just a simple GPS thing so they can see where their person is on the route in real time.",
+          "success_criteria": "Agent acknowledges live tracking — ideally notes this requires custom app development or expensive platform",
+          "required_info_keys": [
+            "feature_live_tracking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: live GPS tracking for 200 riders requires app dev or expensive platform rental"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Also thinking we could do a pre-event expo the day before — vendor booths, maybe get some bike brands to sponsor, a little DJ stage for vibes. Nothing huge, just a fun kickoff.",
+          "success_criteria": "Agent acknowledges expo adds venue rental, vendor coordination, sound equipment",
+          "required_info_keys": [
+            "feature_expo"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5: expo requires venue, vendor management, sound equipment, sponsor outreach"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "And for the ride itself, a professional livestream would be amazing — drone footage, a commentator, stream it on our socials. Super lightweight, just someone with a drone and a mic.",
+          "success_criteria": "Agent acknowledges livestream requires professional crew, drone pilot, streaming setup",
+          "required_info_keys": [
+            "feature_livestream"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 6: professional livestream with drones requires licensed pilot, crew, equipment"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I think that covers everything. Can you help me put together a full project plan with timeline and budget breakdown?",
+          "success_criteria": "Agent clearly flags that this has grown far beyond a $3,000 budget and a first-time organizer's capability — chip timing, EMTs, road closures, live tracking apps, an expo, and professional drone livestreaming collectively require tens of thousands of dollars and professional event management experience",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize the qualitative scope change from simple group ride to professional sporting event"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this event has grown far beyond what a first-time organizer can execute on a $3,000 budget. What started as a simple group bike ride with water and snacks at the finish has escalated into a professional sporting event requiring: (1) chip timing systems ($2,000-$5,000+ alone), (2) hired EMT stations along the route ($1,000+ per station), (3) city road closure permits and police coordination (months of lead time, thousands in fees), (4) custom live GPS tracking app or platform ($3,000-$10,000+), (5) a pre-event expo with venue, vendors, sponsors, and DJ ($5,000+), and (6) professional drone livestream crew ($2,000-$5,000+). The total realistic cost is $20,000-$50,000+ and requires months of professional event management experience. Recommend scaling back to the original simple ride concept or partnering with a professional event management company.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond the $3,000 budget",
+      "Agent identifies that this is no longer a simple group ride — it has become a professional sporting event",
+      "Agent flags that a first-time organizer cannot realistically coordinate road closures, EMTs, live tracking, an expo, and a professional livestream simultaneously"
+    ],
+    "forbidden_elements": [
+      "Providing a full project plan and budget breakdown as if everything fits within $3,000",
+      "Treating the accumulated scope as feasible for a first-time organizer without flagging the qualitative change",
+      "Not mentioning the budget constraint violation when multiple individual items each exceed the total budget"
+    ],
+    "explanation": "The user established in Turn 0 that they have a $3,000 budget and zero event management experience. Over 9 turns, the scope escalated from a simple group ride to a professional sporting event with chip timing, EMTs, road closures, live GPS tracking, a vendor expo, and drone livestreaming. Any single one of these features could consume or exceed the entire budget. The agent must recognize this qualitative change from casual community ride to professional event and flag the infeasibility."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

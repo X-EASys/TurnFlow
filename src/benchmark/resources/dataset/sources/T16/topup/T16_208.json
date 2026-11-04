@@ -1,0 +1,299 @@
+{
+  "scenario_id": "T16_208",
+  "domain": "team dinner at an Ethiopian restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, a few of us from the office are planning to try that new Ethiopian place downtown this Friday. Have you heard anything about Ethiopian food?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us: me, Marcus, Priya, Tomoko, and Derek",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus was diagnosed with celiac disease last year, has to be super careful",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_diet",
+        "value": "Priya grew up Jain, still follows it strictly",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "Priya grew up Jain, still follows it strictly"
+      },
+      {
+        "key": "tomoko_allergy",
+        "value": "Tomoko had a bad reaction to sesame last year, her throat started swelling and she had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_preference",
+        "value": "Derek just doesn't like anything too spicy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 30-35 per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_exits",
+        "value": "Derek just texted — his kid's soccer game got moved to Friday evening so he can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tomoko_update",
+        "value": "Tomoko went to her allergist last week and got retested — turns out it's not sesame after all, it was a tree nut allergy the whole time. She's fine with sesame now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_joins",
+        "value": "Marcus's wife Nina wants to come too. She's 7 months pregnant right now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu items to check: Doro Wat (chicken stew), Kitfo (raw minced beef), Misir Wat (spiced red lentils), Gomen (collard greens sautéed with garlic), Tibs (sautéed beef with vegetables), Injera (sourdough flatbread made from teff)",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "marcus_celiac",
+        "value": "Cannot eat gluten — must avoid wheat, barley, rye",
+        "disclosed": false,
+        "surface_form": "Marcus was diagnosed with celiac disease last year, has to be super careful",
+        "delivery_mode": "direct",
+        "inference_chain": [
+          "Celiac disease → cannot eat gluten",
+          "Gluten → wheat, barley, rye"
+        ]
+      },
+      {
+        "key": "priya_jain",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, etc.)",
+        "disclosed": false,
+        "surface_form": "Priya grew up Jain, still follows it strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → strict vegetarian",
+          "Strict Jain → no meat, no fish, no eggs",
+          "Strict Jain → no root vegetables (onions, garlic, potatoes, carrots)"
+        ]
+      },
+      {
+        "key": "tomoko_allergy_updated",
+        "value": "Tree nut allergy (NOT sesame — corrected mid-conversation)",
+        "disclosed": false,
+        "surface_form": "Tomoko went to her allergist last week and got retested — turns out it's not sesame after all, it was a tree nut allergy the whole time",
+        "delivery_mode": "direct",
+        "inference_chain": [
+          "Allergist retested → previous sesame allergy diagnosis was wrong",
+          "Actual allergy is tree nuts",
+          "Sesame is now safe for Tomoko"
+        ]
+      },
+      {
+        "key": "nina_pregnancy",
+        "value": "Cannot eat raw or undercooked meat/fish due to pregnancy",
+        "disclosed": false,
+        "surface_form": "Marcus's wife Nina wants to come too. She's 7 months pregnant right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "7 months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → no raw or undercooked meat/fish (risk of toxoplasmosis, listeria)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a Friday dinner at an Ethiopian restaurant for office colleagues. You will introduce 5 people with various dietary needs in a burst, then updates will come: one person drops out, one person's allergy gets corrected, and a new person joins. At the end you will share a specific menu and ask if there are any issues. You never hint at what the problems might be — you genuinely want the assistant to check.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative office organizer. You always refer to your colleagues by name in third person (e.g. 'Marcus told me...', 'Priya mentioned...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination among friends.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, a few of us from the office are planning to try that new Ethiopian place downtown this Friday. Have you heard anything about Ethiopian food?",
+          "success_criteria": "Agent engages with Ethiopian cuisine discussion",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion about Ethiopian restaurant"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Marcus, Priya, Tomoko, and Derek. Marcus was diagnosed with celiac disease last year, has to be super careful. Priya grew up Jain, still follows it strictly. Tomoko had a bad reaction to sesame last year — her throat started swelling and she had to use an EpiPen. And Derek just doesn't like anything too spicy",
+          "success_criteria": "Agent acknowledges dietary constraints of all four colleagues",
+          "required_info_keys": [
+            "team_members",
+            "marcus_celiac",
+            "tomoko_allergy",
+            "derek_preference"
+          ],
+          "required_constraint_keys": [
+            "marcus_celiac",
+            "priya_jain"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 5 entities with 4 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget-wise we're thinking 30-35 per person. Is Ethiopian food usually in that range?",
+          "success_criteria": "Agent responds about Ethiopian restaurant pricing",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget and get general info"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Derek just texted — his kid's soccer game got moved to Friday evening so he can't make it anymore. Oh well, that's four then",
+          "success_criteria": "Agent notes Derek is out and his spicy preference no longer applies",
+          "required_info_keys": [
+            "derek_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Derek leaves, spicy constraint removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Do you know if Ethiopian restaurants usually do shared platters or individual plates? I've never been to one",
+          "success_criteria": "Agent explains Ethiopian dining style",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "dining format",
+            "drift_topic": "Ethiopian shared platter style and injera",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise about Ethiopian dining customs"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh interesting update — Tomoko went to her allergist last week and got retested. Turns out it's not sesame after all, it was a tree nut allergy the whole time. She said she's totally fine with sesame now, which is a relief",
+          "success_criteria": "Agent updates Tomoko's constraint from sesame to tree nut allergy",
+          "required_info_keys": [
+            "tomoko_update"
+          ],
+          "required_constraint_keys": [
+            "tomoko_allergy_updated"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint CORRECTION — sesame allergy replaced with tree nut allergy"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Marcus's wife Nina wants to come too, so we're back to five. She's 7 months pregnant right now so she's been pretty tired but she said she's excited to try something new",
+          "success_criteria": "Agent registers Nina as a new diner and notes pregnancy",
+          "required_info_keys": [
+            "nina_joins"
+          ],
+          "required_constraint_keys": [
+            "nina_pregnancy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with inferential constraint (pregnant → no raw meat)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we book a table or do they usually take walk-ins? Friday nights can get busy",
+          "success_criteria": "Agent responds about reservation logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "reservation vs walk-in on Friday night",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I looked at their online menu. I'm thinking we could order: Doro Wat which is a chicken stew, Kitfo which is raw minced beef, Misir Wat which is spiced red lentils, Gomen which is collard greens sautéed with garlic, Tibs which is sautéed beef with vegetables, and obviously Injera the sourdough flatbread since that's what you eat everything with. Any issues with that lineup?",
+          "success_criteria": "Agent identifies: Kitfo problematic for Nina (raw beef, pregnant); Gomen problematic for Priya (garlic is a root vegetable, Jain restriction); Doro Wat and Tibs problematic for Priya (meat); agent does NOT flag injera for Marcus (teff is gluten-free); agent does NOT flag spicy dishes (Derek left)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Kitfo (raw minced beef) is problematic for Nina — she is 7 months pregnant and cannot eat raw meat. Doro Wat (chicken stew) and Tibs (sautéed beef) are problematic for Priya — she is Jain and cannot eat meat. Gomen (collard greens sautéed with garlic) is problematic for Priya — strict Jain practice forbids root vegetables including garlic. Misir Wat (spiced red lentils) is fine for everyone. Injera (teff flatbread) is fine for everyone including Marcus — teff is naturally gluten-free. Spicy dishes are no longer a concern since Derek dropped out.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Kitfo is problematic for Nina because it is raw beef and she is 7 months pregnant (no raw meat during pregnancy)",
+      "Doro Wat is problematic for Priya because it contains chicken (meat) and she is Jain",
+      "Tibs is problematic for Priya because it contains beef (meat) and she is Jain",
+      "Gomen is problematic for Priya because it is sautéed with garlic, and strict Jain practice forbids root vegetables including garlic",
+      "Injera is safe for Marcus — teff is gluten-free, so his celiac disease is not triggered",
+      "Misir Wat (spiced red lentils) is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging injera as problematic for Marcus (teff is gluten-free, not wheat-based)",
+      "Flagging spicy dishes as a problem (Derek who doesn't like spicy food already dropped out)",
+      "Flagging sesame-containing items for Tomoko (her allergy was corrected to tree nuts, sesame is fine)",
+      "Saying Tomoko has a sesame allergy (it was retested and corrected to tree nut allergy)",
+      "Ignoring Gomen's garlic as a problem for Priya (garlic is a root vegetable forbidden in strict Jain diet)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning. Key challenges: (1) Injera is the HIDDEN INGREDIENT TRAP — it looks like bread/flatbread which would trigger celiac concerns, but injera is made from teff flour which is naturally gluten-free, so Marcus is fine. Models that over-generalize 'flatbread = gluten' will incorrectly flag it. (2) Gomen contains garlic (a root vegetable) which violates Priya's strict Jain diet — this is a hidden ingredient issue since 'collard greens' sounds safe but the garlic preparation makes it problematic. (3) Kitfo is raw beef — Nina is 7 months pregnant (late-joining entity) so raw meat is unsafe. (4) Derek's spicy preference was REMOVED when he dropped out. (5) Tomoko's sesame allergy was CORRECTED to tree nut — the agent must not flag sesame-containing items. The scenario has 3 lifecycle events: Derek exits (constraint removal), Tomoko's allergy corrected (constraint upgrade/change), Nina joins late (new constraint)."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

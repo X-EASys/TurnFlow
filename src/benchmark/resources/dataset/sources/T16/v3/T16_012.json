@@ -1,0 +1,306 @@
+{
+  "scenario_id": "T16_012",
+  "domain": "company holiday party buffet",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan a company holiday party buffet by tracking attendees, their dietary needs, and menu choices. When the user asks you to review specific dishes, check each dish against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and any corrections to previously stated restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're throwing a holiday party at the office next Friday and I'm in charge of the buffet. Could use some help figuring out the menu.",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us confirmed so far: me, Rachel, Dev, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_initial",
+        "value": "Rachel mentioned she's lactose intolerant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_allergy",
+        "value": "Marcus ate something with peanuts at a work potluck a couple years ago and his throat started swelling up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Company gave us about 25 dollars per head for catering",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "headcount_question",
+        "value": "Do you think we should plan for exactly the RSVP count or add a buffer?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_correction",
+        "value": "Rachel's mom actually called her to correct something — turns out Rachel was tested last month and it's not lactose intolerance, it's a milk protein allergy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tina_joins",
+        "value": "Oh, Tina from accounting just confirmed she's coming too, so that's five now. She told me she's about five months along, expecting in March",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_exits",
+        "value": "Marcus just pinged me — he's got a client call that got moved to Friday afternoon, so he can't make the party. He asked if I could set a plate aside for him though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timing_question",
+        "value": "We're thinking of starting around noon. Does that work for a buffet or should we push to 1?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "OK so the catering company sent over their holiday package options. For our budget they can do: beef sliders with cheddar, shrimp cocktail, Caesar salad, pad Thai with crushed peanuts, salmon sashimi platter, and garlic bread with butter. Can you take a look and see if there are any problems?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "dev_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables including garlic and onion",
+        "disclosed": false,
+        "surface_form": "Dev grew up in a Jain household and still follows the family's dietary traditions pretty strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain household with strict dietary traditions → practices Jain vegetarianism",
+          "Jain vegetarianism → no meat, no fish, no eggs",
+          "Jain vegetarianism → no root vegetables (onion, garlic, potatoes, etc.)"
+        ]
+      },
+      {
+        "key": "marcus_peanut",
+        "value": "Has a severe peanut allergy (anaphylactic reaction)",
+        "disclosed": false,
+        "surface_form": "Marcus ate something with peanuts at a work potluck a couple years ago and his throat started swelling up, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_lactose_initial",
+        "value": "Cannot consume lactose-containing dairy products",
+        "disclosed": false,
+        "surface_form": "Rachel mentioned she's lactose intolerant",
+        "delivery_mode": "direct",
+        "superseded_by": "rachel_milk_protein"
+      },
+      {
+        "key": "rachel_milk_protein",
+        "value": "Cannot consume any dairy products or anything containing milk protein — broader than lactose intolerance, includes all cheese, butter, cream, whey, casein",
+        "disclosed": false,
+        "surface_form": "Rachel's mom actually called her to correct something — turns out Rachel was tested last month and it's not lactose intolerance, it's a milk protein allergy",
+        "delivery_mode": "direct",
+        "supersedes": "rachel_lactose_initial"
+      },
+      {
+        "key": "tina_pregnancy",
+        "value": "Should avoid raw fish and alcohol-containing dishes",
+        "disclosed": false,
+        "surface_form": "Tina from accounting is about five months along, expecting in March",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Five months pregnant, expecting in March → currently pregnant",
+          "Pregnant → should avoid raw/undercooked fish (listeria/mercury risk)",
+          "Pregnant → should avoid alcohol and alcohol-based preparations"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are an office worker organizing a holiday party buffet for your team. You will introduce the attendees and their backgrounds across several turns. Plans will change — one person's dietary restriction gets corrected to something broader, a new person joins, and someone drops out but wants food saved. At the end, you will share a specific catering menu and ask the assistant to check it for problems. You never tell the assistant what specific constraints to check — just ask if there are any problems with the menu.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing office worker coordinating a party. You always refer to colleagues by name in third person (e.g. 'Rachel told me...', 'Marcus just pinged me...'). You never express frustration even when plans change. Each update is just normal party planning coordination. When sharing the final menu, just ask if there are any problems — do not hint at dietary issues or tell the assistant what to check for.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're throwing a holiday party at the office next Friday and I'm in charge of the buffet. Could use some help figuring out the menu.",
+          "success_criteria": "Agent engages with buffet planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate holiday party buffet planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So far four of us are confirmed — me, Rachel, Dev, and Marcus. Rachel mentioned she's lactose intolerant. Dev grew up in a Jain household and still follows the family's dietary traditions pretty strictly. And Marcus ate something with peanuts at a work potluck a couple years ago and his throat started swelling up, had to use an EpiPen.",
+          "success_criteria": "Agent acknowledges all three colleagues and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "rachel_initial",
+            "marcus_allergy"
+          ],
+          "required_constraint_keys": [
+            "dev_diet",
+            "marcus_peanut",
+            "rachel_lactose_initial"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 3 entities with 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The company gave us about 25 dollars per head for catering. Do you think we should plan for exactly the RSVP count or add a buffer?",
+          "success_criteria": "Agent responds to budget and headcount question",
+          "required_info_keys": [
+            "budget_info",
+            "headcount_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + noise question about headcount planning"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh hey, so Rachel's mom actually called her to correct something — turns out Rachel was tested last month and it's not lactose intolerance, it's a milk protein allergy.",
+          "success_criteria": "Agent updates Rachel's constraint from lactose intolerance to the broader milk protein allergy",
+          "required_info_keys": [
+            "rachel_correction"
+          ],
+          "required_constraint_keys": [
+            "rachel_milk_protein"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE: lactose intolerance → milk protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Oh, Tina from accounting just confirmed she's coming too, so that's five now. She told me she's about five months along, expecting in March.",
+          "success_criteria": "Agent registers Tina as a new attendee and infers pregnancy dietary restrictions",
+          "required_info_keys": [
+            "tina_joins"
+          ],
+          "required_constraint_keys": [
+            "tina_pregnancy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with inferential constraint (pregnant → no raw fish)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Marcus just pinged me — he's got a client call that got moved to Friday afternoon, so he can't make the party. He asked if I could set a plate aside for him though.",
+          "success_criteria": "Agent notes Marcus won't attend but needs a plate saved, so his peanut allergy still applies to his plate",
+          "required_info_keys": [
+            "marcus_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Marcus leaves but peanut allergy applies to saved plate"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "We're thinking of starting around noon. Does that work for a buffet or should we push to 1?",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [
+            "timing_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party logistics",
+            "drift_topic": "buffet start time noon vs 1pm",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we do disposable plates or rent proper ones? I don't want cleanup to be a nightmare.",
+          "success_criteria": "Agent responds about plate logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party logistics",
+            "drift_topic": "disposable vs rented plates and cleanup",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to increase distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so the catering company sent over their holiday package options. For our budget they can do: beef sliders with cheddar, shrimp cocktail, Caesar salad, pad Thai with crushed peanuts, salmon sashimi platter, and garlic bread with butter. Can you take a look and see if there are any problems?",
+          "success_criteria": "Agent checks each of the 6 dishes against all active constraints and identifies: beef sliders with cheddar problematic for Rachel (milk protein in cheddar) and Dev (beef is meat); Caesar salad problematic for Dev (anchovies in traditional Caesar dressing are fish); pad Thai with crushed peanuts cannot go on Marcus's saved plate (peanut allergy); salmon sashimi platter problematic for Tina (raw fish, pregnant) and Dev (fish); garlic bread with butter problematic for Rachel (butter contains milk protein) and Dev (garlic is a root vegetable in Jain diet). Shrimp cocktail is fine for everyone currently attending the party.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 buffet dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Six dishes, mixed verdicts. Beef sliders with cheddar: problematic — cheddar contains milk protein (Rachel's milk protein allergy) and beef is meat (Dev follows Jain vegetarianism). Shrimp cocktail: fine for everyone attending the party. Caesar salad: problematic — traditional Caesar dressing contains anchovies, which are fish (Dev is Jain, no fish). Pad Thai with crushed peanuts: fine for the buffet table since Marcus is not attending, but must NOT be included on Marcus's saved plate (severe peanut allergy, anaphylactic). Salmon sashimi platter: problematic — raw fish is unsafe for Tina (pregnant) and fish violates Dev's Jain diet. Garlic bread with butter: problematic — butter contains milk protein (Rachel) and garlic is a root vegetable forbidden in Jain diet (Dev).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Beef sliders with cheddar flagged for Rachel: cheddar cheese contains milk protein, and Rachel has a milk protein allergy (not just lactose intolerance — her constraint was upgraded)",
+      "Beef sliders with cheddar flagged for Dev: beef is meat, and Dev follows Jain dietary traditions which forbid meat",
+      "Caesar salad flagged for Dev: traditional Caesar dressing contains anchovies (fish), which Dev cannot eat as a Jain vegetarian",
+      "Pad Thai with crushed peanuts must not be put on Marcus's saved plate: Marcus has a severe peanut allergy and requested a plate be set aside for him",
+      "Salmon sashimi platter flagged for Tina: raw fish should be avoided during pregnancy, and Tina is five months pregnant",
+      "Salmon sashimi platter flagged for Dev: fish is not permitted in Jain vegetarian diet",
+      "Garlic bread with butter flagged for Rachel: butter is a dairy product containing milk protein",
+      "Garlic bread with butter flagged for Dev: garlic is a root vegetable, which Jain dietary practice forbids",
+      "Shrimp cocktail identified as fine for all current attendees"
+    ],
+    "forbidden_elements": [
+      "Treating Rachel's restriction as only lactose intolerance (it was upgraded to milk protein allergy, which is broader)",
+      "Flagging pad Thai with peanuts as problematic for the buffet table (Marcus is not attending the party, only his saved plate is affected)",
+      "Saying Marcus has a general nut allergy or tree nut allergy (he specifically has a peanut allergy)",
+      "Flagging shrimp cocktail as problematic for anyone (no attendee has a shellfish allergy)",
+      "Saying Dev cannot eat shrimp because of Jain diet without distinguishing that Jain restrictions cover fish but the status of shellfish/crustaceans varies — the core issue for the sashimi is that salmon is clearly fish",
+      "Ignoring Tina's pregnancy constraint on the salmon sashimi (she joined late but is an active attendee)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint upgrade reasoning across 9 turns. Key challenges: (1) Rachel's constraint is UPGRADED from lactose intolerance to milk protein allergy mid-conversation — the agent must apply the broader scope (all dairy including cheese and butter, not just lactose). (2) Dev's Jain dietary constraint requires multi-step inference: Jain household → Jain vegetarianism → no meat, no fish, no eggs, no root vegetables (garlic, onion). The garlic bread is a 2-step trap: butter hits Rachel AND garlic hits Dev. (3) Tina joins late (turn 5) while pregnant — the agent must infer pregnancy → no raw fish and apply it to the salmon sashimi. (4) Marcus exits but wants a saved plate — his peanut allergy still applies to that plate, so pad Thai with peanuts cannot be on it, but it is fine for the buffet table. (5) Shrimp cocktail is the trap item that looks potentially problematic but is actually fine for everyone. The probe has 6 items with mixed verdicts: 4 problematic (beef sliders, Caesar salad, salmon sashimi, garlic bread), 1 scope-dependent (pad Thai — fine for table, not for Marcus's plate), and 1 clearly fine (shrimp cocktail)."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

@@ -1,0 +1,225 @@
+{
+  "scenario_id": "T18_212",
+  "domain": "buying a laptop with company reimbursement",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and purchase a laptop. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to buy a new laptop for work. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 laptops: Lenovo ThinkPad E14 Gen 6, Dell Inspiron 14, MacBook Air M3",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "laptop_details",
+        "value": "ThinkPad E14 Gen 6: $1,249, 16GB RAM, business-grade build, 3-year warranty. Dell Inspiron 14: $849, 16GB RAM, solid mid-range, 1-year warranty. MacBook Air M3: $1,099, 8GB RAM, excellent battery life, macOS only",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reimbursement_policy",
+        "value": "Company reimburses up to $900 for laptop purchases, submitted as a one-time equipment claim",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "software_requirement",
+        "value": "User's team uses Windows-only proprietary ERP software daily, no Mac version available",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum laptop budget is $900 (company reimbursement cap, user will not pay out of pocket)",
+        "surface_form": "My company reimburses up to $900 for equipment and I don't want to pay anything out of pocket",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "os_constraint",
+        "value": "Must run Windows natively because team uses Windows-only ERP software daily",
+        "surface_form": "Our team uses this proprietary ERP system every day and it only runs on Windows, no Mac version",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "ERP software is Windows-only → laptop must run Windows natively",
+          "MacBook Air runs macOS → cannot run Windows-only ERP natively",
+          "MacBook Air M3 is eliminated by OS requirement"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "ram_requirement",
+        "value": "Needs at least 16GB RAM for running ERP alongside other applications",
+        "surface_form": "The ERP is a memory hog, IT told us we need at least 16 gigs to run it smoothly alongside everything else",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 laptops (ThinkPad E14, Dell Inspiron 14, MacBook Air M3) for work. You will share laptop specs, your company reimbursement cap, and your software requirements across several turns. Your colleague and friend will praise the ThinkPad and MacBook. At the very end, you will simply say you have decided and ask what you need to do to order it — you must NEVER name which laptop you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. When sharing info about colleagues or friends, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to buy a new laptop for work. I've narrowed it down to 3: the Lenovo ThinkPad E14 Gen 6, the Dell Inspiron 14, and the MacBook Air M3",
+          "success_criteria": "Agent engages with the 3-option laptop selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So the ThinkPad E14 Gen 6 is $1,249, 16GB RAM, business-grade build with a 3-year warranty. The Dell Inspiron 14 is $849, 16GB RAM, solid mid-range with a 1-year warranty. And the MacBook Air M3 is $1,099, 8GB RAM, amazing battery life but macOS only",
+          "success_criteria": "Agent processes all 3 options with prices and specs",
+          "required_info_keys": [
+            "laptop_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and key specs in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just got the ThinkPad E14 last month, he's been raving about it. Says the keyboard feel is incredible and the build quality is a huge step up from his old laptop",
+          "success_criteria": "Agent responds to the positive ThinkPad review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "just got the ThinkPad E14, raving about keyboard feel and build quality",
+            "target_option": "ThinkPad E14"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward ThinkPad E14"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company reimburses up to $900 for equipment and I don't want to pay anything out of pocket",
+          "success_criteria": "Agent registers the $900 budget cap and ideally notes ThinkPad ($1,249) and MacBook ($1,099) exceed it",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates ThinkPad and MacBook on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned the ThinkPad's 3-year warranty saved him when his old laptop's motherboard died after 18 months. He said the on-site repair was seamless",
+          "success_criteria": "Agent responds to the ThinkPad warranty anecdote",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "ThinkPad 3-year warranty saved him, on-site repair was seamless",
+            "target_option": "ThinkPad E14"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about ThinkPad (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Our team uses this proprietary ERP system every day and it only runs on Windows, no Mac version. The ERP is a memory hog, IT told us we need at least 16 gigs to run it smoothly alongside everything else",
+          "success_criteria": "Agent recognizes this eliminates MacBook Air M3 (macOS only, 8GB RAM) and confirms Dell Inspiron 14 meets both requirements",
+          "required_info_keys": [
+            "software_requirement"
+          ],
+          "required_constraint_keys": [
+            "os_constraint",
+            "ram_requirement"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver OS and RAM constraints — double-eliminates MacBook (wrong OS + only 8GB RAM)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend who's a designer swears by her MacBook Air M3. She says the battery lasts her entire workday without charging and the display colors are stunning",
+          "success_criteria": "Agent responds to the positive MacBook review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "designer friend swears by MacBook Air M3, battery lasts all day, stunning display",
+            "target_option": "MacBook Air M3"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward MacBook Air M3"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also told me the MacBook is so light she barely notices it in her bag. And apparently the M3 chip handles her Figma and Photoshop workflows without the fans ever spinning up",
+          "success_criteria": "Agent responds to more MacBook praise",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "MacBook is ultralight, M3 chip handles design workflows silently",
+            "target_option": "MacBook Air M3"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about MacBook (already eliminated by OS, RAM, and budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to submit the purchase request to my company this week. Which one should I go with?",
+          "success_criteria": "Agent commits to recommending the Dell Inspiron 14 specifically — the only option within the $900 reimbursement cap, running Windows, and having 16GB RAM",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "budget",
+              "afford",
+              "reimbursement"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to Dell Inspiron 14 as the only constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should purchase the Dell Inspiron 14 ($849). The ThinkPad E14 ($1,249) exceeds the $900 reimbursement cap. The MacBook Air M3 ($1,099) exceeds the $900 cap, runs macOS which cannot run the Windows-only ERP software, and only has 8GB RAM (below the 16GB requirement). Only the Dell Inspiron 14 ($849 < $900, Windows, 16GB RAM) satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to recommending the Dell Inspiron 14 specifically",
+      "Agent shows that the ThinkPad E14 at $1,249 exceeds the $900 reimbursement cap",
+      "Agent shows that the MacBook Air M3 at $1,099 exceeds the $900 reimbursement cap",
+      "Agent shows that the MacBook Air M3 fails the Windows-only ERP requirement because it runs macOS",
+      "Agent shows that the Dell Inspiron 14 at $849 fits within the $900 reimbursement cap and runs Windows with 16GB RAM"
+    ],
+    "forbidden_elements": [
+      "Recommending the ThinkPad E14 ($1,249 exceeds $900 reimbursement cap by $349)",
+      "Recommending the MacBook Air M3 ($1,099 exceeds $900 cap, wrong OS, insufficient RAM)",
+      "Suggesting the user pay out of pocket for the difference on a more expensive option",
+      "Asking the user which laptop they decided on instead of computing it from constraints",
+      "Ignoring the Windows-only ERP requirement when making a recommendation"
+    ],
+    "explanation": "Budget constraint ($900 max, no out-of-pocket): ThinkPad=$1,249 exceeds by $349, MacBook=$1,099 exceeds by $199, Dell=$849 within budget. OS constraint (Windows-only ERP): MacBook runs macOS, eliminated. RAM constraint (16GB minimum): MacBook has 8GB, eliminated. Dell Inspiron 14 is the only option satisfying all 3 constraints. Despite 4 drift turns praising ThinkPad and MacBook, the agent must respect the hard constraints and recommend Dell."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

@@ -1,0 +1,155 @@
+{
+  "scenario_id": "T19_401",
+  "domain": "planning a weekend with family events + vehicle service under bike-only preference",
+  "personality": "Relaxed suburban parent",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a weekend planning assistant. Help the user organize their Saturday activities and transportation.",
+  "state_queue": {
+    "anchor": "I have a packed Saturday coming up and need help organizing the day.",
+    "flow_info": [
+      {
+        "key": "situation_tire_service",
+        "value": "Situation 1: User's SUV has a scheduled tire rotation and alignment appointment at the dealership service center at 9am Saturday. The dealership is 8km away. The appointment was booked 2 weeks ago and the tires are overdue for rotation.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_farmers_market",
+        "value": "Situation 2: User wants to pick up weekly produce from the farmers market 2km from home. Opens 8am-12pm Saturday.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_daughter_recital",
+        "value": "Situation 3: User's daughter has a piano recital at the community center 1.5km away at 2pm Saturday. User needs to be there to watch.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_library_returns",
+        "value": "Situation 4: User has library books due Saturday, library is 1km away. Just a quick drop-off at the return slot.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a suburban parent planning a busy Saturday. You state your bike-only preference ONCE in Turn 2 as a long-held identity, then in Turns 3-6 you describe the four Saturday activities as pure factual context — NEVER restate, allude to, or reinforce the bike-only preference again after Turn 2. In Turn 7 you close with a natural 'help me plan my Saturday schedule with transport for each stop' — do not enumerate the activities, do not ask 'can I bike to all of them', do not hint at any conflict. You genuinely believe biking works for everything. Let the agent decide whether any activity needs a different transport mode.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "relaxed_parent_tone",
+        "category": "communication_style",
+        "value": "Relaxed and matter-of-fact. State facts plainly, no anxiety, no hedging. Tone of a parent casually listing weekend errands. Each turn 1-3 short sentences.",
+        "description": "Prevents emotion escalation and keeps turns brief"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've been bike-only for 8 years. Sold my second car back then, never looked back. Friends and neighbors all know me as the bike guy. I do all my errands, commutes, everything on two wheels. It's better for health, better for the planet.",
+          "success_criteria": "Agent acknowledges the long-term bike-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_tire",
+          "aim_type": "info_scatter",
+          "description": "So first thing Saturday morning, I have a 9am appointment at the dealership service center for my SUV — tire rotation plus alignment. It's about 8km out. Booked it two weeks ago, tires are overdue.",
+          "success_criteria": "Agent acknowledges the tire service appointment",
+          "required_info_keys": [
+            "situation_tire_service"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (SUV tire service at dealership) as factual context, no transport hint"
+        },
+        {
+          "aim_id": "aim_2_situation_market",
+          "aim_type": "info_scatter",
+          "description": "After that I want to swing by the farmers market for our weekly produce. It's about 2km from home, open until noon.",
+          "success_criteria": "Agent acknowledges the farmers market trip",
+          "required_info_keys": [
+            "situation_farmers_market"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (farmers market 2km away) — bike-compatible by default"
+        },
+        {
+          "aim_id": "aim_3_situation_recital",
+          "aim_type": "info_scatter",
+          "description": "Then at 2pm my daughter has her piano recital at the community center, about 1.5km away. I definitely need to be there for that.",
+          "success_criteria": "Agent acknowledges the piano recital",
+          "required_info_keys": [
+            "situation_daughter_recital"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (daughter's recital 1.5km away) — bike-compatible by default"
+        },
+        {
+          "aim_id": "aim_4_situation_library",
+          "aim_type": "info_scatter",
+          "description": "Oh and I also need to drop off some library books that are due Saturday. Library's about 1km away, just a quick return slot drop-off.",
+          "success_criteria": "Agent acknowledges the library return",
+          "required_info_keys": [
+            "situation_library_returns"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (library 1km away) — bike-compatible by default"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan my Saturday schedule with transport for each stop.",
+          "success_criteria": "Agent differentiates transport per activity: tire service at dealership → must DRIVE the SUV there (the whole point is the SUV needs to physically be at the service center for tire work — biking to the dealership leaves the SUV at home and the appointment unfulfilled); farmers market → bike fine (2km, produce fits in panniers); piano recital → bike fine (1.5km); library → bike fine (1km). Agent commits to concrete per-activity transport, does NOT blanket-approve biking for all four per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "tire",
+              "dealership",
+              "SUV",
+              "car",
+              "drive",
+              "market",
+              "recital",
+              "library",
+              "first",
+              "second",
+              "third",
+              "fourth"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan Saturday schedule with transport' without enumerating activities — forces agent to self-differentiate across the four activities already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-activity transport plan: SUV tire rotation at dealership → must drive the SUV there (the vehicle itself needs to be physically present at the service center for the tire work to happen — biking to the dealership leaves the SUV at home and the appointment is unfulfilled); farmers market 2km → bike is fine (short distance, produce fits in bike bags); daughter's piano recital 1.5km → bike is fine (short distance, just attending); library book return 1km → bike is fine (short distance, quick drop-off). The user's 8-year bike-only preference is valid for 3 of the 4 activities, but the tire service appointment semantically requires driving the SUV because the vehicle must be at the shop. This is not a distance issue — it is a logical necessity that the object being serviced must be present at the service location.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the SUV tire service appointment requires driving the SUV to the dealership — biking there leaves the vehicle at home and the appointment cannot be fulfilled",
+      "Agent commits to concrete per-activity transport differentiation rather than blanket biking for all four activities",
+      "Agent keeps bike as transport for the farmers market, piano recital, and library return — demonstrating selective override rather than wholesale rejection of the preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves biking to all four activities including the tire service appointment",
+      "Agent suggests biking to the dealership for the tire service without addressing how the SUV gets there",
+      "Agent hedges generically without concrete transport assignment per activity",
+      "Agent silently defers to the bike-only preference for all activities without flagging the tire service conflict",
+      "Agent suggests having someone else drive the SUV to the dealership — the scenario presents a solo parent planning their own day"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states bike-only identity ONCE in Turn 2, then Turns 3-6 disclose four Saturday activities without any preference restatement. At Turn 7 probe, if agent applies bike-only globally it ignores the per-activity semantic necessity of the tire service appointment. The SUV must physically be at the dealership for tire rotation — this is implicit from the action verb 'tire service appointment for my SUV at the dealership.' No explicit counter-voice states 'you need to drive.' The override is common-knowledge level (Bucket A: vehicle-must-go). The other three activities are short-distance errands fully compatible with biking, making the preference plausibly valid for most decisions and the single override feel counterintuitive."
+  },
+  "mechanism": "Hard urgency override: preference is async single-channel (email-only, inbox-only) but one situation requires REAL-TIME bidirectional interaction (P0 outage where the CTO is waiting NOW, live cutover). Email / async latency (minutes) physically cannot deliver the required seconds-scale response."
+}

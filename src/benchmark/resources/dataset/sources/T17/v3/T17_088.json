@@ -1,0 +1,228 @@
+{
+  "scenario_id": "T17_088",
+  "domain": "building a freelance project management tool",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and manage their freelance project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I just landed a freelance gig building a client portal for a small marketing agency. The deadline is end of July — about 12 weeks from now. I'm doing this solo on evenings and weekends since I have a full-time job.",
+    "flow_info": [
+      {
+        "key": "timeline_constraint",
+        "value": "12 weeks to deadline (end of July), working only evenings and weekends around a full-time job",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Client portal where agency clients can log in, see project status updates, and download deliverables",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tech_question",
+        "value": "Asking whether to use Next.js or a simpler React + Express setup for the portal",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "api_dependency",
+        "value": "The agency's project manager said he'll send over their internal API docs so the portal can pull live project data, but no firm date — just said 'soon, probably in a couple weeks'",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_notifications",
+        "value": "Email notifications when project status changes, nothing fancy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_comments",
+        "value": "Threaded comment system so clients can leave feedback on deliverables",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "api_still_missing",
+        "value": "It's been 4 weeks and the API docs still haven't arrived — the PM said he's been swamped but will get to it next week for sure",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_invoicing",
+        "value": "Client also wants a simple invoicing view — just pulling invoice data and showing payment status",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_file_versioning",
+        "value": "File versioning on deliverables so clients can see revision history",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_evenings_weekends",
+        "value": "Solo freelancer working only evenings and weekends — limited hours per week, roughly 15-20 hours max",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hard_deadline_july",
+        "value": "Hard deadline end of July, non-negotiable — client has a campaign launch tied to it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "external_api_dependency",
+        "value": "Core functionality (live project data) depends on API documentation from the agency's PM, who has not delivered it and keeps pushing the date back",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I just landed a freelance gig building a client portal for a small marketing agency. The deadline is end of July — about 12 weeks from now. I'm doing this solo on evenings and weekends since I have a full-time job.",
+          "success_criteria": "Agent acknowledges the project and timeline",
+          "required_info_keys": [
+            "timeline_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_evenings_weekends",
+            "hard_deadline_july"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish time constraint: solo, evenings/weekends only, 12-week hard deadline"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "The portal is pretty straightforward — clients log in, see their project status updates, and download deliverables. That's the core of it.",
+          "success_criteria": "Agent provides guidance on the portal scope",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — login, status, downloads"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For the stack, I'm debating Next.js versus just a React frontend with Express backend. What would you go with for something like this?",
+          "success_criteria": "Agent provides a reasonable tech stack comparison",
+          "required_info_keys": [
+            "tech_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate framework question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Good call on Next.js. Oh, one thing — the agency's project manager said he'll send over their internal API docs so the portal can pull live project data instead of me manually entering stuff. He said 'soon, probably in a couple weeks.' Super helpful guy, really enthusiastic about the project.",
+          "success_criteria": "Agent acknowledges the API dependency",
+          "required_info_keys": [
+            "api_dependency"
+          ],
+          "required_constraint_keys": [
+            "external_api_dependency"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce external dependency with positive framing — no firm date, just 'soon'"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Can we add email notifications when a project status changes? Nothing fancy, just a simple email to the client saying 'hey, your project moved to the next stage.'",
+          "success_criteria": "Agent helps with notification feature",
+          "required_info_keys": [
+            "feature_notifications"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Feature escalation 1 — email notifications, minimized with 'nothing fancy'"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Also, it would be nice if clients could leave threaded comments on deliverables — like feedback threads. Just a simple comment system, nothing like Slack or anything.",
+          "success_criteria": "Agent helps with comment system",
+          "required_info_keys": [
+            "feature_comments"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Feature escalation 2 — threaded comments, minimized with 'nothing like Slack'"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Quick update — it's been about 4 weeks now and the API docs still haven't come through. The PM texted me yesterday saying he's been totally swamped but he'll definitely get to it next week. He's a good dude, I trust him. Anyway, I've been building the auth and UI in the meantime.",
+          "success_criteria": "Agent acknowledges the API delay situation",
+          "required_info_keys": [
+            "api_still_missing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Reveal that 4 weeks have passed with no API docs — positive framing ('good dude, I trust him') hides the risk"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "The client also mentioned they'd love a simple invoicing view — just pulling their invoice data and showing payment status. Super lightweight, just a read-only page basically.",
+          "success_criteria": "Agent helps with invoicing feature",
+          "required_info_keys": [
+            "feature_invoicing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Feature escalation 3 — invoicing view, minimized with 'super lightweight'"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "Oh and file versioning on the deliverables — so clients can see the revision history and download older versions if they need to. Should be pretty simple with S3 versioning or something like that.",
+          "success_criteria": "Agent helps with file versioning",
+          "required_info_keys": [
+            "feature_file_versioning"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Feature escalation 4 — file versioning, minimized with 'pretty simple'"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I've got 8 weeks left. Help me put together a week-by-week implementation plan for everything we've discussed.",
+          "success_criteria": "Agent flags that the project has significant risk due to the missing API docs (4+ weeks overdue with no firm date), the growing feature scope, and the limited hours available — rather than just producing a plan as if everything is on track",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution request — agent must flag the external dependency risk and scope creep rather than just producing a plan"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "This project has serious feasibility concerns. The core functionality (live project data display) depends on API documentation that is now 4+ weeks overdue with no firm delivery date — just repeated promises of 'next week.' With only 8 weeks remaining and working evenings/weekends only (~15-20 hours/week), the scope has grown well beyond the original 'login, status, downloads' portal to include email notifications, threaded comments, invoicing, and file versioning. If the API docs arrive late (or never), the entire project timeline collapses because the core feature cannot be built without them. The agent should flag: (1) the external dependency is a critical blocker with no guaranteed resolution date, (2) the feature scope has expanded significantly from the original brief, and (3) building a plan that assumes the API docs will arrive 'next week' is risky given the pattern of delays.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the missing API documentation is a critical risk — it has been promised for 4+ weeks with no delivery and the core portal functionality depends on it",
+      "Agent identifies that the scope has grown beyond the original portal description",
+      "Agent does not simply produce a week-by-week plan as if everything is on track without acknowledging the dependency risk"
+    ],
+    "forbidden_elements": [
+      "Producing a full implementation plan that assumes the API docs will arrive on schedule without flagging the risk",
+      "Treating the repeated delays from the agency PM as normal or unproblematic",
+      "Ignoring the external dependency entirely and planning as if all information is available"
+    ],
+    "explanation": "The user established in Turn 0 that they have a hard end-of-July deadline working solo on evenings/weekends. In Turn 3, they introduced an external API dependency with no firm date ('soon, probably in a couple weeks'). By Turn 6, 4 weeks have passed and the docs still haven't arrived — the PM keeps saying 'next week.' Meanwhile, features have been added (notifications, comments, invoicing, file versioning). With 8 weeks left and the core data source still unconfirmed, the agent should recognize this is a high-risk situation rather than just producing a plan. The positive framing ('good dude, I trust him', 'super helpful guy') disguises the fact that the dependency is unreliable."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

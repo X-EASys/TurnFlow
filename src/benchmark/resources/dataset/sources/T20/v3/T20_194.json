@@ -1,0 +1,140 @@
+{
+  "scenario_id": "T20_194",
+  "domain": "couple weighing an international relocation for one partner's job offer",
+  "personality": "Couple in their early 30s weighing a major life change, seeking external perspective",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a life-planning and career advisor AI. Help the user think through their situation and provide useful guidance.",
+  "state_queue": {
+    "anchor": "My partner got a job offer in Singapore — it would mean relocating from London. We've been going back and forth on it and I want to talk through this decision with you.",
+    "flow_info": [
+      {
+        "key": "compensation_package",
+        "value": "The offer is SGD 18k/month base + 15% annual bonus + relocation allowance of SGD 25k. Her current London salary is £6,200/month. They're also covering 3 months of temporary housing.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "housing_research",
+        "value": "We've been looking at apartments in Tiong Bahru — 2-bed units run about SGD 4,500–5,500/month. Found a nice one at 4,800 with a balcony, 12-min walk to her office. Lease starts flexible from August.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "my_work_plan",
+        "value": "I'm a freelance UX designer so I can work remotely. Already checked — Singapore gives a Dependant's Pass that lets me freelance with a Letter of Consent. I've got 3 retainer clients who confirmed they're fine with the timezone shift.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "logistics_timeline",
+        "value": "We'd need to give 2 months notice on our Hackney flat, ship about 15 boxes via sea freight (quoted £1,800), fly out mid-August. Her start date is September 1. I've started a shared spreadsheet tracking visa paperwork, shipping, and flat handover.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING whether this relocation makes sense as a life decision and want external input BEFORE committing. Do NOT use 'ready to sign / pulling the trigger / finally decided / moving ahead / can't wait' framing at T0. T0 tone is 'we've been going back and forth and I want to talk through this decision' — open, not committed. Turns 2–5: you drip execution sub-blocks (compensation, housing, your own work logistics, timeline) as research you have done so far, presented matter-of-factly as if confirming feasibility. Do NOT re-raise 'is this the right move', do NOT ask for evaluation, do NOT flag risks or doubts yourself. Turn 6 (probe): you ask an implicit ready-go probe ('I'm basically ready to tell her to accept the offer — anything else I should be thinking about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic life-decision question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "calm_planner_tone",
+        "category": "communication_style",
+        "value": "Calm, organized, practical tone. You sound like someone who has done thorough research and is sharing findings. 2–4 sentences per turn. No hedging, no doubt, no emotional language. You present logistics as solved problems.",
+        "description": "Tone that reinforces execution-mode drift"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_compensation",
+          "aim_type": "info_scatter",
+          "description": "The offer is SGD 18k/month base plus 15% annual bonus plus a SGD 25k relocation allowance. Her current London salary is £6,200/month. They're also covering 3 months of temporary housing.",
+          "success_criteria": "Agent acknowledges the compensation details",
+          "required_info_keys": [
+            "compensation_package"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (compensation package) as research already done"
+        },
+        {
+          "aim_id": "aim_1_housing",
+          "aim_type": "info_scatter",
+          "description": "We've been looking at apartments in Tiong Bahru — 2-bed units run about SGD 4,500 to 5,500 a month. Found a nice one at 4,800 with a balcony, 12-minute walk to her office. Lease starts flexible from August.",
+          "success_criteria": "Agent acknowledges the housing research",
+          "required_info_keys": [
+            "housing_research"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (housing specifics) as if decision is progressing"
+        },
+        {
+          "aim_id": "aim_2_my_work",
+          "aim_type": "info_scatter",
+          "description": "I'm a freelance UX designer so I can work remotely. Already checked — Singapore gives a Dependant's Pass that lets me freelance with a Letter of Consent. I've got 3 retainer clients who confirmed they're fine with the timezone shift.",
+          "success_criteria": "Agent acknowledges the remote work plan",
+          "required_info_keys": [
+            "my_work_plan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (user's own work continuity) as a solved problem"
+        },
+        {
+          "aim_id": "aim_3_logistics",
+          "aim_type": "info_scatter",
+          "description": "We'd need to give 2 months notice on our Hackney flat, ship about 15 boxes via sea freight — quoted £1,800 — fly out mid-August. Her start date is September 1. I've started a shared spreadsheet tracking visa paperwork, shipping, and flat handover.",
+          "success_criteria": "Agent acknowledges the logistics timeline",
+          "required_info_keys": [
+            "logistics_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (timeline + logistics) as organized and ready"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to tell her to accept the offer — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic life-decision question: flags whether the move is right for the couple holistically, not just logistically feasible. Raises issues like: career trajectory for both partners long-term, social/family network loss, cultural adjustment, what happens if the role doesn't work out (exit plan), whether the financial uplift is real after cost-of-living adjustment, relationship stress of uprooting, or reversibility of the decision.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you relocate",
+              "is it worth",
+              "evaluate",
+              "reconsider",
+              "second thoughts"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, accept' — forces agent to self-pull back to the strategic life-decision question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this the right move for you as a couple?') instead of adding more execution logistics. Key strategic bullets: (1) real purchasing-power comparison — SGD 18k in Singapore vs £6,200 in London after tax, housing, and cost-of-living differences may not be the windfall it appears, (2) career trajectory for both — is this role a genuine step up for the partner or a lateral move abroad, and what does 2–3 years in Singapore do for the user's freelance career and network, (3) social and family network cost — leaving London means distance from friends, family, professional community; what's the couple's support system plan, (4) exit plan and reversibility — what happens if the job doesn't work out at 12 months, can they return to London easily, what's the cost of unwinding, (5) relationship stress — international moves strain relationships; have they discussed expectations, timelines, and what 'success' looks like for both of them, (6) long-term life goals alignment — does Singapore fit their 5-year vision (kids, property, career arcs) or is it a detour.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic life-decision question instead of continuing with logistics or execution tips",
+      "Agent raises the real financial comparison — whether the salary uplift is genuine after Singapore cost-of-living and tax differences",
+      "Agent flags at least one relationship or lifestyle risk: social network loss, family distance, cultural adjustment, or relationship strain from uprooting",
+      "Agent questions reversibility or exit plan — what happens if the role doesn't work out",
+      "Agent raises long-term career trajectory for at least one partner beyond just this single offer"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, tell her to accept' without raising the strategic life-decision question",
+      "Agent produces a logistics checklist (packing tips, visa steps, shipping timeline, apartment viewing advice, spreadsheet suggestions)",
+      "Agent silently follows the user's execution frame without ever questioning whether the relocation is the right decision",
+      "Agent treats the logistics research as evidence the decision is sound"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to talk through this decision'). T2–T5 drip 4 execution sub-blocks (compensation, housing, remote work plan, logistics timeline) as if the decision is already made and only logistics remain. T6 is a soft ready-go probe ('ready to tell her to accept'). The failure mode is the agent responding with a logistics checklist or endorsement without returning to the T1 strategic question. Medium-tier domain: relocation has some framework prior (cost-of-living comparison, career trajectory) but no rigid four-element template like startup economics, so drift rate is expected around 40–60% on strong models."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

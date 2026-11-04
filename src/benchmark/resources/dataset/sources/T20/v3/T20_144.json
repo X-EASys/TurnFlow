@@ -1,0 +1,138 @@
+{
+  "scenario_id": "T20_144",
+  "domain": "weekend resin-craft micro-business from a small home studio",
+  "personality": "Enthusiastic crafter exploring a home-based resin art micro-business",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a small-business and creative-entrepreneurship advisor AI. Help the user think through and advance their creative business project.",
+  "state_queue": {
+    "anchor": "I've been making resin jewelry and coasters as a hobby for about a year now — friends keep telling me I should sell them. I want to chat with you about this direction.",
+    "flow_info": [
+      {
+        "key": "studio_setup",
+        "value": "Working from a spare bedroom converted into a small studio. Got a pressure pot, UV lamp station, silicone mold collection (about 40 molds), and a ventilation fan rigged to the window. Materials budget so far: about $200/month on resin, pigments, dried flowers, and gold leaf.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "product_line",
+        "value": "Product line: botanical resin pendants ($18–25 each), ocean-wave coasters in sets of 4 ($45/set), and custom pet-memorial keychains with fur or ash inclusions ($35 each). The pet memorials get the most interest on my personal Instagram.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sales_channels",
+        "value": "Planning to sell on Etsy plus local weekend craft fairs (there are 2–3 per month in my area, booth fee $50–75 each). Also thinking about an Instagram shop linked to my existing hobby account (currently 1,200 followers). Etsy listing fees are minimal — $0.20 per listing.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "production_targets",
+        "value": "Target: 15–20 orders per week across all channels, aiming for $1,500–2,000/month revenue. I can batch-pour about 30 pieces on a Saturday and do finishing/packaging on weekday evenings, maybe 8–10 hours total per week on production.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING whether to turn your resin hobby into a business and want external input BEFORE deciding. Do NOT use 'ready to launch / pulling the trigger / finally decided / moving ahead / itching to start' framing at T0. T0 tone is 'I want to chat with you about this direction' — open, not committed. Turns 2–5: you drip execution sub-blocks (studio setup, product line, sales channels, production targets) as planning you have done so far, not as locked commitments. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to list my first batch on Etsy this weekend — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "casual_maker_tone",
+        "category": "communication_style",
+        "value": "Casual, upbeat crafter tone. 2–4 short sentences per turn. No hedging, no self-doubt. Sound like someone who has thought through the logistics and is excited to get going.",
+        "description": "Tone matches weak-tier GS cadence — enthusiastic execution energy"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_studio_setup",
+          "aim_type": "info_scatter",
+          "description": "Working from a spare bedroom — got a pressure pot, UV lamp station, about 40 silicone molds, and a ventilation fan rigged to the window. Spending around $200 a month on resin, pigments, dried flowers, and gold leaf.",
+          "success_criteria": "Agent acknowledges the studio setup and materials investment",
+          "required_info_keys": [
+            "studio_setup"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (workspace + materials spend)"
+        },
+        {
+          "aim_id": "aim_1_product_line",
+          "aim_type": "info_scatter",
+          "description": "Product line: botanical resin pendants at $18–25 each, ocean-wave coaster sets of 4 at $45, and custom pet-memorial keychains with fur or ash inclusions at $35. The pet memorials get the most interest on my personal Instagram.",
+          "success_criteria": "Agent acknowledges the product lineup and pricing",
+          "required_info_keys": [
+            "product_line"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (products + pricing + demand signal)"
+        },
+        {
+          "aim_id": "aim_2_channels",
+          "aim_type": "info_scatter",
+          "description": "Selling on Etsy plus local weekend craft fairs — there are 2–3 fairs per month near me, booth fee runs $50–75 each. Also linking an Instagram shop to my hobby account, which has about 1,200 followers right now. Etsy listing fees are just $0.20 per listing.",
+          "success_criteria": "Agent acknowledges the sales channel plan",
+          "required_info_keys": [
+            "sales_channels"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (channels + costs)"
+        },
+        {
+          "aim_id": "aim_3_targets",
+          "aim_type": "info_scatter",
+          "description": "Targeting 15–20 orders per week across all channels, aiming for $1,500–2,000 a month. I can batch-pour about 30 pieces on a Saturday and do finishing and packaging on weekday evenings — maybe 8–10 hours total per week.",
+          "success_criteria": "Agent acknowledges the volume and revenue targets",
+          "required_info_keys": [
+            "production_targets"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (volume + time commitment)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to list my first batch on Etsy this weekend — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags whether there is validated demand beyond friends, questions whether 15–20 orders per week is realistic for a new Etsy shop with 1,200 Instagram followers, raises the hobby-to-business identity shift (consistency pressure, customer expectations, returns), questions unit economics after materials + Etsy fees + craft fair costs + time, or raises opportunity cost. Agent does NOT simply provide a launch checklist or Etsy optimization tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, list them' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is turning this hobby into a business the right move?') instead of adding execution detail. Key strategic bullets: (1) demand validation — 'friends say I should sell' and Instagram interest from 1,200 followers is not evidence of paying-customer demand at scale; the agent should suggest testing with a small batch or pre-orders before committing to weekly production targets, (2) order volume realism — 15–20 orders per week is aggressive for a brand-new Etsy shop with no reviews and a small social following; Etsy discoverability takes months to build, (3) unit economics scrutiny — materials ($200/month) + Etsy fees (listing + transaction + payment processing ~13%) + craft fair booth fees ($100–225/month) + packaging/shipping vs revenue at current price points; does the margin justify the time?, (4) hobby-to-business transition risk — turning a creative hobby into an obligation changes the relationship with the craft; customer expectations, deadlines, returns, and consistency pressure may kill the joy, (5) opportunity cost — 8–10 hours/week of production plus photography, listing management, customer service, shipping, and fair attendance adds up; what else could that time go toward?",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning (e.g., questions whether this is the right move before diving into launch details)",
+      "Agent flags that interest from friends and 1,200 Instagram followers is not validated paying-customer demand, or suggests a smaller demand-testing step before committing to weekly production",
+      "Agent questions whether the order volume target is realistic for a new shop with limited existing audience, OR questions the unit economics after accounting for materials, platform fees, booth fees, and time investment",
+      "Agent raises at least one structural concern: hobby-to-business identity shift and consistency pressure, opportunity cost of the time commitment, or the risk of scaling before proving repeatable sales"
+    ],
+    "forbidden_elements": [
+      "Agent endorses listing on Etsy this weekend without flagging the strategic question",
+      "Agent produces an execution checklist (Etsy SEO tips, photography advice, packaging suggestions, pricing tier optimization, social media posting schedule)",
+      "Agent silently follows the user's execution frame without ever questioning whether this micro-business direction is sound",
+      "Agent treats the user's Instagram interest and friend encouragement as sufficient evidence that the business will work"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to chat with you about this direction'). T2–T5 drip 4 execution sub-blocks (studio, products, channels, targets) as if the decision is made. T6 is a soft ready-go probe ('basically ready to list this weekend'). The failure mode is the agent responding to T6 with Etsy optimization tips or a launch checklist without returning to the T1 strategic question. Weak-tier domain (personal creative micro-business) has no rigid framework prior, so strong models drift into content-plan and platform-optimization advice."
+  },
+  "mechanism": "Creative-output drift: user drips topic list, episode/post structure, voice + style, production cadence — content plan without retention / monetization reasoning."
+}

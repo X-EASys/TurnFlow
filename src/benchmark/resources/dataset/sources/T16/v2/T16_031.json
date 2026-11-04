@@ -1,0 +1,319 @@
+{
+  "scenario_id": "T16_031",
+  "domain": "tailgate party food planning",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful food planning assistant. Help the user plan food for a tailgate party by tracking who is attending, their dietary needs, and preferences. When the user asks you to evaluate specific food items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're throwing a tailgate party before the big game this Saturday. Can you help me figure out the food situation?",
+    "flow_info": [
+      {
+        "key": "initial_group",
+        "value": "Five of us confirmed so far: me, Derek, Marcus, Priya, and Jen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_injury",
+        "value": "Derek tore his ACL last month and just had surgery, he's on blood thinners right now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_background",
+        "value": "Marcus grew up Jain, still follows it pretty strictly",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_celiac",
+        "value": "Priya got diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jen_pregnancy",
+        "value": "Jen just told us she's 14 weeks pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Trying to keep it around 20 bucks a head",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_cleared",
+        "value": "Derek just texted me — his doctor took him off the blood thinners yesterday, said his clotting levels are back to normal and he's all clear to eat whatever he wants",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_brother_joins",
+        "value": "Derek also asked if his brother Tyler can come along",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tyler_peanut",
+        "value": "Tyler went into anaphylaxis from peanuts when he was a kid, carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_exits",
+        "value": "Priya just messaged me, she got called into work Saturday so she can't make it. She asked if I could set aside a plate for her though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jen_update",
+        "value": "Jen told me she actually just hit her second trimester and her doctor said she's past the high-risk window now, so she's not being as strict anymore — she said she'll eat pretty much anything at this point",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Here's what I'm thinking of making: Thai peanut chicken skewers, black bean veggie burgers on regular buns, beef chili with cheddar on top, smoked salmon dip with crackers, and a big garden salad with ranch. Any issues with that lineup?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "derek_blood_thinners",
+        "value": "Should avoid foods high in vitamin K (leafy greens, broccoli, etc.) and avoid alcohol, as these interfere with blood thinners",
+        "disclosed": false,
+        "surface_form": "Derek tore his ACL last month and just had surgery, he's on blood thinners right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "ACL surgery → post-surgical blood thinner medication (e.g., warfarin)",
+          "Blood thinners → must avoid high vitamin K foods (interfere with anticoagulant efficacy)",
+          "Blood thinners → should avoid alcohol (increases bleeding risk)"
+        ]
+      },
+      {
+        "key": "marcus_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots, etc.)",
+        "disclosed": false,
+        "surface_form": "Marcus grew up Jain, still follows it pretty strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → strict Jain dietary practice",
+          "Strict Jain → no meat, no fish, no eggs",
+          "Strict Jain → no root vegetables (onions, garlic, potatoes) as harvesting kills the plant"
+        ]
+      },
+      {
+        "key": "priya_gluten_free",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Priya got diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods including bread, regular crackers, most buns"
+        ]
+      },
+      {
+        "key": "jen_pregnancy_diet",
+        "value": "Should avoid raw or undercooked fish, high-mercury fish, unpasteurized foods, and alcohol",
+        "disclosed": false,
+        "surface_form": "Jen just told us she's 14 weeks pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → prenatal dietary restrictions",
+          "Prenatal → avoid raw/undercooked fish, high-mercury fish, unpasteurized cheese, alcohol"
+        ]
+      },
+      {
+        "key": "tyler_peanut_allergy",
+        "value": "Severe peanut allergy — cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Tyler went into anaphylaxis from peanuts when he was a kid, carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a tailgate party for Saturday. You will introduce 5 friends with various dietary situations in a burst, then share updates as people's situations change — Derek gets cleared off blood thinners, his brother Tyler joins (severe peanut allergy), Priya can't come but wants a plate saved, and Jen's pregnancy restrictions relax. At the end you will list 5 food items and ask if there are any issues. You must NEVER hint at which items are problematic or tell the assistant what to check for.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing party organizer. You always refer to your friends by name in third person (e.g. 'Derek just texted me...', 'Priya told me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal friend-group coordination. Keep your tone casual and upbeat.",
+        "description": "Prevents emotion escalation and ensures third-person relay for friend updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're throwing a tailgate party before the big game this Saturday. Can you help me figure out the food situation?",
+          "success_criteria": "Agent engages with tailgate food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate tailgate food planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Five of us confirmed so far: me, Derek, Marcus, Priya, and Jen. Derek tore his ACL last month and just had surgery, he's on blood thinners right now. Marcus grew up Jain, still follows it pretty strictly. Priya got diagnosed with celiac disease a couple years ago. And Jen just told us she's 14 weeks pregnant",
+          "success_criteria": "Agent acknowledges all four friends and their dietary situations",
+          "required_info_keys": [
+            "initial_group",
+            "derek_injury",
+            "marcus_background",
+            "priya_celiac",
+            "jen_pregnancy"
+          ],
+          "required_constraint_keys": [
+            "derek_blood_thinners",
+            "marcus_jain_diet",
+            "priya_gluten_free",
+            "jen_pregnancy_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 inferential constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Trying to keep it around 20 bucks a head. We've got a portable grill and a couple coolers, so we can do hot and cold stuff",
+          "success_criteria": "Agent registers budget and equipment info",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget and logistics info"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Derek just texted me — his doctor took him off the blood thinners yesterday, said his clotting levels are back to normal and he's all clear to eat whatever he wants. He also asked if his brother Tyler can come along",
+          "success_criteria": "Agent removes Derek's blood thinner dietary restriction and registers Tyler as a new attendee",
+          "required_info_keys": [
+            "derek_cleared",
+            "derek_brother_joins"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Derek healed) + entity JOIN (Tyler)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Oh yeah, about Tyler — he went into anaphylaxis from peanuts when he was a kid, carries an EpiPen everywhere. So we definitely need to be careful with that",
+          "success_criteria": "Agent registers Tyler's severe peanut allergy",
+          "required_info_keys": [
+            "tyler_peanut"
+          ],
+          "required_constraint_keys": [
+            "tyler_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity gets high-severity constraint"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Priya just messaged me, she got called into work Saturday so she can't make it. She asked if I could set aside a plate for her though",
+          "success_criteria": "Agent notes Priya exits the party but her celiac/gluten constraint still applies to the plate set aside for her",
+          "required_info_keys": [
+            "priya_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Priya's gluten constraint applies to her saved plate only"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Jen told me she actually just hit her second trimester and her doctor said she's past the high-risk window now, so she's not being as strict anymore — she said she'll eat pretty much anything at this point",
+          "success_criteria": "Agent relaxes or removes Jen's pregnancy dietary restrictions",
+          "required_info_keys": [
+            "jen_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Jen's pregnancy restrictions relaxed)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How many people should I plan portions for? And should I bring extra in case some of the guys from the next lot wander over?",
+          "success_criteria": "Agent responds about portion planning without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "portion sizes and extra guests from neighboring tailgate",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Here's what I'm thinking of making: Thai peanut chicken skewers, black bean veggie burgers on regular buns, beef chili with cheddar on top, smoked salmon dip with crackers, and a big garden salad with ranch. Any issues with that lineup?",
+          "success_criteria": "Agent identifies: Thai peanut chicken skewers problematic for Tyler (peanut allergy) and Marcus (Jain, no meat); black bean veggie burgers on regular buns problematic for Marcus (likely contains onion/garlic) and buns are gluten for Priya's plate; beef chili problematic for Marcus (meat); smoked salmon dip with crackers — dip is fine for table since Jen's restrictions relaxed, crackers are gluten for Priya's plate; garden salad with ranch is fine for everyone at the party",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 food items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Thai peanut chicken skewers: problematic — contains peanuts (Tyler has severe peanut allergy) and contains chicken (Marcus is Jain, cannot eat meat). Black bean veggie burgers on regular buns: the patty itself may be OK for Marcus depending on ingredients (onion/garlic are root vegetables forbidden for strict Jain), and the regular buns contain gluten so this cannot go on Priya's saved plate. Beef chili with cheddar: problematic for Marcus (beef is meat, Jain diet forbids it). Smoked salmon dip with crackers: the dip is fine for the table — Jen's pregnancy restrictions have been relaxed so raw/smoked fish is no longer a concern for her; however the crackers likely contain gluten so this cannot go on Priya's saved plate. Garden salad with ranch: fine for everyone at the party. Derek has no restrictions anymore (off blood thinners). Jen's restrictions have been relaxed. Priya is not attending but needs a gluten-free plate.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Thai peanut chicken skewers are problematic for Tyler because they contain peanuts and he has a severe peanut allergy",
+      "Thai peanut chicken skewers are problematic for Marcus because chicken is meat and he follows a Jain diet",
+      "Beef chili is problematic for Marcus because beef is meat and he follows a Jain diet",
+      "Regular buns on the veggie burgers contain gluten, which is a problem for Priya's saved plate since she has celiac disease",
+      "Crackers served with the smoked salmon dip contain gluten, which is a problem for Priya's saved plate since she has celiac disease",
+      "Garden salad with ranch is fine for everyone currently attending the party",
+      "Derek has no dietary restrictions anymore — agent treats him as cleared to eat anything"
+    ],
+    "forbidden_elements": [
+      "Flagging smoked salmon dip as problematic for Jen due to pregnancy (her restrictions have been relaxed per her doctor)",
+      "Flagging garden salad as problematic for Derek due to vitamin K and blood thinners (he is off blood thinners and cleared)",
+      "Saying Derek still needs to avoid leafy greens or vitamin K foods (his blood thinner constraint was removed)",
+      "Saying Jen still needs to avoid raw or smoked fish (her pregnancy dietary restrictions were relaxed)",
+      "Flagging peanut chicken skewers as problematic for Priya (she is not attending the party — her constraint only applies to her saved plate, and peanut chicken is not a gluten issue)",
+      "Saying Tyler has a general nut allergy (he specifically has a peanut allergy only)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint removal across 9 conversational turns. The agent must track: (1) Derek is on blood thinners post-ACL surgery → should avoid vitamin K foods — but this constraint is REMOVED when his doctor clears him (constraint removal is the primary difficulty mechanism). (2) Marcus is Jain → no meat, no fish, no eggs, no root vegetables (inferential chain, never explicitly listed). (3) Priya has celiac → no gluten — she EXITS the party but wants a saved plate, so her gluten constraint persists for the plate only (scope change). (4) Jen is pregnant → prenatal dietary restrictions — but these are REMOVED when she reports her doctor relaxed them in the second trimester (second constraint removal). (5) Tyler JOINS late with a severe peanut allergy (late-joining high-constraint entity). At probe time, the active constraints are: Marcus = Jain (no meat, no root vegetables), Tyler = peanut allergy, Priya = celiac/gluten-free (saved plate only). Derek and Jen have NO active restrictions. The probe items create mixed verdicts: Thai peanut chicken skewers are clearly bad (peanuts for Tyler, meat for Marcus), garden salad is clearly fine, beef chili fails for Marcus, and the gluten items (buns, crackers) are a scope distinction — fine for the table but not for Priya's plate. Smoked salmon dip is a trap — it looks problematic for Jen (pregnant + raw fish) but her restrictions were lifted."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

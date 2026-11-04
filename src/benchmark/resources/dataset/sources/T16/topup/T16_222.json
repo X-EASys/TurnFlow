@@ -1,0 +1,287 @@
+{
+  "scenario_id": "T16_222",
+  "domain": "company retreat dinner planning",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user plan a company retreat dinner by tracking attendees, their dietary needs, and logistics. When asked to evaluate specific dishes or options, check each item against every active diner's current constraints. Pay attention to changes in the guest list throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're organizing a dinner for our company retreat next Saturday. Can you help me figure out the food situation?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Six of us confirmed so far: me, David, Priya, Marcus, and Sonia",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_celiac",
+        "value": "David was diagnosed with celiac disease last year, has to be super careful",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_shellfish",
+        "value": "Marcus ate shrimp at a conference dinner two months ago and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "The retreat venue has a catering kitchen, they said they can do a family-style spread",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Company is covering it, budget is about 60 per head",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sonia_exits_packfood",
+        "value": "Sonia just told me she has to leave right after the afternoon session to catch a flight, but she asked if we could save her a plate to grab on her way out",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_constraint_removed",
+        "value": "Priya told me her doctor cleared her last week — she finished her blood pressure medication, so her salt restriction is lifted and normal seasoning is fine. Her Jain diet still applies.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_joins",
+        "value": "Oh, Rachel from the London office is flying in for the retreat too, so add one more",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_exits_sonia_plate",
+        "value": "Actually Rachel just messaged — her flight got cancelled so she's not coming anymore. But she said to tell Sonia she's jealous of the saved plate",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "The caterer sent over their proposed menu: herb-crusted salmon, mushroom risotto, salt and pepper squid, sourdough bread basket, panna cotta with berry compote, and a Caesar salad",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a strict Jain household in Gujarat and still follows the family traditions",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Strict Jain household → follows Jain dietary practices",
+          "Jain diet → no meat, no fish, no eggs, no root vegetables (onion, garlic, potato)"
+        ]
+      },
+      {
+        "key": "david_celiac_constraint",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "David was diagnosed with celiac disease last year, has to be super careful",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_shellfish_constraint",
+        "value": "Cannot eat shellfish — shrimp, crab, lobster, squid, etc.",
+        "disclosed": false,
+        "surface_form": "Marcus ate shrimp at a conference dinner two months ago and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Severe allergic reaction to shrimp → shellfish allergy",
+          "EpiPen use → anaphylaxis-level severity"
+        ]
+      },
+      {
+        "key": "sonia_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Sonia carries an EpiPen everywhere because of peanuts — even trace amounts set her off",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are an office manager planning a company retreat dinner. You will introduce the team, share their dietary issues through stories and background info, then update the guest list as people drop out or join. At the end you will share a proposed caterer menu and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, organized office manager. You relay updates about colleagues in third person (e.g. 'David told me...', 'Sonia just messaged...'). You never express frustration even when plans change repeatedly. You treat each update as normal event coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're organizing a dinner for our company retreat next Saturday. Can you help me figure out the food situation?",
+          "success_criteria": "Agent engages with retreat dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate retreat dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "There are five of us confirmed: me, David, Priya, Marcus, and Sonia. David was diagnosed with celiac disease last year, has to be super careful. Priya grew up in a strict Jain household in Gujarat and still follows the family traditions. Marcus ate shrimp at a conference dinner two months ago and his throat swelled up, had to use an EpiPen. And Sonia carries an EpiPen everywhere because of peanuts — even trace amounts set her off",
+          "success_criteria": "Agent acknowledges all attendees and their dietary constraints",
+          "required_info_keys": [
+            "team_members",
+            "david_celiac",
+            "marcus_shellfish"
+          ],
+          "required_constraint_keys": [
+            "priya_jain_diet",
+            "david_celiac_constraint",
+            "marcus_shellfish_constraint",
+            "sonia_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 4 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The retreat venue has a catering kitchen, they said they can do a family-style spread. Company is covering it, budget is about 60 per head",
+          "success_criteria": "Agent registers venue and budget info",
+          "required_info_keys": [
+            "venue_info",
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Provide logistics context"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Sonia just told me she has to leave right after the afternoon session to catch a flight, but she asked if we could save her a plate to grab on her way out",
+          "success_criteria": "Agent notes Sonia won't be at dinner but needs a saved plate, her peanut allergy applies to the saved plate",
+          "required_info_keys": [
+            "sonia_exits_packfood"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Sonia leaves but needs a plate saved"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Do you think we should do a sit-down dinner or more of a buffet style? People will be tired after the team-building activities",
+          "success_criteria": "Agent discusses dinner format options",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "dinner format",
+            "drift_topic": "sit-down vs buffet style given tired attendees",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic but not constraint-related"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Priya told me her doctor cleared her last week — she finished her blood pressure medication, so her salt restriction is lifted and normal seasoning is fine. Her Jain diet still applies. Oh, Rachel from the London office is flying in for the retreat too, so add one more",
+          "success_criteria": "Agent removes Priya's medical constraint (but NOT her Jain diet) and registers Rachel as new attendee",
+          "required_info_keys": [
+            "priya_constraint_removed",
+            "rachel_joins"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Priya's medical issue only — Jain diet persists) + entity JOIN (Rachel)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Actually Rachel just messaged — her flight got cancelled so she's not coming anymore. But she said to tell Sonia she's jealous of the saved plate",
+          "success_criteria": "Agent removes Rachel from the guest list",
+          "required_info_keys": [
+            "rachel_exits_sonia_plate"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Rachel) — no constraint impact since she had none"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we do any kind of toast or speech before dinner? Marcus mentioned he wanted to say a few words about the quarter",
+          "success_criteria": "Agent discusses toast/speech logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "Marcus",
+            "drift_topic": "toast or speech before dinner about the quarter",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "The caterer sent over their proposed menu: herb-crusted salmon, mushroom risotto, salt and pepper squid, sourdough bread basket, panna cotta with berry compote, and a Caesar salad. Any issues?",
+          "success_criteria": "Agent identifies: herb-crusted salmon problematic for Priya (Jain, no fish); salt and pepper squid problematic for Marcus (shellfish allergy) AND Priya (no fish/seafood); sourdough bread basket problematic for David (celiac, contains gluten); mushroom risotto is fine if made without onion/garlic (flag for Priya's Jain diet); panna cotta is fine for everyone at the table; Caesar salad needs checking for Priya (may contain egg in dressing, anchovies). Notes that Sonia's saved plate must avoid peanut cross-contamination but none of these dishes inherently contain peanuts.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Herb-crusted salmon: problematic for Priya (Jain — no fish). Salt and pepper squid: problematic for Marcus (shellfish allergy, squid is a mollusk/shellfish) AND Priya (Jain — no seafood/fish). Sourdough bread basket: problematic for David (celiac — sourdough is wheat-based, contains gluten). Mushroom risotto: potentially problematic for Priya if it contains onion or garlic (Jain — no root vegetables), agent should flag this. Panna cotta with berry compote: fine for everyone currently attending. Caesar salad: potentially problematic for Priya (traditional Caesar dressing contains egg and anchovies — Jain diet excludes both). For Sonia's saved plate: none of these dishes inherently contain peanuts, but cross-contamination should be checked with the caterer. Priya's blood pressure medication being finished does NOT remove her Jain dietary practice. The spicy/low-sodium concern from her medical issue is gone, but the Jain constraint remains.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Herb-crusted salmon is problematic for Priya because her Jain diet excludes fish",
+      "Salt and pepper squid is problematic for Marcus because of his shellfish allergy",
+      "Salt and pepper squid is also problematic for Priya because Jain diet excludes seafood and fish",
+      "Sourdough bread basket is problematic for David because celiac disease means no gluten and sourdough is wheat-based",
+      "Panna cotta with berry compote is fine for everyone currently attending",
+      "Agent flags that Sonia's saved plate needs to be checked for peanut cross-contamination even though none of the listed dishes inherently contain peanuts"
+    ],
+    "forbidden_elements": [
+      "Saying Priya can now eat anything because her doctor cleared her (the medical clearance was for blood pressure medication only, her Jain diet is a lifelong religious practice)",
+      "Flagging dishes as problematic for Rachel (she is not coming, flight cancelled)",
+      "Saying Marcus has a general seafood allergy (he has a shellfish allergy specifically — salmon would be fine for him)",
+      "Ignoring Sonia's saved plate entirely because she left the dinner (she still needs food packed)",
+      "Saying panna cotta is problematic for David (panna cotta is typically gluten-free)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking with a critical scope-change exit. Key tracking challenges: (1) Priya has TWO constraints — a Jain religious diet (permanent, inferential) and a blood pressure medication issue (temporary, removed in turn 5). The agent must NOT conflate the medical clearance with removal of the Jain diet. (2) Sonia EXITS the dinner but needs a saved plate — her peanut allergy still applies to whatever is packed for her. (3) Rachel JOINS then EXITS with no dietary constraints, testing whether the agent keeps ghost constraints. (4) Marcus's shellfish allergy must be correctly scoped — squid is shellfish/mollusk (problematic) but salmon is not (fine for him). (5) The mushroom risotto and Caesar salad are nuanced items requiring knowledge of typical ingredients (risotto often has onion/garlic; Caesar dressing has egg and anchovies) against Priya's Jain constraints."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

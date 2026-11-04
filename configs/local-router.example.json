@@ -1,0 +1,14 @@
+{
+  "defaults": {
+    "api_base": "http://127.0.0.1:8234/v1",
+    "timeout": 1200,
+    "retries": 3
+  },
+  "agent": {
+    "model": "deepseek-v4-pro",
+    "reasoning_effort": "high",
+    "omit_temperature": true
+  },
+  "simulator": {"model": "gemini-3.7-flash"},
+  "judge": {"model": "deepseek-v4-flash"}
+}

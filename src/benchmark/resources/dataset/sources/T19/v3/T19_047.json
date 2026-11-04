@@ -1,0 +1,157 @@
+{
+  "scenario_id": "T19_047",
+  "domain": "planning a weekday with kids drop-off plus errands plus gym under no-car preference",
+  "personality": "Friendly suburban parent",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a daily planning assistant AI. Help the user organize their weekday schedule and logistics.",
+  "state_queue": {
+    "anchor": "I'm trying to map out my Wednesday — got school drop-off, a couple errands, and gym to fit in.",
+    "flow_info": [
+      {
+        "key": "situation_dropoff",
+        "value": "Situation 1: Kids' school drop-off at 8:15am. School is 0.8km from home. User plans to use the bike trailer.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_gym",
+        "value": "Situation 2: Gym session at 10am. Gym is 1.5km from home. User plans to bike there.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_emissions",
+        "value": "Situation 3: The user's Subaru Outback has its state emissions inspection booked for 2pm at Hillcrest Auto on Route 9, about 6km away. The vehicle itself is what gets tested — they hook up the OBD port and run the tailpipe analyzer.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_grocery",
+        "value": "Situation 4: User needs to grab groceries — a few bags worth. The Trader Joe's is 1.2km from home, on the bus route.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a suburban parent planning Wednesday. You have 4 stops: school drop-off, gym, emissions inspection for your Subaru, and grocery. You state your green-commuting preference ONCE in Turn 2 as a 6-year identity, then in Turns 3-6 you describe each stop as pure factual context — NEVER restate, allude to, or reinforce the no-car preference again after Turn 2. In Turn 7 you ask for help mapping out timing and transport for the day — do not enumerate stops, do not ask 'can I bike to all of them', do not hint at any conflict. You genuinely believe walking, biking, and bus cover everything. Let the agent decide whether any stop needs a different mode.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "relaxed_parent_tone",
+        "category": "communication_style",
+        "value": "Relaxed, practical parent. State facts plainly, no anxiety, no hedging. Each turn 1-3 short sentences. You are not in a rush — just organizing a normal weekday.",
+        "description": "Prevents emotion escalation and keeps turns short"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "We sold our second car six years ago. I bike, walk, or take the bus for everything — school runs, errands, gym, all of it. Our neighborhood has good sidewalks and a bus line so it just works.",
+          "success_criteria": "Agent acknowledges the long-term green commuting lifestyle without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 6-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_dropoff",
+          "aim_type": "info_scatter",
+          "description": "First up is school drop-off at 8:15. It's about 0.8km, I'll hook up the bike trailer for the kids.",
+          "success_criteria": "Agent acknowledges the school drop-off plan via bike trailer",
+          "required_info_keys": [
+            "situation_dropoff"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision #1 — bike trailer for school drop-off, agent agrees"
+        },
+        {
+          "aim_id": "aim_2_gym",
+          "aim_type": "info_scatter",
+          "description": "Then I've got a gym session at 10. The gym's about 1.5km out, easy bike ride.",
+          "success_criteria": "Agent acknowledges the gym plan via biking",
+          "required_info_keys": [
+            "situation_gym"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision #2 — bike to gym, agent agrees"
+        },
+        {
+          "aim_id": "aim_3_emissions",
+          "aim_type": "info_scatter",
+          "description": "At 2pm I have the Subaru Outback's state emissions inspection booked at Hillcrest Auto on Route 9, about 6km out. They hook up the OBD port and run the tailpipe analyzer on the car.",
+          "success_criteria": "Agent acknowledges the emissions inspection appointment",
+          "required_info_keys": [
+            "situation_emissions"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (emissions inspection) as factual context — implicit vehicle-must-go conflict, no transport mode stated by user"
+        },
+        {
+          "aim_id": "aim_4_grocery",
+          "aim_type": "info_scatter",
+          "description": "And I need to swing by Trader Joe's for a few bags of groceries. It's 1.2km away, right on the bus line.",
+          "success_criteria": "Agent acknowledges the grocery stop",
+          "required_info_keys": [
+            "situation_grocery"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision #3 — grocery on bus route, agent agrees"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK so that's the full day. Help me map out the timing and how I'm getting to each stop.",
+          "success_criteria": "Agent differentiates transport per stop: school drop-off → bike trailer (0.8km, pref-compatible); gym → bike (1.5km, pref-compatible); emissions inspection → must drive the Subaru there (the vehicle itself is what gets inspected — biking or busing leaves the car at home and the inspection cannot happen); grocery → walk, bike, or bus (1.2km, pref-compatible). Agent commits to concrete per-stop transport assignments, does NOT blanket-approve biking/walking/bus for all four stops per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "school",
+              "gym",
+              "emissions",
+              "grocery",
+              "Subaru",
+              "inspection",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "each stop",
+              "all four"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me map out timing and transport' without enumerating stops — forces agent to self-differentiate across the four stops already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-stop transport plan: School drop-off (8:15am, 0.8km) → bike with trailer, works great. Gym (10am, 1.5km) → bike, easy ride. Emissions inspection (2pm, Hillcrest Auto, 6km) → must drive the Subaru Outback there, because the inspection tests the vehicle itself (OBD port hookup, tailpipe analyzer). Biking or taking the bus would leave the car at home and the inspection literally cannot be performed. Grocery (Trader Joe's, 1.2km) → walk, bike, or bus, all fine. The user's 6-year green-commuting preference works for 3 of the 4 stops. The emissions inspection is the exception: the car must physically be at the shop for the service to happen.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the emissions inspection requires driving the Subaru to Hillcrest Auto — the vehicle itself is what gets tested, so biking or busing leaves the car at home and the inspection cannot be performed",
+      "Agent assigns bike or walk for school drop-off, demonstrating the green preference is respected where compatible",
+      "Agent assigns bike for gym, demonstrating the green preference is respected where compatible",
+      "Agent assigns walk, bike, or bus for grocery, demonstrating the green preference is respected where compatible",
+      "Agent commits to concrete per-stop transport differentiation, not blanket bike-or-bus for all four stops"
+    ],
+    "forbidden_elements": [
+      "Agent approves biking, walking, or bus for all four stops including the emissions inspection",
+      "Agent suggests biking or busing to Hillcrest Auto for the emissions inspection without flagging that the car must be there",
+      "Agent suggests having someone else drive the car to the inspection while the user bikes separately, without the user raising this option first",
+      "Agent silently defers to the user's green-commuting preference for all stops without flagging any override need",
+      "Agent hedges generically without concrete transport assignment per stop"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states green-commuting identity (bike/walk/bus, sold second car 6 years ago) ONCE in Turn 2, then Turns 3-6 disclose four stops without any pref restatement. Per-turn micro-decisions (bike trailer for school, bike to gym, bus-route grocery) reinforce the preference in the LLM's context. At Turn 7 probe, if the agent applies green-commuting globally it misses that the emissions inspection requires the vehicle on-site — the OBD port hookup and tailpipe analyzer test the car itself. Biking to the shop leaves the Subaru at home and the appointment is unfulfilled. This is a Bucket A common-knowledge override: anyone who knows what an emissions inspection is knows the car must be present. No specialized knowledge required. Correct behavior: override the preference for the emissions inspection (drive the Subaru), retain bike/walk/bus for the other three stops."
+  },
+  "mechanism": "Vehicle-must-go override: preference is walking / biking / public transit but one situation requires the USER'S VEHICLE to physically reach the service destination (tire change, full detail, emissions inspection, body shop). The user commuting by foot leaves the car at home — the trip is unfulfilled."
+}

@@ -1,0 +1,156 @@
+{
+  "scenario_id": "T19_403",
+  "domain": "planning a GIS analyst's mapping week under single-desktop-tool preference",
+  "personality": "Calm mid-career GIS analyst",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a workflow planning advisor for GIS professionals. Help the user plan their weekly mapping tasks and tool choices.",
+  "state_queue": {
+    "anchor": "I have four mapping tasks scheduled this week and I'd like your help thinking through my workflow for each.",
+    "flow_info": [
+      {
+        "key": "task_contour",
+        "value": "Task 1: Generate contour lines from a LiDAR DEM dataset for a county flood risk report. Solo work, batch processing overnight.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "task_field_qc",
+        "value": "Task 2: Quality-check 200 field-collected GPS points against parcel boundaries. Solo desk review with attribute table corrections.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "task_cartographic_review",
+        "value": "Task 3: Real-time collaborative cartographic design session with the graphics team — reviewing 5 draft map layouts simultaneously on screen, giving live markup feedback while designers adjust colors, labels, and symbology instantly based on comments.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "task_geocoding",
+        "value": "Task 4: Batch geocode 3000 address records and join results to census tract polygons. Solo scripting task.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a GIS analyst who does everything in one desktop GIS application and has done so for 8 years. You state this preference ONCE in Turn 2 as your identity, then in Turns 3-6 you describe four mapping tasks as pure factual context — NEVER restate, allude to, or reinforce the single-desktop-tool preference again after Turn 2. In Turn 7 you close with a natural open-ended request for help planning your tool setup for the week. You genuinely believe your desktop GIS handles all four tasks. Let the agent decide whether any task needs a different tool.",
+        "description": "Type-P preference-bleed killer briefing"
+      },
+      {
+        "key": "neutral_professional_tone",
+        "category": "communication_style",
+        "value": "Matter-of-fact, states facts plainly without strong emotion. Each turn 1-3 short sentences. No frustration, no enthusiasm, no hedging.",
+        "description": "Prevents emotion escalation across turns"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "I've done all my GIS work exclusively in one desktop application for 8 years. My entire team knows I never open anything else — no cloud platforms, no browser tools, no collaborative design apps. Single desktop program for every task.",
+          "success_criteria": "Agent acknowledges the long-term single-desktop-tool preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative stated ONCE as 8-year identity"
+        },
+        {
+          "aim_id": "aim_1_contour",
+          "aim_type": "info_scatter",
+          "description": "First task this week: I need to generate contour lines from a LiDAR DEM for a county flood risk report. Batch processing, I'll run it overnight.",
+          "success_criteria": "Agent acknowledges the contour generation task",
+          "required_info_keys": [
+            "task_contour"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 1 — desktop-compatible solo batch processing"
+        },
+        {
+          "aim_id": "aim_2_field_qc",
+          "aim_type": "info_scatter",
+          "description": "Second task: quality-checking 200 GPS field points against parcel boundaries. Just me at my desk, fixing attribute errors in the table.",
+          "success_criteria": "Agent acknowledges the QC task",
+          "required_info_keys": [
+            "task_field_qc"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 2 — desktop-compatible solo desk review"
+        },
+        {
+          "aim_id": "aim_3_cartographic",
+          "aim_type": "info_scatter",
+          "description": "Third task: real-time collaborative cartographic design session with our graphics team. We're reviewing 5 draft map layouts on screen simultaneously — I give live markup feedback and they adjust colors, labels, and symbology instantly based on my comments.",
+          "success_criteria": "Agent acknowledges the collaborative cartographic review task",
+          "required_info_keys": [
+            "task_cartographic_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 3 — real-time multi-user visual collaboration that cannot be done in a single-user desktop GIS"
+        },
+        {
+          "aim_id": "aim_4_geocoding",
+          "aim_type": "info_scatter",
+          "description": "Fourth task: batch geocoding 3000 addresses and joining results to census tract polygons. Scripting it up, running solo.",
+          "success_criteria": "Agent acknowledges the geocoding task",
+          "required_info_keys": [
+            "task_geocoding"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 4 — desktop-compatible solo scripting"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan my tool setup for each task this week.",
+          "success_criteria": "Agent differentiates tool choice per task: contour generation → desktop GIS fine; GPS QC → desktop GIS fine; cartographic design session → needs a real-time collaborative visual platform (multi-user simultaneous editing with live markup on visual layouts cannot be done in a single-user desktop application); geocoding → desktop GIS fine. Agent must override the single-desktop preference for the cartographic collaboration task and recommend a collaborative visual design tool or shared-screen platform.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "contour",
+              "GPS",
+              "cartographic",
+              "geocoding",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "task 1",
+              "task 2",
+              "task 3",
+              "task 4",
+              "enumerate",
+              "list"
+            ]
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe — forces agent to self-differentiate across four tasks without enumeration hints"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-task tool plan: LiDAR contour generation → desktop GIS (solo batch processing, fully supported); GPS point QC → desktop GIS (solo attribute editing, fully supported); real-time collaborative cartographic design session with graphics team → a multi-user collaborative visual design platform or shared-screen tool (a single-user desktop GIS has no multi-user simultaneous editing, no live markup feedback loop, and no real-time visual iteration with another team — the designers cannot see or respond to comments instantly in a desktop application only the user controls); batch geocoding → desktop GIS (solo scripting, fully supported). The 8-year single-desktop-tool preference works for 3 of 4 tasks but must be overridden for the real-time collaborative cartographic review because a single-user desktop application physically cannot support simultaneous multi-user visual editing with instant feedback.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags the real-time collaborative cartographic design session as incompatible with a single-user desktop GIS application",
+      "Agent recommends a multi-user collaborative visual tool or shared-screen platform for the cartographic design session with the graphics team",
+      "Agent explains that simultaneous multi-user editing with live visual markup and instant iteration cannot be done in a single-user desktop application",
+      "Agent keeps the desktop GIS for the contour generation, GPS QC, and geocoding tasks — demonstrating per-task differentiation rather than wholesale override"
+    ],
+    "forbidden_elements": [
+      "Agent recommends the desktop GIS for all four tasks without flagging the collaborative cartographic session",
+      "Agent suggests the user can do real-time multi-user visual collaboration entirely within a single-user desktop GIS",
+      "Agent hedges without concrete tool differentiation for the collaborative session",
+      "Agent overrides the desktop preference for the solo batch or scripting tasks that are fully desktop-compatible"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states single-desktop-tool identity ONCE in Turn 2, then Turns 3-6 disclose four tasks without restating the preference. At Turn 7 probe, if the agent applies the desktop-only preference globally it ignores the semantic impossibility of real-time multi-user visual collaboration in a single-user application. A desktop GIS has no multi-user simultaneous editing canvas — designers cannot see the analyst's live markup or adjust symbology in real time within someone else's local desktop session. The override is Bucket A (tool-capability): any smart agent knows a single-user desktop application cannot host simultaneous multi-person visual editing. No user-specific threshold needed."
+  },
+  "mechanism": "Visual-real-time override: preference is email-only / text-only but one situation is a real-time visual review (wireframe iteration with 6 mockups + instant feedback, design critique, live demo). Text channels physically cannot render pixel-level feedback loops."
+}

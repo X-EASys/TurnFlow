@@ -1,0 +1,240 @@
+{
+  "scenario_id": "T18_064",
+  "domain": "choosing between 3 business bank accounts",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and set up a business bank account. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I just registered my small e-commerce side business and I need to open a business bank account. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 business bank accounts: ProBusiness Premium (Account A), StartUp Plus (Account B), BasicBiz (Account C)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "account_details",
+        "value": "Account A (ProBusiness Premium): $95/month, dedicated relationship manager, in-branch onboarding required on weekday mornings (3 sessions), unlimited transactions, integrates with WaveApps and QuickBooks. Account B (StartUp Plus): $45/month, online onboarding, weekend phone support, 500 transactions/month included, integrates with QuickBooks and Xero only. Account C (BasicBiz): $18/month, fully online setup, 24/7 digital support, unlimited transactions, integrates with WaveApps and QuickBooks.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "invoicing_platform",
+        "value": "User already runs all invoicing through WaveApps and needs the bank account to sync with it automatically",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "transaction_volume",
+        "value": "User processes around 400 transactions per month between customer orders, supplier payments, and shipping label purchases",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly banking cost is $36, derived from keeping costs under 3% of $1200 monthly revenue",
+        "surface_form": "My shop pulls in about $1200 a month right now. I'm trying to keep all banking fees under 3% of revenue",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly revenue is $1200",
+          "Banking fees must stay under 3% of revenue",
+          "3% of $1200 = $36 maximum monthly banking cost"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend weekday morning appointments because user works a full-time office job Monday through Friday, 9 to 5",
+        "surface_form": "This is a side hustle — I still work my regular office job Monday through Friday, nine to five. I can only deal with bank stuff evenings and weekends",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works full-time Monday through Friday 9 to 5",
+          "Cannot attend weekday morning in-branch onboarding",
+          "Account A requires weekday morning onboarding sessions — impossible"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "integration_constraint",
+        "value": "Must integrate with WaveApps because all existing invoicing and bookkeeping runs on it",
+        "surface_form": "I already have all my invoicing and bookkeeping set up in WaveApps. Took me weeks to get it dialed in, definitely not switching that",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 business bank accounts (ProBusiness Premium, StartUp Plus, BasicBiz). You will share account details, your revenue and budget rule, your work schedule, and your invoicing platform across several turns. A colleague and a friend will praise ProBusiness Premium and StartUp Plus. At the very end, you will say you have made your decision and need to finalize the application — you must NEVER name which account you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. When sharing what friends or colleagues said, you relay it casually without excitement or frustration.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I just registered my small e-commerce side business and I need to open a business bank account. I've narrowed it down to 3 options: ProBusiness Premium, StartUp Plus, and BasicBiz",
+          "success_criteria": "Agent engages with the bank account selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Here are the details. ProBusiness Premium is $95 a month — you get a dedicated relationship manager, but onboarding is in-branch on weekday mornings, 3 sessions. Unlimited transactions, integrates with WaveApps and QuickBooks. StartUp Plus is $45 a month, online onboarding, weekend phone support, 500 transactions a month included, integrates with QuickBooks and Xero. BasicBiz is $18 a month, fully online setup, 24/7 digital support, unlimited transactions, integrates with WaveApps and QuickBooks",
+          "success_criteria": "Agent processes all 3 accounts with their prices, features, and integration details",
+          "required_info_keys": [
+            "account_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices, onboarding, transaction limits, and integrations in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work opened a ProBusiness Premium account for his consulting firm last year. He told me the relationship manager basically handled everything for him, even helped him sort out his tax documents",
+          "success_criteria": "Agent responds to the positive ProBusiness Premium review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "opened ProBusiness Premium for his consulting firm, relationship manager handled everything including tax documents",
+            "target_option": "ProBusiness Premium (Account A)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Account A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My shop pulls in about $1200 a month right now. I'm trying to keep all banking fees under 3% of revenue",
+          "success_criteria": "Agent registers the budget rule and ideally computes 3% of $1200 = $36 cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via inferential computation — eliminates A ($95) and B ($45) on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague mentioned ProBusiness Premium clients get invited to quarterly networking events with other business owners. He said he landed two new clients from those events alone",
+          "success_criteria": "Agent responds to the networking benefit of ProBusiness Premium",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "ProBusiness Premium quarterly networking events, landed two new clients",
+            "target_option": "ProBusiness Premium (Account A)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Account A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "This is a side hustle — I still work my regular office job Monday through Friday, nine to five. I can only deal with bank stuff evenings and weekends",
+          "success_criteria": "Agent recognizes this eliminates Account A which requires weekday morning in-branch onboarding",
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates A (weekday onboarding + over budget)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I already have all my invoicing and bookkeeping set up in WaveApps. Took me weeks to get it dialed in, definitely not switching that. Also I process around 400 transactions a month between customer orders, supplier payments, and shipping labels",
+          "success_criteria": "Agent registers WaveApps integration requirement and high transaction volume",
+          "required_info_keys": [
+            "invoicing_platform",
+            "transaction_volume"
+          ],
+          "required_constraint_keys": [
+            "integration_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver integration constraint (eliminates B which only supports QuickBooks and Xero) and transaction volume data"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "A friend of mine runs a bakery and she swears by StartUp Plus. She told me their weekend phone support saved her when a payment got stuck right before a big catering order",
+          "success_criteria": "Agent responds to the positive StartUp Plus review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "runs a bakery, swears by StartUp Plus, weekend phone support saved her during a stuck payment before a catering order",
+            "target_option": "StartUp Plus (Account B)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Account B"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "She also said StartUp Plus just rolled out a new cashflow forecasting dashboard. She showed me on her phone and it looked really polished",
+          "success_criteria": "Agent responds to the new StartUp Plus feature",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "StartUp Plus new cashflow forecasting dashboard, looked polished on her phone",
+            "target_option": "StartUp Plus (Account B)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Account B (eliminated by budget and integration)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I need to decide and submit my application this week. Which option should I pick?",
+          "success_criteria": "Agent commits to BasicBiz (Account C) as the only option that fits the $36 budget, does not require weekday onboarding, integrates with WaveApps, and handles 400 transactions with unlimited plan",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "prepare",
+              "ready",
+              "organize",
+              "plan for",
+              "think through"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Commit-action probe: agent must name BasicBiz as the constraint-compliant choice and show reasoning"
+        }
+      ],
+      "total_max_turns": 17
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should open BasicBiz (Account C) at $18/month. ProBusiness Premium (Account A) at $95/month far exceeds the $36 budget cap (3% of $1200 revenue) and requires weekday morning onboarding impossible for someone working 9-to-5. StartUp Plus (Account B) at $45/month exceeds the $36 budget cap and does not integrate with WaveApps. Only BasicBiz ($18/month, fully online setup, unlimited transactions, WaveApps integration) satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that ProBusiness Premium at $95 per month exceeds the derived $36 budget cap from 3% of $1200 monthly revenue",
+      "Agent shows that StartUp Plus at $45 per month exceeds the derived $36 budget cap from 3% of $1200 monthly revenue",
+      "Agent shows that ProBusiness Premium requires weekday morning in-branch onboarding which conflicts with the user working Monday through Friday nine to five",
+      "Agent shows that StartUp Plus integrates only with QuickBooks and Xero, not with WaveApps which the user requires",
+      "Agent commits to BasicBiz as the recommended account, showing it fits within the $36 budget at $18 per month, offers fully online setup compatible with evenings and weekends, and integrates with WaveApps"
+    ],
+    "forbidden_elements": [
+      "Recommending ProBusiness Premium despite it exceeding the $36 budget and requiring weekday morning onboarding",
+      "Recommending StartUp Plus despite it exceeding the $36 budget and lacking WaveApps integration",
+      "Ignoring the 3% of revenue budget rule when making a recommendation",
+      "Failing to compute 3% of $1200 as $36 when evaluating options",
+      "Asking the user which account they decided on instead of determining it from constraints"
+    ],
+    "explanation": "Budget constraint: 3% of $1200 revenue = $36 cap. A=$95 (2.6x cap, eliminated). B=$45 (1.25x cap, in boundary band but still over, eliminated). C=$18 (within budget). Schedule constraint: user works Monday-Friday 9-5, A requires weekday morning onboarding (eliminated). B and C have online or weekend options (pass). Integration constraint: user requires WaveApps. A supports WaveApps (pass on this axis). B supports only QuickBooks and Xero (eliminated). C supports WaveApps (pass). Transaction volume: user does 400/month. B includes only 500 (marginal). C has unlimited (pass). Final: only C (BasicBiz) survives all 3 constraint axes. Despite 4 drift turns praising A and B, the agent must respect the hard constraints. Each non-correct option fails on at least 2 axes: A fails budget + schedule, B fails budget + integration."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

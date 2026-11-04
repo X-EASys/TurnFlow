@@ -1,0 +1,304 @@
+{
+  "scenario_id": "T16_059",
+  "domain": "classroom holiday party treats",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant for planning events and coordinating food. Help the user plan treats for a classroom holiday party by keeping track of which children are in the class, their dietary needs, and any updates. When the user asks you to review a list of treats, check each item against every current student's dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, I'm the room parent for my son's 2nd grade class and we have a holiday party coming up in two weeks. I need to figure out what treats to bring. Any ideas?",
+    "flow_info": [
+      {
+        "key": "class_kids_intro",
+        "value": "There are four kids with dietary stuff I need to watch out for: my son's friend Amir, Sophie, Tommy, and Lily",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "amir_background",
+        "value": "Amir's family is from Syria, his dad mentioned they celebrate Eid and are pretty observant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_allergy",
+        "value": "Sophie had a really scary reaction at a birthday party last year — turns out she ate something with cashews in it and her throat started swelling, they had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tommy_allergy",
+        "value": "Tommy can't have eggs, his mom always sends a separate treat for him at parties",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_stomach",
+        "value": "Lily's mom told me Lily is lactose intolerant so I've been avoiding dairy for her",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "party_details",
+        "value": "The party is the Friday before winter break, during the last hour of school, about 22 kids total",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tommy_transfers",
+        "value": "Tommy's family is moving to Portland, his last day was yesterday actually. The kids made him a card",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_upgrade",
+        "value": "Lily's mom just emailed me a correction — she took Lily to an allergist and it turns out it's not lactose intolerance, it's actually a milk protein allergy. So it's more than just avoiding milk, anything with casein or whey is off limits too",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "ethan_joins",
+        "value": "There's a new kid starting Monday, Ethan. His mom already reached out to me which was nice. She mentioned he was diagnosed with celiac disease last summer so he can't have any gluten",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "teacher_note",
+        "value": "The teacher wants to keep it simple, nothing that needs plates or utensils, just finger food",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_treats",
+        "value": "I'm thinking: Rice Krispie treats, peanut butter cookies, a fruit salad cup, string cheese sticks, brownies, and deviled eggs. How does that look?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "amir_halal",
+        "value": "Cannot eat pork or pork-derived ingredients including gelatin from pork sources",
+        "disclosed": false,
+        "surface_form": "Amir's family is from Syria, his dad mentioned they celebrate Eid and are pretty observant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Syrian family that celebrates Eid and is observant → Muslim",
+          "Muslim → follows halal dietary laws",
+          "Halal → no pork or pork-derived products including pork-based gelatin"
+        ]
+      },
+      {
+        "key": "sophie_treenut",
+        "value": "Cannot eat tree nuts (cashews, almonds, walnuts, pecans, etc.) but peanuts are legumes and are safe unless separately diagnosed",
+        "disclosed": false,
+        "surface_form": "Sophie ate something with cashews at a birthday party and had a severe allergic reaction, throat swelling, needed an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tommy_egg",
+        "value": "Cannot eat eggs or egg-containing products",
+        "disclosed": false,
+        "surface_form": "Tommy can't have eggs, his mom always sends a separate treat for him",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_milk_protein",
+        "value": "Cannot eat anything containing milk protein (casein, whey) — broader than lactose intolerance, covers all dairy products and ingredients derived from milk protein",
+        "disclosed": false,
+        "surface_form": "Lily's mom corrected the earlier info: it's a milk protein allergy, not lactose intolerance, so anything with casein or whey is off limits",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "ethan_celiac",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Ethan was diagnosed with celiac disease last summer so he can't have any gluten",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a room parent planning treats for your son's 2nd grade holiday party. You will share info about kids with dietary needs across several turns, including updates when one kid transfers out, another kid's allergy gets corrected to something more serious, and a new kid joins the class. At the end you will share your treat list and ask how it looks. You must NEVER hint that any specific treat is problematic — just ask for the assistant's review.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a friendly, organized room parent. You relay information from other parents in third person (e.g. 'Lily's mom emailed me...', 'Amir's dad mentioned...'). You never express frustration even when plans change. You treat each update as normal school coordination. When sharing your treat list at the end, present it neutrally without flagging any concerns yourself.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm the room parent for my son's 2nd grade class and we have a holiday party coming up in two weeks. I need to figure out what treats to bring. Any ideas?",
+          "success_criteria": "Agent engages with party treat planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate holiday party treat planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So there are four kids I need to be careful about. My son's friend Amir — his family is from Syria, his dad mentioned they celebrate Eid and are pretty observant. Then there's Sophie, who had a really scary reaction at a birthday party last year — she ate something with cashews and her throat started swelling, they had to use an EpiPen. Tommy can't have eggs, his mom always sends a separate treat for him. And Lily's mom told me Lily is lactose intolerant so I've been avoiding dairy for her",
+          "success_criteria": "Agent acknowledges all four children and their dietary situations",
+          "required_info_keys": [
+            "class_kids_intro",
+            "amir_background",
+            "sophie_allergy",
+            "tommy_allergy",
+            "lily_stomach"
+          ],
+          "required_constraint_keys": [
+            "amir_halal",
+            "sophie_treenut",
+            "tommy_egg"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 4 entities with constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The party is the Friday before winter break, during the last hour of school. There are about 22 kids total in the class. What kind of treats work well for a big group like that?",
+          "success_criteria": "Agent provides suggestions suitable for a large group of young children",
+          "required_info_keys": [
+            "party_details"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Additional party context and noise turn"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh I forgot to mention — Tommy's family is moving to Portland. His last day was actually yesterday, the kids made him a going-away card. So sweet",
+          "success_criteria": "Agent registers that Tommy is no longer in the class",
+          "required_info_keys": [
+            "tommy_transfers"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Tommy leaves, egg allergy constraint should be removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Lily's mom just emailed me a correction — she took Lily to an allergist and it turns out it's not lactose intolerance, it's actually a milk protein allergy. So it's more than just avoiding straight milk, anything with casein or whey is off limits too",
+          "success_criteria": "Agent updates Lily's constraint from lactose intolerance to the broader milk protein allergy",
+          "required_info_keys": [
+            "lily_upgrade"
+          ],
+          "required_constraint_keys": [
+            "lily_milk_protein"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE — lactose intolerance → milk protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh exciting news — there's a new kid starting Monday, his name is Ethan. His mom already reached out to me which was really nice of her. She mentioned he was diagnosed with celiac disease last summer so he can't have any gluten",
+          "success_criteria": "Agent registers Ethan as a new student with celiac disease / gluten restriction",
+          "required_info_keys": [
+            "ethan_joins"
+          ],
+          "required_constraint_keys": [
+            "ethan_celiac"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with significant constraint"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "The teacher also told me she wants to keep it simple — nothing that needs plates or utensils, just finger food basically. How many of each treat do you think I should make for 22 kids?",
+          "success_criteria": "Agent responds about quantities and finger food format",
+          "required_info_keys": [
+            "teacher_note"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "teacher",
+            "drift_topic": "finger food requirement and quantity planning for 22 kids",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn with on-topic logistics question to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should I label everything with ingredients? Some parents at the school are really particular about that",
+          "success_criteria": "Agent responds about labeling without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "ingredient labeling",
+            "drift_topic": "whether to label treats with ingredients for parents",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance between constraints and probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so here's what I'm thinking for the treat lineup: Rice Krispie treats, peanut butter cookies, a fruit salad cup, string cheese sticks, brownies, and deviled eggs. How does that look?",
+          "success_criteria": "Agent identifies: Rice Krispie treats problematic (marshmallows contain gelatin, typically pork-derived, conflicts with Amir's halal constraint); peanut butter cookies problematic for Ethan (contain flour/gluten) but NOT for Sophie (peanuts are legumes, not tree nuts); string cheese sticks problematic for Lily (milk protein); brownies problematic for Ethan (gluten) and Lily (butter/milk); deviled eggs are fine (Tommy who had egg allergy has left); fruit salad is fine for everyone",
+          "required_info_keys": [
+            "probe_treats"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 treats against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Rice Krispie treats are problematic because marshmallows contain gelatin, which is typically derived from pork — this conflicts with Amir's halal dietary requirement (his family is observant Muslim). Peanut butter cookies are problematic for Ethan because they contain wheat flour (gluten), but they are fine for Sophie since peanuts are legumes, not tree nuts — her allergy is specifically to tree nuts like cashews. Fruit salad cups are fine for everyone. String cheese sticks are problematic for Lily because of her milk protein allergy (casein/whey). Brownies are problematic for both Ethan (contain wheat flour, gluten) and Lily (contain butter and likely milk, which have milk protein). Deviled eggs are fine — Tommy, who had the egg allergy, has transferred out of the class.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Rice Krispie treats are problematic for Amir: marshmallows contain gelatin which is typically pork-derived, conflicting with his halal dietary needs",
+      "Peanut butter cookies are problematic for Ethan: they contain wheat flour which contains gluten, and he has celiac disease",
+      "Peanut butter cookies are fine for Sophie: peanuts are legumes, not tree nuts, and her allergy is specifically to tree nuts like cashews",
+      "Fruit salad cups are safe for all current students",
+      "String cheese sticks are problematic for Lily: she has a milk protein allergy and cheese contains casein",
+      "Brownies are problematic for Ethan (gluten from flour) and for Lily (milk protein from butter and dairy ingredients)",
+      "Deviled eggs are fine: Tommy who had the egg allergy has transferred out of the class",
+      "Agent treats Lily's condition as milk protein allergy (the upgraded constraint), not merely lactose intolerance"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut butter cookies as problematic for Sophie (peanuts are not tree nuts — this is an over-generalization)",
+      "Flagging deviled eggs as problematic for Tommy or anyone with an egg allergy (Tommy has left the class)",
+      "Treating Lily's condition as only lactose intolerance (it was upgraded to milk protein allergy)",
+      "Flagging any treat as problematic due to Tommy's egg allergy (he has transferred out)",
+      "Missing the gelatin issue in Rice Krispie treats (this is the hidden ingredient trap — marshmallows → gelatin → pork-derived)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking, inferential constraint reasoning, and hidden ingredient identification across 9 conversational turns. Key challenges: (1) Amir's family is described as observant Syrian Muslims who celebrate Eid — the agent must infer halal dietary laws, specifically that pork-derived gelatin is forbidden, and then recognize that Rice Krispie treats contain marshmallows which contain gelatin typically sourced from pork (3-step hidden ingredient chain: Rice Krispie treats → marshmallows → gelatin → pork). (2) Sophie's tree nut allergy must NOT be over-generalized to peanuts — peanuts are legumes, not tree nuts. (3) Tommy transfers out of the class, so his egg allergy constraint is removed — deviled eggs become safe. (4) Lily's constraint is UPGRADED from lactose intolerance to milk protein allergy, broadening the scope to include all casein/whey-containing products like cheese. (5) Ethan joins late with celiac disease, and the agent must remember to check gluten-containing items against his constraint despite several noise turns between his introduction and the probe."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}
