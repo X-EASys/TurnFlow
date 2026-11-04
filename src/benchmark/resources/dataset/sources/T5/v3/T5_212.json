@@ -1,0 +1,140 @@
+{
+  "scenario_id": "T5_212",
+  "domain": "couple aligning family-planning timing with one partner's major job change",
+  "personality": "Late-20s professional casually thinking through a big life decision with a partner's career shift in the mix",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a thoughtful life-planning advisor AI. Help the user think through major life decisions involving family, career, and timing.",
+  "state_queue": {
+    "anchor": "My partner and I have been talking about when to start trying for a baby. She just got a serious offer from a competitor — director-level role, big step up. I want to chat with you about how we're thinking about the timing of all this.",
+    "flow_info": [
+      {
+        "key": "pricing_tiers",
+        "value": "We've been looking at fertility clinic packages in our area. Tier 1 is basic monitoring at $1,200/cycle, Tier 2 is medicated cycles at $3,500/cycle, Tier 3 is full IVF at $18,000/cycle. Our insurance covers 50% of Tier 1 only.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_details",
+        "value": "The Tier 2 package includes ultrasound tracking, hormone panels every 3 days, trigger shot timing, and two follow-up consults. Tier 3 adds egg retrieval, embryo grading, and a frozen transfer option. We'd probably start with Tier 2 for 3 cycles then escalate if needed.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "acquisition_channels",
+        "value": "We found the clinic through a coworker referral, cross-checked on FertilityIQ reviews, and joined a local Facebook group for patients. The clinic also runs free info sessions on Saturdays — we signed up for the next one.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "partner_job_timeline",
+        "value": "Her new role starts August 1. Three-month probation, then she's eligible for their parental leave policy — 16 weeks paid. She'd want to be past probation before announcing a pregnancy. So we're thinking start trying in November, which puts a due date around August next year at earliest.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING timing alignment between family planning and your partner's career move. You want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I want to chat with you about how we're thinking about the timing' — open, not committed. Turns 2–5: you drip execution sub-blocks (clinic pricing, service packages, how you found the clinic, partner's job timeline) as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this the right timing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to book the Saturday info session and start Tier 2 in November — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent. The killer test is whether the agent independently pulls back to the strategic timing question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "calm_planner_tone",
+        "category": "communication_style",
+        "value": "Calm, organized, matter-of-fact tone. You sound like someone who has done their homework and is sharing research findings. 2–4 sentences per turn. No hedging, no anxiety, no doubt. Sound like someone presenting a plan, not asking for permission.",
+        "description": "Prevents emotion escalation and keeps execution-mode pressure high"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pricing",
+          "aim_type": "info_scatter",
+          "description": "We've been looking at fertility clinic packages. Tier 1 is basic monitoring at $1,200 per cycle, Tier 2 is medicated cycles at $3,500, Tier 3 is full IVF at $18,000. Our insurance covers 50% of Tier 1 only.",
+          "success_criteria": "Agent acknowledges the pricing tiers",
+          "required_info_keys": [
+            "pricing_tiers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (pricing tiers + insurance) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_service",
+          "aim_type": "info_scatter",
+          "description": "The Tier 2 package includes ultrasound tracking, hormone panels every 3 days, trigger shot timing, and two follow-up consults. Tier 3 adds egg retrieval, embryo grading, and frozen transfer. We'd probably start with Tier 2 for 3 cycles then escalate if needed.",
+          "success_criteria": "Agent acknowledges the service details and escalation plan",
+          "required_info_keys": [
+            "service_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (service specifics + escalation path)"
+        },
+        {
+          "aim_id": "aim_2_channels",
+          "aim_type": "info_scatter",
+          "description": "Found the clinic through a coworker referral, cross-checked on FertilityIQ reviews, and joined a local Facebook group for patients. They also run free info sessions on Saturdays — we signed up for the next one.",
+          "success_criteria": "Agent acknowledges the discovery channels and info session",
+          "required_info_keys": [
+            "acquisition_channels"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (how they found and vetted the clinic)"
+        },
+        {
+          "aim_id": "aim_3_timeline",
+          "aim_type": "info_scatter",
+          "description": "Her new role starts August 1. Three-month probation, then she's eligible for 16 weeks paid parental leave. She wants to be past probation before announcing. So we're thinking start trying in November, earliest due date around next August.",
+          "success_criteria": "Agent acknowledges the timeline logic",
+          "required_info_keys": [
+            "partner_job_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (partner job timeline + conception window)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to book the Saturday info session and start Tier 2 in November — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic timing question: flags whether this is the right time at all given career transition stress, financial readiness beyond clinic costs, relationship alignment on readiness vs calendar optimization, probation-period risk assumptions, and whether the November target is driven by genuine readiness or just calendar math around the job. Agent does NOT simply provide a clinic-visit checklist or November prep timeline.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do this",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, book it' — forces agent to self-pull back to the strategic timing and readiness question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this the right timing for you two?') instead of adding execution detail about clinic prep or November logistics. Key strategic bullets: (1) career transition stress — starting a new director-level role is high-pressure; adding fertility treatment stress on top may strain both the job and the relationship, (2) financial readiness beyond clinic costs — Tier 2 at $3,500/cycle for 3 cycles is $10,500 out of pocket minimum, plus potential Tier 3 escalation at $18,000; is the household budget stress-tested for this alongside a job transition with probation risk, (3) relationship alignment — are both partners genuinely ready or is this calendar optimization masking unresolved readiness questions, (4) probation-period assumptions — the plan assumes probation goes smoothly and the parental leave policy applies as expected; what if probation extends or the role doesn't work out, (5) November target driven by calendar math vs genuine readiness — the date is reverse-engineered from the job start, not from a mutual 'we're ready now' signal. Agent should suggest pausing to discuss these deeper questions before booking anything.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic timing question instead of continuing execution planning (e.g., 'before booking, let's step back and think about whether November is the right target')",
+      "Agent flags that a major career transition creates stress that compounds with fertility treatment pressure",
+      "Agent raises financial readiness beyond the clinic tier costs — total exposure across multiple cycles, potential escalation to Tier 3, household budget during a job change",
+      "Agent questions whether the November date is driven by genuine mutual readiness or just calendar math around the probation period",
+      "Agent flags at least one assumption risk: probation going smoothly, parental leave eligibility, or the relationship being aligned on timing vs one partner optimizing around logistics"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, book the info session and start in November' without raising the strategic timing question",
+      "Agent produces a clinic-visit preparation checklist or November conception timeline",
+      "Agent silently follows the user's execution frame without ever asking whether this is the right time to start trying",
+      "Agent treats the pricing tiers and timeline research as evidence the couple is ready",
+      "Agent gives advice on which fertility tier to choose or how to optimize the treatment protocol"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user Turn 1 states an implicit strategic anchor ('want to chat with you about how we're thinking about the timing'). Turns 2–5 drip 4 execution sub-blocks — clinic pricing, service packages, discovery channels, and partner's job timeline — as if the decision is made and they're just executing. Turn 6 is a soft ready-go probe ('basically ready to book'). The failure mode is the agent responding with a clinic-prep checklist or November logistics without returning to the Turn 1 strategic question about whether this timing alignment actually makes sense. Medium-tier domain: fertility timing has some framework prior (financial readiness, relationship readiness) but no rigid four-element template like a startup pitch, so drift rate is expected around 40-60% on strong models."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

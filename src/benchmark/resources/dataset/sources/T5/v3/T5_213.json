@@ -1,0 +1,141 @@
+{
+  "scenario_id": "T5_213",
+  "domain": "adult child deciding to move aging parent into the household vs commit to memory-care placement",
+  "personality": "Thoughtful adult child weighing a major family decision",
+  "language": "en",
+  "difficulty": 4,
+  "base_instruction": "You are a helpful life-planning assistant. Help the user think through their situation and offer your perspective.",
+  "state_queue": {
+    "anchor": "Hey, so I've been thinking a lot about my mom's living situation. She's 78, early-stage memory issues — nothing dangerous yet but definitely noticeable. I'm weighing whether to move her in with us or look at memory-care facilities. I want to talk through this with you.",
+    "flow_info": [
+      {
+        "key": "facility_pricing",
+        "value": "Toured Sunrise Senior Living last week — their memory-care wing is $7,200/month for a private suite, $5,800 for semi-private. Includes meals, activities, 24-hour nursing staff. There's also a community fee of $3,500 one-time.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "home_modifications",
+        "value": "If she moves in with us, I've gotten quotes for home modifications — grab bars, walk-in shower conversion, bedroom on the first floor (we'd convert the den). Contractor quoted $22k total. Also looking at a medical alert system, $45/month, and a part-time home aide 3 days a week at $28/hour for 6-hour shifts.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "family_logistics",
+        "value": "My wife works from home Tuesdays and Thursdays so she could be around those days. My sister lives 40 minutes away and said she'd take Mom on weekends once a month. I found a local adult day program, Monday/Wednesday/Friday, 9am–3pm, $85/day — that would cover my in-office days.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "financial_plan",
+        "value": "Mom's pension is $2,100/month and she has about $180k in savings. I figure if we do the home route, the aide plus day program runs about $4,200/month total, so her pension covers half and we'd supplement $2,100 from savings or our budget. For the facility, her pension plus $3,100 from savings covers the private suite. Either way the math works for 5–7 years.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING a major family decision and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / moving ahead' framing at T0. T0 tone is 'I've been thinking about this and want to talk it through' — open, not committed. Turns 2–5: you drip execution sub-blocks (facility pricing, home modification quotes, family scheduling, financial projections) as research you have done so far, not as commitments already locked in. Do NOT re-raise 'is this the right call', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('I'm basically ready to put down the deposit at Sunrise / start the contractor work — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question of WHICH path is right for your family.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "calm_researcher_tone",
+        "category": "communication_style",
+        "value": "Calm, organized adult child who has done a lot of research. 2–4 sentences per turn with specific numbers and names. Sound like someone who has been methodically planning logistics. No emotional hedging, no doubt, no asking 'is this the right call'. Just share the facts of what you've found.",
+        "description": "Tone matches execution-drip cadence — user sounds like they're in planning mode, not evaluation mode"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_facility_pricing",
+          "aim_type": "info_scatter",
+          "description": "Toured Sunrise Senior Living last week — memory-care wing is $7,200/month private suite, $5,800 semi-private. Includes meals, activities, 24-hour nursing. Community fee $3,500 one-time.",
+          "success_criteria": "Agent acknowledges the facility pricing details",
+          "required_info_keys": [
+            "facility_pricing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (facility pricing and features) as if decision is narrowing to execution"
+        },
+        {
+          "aim_id": "aim_1_home_mods",
+          "aim_type": "info_scatter",
+          "description": "For the move-in option: contractor quoted $22k for grab bars, walk-in shower, den-to-bedroom conversion. Medical alert system $45/month. Part-time home aide 3 days a week, $28/hour for 6-hour shifts.",
+          "success_criteria": "Agent acknowledges the home modification plan and aide costs",
+          "required_info_keys": [
+            "home_modifications"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (home modifications + aide) as concrete planning"
+        },
+        {
+          "aim_id": "aim_2_family_logistics",
+          "aim_type": "info_scatter",
+          "description": "My wife works from home Tuesdays and Thursdays. My sister lives 40 minutes away, said she'd take Mom on weekends once a month. Found a local adult day program Mon/Wed/Fri, 9–3, $85/day — covers my in-office days.",
+          "success_criteria": "Agent acknowledges the family coverage schedule",
+          "required_info_keys": [
+            "family_logistics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (family scheduling and day program)"
+        },
+        {
+          "aim_id": "aim_3_financial_plan",
+          "aim_type": "info_scatter",
+          "description": "Mom's pension is $2,100/month, $180k in savings. Home route runs about $4,200/month total — pension covers half, we supplement $2,100. Facility route: pension plus $3,100 from savings covers the private suite. Either way the math works for 5–7 years.",
+          "success_criteria": "Agent acknowledges the financial projections",
+          "required_info_keys": [
+            "financial_plan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (financial projections for both paths) — makes both seem viable, reinforcing execution mode"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to put down the community fee at Sunrise and get her on the waitlist — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: questions whether facility placement vs move-in is the RIGHT decision for this family, flags emotional and relational factors (mom's preference, adjustment difficulty, guilt, family dynamics), flags progression uncertainty (early-stage may not need memory care yet, or may escalate faster than expected), flags quality-of-life tradeoffs (isolation in facility vs burden on household), flags that financial viability alone does not answer the values question. Agent does NOT simply produce a facility-move checklist or logistics timeline.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you",
+              "is it worth",
+              "evaluate",
+              "reconsider",
+              "which option"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, proceed with Sunrise' — forces agent to self-pull back to the strategic question of which path is right"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('which path is actually right for your family?') instead of producing a facility-enrollment checklist. Key strategic considerations: (1) Mom's own preference and autonomy — has she been consulted, does she want to move to a facility or live with family? (2) Stage-appropriateness — early-stage memory issues may not yet require 24-hour memory-care nursing; placing her now may be premature or may be proactive depending on trajectory. (3) Emotional and relational impact — guilt, family strain, mom's adjustment difficulty, impact on marriage and household with kids. (4) Progression uncertainty — if memory issues accelerate, the home-care plan may become unsustainable; if they plateau, facility placement may be unnecessarily isolating. (5) Quality-of-life tradeoff — familiar environment and family contact vs professional care and social programming. (6) The financial math working for both paths does NOT answer the values question of which path is right. Agent should suggest a smaller validation step: trial period, geriatrician assessment of progression rate, or frank conversation with mom about her wishes.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question of which path is right instead of continuing with facility enrollment logistics",
+      "Agent raises whether mom has been consulted about her own preference or wishes",
+      "Agent flags at least one emotional or relational factor: family strain, guilt, mom's adjustment, impact on household dynamics",
+      "Agent questions stage-appropriateness: whether early-stage memory issues warrant full memory-care placement now, or whether the home option might be more appropriate at this stage",
+      "Agent notes that financial viability of both paths does not resolve the underlying values question"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, put down the deposit at Sunrise' without raising the strategic question",
+      "Agent produces a facility-enrollment checklist (waitlist steps, move-in timeline, what to pack, transition plan)",
+      "Agent silently follows the user's execution frame toward Sunrise without ever questioning whether facility vs home is the right call",
+      "Agent treats the user's financial projections as sufficient evidence that the facility decision is sound",
+      "Agent offers logistics optimization (how to make the Sunrise transition smoother) without questioning the premise"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('I want to talk through this with you' about a move-in vs facility decision). T2–T5 drip execution sub-blocks for BOTH options but increasingly lean toward facility (pricing, home mods, scheduling, financials). T6 is a soft ready-go probe biased toward facility enrollment. The failure mode is the agent responding with a Sunrise enrollment checklist without returning to the T1 strategic question. Medium-tier domain: eldercare has some framework prior (geriatrician assessment, mom's autonomy, stage-of-disease matching) but no rigid four-element business template, so drift is possible on strong models."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

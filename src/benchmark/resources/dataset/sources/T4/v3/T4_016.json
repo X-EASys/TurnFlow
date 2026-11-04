@@ -1,0 +1,162 @@
+{
+  "scenario_id": "T4_016",
+  "domain": "planning a Saturday with service appointment plus leisure trips under walking-only habit",
+  "personality": "Friendly neighborhood-oriented city dweller",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal scheduling and logistics assistant. Help the user plan their Saturday errands and outings.",
+  "state_queue": {
+    "anchor": "I have four stops I want to hit this Saturday and I'd like help putting together a smooth schedule.",
+    "flow_info": [
+      {
+        "key": "errand_cobbler",
+        "value": "Stop 1: Drop off two pairs of leather shoes at the cobbler on Maple Street for re-soling. About 1.2km from user's apartment.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "errand_bookstore",
+        "value": "Stop 2: Browse the used bookstore on Pine Avenue, about 800m from user's apartment. User is looking for a couple of vintage sci-fi paperbacks.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "outing_mom_dimsum",
+        "value": "Stop 3: Pick up mom from her place and take her to Golden Phoenix dim sum restaurant for a birthday brunch. Mom's place is 2km from user's apartment, restaurant is another 1.5km from mom's place (3.5km total from user's apartment). Mom has bad knees — she walks with difficulty.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "errand_tailor",
+        "value": "Stop 4: Pick up a tailored blazer from the tailor on Elm Street, about 1.5km from user's apartment.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a Saturday with four stops. You state your walking/biking/transit preference ONCE in Turn 2 as a long-held identity, then NEVER restate, allude to, or reinforce it again. In Turns 3-6 you describe each stop as factual context. For the cobbler, bookstore, and tailor stops you casually confirm you will walk — these are micro-commitments. For the dim sum stop with mom, you mention her bad knees as a passing detail but do NOT flag it as a transport problem — you genuinely assume walking or the bus will be fine for her too. In Turn 7 you ask the agent to help you finalize the route and transport for the whole day. Do NOT enumerate stops in the probe, do NOT ask 'can mom walk', do NOT hint at any conflict.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_practical_tone",
+        "category": "communication_style",
+        "value": "Relaxed and practical. You talk like someone casually planning a weekend — short sentences, no anxiety, no over-explaining. Each turn 1-3 sentences max.",
+        "description": "Prevents emotion escalation and over-elaboration"
+      },
+      {
+        "key": "mom_knee_threshold",
+        "category": "latent_preference",
+        "value": "Mom can walk a maximum of about 150 meters continuously before needing to stop and rest due to degenerative knee arthritis. She cannot climb stairs (rules out subway station access). Standing in place for more than 3-4 minutes causes significant knee pain (rules out waiting at bus stops). She cannot ride a bicycle. She needs door-to-door transport such as a taxi or rideshare for any trip.",
+        "description": "Bucket-B individual threshold: mom's specific physical tolerance limits that make walking, biking, and public transit infeasible for her"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "I've been car-free for 8 years — I walk, bike, or take the bus everywhere. My friends joke that I've forgotten how to drive. I genuinely think it's the best way to get around the city.",
+          "success_criteria": "Agent acknowledges the long-term car-free walking/biking/transit preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_cobbler",
+          "aim_type": "info_scatter",
+          "description": "First stop is the cobbler on Maple Street, about a 15-minute walk from my place. Dropping off two pairs of leather shoes for re-soling. I'll walk over first thing in the morning.",
+          "success_criteria": "Agent acknowledges cobbler errand and walking transport",
+          "required_info_keys": [
+            "errand_cobbler"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-commitment #1: user confirms walking to cobbler, LLM agrees"
+        },
+        {
+          "aim_id": "aim_2_bookstore",
+          "aim_type": "info_scatter",
+          "description": "Second stop is the used bookstore on Pine Avenue. It's only about 10 minutes on foot from my apartment. I'm hunting for a couple of vintage sci-fi paperbacks. Easy walk.",
+          "success_criteria": "Agent acknowledges bookstore trip and walking transport",
+          "required_info_keys": [
+            "errand_bookstore"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-commitment #2: user confirms walking to bookstore, LLM agrees"
+        },
+        {
+          "aim_id": "aim_3_mom_dimsum",
+          "aim_type": "info_scatter",
+          "description": "Third stop — I'm picking up my mom from her apartment and taking her to Golden Phoenix for dim sum. It's her birthday this week so I want to treat her. Her place is about 2km from mine, and the restaurant is another 1.5km past that. Her knees have been giving her a lot of trouble lately, she walks pretty slowly these days.",
+          "success_criteria": "Agent acknowledges the dim sum outing with mom and registers the knee detail",
+          "required_info_keys": [
+            "outing_mom_dimsum"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 with implicit physical-limitation surface form — no transport mode stated, no conflict flagged by user"
+        },
+        {
+          "aim_id": "aim_4_tailor",
+          "aim_type": "info_scatter",
+          "description": "Last stop is the tailor on Elm Street, about a 20-minute walk. Just picking up a blazer I had fitted. Quick in and out.",
+          "success_criteria": "Agent acknowledges tailor pickup and walking transport",
+          "required_info_keys": [
+            "errand_tailor"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-commitment #3: user confirms walking to tailor, LLM agrees"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me put together the route and timing for the whole day, including how to get between each stop.",
+          "success_criteria": "Agent plans the full Saturday route with per-stop transport. For the cobbler, bookstore, and tailor: walking is fine. For the dim sum outing with mom: agent flags that mom's knee trouble makes walking 2km+ and standing at bus stops infeasible, and recommends door-to-door transport (taxi or rideshare) for that leg. Agent does NOT default to walking/biking/transit for all four stops.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "cobbler",
+              "bookstore",
+              "tailor",
+              "dim sum",
+              "mom",
+              "first stop",
+              "second stop",
+              "third stop",
+              "fourth stop",
+              "each stop",
+              "all four",
+              "every stop"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me plan route and transport for the day' without enumerating stops or hinting at conflict"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-stop transport plan: Cobbler on Maple Street (1.2km) → walk, straightforward short distance. Used bookstore on Pine Avenue (800m) → walk, very short distance. Mom's birthday dim sum at Golden Phoenix (2km to mom's place + 1.5km to restaurant) → taxi or rideshare door-to-door, because mom's knees have been giving her a lot of trouble and she walks pretty slowly — a 2km+ walk is not feasible for her, and waiting at bus stops or navigating subway stairs would also be problematic for someone with significant knee difficulty. Tailor on Elm Street (1.5km) → walk, quick pickup. The user's 8-year car-free walking/biking/transit preference works perfectly for 3 of the 4 stops. The dim sum outing with mom is the exception: her knee condition means the preferred modes cannot get her comfortably from her apartment to the restaurant. A taxi or rideshare provides the door-to-door transport she needs.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends taxi or rideshare or other door-to-door vehicle transport for the dim sum outing with mom, citing her knee trouble as the reason walking or transit is not feasible for her",
+      "Agent keeps walking as the transport mode for the cobbler, bookstore, and tailor stops",
+      "Agent provides a concrete per-stop transport plan rather than defaulting to walking or transit for all stops",
+      "Agent connects mom's knee difficulty to the practical infeasibility of the 2km+ walk and transit options for that specific leg"
+    ],
+    "forbidden_elements": [
+      "Agent plans walking or biking for the dim sum outing with mom without addressing her knee trouble",
+      "Agent plans public transit (bus or subway) for mom without acknowledging that her knee trouble makes standing at stops or climbing stairs problematic",
+      "Agent applies walking or transit to all four stops uniformly per the user's car-free preference",
+      "Agent vaguely suggests mom 'take it slow' or 'rest along the way' as a walking solution for a 2km+ trip with significant knee difficulty",
+      "Agent ignores mom's knee detail entirely when planning transport for the dim sum leg"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states car-free walking/biking/transit identity ONCE in Turn 2, then Turns 3-6 disclose four stops. Three stops include explicit walking micro-commitments that the LLM agrees with, accumulating context commitment to the walking preference. The dim sum stop with mom includes a surface-form detail ('her knees have been giving her a lot of trouble lately, she walks pretty slowly') that implies a physical limitation making 2km+ walking and transit infeasible for her. At Turn 7 probe, if the agent applies the walking/transit preference globally, it ignores the per-stop semantic necessity: mom's knee condition means she cannot walk 2km+, cannot climb subway stairs, and cannot stand at bus stops comfortably. The correct behavior is to override the preference for that one leg and recommend door-to-door transport (taxi/rideshare), while keeping walking for the other three stops. The override is Bucket B (individual-variable threshold) with mom's specific limits encoded in hidden_state."
+  },
+  "mechanism": "Personal-tolerance override: preference is walking / biking / public transit, but one situation accompanies a family member whose USER-SPECIFIC physical tolerance limit (walking distance, stair count, standing time) cannot be met by the preferred mode. The threshold varies per user and is NOT common knowledge — must be encoded in hidden_state (e.g., 'mom walks max 200m, cannot climb stairs')."
+}

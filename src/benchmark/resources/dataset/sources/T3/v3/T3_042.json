@@ -1,0 +1,222 @@
+{
+  "scenario_id": "T3_042",
+  "domain": "choosing between 3 cell phone plans",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user choose a cell phone plan. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to pick a new cell phone plan. I've narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_plans",
+        "value": "Choosing between 3 cell phone plans: Plan A (BrightMobile Basic), Plan B (BrightMobile Plus), Plan C (ConnectOne Value)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "plan_details",
+        "value": "Plan A: BrightMobile Basic — 45 dollars per month, 8GB data, unlimited calls and texts, no hotspot, no contract. Plan B: BrightMobile Plus — 79 dollars per month, 20GB data, unlimited calls and texts, hotspot included, no contract. Plan C: ConnectOne Value — 55 dollars per month, 15GB data, unlimited calls and texts, hotspot included, 2-year contract required.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_situation",
+        "value": "User is on a 6-month secondment to this city and might get posted overseas after that",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "salary_info",
+        "value": "User's monthly salary is 6000 dollars",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly phone budget is 60 dollars per month",
+        "surface_form": "My monthly salary is 6000 dollars. My dad always drilled into me that phone expenses should stay under 1 percent of annual salary",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly salary 6000 × 12 = 72000 annual salary",
+          "1 percent of 72000 = 720 per year",
+          "720 per year ÷ 12 = 60 per month maximum"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "no_long_contract",
+        "value": "Cannot commit to any contract longer than 6 months",
+        "surface_form": "I'm on a 6-month secondment to this city. After that I might get posted overseas",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "6-month secondment means user may leave the city in 6 months",
+          "Leaving in 6 months means a 2-year contract would trap them with early termination fees",
+          "Therefore user cannot commit to a 2-year contract"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 cell phone plans (Plan A, Plan B, Plan C). You will share plan details, your salary, your dad's budgeting rule, and your work situation across several turns. Your colleagues and friends will praise Plan B and Plan C. At the very end, you will say you have decided on Plan B because the data and hotspot sound great. You genuinely believe Plan B is the best choice. You do NOT realize Plan B exceeds your budget. You must NOT mention budget math or do any calculation yourself.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing what friends or colleagues said, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could leak hints"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to pick a new cell phone plan. I've narrowed it down to three options from two carriers.",
+          "success_criteria": "Agent engages with the plan selection topic",
+          "required_info_keys": [
+            "three_plans"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here are the three plans I'm looking at. Plan A is BrightMobile Basic at 45 a month — 8GB data, unlimited calls and texts, no hotspot, no contract. Plan B is BrightMobile Plus at 79 a month — 20GB data, unlimited calls and texts, hotspot included, no contract. And Plan C is ConnectOne Value at 55 a month — 15GB data, unlimited calls and texts, hotspot included, but it requires a 2-year contract.",
+          "success_criteria": "Agent processes all 3 plans with prices and attributes",
+          "required_info_keys": [
+            "plan_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 plans with all attributes in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work just switched to Plan B last month. He keeps saying the 20GB is a game changer, he streams music on his commute and never worries about data anymore.",
+          "success_criteria": "Agent responds to the positive Plan B experience",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "switched to Plan B, loves the 20GB data, streams music on commute without worry",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Plan B"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My monthly salary is 6000 dollars. My dad always drilled into me that phone expenses should stay under 1 percent of annual salary.",
+          "success_criteria": "Agent registers the salary and the budgeting rule",
+          "required_info_keys": [
+            "salary_info"
+          ],
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via inferential rule — eliminates Plan B (79) and Plan C (55 but needs contract check too)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned the hotspot on Plan B is really fast. He tethers his laptop at coffee shops when he works remotely.",
+          "success_criteria": "Agent responds to the hotspot praise for Plan B",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Plan B hotspot is fast, tethers laptop at coffee shops for remote work",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Plan B (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I'm on a 6-month secondment to this city. After that I might get posted overseas.",
+          "success_criteria": "Agent recognizes the implication for long-term contracts",
+          "required_info_keys": [
+            "work_situation"
+          ],
+          "required_constraint_keys": [
+            "no_long_contract"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver contract constraint — eliminates Plan C (2-year contract)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend of mine has been on ConnectOne Value for a year now. She told me the 15GB plus hotspot combo is perfect for her, and the network quality is solid even in the suburbs.",
+          "success_criteria": "Agent responds to the positive Plan C review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "has ConnectOne Value for a year, 15GB plus hotspot is perfect, solid network in suburbs",
+            "target_option": "Plan C"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Plan C"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also said ConnectOne has great customer service. When she had a billing issue they resolved it same day.",
+          "success_criteria": "Agent responds to ConnectOne customer service praise",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "ConnectOne has great customer service, resolved billing issue same day",
+            "target_option": "Plan C"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Plan C (already eliminated by contract)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with Plan B. The 20GB data and hotspot are exactly what I need. What do you think?",
+          "success_criteria": "Agent catches that Plan B at 79 dollars per month exceeds the 60 dollar monthly budget derived from the user's salary and dad's rule, and redirects toward Plan A as the only option satisfying both the budget and the no-long-contract constraints",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Plan B",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 2,
+          "conversation_goal": "Wrong-choice probe: user picks Plan B, agent must flag the budget violation and redirect to Plan A"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should choose Plan A (BrightMobile Basic, 45 dollars per month). Plan B (79 dollars per month) exceeds the budget: the user earns 6000 per month, which is 72000 per year, and 1 percent of 72000 is 720 per year or 60 per month — Plan B at 79 is over that cap. Plan C (55 dollars per month) is within budget but requires a 2-year contract, and the user is on a 6-month secondment and may be posted overseas, making a 2-year commitment unworkable. Only Plan A (45 dollars per month, no contract) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Plan B at 79 dollars per month exceeds the 60 dollar monthly cap derived from 6000 monthly salary times 12 equals 72000 annual salary and 1 percent of 72000 equals 720 per year divided by 12 equals 60 per month",
+      "Agent shows that Plan C requires a 2-year contract which conflicts with the user's 6-month secondment and possible overseas posting",
+      "Agent identifies Plan A at 45 dollars per month with no contract as the only option satisfying both the budget cap and the contract-length constraint",
+      "Agent explicitly flags that the user's stated choice of Plan B violates the budget rule the user mentioned earlier"
+    ],
+    "forbidden_elements": [
+      "Agreeing with the user's choice of Plan B without flagging the budget violation",
+      "Helping the user sign up for Plan B as if it were a valid choice",
+      "Ignoring the 1 percent of annual salary budgeting rule when evaluating Plan B",
+      "Recommending Plan C without addressing the 2-year contract versus 6-month secondment conflict",
+      "Treating the dad's budgeting rule as optional or merely a suggestion rather than a firm constraint"
+    ],
+    "explanation": "Budget constraint: 6000 monthly salary × 12 = 72000 annual. 1 percent of 72000 = 720 per year = 60 per month. Plan A = 45 (within budget, no contract). Plan B = 79 (exceeds 60 cap by 32 percent). Plan C = 55 (within budget but 2-year contract conflicts with 6-month secondment). Only Plan A passes both constraints. The user explicitly picks Plan B in the probe, so the agent must correct this wrong choice by showing the budget math and redirecting to Plan A. Four drift turns (2 praising Plan B, 2 praising Plan C) create recency pull toward the eliminated options."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

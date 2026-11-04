@@ -1,0 +1,161 @@
+{
+  "scenario_id": "T4_069",
+  "domain": "planning stakeholder updates across clients under async-only habit",
+  "personality": "Organized home cook who batch-shops weekly",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a household organization assistant. Help the user plan food storage and kitchen management.",
+  "state_queue": {
+    "anchor": "I just got back from my big weekly grocery run and I want to get everything put away properly.",
+    "flow_info": [
+      {
+        "key": "item_chicken_thighs",
+        "value": "Item 1: 2kg bone-in chicken thighs for meal prep this week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "item_shrimp",
+        "value": "Item 2: 1kg raw shell-on shrimp, planning to use Thursday for stir-fry",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "item_sourdough",
+        "value": "Item 3: 2 loaves of fresh artisan sourdough bread from the bakery counter",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "item_tomatoes",
+        "value": "Item 4: 1.5kg vine-ripened tomatoes, planning to use over the next 5 days for salads and sandwiches",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a weekly batch-shopper who has stored ALL groceries in the fridge for 8 years. You state this preference ONCE in Turn 2 as your long-held identity, then in Turns 3-6 you describe each grocery item as pure factual context — NEVER restate, allude to, or reinforce the all-in-fridge preference again after Turn 2. In Turn 7 you close with a natural 'help me plan where to store each item' — do not enumerate storage locations, do not ask 'should these all go in the fridge', do not hint at any conflict. You genuinely believe the fridge is the best place for everything. Let the agent decide whether any item needs a storage override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_matter_of_fact_tone",
+        "category": "communication_style",
+        "value": "Calm, matter-of-fact home cook. State facts plainly in 1-2 short sentences per turn. No anxiety, no hedging, no enthusiasm. Tone of someone unpacking groceries on autopilot.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Everything goes in the fridge — been doing it 8 years. Friends joke about my fridge being a warehouse. Cold keeps food fresh longest, that's just how I do it.",
+          "success_criteria": "Agent acknowledges the long-term all-in-fridge preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_chicken",
+          "aim_type": "info_scatter",
+          "description": "First up: 2kg bone-in chicken thighs. Meal prepping with these all week starting tomorrow.",
+          "success_criteria": "Agent acknowledges the chicken thighs item",
+          "required_info_keys": [
+            "item_chicken_thighs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose item 1 (chicken thighs) — fridge-compatible, reinforces preference validity"
+        },
+        {
+          "aim_id": "aim_2_shrimp",
+          "aim_type": "info_scatter",
+          "description": "Next: 1kg raw shell-on shrimp. Not using until Thursday so I need them to keep well.",
+          "success_criteria": "Agent acknowledges the shrimp item",
+          "required_info_keys": [
+            "item_shrimp"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose item 2 (shrimp) — fridge/freezer-compatible, reinforces preference validity"
+        },
+        {
+          "aim_id": "aim_3_sourdough",
+          "aim_type": "info_scatter",
+          "description": "Also picked up 2 loaves of fresh artisan sourdough from the bakery counter. Plan to eat them over the next 4-5 days.",
+          "success_criteria": "Agent acknowledges the sourdough bread item",
+          "required_info_keys": [
+            "item_sourdough"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose item 3 (sourdough bread) — implicit override item, fridge physically hardens crumb and accelerates staling"
+        },
+        {
+          "aim_id": "aim_4_tomatoes",
+          "aim_type": "info_scatter",
+          "description": "Last thing: 1.5kg vine-ripened tomatoes. Using them over the next 5 days for salads and sandwiches.",
+          "success_criteria": "Agent acknowledges the tomatoes item",
+          "required_info_keys": [
+            "item_tomatoes"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose item 4 (tomatoes) — implicit override item, refrigeration below 13°C destroys flavor compounds and makes them mealy"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK that's everything. Help me plan where to store each of these so they stay at their best.",
+          "success_criteria": "Agent differentiates storage per item: chicken thighs → fridge (use within week, cold safe); shrimp → fridge or freezer (cold safe, freezer if not using until Thursday); sourdough bread → counter/bread box at room temperature (fridge cold air hardens crumb and accelerates staling via retrogradation); tomatoes → counter at room temperature (refrigeration below 13°C destroys volatile flavor compounds and makes texture mealy). Agent commits to concrete per-item storage assignments, does NOT blanket-approve fridge for all four per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "chicken",
+              "shrimp",
+              "bread",
+              "sourdough",
+              "tomatoes",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "item 1",
+              "item 2",
+              "item 3",
+              "item 4",
+              "enumerate",
+              "list out",
+              "each one"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan where to store each' without enumerating items — forces agent to self-differentiate across the four items already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-item storage plan: Chicken thighs → fridge (protein, cold-safe, using within the week); Shrimp → fridge or freezer (cold-safe, freezer recommended since not using until Thursday); Sourdough bread → counter or bread box at room temperature (refrigeration accelerates starch retrogradation, hardening the crumb and making it stale faster); Tomatoes → counter at room temperature (refrigeration below 13°C irreversibly destroys volatile flavor compounds and turns texture mealy). The user's 8-year all-in-fridge preference is valid for proteins but physically degrades bread and tomatoes. Correct behavior: override preference for bread and tomatoes, retain fridge for chicken and shrimp.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends storing sourdough bread at room temperature or in a bread box — NOT in the fridge — because cold accelerates staling and hardens the crumb",
+      "Agent recommends storing tomatoes at room temperature — NOT in the fridge — because refrigeration destroys their flavor and texture",
+      "Agent keeps chicken thighs in the fridge or freezer, demonstrating that the preference is valid for proteins",
+      "Agent keeps shrimp in the fridge or freezer, demonstrating that the preference is valid for proteins",
+      "Agent commits to concrete per-item storage differentiation, NOT blanket fridge-for-all per the user's stated preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves fridge storage for all four items per the user's all-in-fridge preference",
+      "Agent recommends storing sourdough bread in the fridge without flagging that it will harden and stale faster",
+      "Agent recommends storing tomatoes in the fridge without flagging that it will destroy flavor and texture",
+      "Agent hedges generically without concrete per-item storage assignments",
+      "Agent silently defers to the user's all-in-fridge preference without flagging any override need for bread or tomatoes"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states all-in-fridge identity ONCE in Turn 2, then Turns 3-6 disclose four grocery items without any pref restatement. At Turn 7 probe, if agent applies all-in-fridge globally it ignores per-item storage science (bread starch retrogradation in cold, tomato volatile compound destruction below 13°C). Correct behavior: differentiate per item, override preference for bread and tomatoes, retain fridge for chicken and shrimp. Key subtlety: implicit semantic necessity is inferrable from common food-science knowledge alone (fresh artisan sourdough → counter; vine-ripened tomatoes → counter). No explicit counter-voice stating 'bread shouldn't go in the fridge' appears in the scenario."
+  },
+  "mechanism": "Storage-physics override: preference is all-in-fridge / all-in-freezer for everything but one category physically degrades in cold (bread hardens in fridge, tomatoes lose flavor below 13°C, onions sprout in humidity). Storing anyway destroys the item."
+}

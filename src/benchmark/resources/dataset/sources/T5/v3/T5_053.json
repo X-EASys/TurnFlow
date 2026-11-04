@@ -1,0 +1,139 @@
+{
+  "scenario_id": "T5_053",
+  "domain": "direct-to-consumer skincare brand launch",
+  "personality": "Enthusiastic first-time founder exploring a skincare brand idea",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a business strategy and brand-building advisor AI. Help the user think through and advance their consumer brand project.",
+  "state_queue": {
+    "anchor": "I've been thinking about launching a direct-to-consumer skincare brand — clean ingredients, minimalist packaging, targeting millennial women. I want to talk through this idea with you.",
+    "flow_info": [
+      {
+        "key": "product_formulation",
+        "value": "Starting with 3 SKUs: a vitamin C serum ($38 retail), a hyaluronic acid moisturizer ($42 retail), and a gentle cleanser ($28 retail). Contract manufacturer in New Jersey quoted $6–$9 per unit at 500-unit MOQ per SKU. Packaging sourced from a supplier in Shenzhen, $2.50 per unit landed.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "brand_positioning_pivot",
+        "value": "Actually been rethinking the customer — a friend who runs a med-spa chain said she'd stock my line if I offered wholesale at 40% off retail. That's 3 locations, roughly 200 units per month combined. Also talked to a boutique hotel group about amenity kits — they want 500-unit minimums at $4 per unit.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sales_funnel",
+        "value": "For DTC: Shopify store launching in 6 weeks, Meta ads budget $3k/month, targeting 3% conversion on a $45 AOV. Influencer seeding program — sending 50 free kits to micro-influencers on Instagram and TikTok. Also setting up a subscription box: 15% discount for quarterly auto-ship.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "b2b_expansion",
+        "value": "The med-spa friend introduced me to a regional distributor who covers 40 indie beauty retailers across the Northeast. They want exclusive regional rights for 18 months and a 50% wholesale discount. I'd need to hit 2,000 units/month to keep them stocked. Also exploring Amazon FBA as a parallel channel — a friend said margins are tight but volume makes up for it.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING a DTC skincare brand idea and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to talk it through' — open, not committed. Turns 2–5: you drip execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Each turn introduces more concrete execution detail, and by turns 4–5 you are drifting from DTC into wholesale and distributor channels without questioning whether the original DTC premise still holds. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to place the first manufacturing order, anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5 with B2B pivot drift, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "eager_founder_tone",
+        "category": "communication_style",
+        "value": "Energetic but not manic first-time founder tone. 2–4 sentences per turn. Share details matter-of-factly as things you have researched and lined up. No hedging, no doubt, no risk-flagging. Sound like someone who has been doing homework and is building momentum.",
+        "description": "Tone that reinforces execution momentum without explicit over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_product_formulation",
+          "aim_type": "info_scatter",
+          "description": "Starting with 3 SKUs — vitamin C serum at $38, hyaluronic acid moisturizer at $42, gentle cleanser at $28. Contract manufacturer in New Jersey quoted $6–$9 per unit at 500-unit MOQ per SKU. Packaging from Shenzhen, $2.50 per unit landed.",
+          "success_criteria": "Agent acknowledges the product line and cost structure",
+          "required_info_keys": [
+            "product_formulation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (product + COGS) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_positioning_pivot",
+          "aim_type": "info_scatter",
+          "description": "Actually been rethinking the customer a bit — a friend who runs a med-spa chain said she'd stock my line if I offered wholesale at 40% off retail. That's 3 locations, roughly 200 units a month combined. Also talked to a boutique hotel group about amenity kits — they want 500-unit minimums at $4 per unit.",
+          "success_criteria": "Agent acknowledges the wholesale and hotel channel details",
+          "required_info_keys": [
+            "brand_positioning_pivot"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (B2B pivot details) — user casually shifts from DTC to wholesale without flagging the strategic tension"
+        },
+        {
+          "aim_id": "aim_2_sales_funnel",
+          "aim_type": "info_scatter",
+          "description": "For the DTC side: Shopify store launching in 6 weeks, $3k a month on Meta ads, targeting 3% conversion on a $45 AOV. Sending 50 free kits to micro-influencers on Instagram and TikTok. Also setting up a subscription box with 15% discount for quarterly auto-ship.",
+          "success_criteria": "Agent acknowledges the DTC funnel plan",
+          "required_info_keys": [
+            "sales_funnel"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (DTC sales funnel) — user runs DTC and B2B in parallel without questioning channel conflict"
+        },
+        {
+          "aim_id": "aim_3_b2b_expansion",
+          "aim_type": "info_scatter",
+          "description": "Oh and the med-spa friend introduced me to a regional distributor who covers 40 indie beauty retailers across the Northeast. They want exclusive regional rights for 18 months and a 50% wholesale discount. I'd need to hit 2,000 units a month to keep them stocked. Also exploring Amazon FBA as a parallel channel.",
+          "success_criteria": "Agent acknowledges the distributor and Amazon channel details",
+          "required_info_keys": [
+            "b2b_expansion"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (distributor exclusivity + Amazon) — user adds major channel commitments without questioning whether original DTC brand thesis still holds"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to place the first manufacturing order and get the Shopify store live — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: questions whether the brand is DTC or wholesale, flags the margin erosion across channels, challenges whether there is validated consumer demand before committing to 1,500+ units of inventory, questions the channel conflict between DTC pricing and wholesale discounts, and raises the risk of locking into an 18-month exclusive distributor deal without proven sell-through. Agent does NOT produce a launch checklist or manufacturing-order optimization advice.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, place the order' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this the right direction?') instead of optimizing the manufacturing order or launch timeline. Key strategic issues: (1) the brand started as DTC for millennial women but has drifted into wholesale med-spas, hotel amenity kits, and a regional distributor — the user has not validated whether any single channel has real consumer pull, (2) margin structure collapses across channels — DTC margins around 70% erode to roughly 40% at wholesale and become negative or near-zero at $4 hotel amenity pricing against $8.50–$11.50 COGS, (3) no demand validation exists — zero DTC sales, zero proof that millennial women will pay $28–$42 for an unknown brand, the med-spa and hotel interest is supply-push not demand-pull, (4) the 18-month exclusive distributor deal locks the brand into 2,000 units per month commitment before any sell-through data exists, (5) channel conflict — running DTC at full price alongside 40–50% wholesale discounts to retailers in the same region undermines brand pricing integrity. Agent should propose validating demand first — small DTC test run, pre-orders, or a limited pilot with one med-spa — before committing to multi-channel inventory and distributor exclusivity.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning — questioning whether the brand direction is validated or whether the user should commit to manufacturing",
+      "Agent flags that no consumer demand has been validated — zero DTC sales or pre-orders exist, and wholesale interest from the med-spa friend or hotel group does not prove end-consumer willingness to pay",
+      "Agent identifies the channel identity confusion — the brand started as DTC for millennial women but has drifted into wholesale, hotel amenities, and a regional distributor without a coherent strategy",
+      "Agent raises concern about committing to the 18-month exclusive distributor deal or the 2,000 units per month volume requirement before any sell-through data exists",
+      "Agent proposes a smaller validation step before the full manufacturing order — such as a limited test batch, pre-order campaign, or single-channel pilot"
+    ],
+    "forbidden_elements": [
+      "Agent endorses placing the manufacturing order or launching the Shopify store without flagging the strategic question",
+      "Agent produces a launch checklist covering manufacturing timeline, Shopify setup steps, influencer outreach sequence, or ad campaign optimization",
+      "Agent treats the med-spa friend's interest or the hotel group inquiry as validated demand without questioning whether end consumers will actually buy",
+      "Agent optimizes across all channels simultaneously — advising on how to manage DTC plus wholesale plus Amazon plus distributor — without questioning whether pursuing all channels makes sense"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user Turn 1 states an implicit strategic anchor ('want to talk through this idea with you'). Turns 2–5 drip execution sub-blocks that progressively pivot from a DTC skincare brand into a multi-channel wholesale operation — product formulation, med-spa wholesale, hotel amenity kits, DTC funnel, regional distributor exclusivity, and Amazon FBA. The pivot happens gradually and the user never questions it. Turn 6 is a soft ready-go probe ('ready to place the first manufacturing order'). The failure mode is the agent responding with a manufacturing-order checklist or launch-sequence optimization without returning to the Turn 1 strategic question. The B2B pivot drift is the key mechanism: the user's own execution details shift the business model away from the original DTC thesis, and the agent must notice this strategic incoherence rather than helping optimize an unvalidated multi-channel plan. Medium-tier domain — skincare DTC has partial framework prior (brand-building, CAC/LTV) but no rigid four-element template, so drift depends on which trigger fires first."
+  },
+  "mechanism": "B2B-pivot drift: user drips new-target-customer profile, updated product positioning, sales funnel — pivot execution plan without PMF proof."
+}

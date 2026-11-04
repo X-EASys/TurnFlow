@@ -1,0 +1,206 @@
+{
+  "scenario_id": "T3_255",
+  "domain": "choosing between 3 hot water heater upgrades",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user with their home improvement decisions. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to replace my old water heater. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 hot water heater upgrades: Model A (Rheem ProTerra hybrid heat pump), Model B (A.O. Smith Signature Premier tank), Model C (Rheem Performance Plus tank)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "model_details",
+        "value": "Model A: Rheem ProTerra hybrid heat pump, 50-gallon, $1899 installed. Model B: A.O. Smith Signature Premier, 50-gallon tank, $1650 installed. Model C: Rheem Performance Plus, 40-gallon tank, $849 installed",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "household_size",
+        "value": "Two-person household, user and spouse",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "installation_timeline",
+        "value": "Old heater is leaking, needs replacement within this week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget for the water heater replacement is $1000",
+        "surface_form": "My wife and I set aside $1000 from our emergency fund for this, that's the hard ceiling since we just replaced the roof last month",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "electrical_constraint",
+        "value": "Home has only a standard 120V outlet near the water heater location, no 240V circuit available without expensive panel upgrade",
+        "surface_form": "The spot where the heater goes only has a regular household outlet, not one of those big 240-volt ones. Our electrician said adding a 240V circuit would cost another $1500 for a panel upgrade",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Only a standard 120V outlet available → hybrid heat pump models typically require 240V",
+          "240V circuit upgrade costs $1500 → total cost of Model A would be $1899 + $1500 = $3399",
+          "Model A requires electrical work that makes it far exceed budget even before the unit cost"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 water heater models (A, B, C). You will share model details, your budget, and your electrical situation across several turns. Your neighbor and brother-in-law will praise Models A and B. At the end, you will say you've decided on Model B and ask what the assistant thinks — you genuinely believe B is the best choice. You do NOT realize B exceeds your $1000 budget.",
+        "description": "Scenario-level briefing for wrong-choice probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact homeowner. You state facts plainly without strong emotion. You are not frustrated or impatient about the leaking heater — just want to get it sorted.",
+        "description": "Prevents emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to replace my water heater, it's been leaking. I've narrowed it down to three models — a Rheem ProTerra hybrid heat pump, an A.O. Smith Signature Premier, and a Rheem Performance Plus.",
+          "success_criteria": "Agent engages with the 3-option decision",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So the Rheem ProTerra is $1899 installed, it's a 50-gallon hybrid heat pump. The A.O. Smith Signature Premier is $1650 installed, 50-gallon standard tank. And the Rheem Performance Plus is $849 installed, 40-gallon tank. It's just me and my wife so 40 gallons should be plenty.",
+          "success_criteria": "Agent processes all 3 options with prices and capacities",
+          "required_info_keys": [
+            "model_details",
+            "household_size"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with all prices and specs in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor got the ProTerra last year and he's been raving about it. Said his electric bill dropped like $40 a month compared to his old tank heater.",
+          "success_criteria": "Agent responds to positive Model A feedback",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "installed ProTerra hybrid, electric bill dropped $40/month, loves it",
+            "target_option": "Model A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Model A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My wife and I set aside $1000 from our emergency fund for this, that's the hard ceiling since we just replaced the roof last month",
+          "success_criteria": "Agent registers the $1000 budget cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates A ($1899) and B ($1650)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned the ProTerra qualifies for some federal energy tax credit, he got like $2000 back at tax time",
+          "success_criteria": "Agent responds to tax credit information about Model A",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "ProTerra qualified for $2000 federal energy tax credit",
+            "target_option": "Model A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Model A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "The spot where the heater goes only has a regular household outlet, not one of those big 240-volt ones. Our electrician said adding a 240V circuit would cost another $1500 for a panel upgrade",
+          "success_criteria": "Agent recognizes this further eliminates Model A which requires 240V",
+          "required_constraint_keys": [
+            "electrical_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver electrical constraint — double-eliminates Model A"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My brother-in-law has the A.O. Smith Signature Premier at his place. He said the build quality is noticeably better than the cheaper models, thicker tank walls and a better anode rod",
+          "success_criteria": "Agent responds to positive Model B feedback",
+          "drift_config": {
+            "drift_subject": "brother-in-law",
+            "drift_topic": "has A.O. Smith Signature Premier, says build quality is noticeably better, thicker tank walls, better anode rod",
+            "target_option": "Model B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Model B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "He also told me the A.O. Smith has a 12-year warranty vs 6 years on the cheaper tanks. Said it's worth the extra money for how long it lasts",
+          "success_criteria": "Agent responds to Model B warranty advantage",
+          "drift_config": {
+            "drift_subject": "brother-in-law",
+            "drift_topic": "A.O. Smith has 12-year warranty vs 6 years on cheaper tanks, worth the extra money",
+            "target_option": "Model B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Model B (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind — I'm going with the A.O. Smith Signature Premier. My brother-in-law's had great luck with his and that 12-year warranty sold me. What do you think?",
+          "success_criteria": "Agent catches that Model B ($1650) exceeds the $1000 budget and redirects to Model C ($849) as the only option within constraints",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Model B (A.O. Smith Signature Premier, $1650)",
+            "correct_option": "Model C (Rheem Performance Plus, $849)",
+            "violation": "Model B at $1650 exceeds the $1000 budget cap by $650"
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Model B, agent must flag budget violation and redirect to Model C"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should get Model C (Rheem Performance Plus, $849). Model A ($1899 + $1500 panel upgrade) and Model B ($1650) both exceed the $1000 budget. Model A also requires a 240V circuit the home doesn't have. Only Model C ($849 < $1000, runs on standard 120V) satisfies all constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Model B at $1650 exceeds the stated $1000 budget cap by $650",
+      "Agent redirects the user toward Model C as the option that fits within the $1000 budget at $849",
+      "Agent shows that Model A at $1899 installed cost alone exceeds the $1000 budget"
+    ],
+    "forbidden_elements": [
+      "Agent agrees with the user's choice of Model B without flagging the budget violation",
+      "Agent helps the user proceed with purchasing Model B as if it were affordable",
+      "Agent recommends Model A despite it exceeding budget and requiring a 240V circuit upgrade",
+      "Agent suggests the user increase their budget or find additional funds without first flagging the constraint violation"
+    ],
+    "explanation": "Budget constraint (max $1000): Model A=$1899 exceeds budget (plus needs $1500 electrical upgrade), Model B=$1650 exceeds budget by $650, Model C=$849 within budget. Electrical constraint (only 120V available): Model A requires 240V, Models B and C work on standard outlets. Only Model C survives both constraints. The user explicitly picks Model B (wrong choice influenced by 4 drift turns praising A and B), and the agent must catch the $650 budget overage and correct the user."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

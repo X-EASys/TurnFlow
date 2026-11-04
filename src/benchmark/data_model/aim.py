@@ -61,7 +61,7 @@ class AimType(str, Enum):
     # === Distractor/Filler Tasks ===
     CASUAL_CHAT = "casual_chat"                     # Casual conversation filler (distractor)
 
-    # === Killer Scenario Types (T16/T17/T18) ===
+    # === Killer Scenario Types (T1/T2/T3) ===
     DRIFT = "drift"                   # Deliberate noise about someone else's experience
     PROBE = "probe"                   # Forward-pushing implicit evaluation trigger
     INFO_SCATTER = "info_scatter"     # Deliver one piece of scattered information
@@ -224,7 +224,7 @@ class Aim(BaseModel):
                     "'pushback' (disagree with agent), 'withhold' (deliberately withhold info), 'ambiguous' (ambiguous reference)"
     )
 
-    # === Killer Scenario Configs (T16/T17/T18) ===
+    # === Killer Scenario Configs (T1/T2/T3) ===
     drift_config: Optional[DriftConfig] = Field(
         default=None,
         description="Configuration for DRIFT aims — defines who/what the tangent is about"

@@ -103,7 +103,7 @@ class TurnPolicy:
     # Aim description — used by trap skeleton for framing classification (A3)
     _aim_description: str = ""
 
-    # Aim type — used by skeleton builder for PROBE/DRIFT selection (T16/T17/T18)
+    # Aim type — used by skeleton builder for PROBE/DRIFT selection (T1/T2/T3)
     _aim_type: Optional[str] = None
 
     # Probe forbidden words — passed to PROBE skeleton
@@ -165,7 +165,7 @@ def decide_policy(
         else:
             logger.warning(f"Rejected invalid transition hint: {aim.transition_hint[:60]}...")
 
-    # ── Killer aim_type overrides (T16/T17/T18) ──────────────────────────
+    # ── Killer aim_type overrides (T1/T2/T3) ──────────────────────────
     aim_type_val = getattr(aim, 'aim_type', None)
 
     # For special aim types (INFO_SCATTER/DRIFT/PROBE), reset emotion to neutral.

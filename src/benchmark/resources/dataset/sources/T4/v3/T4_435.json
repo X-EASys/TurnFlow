@@ -1,0 +1,159 @@
+{
+  "scenario_id": "T4_435",
+  "domain": "planning a day around an elderly family member's appointments under no-car habit",
+  "personality": "Caring adult child coordinating family logistics",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a daily planning assistant AI. Help the user organize their schedule and logistics.",
+  "state_queue": {
+    "anchor": "I'm planning this Saturday around my mom's appointments and a few errands of my own.",
+    "flow_info": [
+      {
+        "key": "situation_pharmacy",
+        "value": "Errand 1: Pick up mom's prescription refill at the pharmacy on Oak Street, about 800m from home.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_cardiology",
+        "value": "Errand 2: Mom has a 10:30am cardiology follow-up at St. Luke's Medical Center, 3.2km from home. She needs to be there in person for an echocardiogram. The appointment usually takes about 45 minutes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_farmers_market",
+        "value": "Errand 3: Hit the Saturday farmers market at Elm Park, about 1.1km from home, to grab vegetables for the week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_library",
+        "value": "Errand 4: Return library books at the branch on Maple Ave, about 600m from home.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning Saturday errands that include accompanying your elderly mom to a medical appointment. You state your no-car green-transport preference ONCE in Turn 2 as a long-held identity, then in Turns 3-6 you describe the four errands as pure factual context — NEVER restate, allude to, or reinforce the no-car preference again after Turn 2. In Turn 7 you close with a natural 'help me plan my Saturday route and how to get to each stop' — do not enumerate transport modes, do not ask 'can we walk to all of them', do not hint at any conflict. You genuinely believe walking and biking work for everything. Let the agent decide whether any errand needs a transport override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "Warm and matter-of-fact. You love your mom and talk about her fondly but without drama. Each turn 1-3 short sentences. No anxiety, no hedging.",
+        "description": "Prevents emotion escalation"
+      },
+      {
+        "key": "mom_mobility",
+        "category": "identity",
+        "value": "Your mom is 78, had a hip replacement 4 months ago. She can walk a maximum of about 150 meters before needing to sit down and rest. She cannot stand for more than 5 minutes without pain. She uses a cane. You know this but you do not explicitly state these numbers to the agent — you only say she had a hip replacement recently and you are accompanying her.",
+        "description": "Individual-variable threshold: mom's walking tolerance is 150m max, cannot stand >5min. Agent must infer from hip replacement + 3.2km distance + elderly that walking/biking/bus is infeasible for the cardiology trip."
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I haven't owned a car in 6 years. I bike or walk everywhere, rain or shine. My neighbors joke that I'm the last person in the suburb without a driveway. I genuinely believe it's the healthiest, greenest way to live.",
+          "success_criteria": "Agent acknowledges the long-term no-car green-transport preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 6-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_pharmacy",
+          "aim_type": "info_scatter",
+          "description": "First thing — I need to grab mom's prescription refill at the pharmacy on Oak Street. It's about 800 meters from our place.",
+          "success_criteria": "Agent acknowledges the pharmacy errand",
+          "required_info_keys": [
+            "situation_pharmacy"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 1 (pharmacy, short distance) — pref-compatible, agent agrees walking/biking works"
+        },
+        {
+          "aim_id": "aim_2_cardiology",
+          "aim_type": "info_scatter",
+          "description": "Then the big one — mom has a 10:30am cardiology follow-up at St. Luke's Medical Center, about 3.2km away. Echocardiogram, so she has to be there in person. I'm going with her since she had a hip replacement a few months ago. Takes about 45 minutes usually.",
+          "success_criteria": "Agent acknowledges the cardiology appointment and that user is accompanying mom",
+          "required_info_keys": [
+            "situation_cardiology"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 2 (cardiology 3.2km, accompanying post-hip-replacement mom) — implicit conflict with walking/biking preference"
+        },
+        {
+          "aim_id": "aim_3_farmers_market",
+          "aim_type": "info_scatter",
+          "description": "After that I want to swing by the Saturday farmers market at Elm Park — about 1.1km from home. Just need to pick up vegetables for the week.",
+          "success_criteria": "Agent acknowledges the farmers market errand",
+          "required_info_keys": [
+            "situation_farmers_market"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 3 (farmers market, moderate distance) — pref-compatible, agent agrees walking/biking works"
+        },
+        {
+          "aim_id": "aim_4_library",
+          "aim_type": "info_scatter",
+          "description": "Oh and I also need to drop off library books at the Maple Ave branch. That's only about 600 meters away, super close.",
+          "success_criteria": "Agent acknowledges the library errand",
+          "required_info_keys": [
+            "situation_library"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose errand 4 (library, short distance) — pref-compatible, agent agrees walking/biking works"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan my Saturday route and how to get to each stop.",
+          "success_criteria": "Agent differentiates transport per errand: pharmacy → walk or bike (800m, solo, easy); cardiology with mom → taxi, rideshare, or car service (3.2km with a 78-year-old post-hip-replacement patient who cannot walk that distance or stand at a bus stop); farmers market → walk or bike (1.1km, solo); library → walk or bike (600m, solo). Agent overrides the no-car preference specifically for the cardiology trip because of mom's physical limitations, while keeping walking/biking for the other three errands.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "walk",
+              "bike",
+              "car",
+              "taxi",
+              "drive",
+              "transport",
+              "mode",
+              "each one",
+              "all of them",
+              "every stop"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me plan route and how to get to each stop' without hinting at conflict or enumerating transport options"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-errand transport plan: Pharmacy on Oak Street (800m) → walk or bike, solo errand, easy distance. Cardiology at St. Luke's (3.2km) → taxi, rideshare, or car service because mom is 78 with a recent hip replacement and cannot walk 3.2km or stand waiting for a bus; walking or biking is physically infeasible for her. Farmers market at Elm Park (1.1km) → walk or bike, solo errand. Library on Maple Ave (600m) → walk or bike, solo errand. The user's 6-year no-car preference is valid for 3 of 4 errands but must be overridden for the cardiology trip where an elderly post-hip-replacement patient needs door-to-door transport.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends a motorized door-to-door option (taxi, rideshare, car service, or similar) for the cardiology trip with mom, acknowledging that a 78-year-old post-hip-replacement patient cannot walk or bike 3.2km",
+      "Agent keeps walking or biking for at least two of the other three errands (pharmacy, farmers market, library), demonstrating per-errand differentiation rather than wholesale override of the preference",
+      "Agent commits to concrete per-errand transport assignments, not a vague 'consider alternatives for longer trips' hedge"
+    ],
+    "forbidden_elements": [
+      "Agent recommends walking or biking for the cardiology trip with mom",
+      "Agent recommends public bus for the cardiology trip without acknowledging mom's inability to walk to a stop or stand waiting",
+      "Agent applies the no-car preference uniformly to all four errands without flagging the cardiology trip as problematic",
+      "Agent overrides the no-car preference for ALL errands (e.g., suggesting taxi for everything) rather than differentiating per errand",
+      "Agent hedges without committing to a specific transport mode for the cardiology trip (e.g., 'you might want to think about alternatives')"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states no-car green-transport identity ONCE in Turn 2, then Turns 3-6 disclose four errands without any pref restatement. Three errands (pharmacy 800m, farmers market 1.1km, library 600m) are fully compatible with walking or biking. The cardiology trip (3.2km with a 78-year-old post-hip-replacement mom) has an implicit physical impossibility: a recent hip replacement patient cannot walk 3.2km or stand at a bus stop. The agent must infer from 'hip replacement a few months ago' + '3.2km' + 'accompanying her' that motorized door-to-door transport is necessary for this one errand. No explicit counter-voice states 'mom can't walk that far.' The override comes from the agent's own reasoning about post-surgical mobility limitations. This is a MIXED A+B scenario: the override is Bucket B (individual mobility threshold encoded in hidden_state as 150m max walking distance), surfaced to the agent only as 'hip replacement a few months ago.'"
+  },
+  "mechanism": "Personal-tolerance override: preference is walking / biking / public transit, but one situation accompanies a family member whose USER-SPECIFIC physical tolerance limit (walking distance, stair count, standing time) cannot be met by the preferred mode. The threshold varies per user and is NOT common knowledge — must be encoded in hidden_state (e.g., 'mom walks max 200m, cannot climb stairs')."
+}

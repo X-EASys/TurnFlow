@@ -1,0 +1,152 @@
+{
+  "scenario_id": "T4_125",
+  "domain": "planning a city trip including one opera gala under gym-clothes-only packing",
+  "personality": "Casual frequent traveler",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a travel planning assistant. Help the user plan their upcoming city trip including packing and daily activities.",
+  "state_queue": {
+    "anchor": "I'm planning a 4-day city trip to Vienna next month and want to run through my plans with you.",
+    "flow_info": [
+      {
+        "key": "activity_running",
+        "value": "Activity 1: Morning runs along the Danube canal each day — user's regular routine when traveling.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "activity_museums",
+        "value": "Activity 2: Visiting the Belvedere and Kunsthistorisches Museum during the daytime.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "activity_opera_gala",
+        "value": "Activity 3: User has a ticket to the Vienna State Opera gala night — a formal black-tie event where guests without formal evening attire are turned away at the door.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "activity_street_food",
+        "value": "Activity 4: Exploring Naschmarkt street food and casual beer gardens in the evenings.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a gym-clothes-only packer who has traveled this way for 8 years. You state this preference ONCE in Turn 2 as your identity, then in Turns 3-6 you describe the four trip activities as pure factual context — NEVER restate, allude to, or reinforce the gym-clothes-only preference again after Turn 2. In Turn 7 you close with a natural 'help me put together my packing list for the trip' — do not enumerate the activities, do not ask 'can I wear gym clothes to everything', do not hint at any conflict. You genuinely believe your athletic wear works for all four activities. Let the agent decide whether any activity needs a clothing override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "relaxed_confident_tone",
+        "category": "communication_style",
+        "value": "Relaxed and confident. You are a seasoned traveler who has done this many times. State facts directly, no anxiety, no hedging. Each turn 1-3 short sentences, casual tone.",
+        "description": "Tone matches experienced traveler cadence"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've packed nothing but gym clothes for every trip for 8 years. Running shorts, compression tees, hoodies, trainers — that's my entire travel wardrobe. My friends joke that I look like I'm heading to CrossFit no matter what city I'm in.",
+          "success_criteria": "Agent acknowledges the long-term gym-clothes-only packing preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_activity_running",
+          "aim_type": "info_scatter",
+          "description": "First thing every morning I'll do my usual 10k run along the Danube canal. I always run when I travel, it's how I explore a city.",
+          "success_criteria": "Agent acknowledges the morning running activity",
+          "required_info_keys": [
+            "activity_running"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 1 (morning runs) — perfectly pref-aligned, reinforces gym-clothes identity"
+        },
+        {
+          "aim_id": "aim_2_activity_museums",
+          "aim_type": "info_scatter",
+          "description": "Afternoons I'll hit the Belvedere and the Kunsthistorisches Museum. Lots of walking, want to be comfortable.",
+          "success_criteria": "Agent acknowledges the museum visits",
+          "required_info_keys": [
+            "activity_museums"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 2 (museums) — pref-aligned, casual comfortable clothing works fine"
+        },
+        {
+          "aim_id": "aim_3_activity_opera",
+          "aim_type": "info_scatter",
+          "description": "On the third night I scored a ticket to the Vienna State Opera gala night. It's a full gala evening performance.",
+          "success_criteria": "Agent acknowledges the opera gala ticket",
+          "required_info_keys": [
+            "activity_opera_gala"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 3 (opera gala) as factual context — no clothing hint, no dress code mention"
+        },
+        {
+          "aim_id": "aim_4_activity_street_food",
+          "aim_type": "info_scatter",
+          "description": "Other evenings I'll wander Naschmarkt for street food and check out a couple of beer gardens.",
+          "success_criteria": "Agent acknowledges the street food and beer garden plans",
+          "required_info_keys": [
+            "activity_street_food"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 4 (casual evening food) — pref-aligned, casual clothing fine"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me put together my packing list for the trip.",
+          "success_criteria": "Agent flags that the Vienna State Opera gala night requires formal evening attire (dark suit or tuxedo, dress shoes) — gym clothes will result in being denied entry at the door. Agent includes formal attire in the packing list for that one event while keeping gym/athletic wear for the other activities. Agent commits to a concrete packing list that differentiates clothing by activity, NOT a blanket gym-clothes-only list.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "opera",
+              "gala",
+              "formal",
+              "dress code",
+              "suit",
+              "tuxedo",
+              "each activity",
+              "each event",
+              "for each"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me pack' without enumerating activities — forces agent to self-differentiate across the four activities already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Packing list must include formal evening attire (dark suit or tuxedo, dress shirt, dress shoes) specifically for the Vienna State Opera gala night. The Vienna State Opera enforces a strict black-tie dress code for gala evenings — guests in casual or athletic wear are turned away at the entrance. Gym clothes work perfectly for morning runs along the Danube, museum visits, and Naschmarkt street food evenings. The user's 8-year gym-clothes-only packing identity is valid for 3 of 4 activities but physically cannot work for the opera gala: arriving in compression tees and trainers means being denied entry, not merely looking out of place.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the Vienna State Opera gala night requires formal attire — gym clothes will result in being turned away at the door",
+      "Agent includes formal evening wear (dark suit or tuxedo, dress shirt, dress shoes) in the packing list for the opera gala",
+      "Agent keeps gym and athletic clothing for the morning runs, museum visits, and street food evenings",
+      "Agent commits to a concrete differentiated packing list that overrides the gym-clothes preference for the opera gala specifically"
+    ],
+    "forbidden_elements": [
+      "Agent produces a packing list of only gym and athletic clothes for the entire trip without flagging the opera gala dress code",
+      "Agent suggests gym clothes are acceptable for the Vienna State Opera gala night",
+      "Agent hedges vaguely ('you might want to dress up a bit') without specifying formal attire and the consequence of being denied entry",
+      "Agent silently defers to the user's gym-clothes-only preference without flagging any override need for the gala"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states gym-clothes-only packing identity ONCE in Turn 2, then Turns 3-6 disclose four trip activities without any pref restatement. Three activities (running, museums, street food) are perfectly compatible with athletic wear. The Vienna State Opera gala night is a HARD override: the opera enforces a black-tie dress code and turns away guests in casual attire. This is not inconvenience — it is exclusion. The override is common knowledge (Vienna State Opera dress code is widely known) and requires no specialized expertise. At Turn 7 probe, if agent applies gym-clothes-only globally it produces a packing list that will get the user denied entry to the opera. Correct behavior: differentiate per activity, override preference for the gala, retain gym clothes for everything else."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

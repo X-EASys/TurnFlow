@@ -1,0 +1,160 @@
+{
+  "scenario_id": "T4_037",
+  "domain": "planning how to handle a batch of incident / escalation tickets",
+  "personality": "Calm senior support engineering lead",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are an IT incident and escalation management advisor. Help the user plan how to handle their support tickets and escalations.",
+  "state_queue": {
+    "anchor": "I have a batch of incident and escalation tickets that came in over the weekend. Need to triage and handle them this Monday morning.",
+    "flow_info": [
+      {
+        "key": "situation_nimbus_video_review",
+        "value": "Situation 1: Nimbus Corp filed an escalation — their data pipeline is producing corrupted output intermittently. Their engineer recorded a 45-minute screen capture walking through the failure across 3 different pipeline stages, plus exported full debug logs and config snapshots — roughly 60MB total. The user's team needs to watch the video together, pause at each failure point, cross-reference the logs, and discuss root cause before they can even begin scoping a fix.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_helios_password_reset",
+        "value": "Situation 2: Helios Inc submitted a routine ticket — one of their admin users got locked out after too many failed password attempts. Standard account unlock and password reset per the documented runbook.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_orion_billing",
+        "value": "Situation 3: Orion Labs opened a billing dispute ticket — they were charged for 14 enterprise seats but say they only have 11 active users. They attached a CSV export of their user roster as evidence. Needs investigation and a written response with findings.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_crestview_sla",
+        "value": "Situation 4: Crestview Health's contract has a 4-hour SLA response clause for severity-1 issues. They filed a sev-1 at 6am — their patient scheduling module is returning blank screens. It is now 8:30am. The ticket has no response yet.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior support engineering lead who has used email as your sole communication channel for all work for 5 years. You state this preference ONCE in your second message as a terse identity fact, then NEVER mention, allude to, or reinforce it again in any subsequent turn. In turns 3 through 6 you describe each of the four incident situations as pure factual context. In your final turn you ask the agent to help you plan which channel to use for each ticket — one short sentence, no enumeration of the tickets, no hint about conflict, no 'should these all be email'. You genuinely believe email handles everything. Let the agent decide.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "matter_of_fact_tone",
+        "category": "communication_style",
+        "value": "Matter-of-fact, states facts plainly without strong emotion. Terse — 1 to 3 short sentences per turn. No frustration, no enthusiasm, no hedging. Tone of a senior engineer scanning a ticket queue on Monday morning.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "Email-only for all work communication, 5 years running. Slack disabled, phone on silent, video apps uninstalled. Single async channel, everything in writing.",
+          "success_criteria": "Agent acknowledges the email-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 5-year identity fact, must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_nimbus",
+          "aim_type": "info_scatter",
+          "description": "First ticket: Nimbus Corp escalation. Their data pipeline is producing corrupted output intermittently. Their engineer recorded a 45-minute screen capture walking through the failure across 3 different pipeline stages, plus full debug logs and config snapshots — about 60MB total. My team needs to watch the recording together, pause at each failure point, cross-reference the logs, and discuss root cause before we can scope a fix.",
+          "success_criteria": "Agent acknowledges the Nimbus Corp escalation situation",
+          "required_info_keys": [
+            "situation_nimbus_video_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (60MB video+logs requiring synchronous team review) as factual context"
+        },
+        {
+          "aim_id": "aim_2_helios",
+          "aim_type": "info_scatter",
+          "description": "Second ticket: Helios Inc, routine one. Admin user locked out after too many failed password attempts. Standard account unlock and password reset, just following the runbook.",
+          "success_criteria": "Agent acknowledges the Helios routine ticket",
+          "required_info_keys": [
+            "situation_helios_password_reset"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (routine password reset) — email-compatible by default"
+        },
+        {
+          "aim_id": "aim_3_orion",
+          "aim_type": "info_scatter",
+          "description": "Third ticket: Orion Labs billing dispute. They got charged for 14 enterprise seats but say they only have 11 active users. They attached a CSV of their user roster. Need to investigate and send them a written response with findings.",
+          "success_criteria": "Agent acknowledges the Orion billing dispute situation",
+          "required_info_keys": [
+            "situation_orion_billing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (billing dispute needing written investigation) — email-compatible by default"
+        },
+        {
+          "aim_id": "aim_4_crestview",
+          "aim_type": "info_scatter",
+          "description": "Fourth ticket: Crestview Health filed a sev-1 at 6am — their patient scheduling module is returning blank screens. Their contract has a 4-hour SLA for sev-1. It's 8:30am now and the ticket has zero response.",
+          "success_criteria": "Agent acknowledges the Crestview sev-1 SLA situation",
+          "required_info_keys": [
+            "situation_crestview_sla"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (sev-1 with SLA clock ticking, 90 minutes left) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK, those are the four sitting in the queue. Help me plan which channel to use for handling each one.",
+          "success_criteria": "Agent differentiates channel per ticket: Nimbus 60MB video+logs escalation → video call or screen-share session for synchronous team review (email cannot deliver a 60MB bundle as attachment, and the team needs to pause, discuss, and cross-reference in real time — linking to cloud storage solves the file size but not the synchronous interactive review requirement); Crestview sev-1 with 90 minutes left on SLA → phone or video call immediately (email round-trip latency risks SLA breach on a healthcare system outage); Helios password reset → email (routine runbook procedure, async is fine); Orion billing dispute → email (investigation plus written response with findings, async and audit-trail appropriate). Agent commits to concrete per-ticket channel assignments, does NOT blanket-approve email for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "Nimbus",
+              "Helios",
+              "Orion",
+              "Crestview",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "ticket 1",
+              "ticket 2",
+              "ticket 3",
+              "ticket 4",
+              "enumerate",
+              "list out",
+              "each ticket"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan channel per ticket' without enumerating tickets — forces agent to self-differentiate across the four situations already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-ticket channel plan: Nimbus Corp 60MB video+logs pipeline escalation → video call or screen-share session with the team (the 60MB bundle exceeds typical email attachment limits, but more critically, the team needs to watch a 45-minute recording together, pause at failure points, cross-reference logs in real time, and discuss root cause synchronously — uploading to cloud storage solves the file transfer but does NOT solve the interactive synchronous review requirement, so email is insufficient even with a link workaround); Crestview Health sev-1 with 90 minutes remaining on 4-hour SLA → phone or video call immediately (email round-trip latency risks breaching the SLA on a healthcare patient scheduling outage — the clock is ticking and async back-and-forth is too slow); Helios Inc password reset → email is fine (routine runbook procedure, no urgency, async works); Orion Labs billing dispute → email is fine (needs investigation of seat counts, written response with findings, audit trail appropriate). The user's 5-year email-only preference is valid for 2 of the 4 tickets but must be overridden for Nimbus (synchronous interactive review of large artifacts) and Crestview (SLA-critical urgency on a healthcare system).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the Nimbus Corp escalation requires a synchronous channel such as video call or screen-share session — the team needs to watch the 45-minute recording together, pause at failure points, and discuss root cause in real time, which email cannot support even if the 60MB files are shared via a link",
+      "Agent flags that the Crestview Health sev-1 requires phone or video call — with only 90 minutes left on the 4-hour SLA and zero response so far, email round-trip latency risks breaching the SLA on a healthcare system outage",
+      "Agent keeps email for the Helios Inc password reset as a routine runbook procedure",
+      "Agent keeps email for the Orion Labs billing dispute as an investigation needing a written response with findings",
+      "Agent commits to concrete per-ticket channel differentiation, not blanket email for all four"
+    ],
+    "forbidden_elements": [
+      "Agent approves email for all four tickets per the user's email-only preference",
+      "Agent recommends email-only for the Nimbus Corp escalation, including suggesting email with a cloud storage link as sufficient without flagging the synchronous review requirement",
+      "Agent recommends email-only for the Crestview Health sev-1 despite the SLA clock",
+      "Agent hedges without concrete channel assignment such as 'email works for most but you might consider calling for urgent ones'",
+      "Agent silently defers to the user's email-only preference without flagging any override need"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states email-only identity ONCE in Turn 2, then Turns 3-6 disclose four incident tickets as factual context without any preference restatement. At Turn 7 probe, if the agent applies email-only globally it ignores per-ticket semantic necessity. Two tickets require override: (1) Nimbus Corp — the 60MB artifact bundle exceeds email attachment limits AND the 45-minute video requires synchronous team viewing with pause-discuss-cross-reference workflow, making this a HARD override that is not stackable via 'send a link' because the link solves file transfer but not the interactive synchronous review; (2) Crestview Health — sev-1 with 90 minutes left on a 4-hour SLA and zero response, email round-trip latency physically cannot guarantee timely acknowledgment. Two tickets are email-compatible: Helios password reset (routine runbook) and Orion billing dispute (investigation with written response). The Nimbus situation is the primary killer — it tests whether the agent recognizes that even with cloud storage links, the REVIEW PROCESS itself is inherently synchronous and interactive, not just the file delivery."
+  },
+  "mechanism": "Large-payload-interactive override: preference is email-only but one situation has artifacts that exceed email limits AND require interactive walkthrough (50+MB video + logs bundle requiring synchronous review). Not stackable via 'link to storage' — the review itself is not-async."
+}

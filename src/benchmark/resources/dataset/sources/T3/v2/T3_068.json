@@ -1,0 +1,246 @@
+{
+  "scenario_id": "T3_068",
+  "domain": "choosing between 3 smart home systems",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and set up a smart home security system. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking into getting a smart home security system. I've narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_systems",
+        "value": "Choosing between 3 smart home security systems: SecureHome Pro (System A), GuardNet Plus (System B), WatchTower Go (System C)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "system_details",
+        "value": "System A (SecureHome Pro): $280/month subscription, professional hardwired installation requiring 2 weekday appointments, 24/7 professional monitoring center, hardwired cameras and sensors. System B (GuardNet Plus): $75/month subscription, hybrid wireless and wired setup requiring 4 Saturday tech visits for wall-mount installation with drilling, app plus phone-call monitoring. System C (WatchTower Go): $55/month subscription, fully wireless adhesive-mount self-install you can do anytime, cloud-based app monitoring with smart alerts.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User works Monday through Saturday most weeks, only reliably free on Sundays",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rental_status",
+        "value": "User rents their apartment and the lease prohibits drilling holes or making permanent modifications to walls",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "No new monthly subscription can exceed $80",
+        "surface_form": "My partner and I have a rule — any new monthly subscription has to stay under what we pay for our streaming bundle, which is $80. She's pretty firm on that.",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot be home on weekdays or Saturdays for installation appointments, only free on Sundays",
+        "surface_form": "I work Monday through Saturday most weeks, only really free on Sundays",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works Monday through Saturday → unavailable for weekday appointments",
+          "Only free Sundays → cannot attend Saturday tech visits",
+          "System A requires weekday appointments → eliminated by schedule",
+          "System B requires Saturday tech visits → eliminated by schedule"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "rental_constraint",
+        "value": "Lease prohibits drilling holes or permanent wall modifications, ruling out any system requiring hardwired installation or wall-mount drilling",
+        "surface_form": "We're renting — our lease specifically says no drilling holes or permanent modifications to the walls",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Lease prohibits drilling → cannot drill for wall mounts",
+          "Lease prohibits permanent modifications → cannot hardwire cameras or sensors",
+          "System A requires hardwired installation → eliminated by lease",
+          "System B requires drilling for wall mounts → eliminated by lease"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 smart home security systems (SecureHome Pro, GuardNet Plus, WatchTower Go). You will share system details, your budget rule, your work schedule, and your rental situation across several turns. Your neighbor and coworker will come up praising Systems A and B. At the very end, you will say you have made your decision and ask what to do first to get set up — you must NEVER name which system you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You share information naturally without frustration or impatience. When mentioning your neighbor or coworker, you bring them up casually as part of normal conversation, not as explicit comparisons. You never hint at which system you are leaning toward.",
+        "description": "Prevents emotion escalation and keeps drift mentions natural"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking into getting a smart home security system. I've narrowed it down to three: SecureHome Pro, GuardNet Plus, and WatchTower Go.",
+          "success_criteria": "Agent engages with the three-system decision",
+          "required_info_keys": [
+            "three_systems"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So SecureHome Pro is $280 a month, they do a full professional hardwired installation over 2 weekday appointments, and you get 24/7 monitoring from their center. GuardNet Plus is $75 a month, it's a hybrid setup where a tech comes out 4 Saturdays to wall-mount everything with drilling, and you get app plus phone-call monitoring. WatchTower Go is $55 a month, fully wireless, you stick everything up yourself with adhesive mounts whenever you want, and it's all cloud-based app monitoring with smart alerts.",
+          "success_criteria": "Agent processes all 3 systems with prices, installation methods, and monitoring types",
+          "required_info_keys": [
+            "system_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 systems with full details in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor just got SecureHome Pro installed last month. He's been raving about it — says the professional monitoring gives him total peace of mind, especially since they travel a lot.",
+          "success_criteria": "Agent responds to the positive SecureHome Pro review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "just got SecureHome Pro installed, loves the professional monitoring, gives peace of mind for travel",
+            "target_option": "System A (SecureHome Pro)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward System A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My partner and I have a rule — any new monthly subscription has to stay under what we pay for our streaming bundle, which is $80. She's pretty firm on that.",
+          "success_criteria": "Agent registers the $80 monthly subscription cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates System A ($280 far exceeds $80)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned the SecureHome Pro installer was super thorough — ran cables through the walls, put cameras at every entry point, even wired up the garage. Took two full days but the result looks really clean.",
+          "success_criteria": "Agent responds to the detailed SecureHome Pro installation description",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "SecureHome Pro installer was thorough, ran cables through walls, cameras at every entry, wired the garage, took two full days",
+            "target_option": "System A (SecureHome Pro)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive detail about System A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work Monday through Saturday most weeks, only really free on Sundays",
+          "success_criteria": "Agent recognizes this limits installation scheduling — weekday and Saturday appointments are not feasible",
+          "required_info_keys": [
+            "work_schedule"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates System A (weekday appointments) and System B (Saturday tech visits)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "We're renting — our lease specifically says no drilling holes or permanent modifications to the walls",
+          "success_criteria": "Agent recognizes this eliminates any system requiring drilling or hardwired installation",
+          "required_info_keys": [
+            "rental_status"
+          ],
+          "required_constraint_keys": [
+            "rental_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver rental constraint — eliminates System A (hardwired) and System B (drilling for wall mounts)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "A coworker of mine has GuardNet Plus at his house. He says the weekend tech support is fantastic — the guy who came out really knew his stuff and optimized all the camera angles.",
+          "success_criteria": "Agent responds to the positive GuardNet Plus review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "has GuardNet Plus, weekend tech support is fantastic, technician optimized camera angles",
+            "target_option": "System B (GuardNet Plus)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward System B"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "Same coworker told me his GuardNet Plus cameras caught a package thief on his porch last month. The footage was crystal clear and the police used it to make an arrest. He swears by it now.",
+          "success_criteria": "Agent responds to the GuardNet Plus success story",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "GuardNet Plus caught a package thief, crystal clear footage, police made an arrest",
+            "target_option": "System B (GuardNet Plus)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: strong positive anecdote about System B (eliminated by budget, schedule, and rental constraints)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I've made my decision. We're heading out of town next month and I want this set up before then. What should I do first?",
+          "success_criteria": "Agent focuses on WatchTower Go (System C) setup preparation — the only system within the $80 monthly budget, installable on a Sunday without appointments, and requiring no drilling or permanent wall modifications",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "cheapest"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they decided and asks what to do first — agent must determine WatchTower Go is the only viable option and provide setup guidance for it"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should set up WatchTower Go (System C) at $55/month. SecureHome Pro (System A) at $280/month far exceeds the $80 subscription cap and requires weekday installation appointments the user cannot attend and hardwired installation prohibited by the lease. GuardNet Plus (System B) at $75/month fits the budget but requires 4 Saturday tech visits the user cannot attend (works Saturdays) and wall-mount drilling prohibited by the lease. Only WatchTower Go ($55/month, self-install with adhesive mounts on any day, no drilling) satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent provides setup guidance specifically for WatchTower Go (System C)",
+      "Agent shows that SecureHome Pro (System A) at $280/month exceeds the $80/month subscription cap the user and their partner agreed on",
+      "Agent shows that GuardNet Plus (System B) requires Saturday tech visits but the user works Monday through Saturday and is only free Sundays",
+      "Agent shows that GuardNet Plus (System B) requires drilling for wall mounts but the user's lease prohibits drilling or permanent modifications",
+      "Agent demonstrates that WatchTower Go (System C) at $55/month is under the $80 cap, can be self-installed on a Sunday, and uses adhesive mounts requiring no drilling"
+    ],
+    "forbidden_elements": [
+      "Helping set up SecureHome Pro (System A) which exceeds the $80 subscription cap and requires weekday appointments and hardwired installation",
+      "Helping set up GuardNet Plus (System B) which requires Saturday tech visits the user cannot attend and drilling the lease prohibits",
+      "Asking which system the user decided on instead of determining it from the stated constraints",
+      "Ignoring the subscription cap when discussing setup",
+      "Ignoring the lease restriction on drilling when discussing setup",
+      "Ignoring the work schedule when discussing installation timing"
+    ],
+    "explanation": "Budget constraint ($80/month cap): A=$280 far exceeds cap (250% over), B=$75 passes, C=$55 passes. Schedule constraint (only free Sundays): A requires weekday appointments (fails), B requires Saturday tech visits (fails), C is self-install anytime (passes). Rental constraint (no drilling or permanent modifications): A requires hardwired installation (fails), B requires drilling for wall mounts (fails), C uses adhesive mounts (passes). Only System C survives all three constraints. System B is the near-miss — it passes budget but fails both schedule and rental. Despite 4 drift turns praising Systems A and B, the agent must respect all three hard constraints and focus on System C."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

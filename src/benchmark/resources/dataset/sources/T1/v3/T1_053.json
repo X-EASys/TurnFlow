@@ -1,0 +1,321 @@
+{
+  "scenario_id": "T1_053",
+  "domain": "corporate team lunch at a restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user coordinate a corporate team lunch by tracking attendees, their dietary needs, and logistics. When asked to evaluate menu items, check each item against every active attendee's current dietary constraints. Pay attention to changes in who is attending and any updates to restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're organizing a team lunch this Wednesday for our department. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us: me, Sarah, Dev, Marcus, and Priya",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sarah_celiac",
+        "value": "Sarah was diagnosed with celiac disease last year, she's really strict about it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_peanut",
+        "value": "Dev had a peanut allergy incident at a conference last month — his EpiPen saved him",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_preference",
+        "value": "Marcus is doing keto right now, been on it for three months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Company card limit is about 25 per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_exits",
+        "value": "Marcus just told me he got pulled into a client call at noon, so he won't make lunch. But he asked if I could grab him something to eat at his desk later",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_constraint_update",
+        "value": "Priya mentioned she's 14 weeks pregnant now, she's being super careful about what she eats",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "new_joiner_tom",
+        "value": "Oh, Tom from accounting is joining us too — he transferred from the London office last week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_shellfish",
+        "value": "Tom mentioned he ended up in hospital after eating prawns at his farewell dinner in London",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_exits",
+        "value": "Dev just pinged me — he's stuck in a code review that's running over, says don't wait for him and he'll just grab something from the vending machine",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "The Thai place menu: pad thai with shrimp, green curry chicken, beef satay with peanut sauce, mango sticky rice, glass noodle salad with tofu",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "sarah_gluten_free",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Sarah was diagnosed with celiac disease last year, she's really strict about it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Strict celiac → must avoid all gluten-containing foods including soy sauce (often wheat-based)"
+        ]
+      },
+      {
+        "key": "dev_peanut_allergy",
+        "value": "Severe peanut allergy — cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Dev had a peanut allergy incident at a conference last month — his EpiPen saved him",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "EpiPen use → severe allergic reaction (anaphylaxis)",
+          "Peanut incident → peanut allergy",
+          "Severe peanut allergy → must avoid all peanut and peanut-derived products"
+        ]
+      },
+      {
+        "key": "priya_pregnancy",
+        "value": "Pregnant — should avoid raw fish, raw eggs, high-mercury fish, unpasteurized items",
+        "disclosed": false,
+        "surface_form": "Priya mentioned she's 14 weeks pregnant now, she's being super careful about what she eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "14 weeks pregnant → first/second trimester",
+          "Pregnant and careful → avoiding pregnancy-unsafe foods",
+          "Pregnancy food safety → no raw fish, no raw eggs, no high-mercury fish, no unpasteurized products"
+        ]
+      },
+      {
+        "key": "tom_shellfish_allergy",
+        "value": "Allergic to shellfish — cannot eat shrimp, prawns, crab, lobster, or shellfish-derived products",
+        "disclosed": false,
+        "surface_form": "Tom mentioned he ended up in hospital after eating prawns at his farewell dinner in London",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hospitalized after eating prawns → severe allergic reaction to prawns",
+          "Prawns → shellfish",
+          "Shellfish allergy → avoid shrimp, prawns, crab, lobster, and shellfish-derived products"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a corporate team lunch. You will introduce 5 colleagues with various dietary needs, then some people will drop out (one wants food saved for later, one doesn't need anything). A new person joins. At the end you will share a specific Thai restaurant menu and ask if there are any issues. You never hint at what the problems might be — you just ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, organized team coordinator. You always refer to colleagues by name in third person (e.g. 'Sarah told me...', 'Dev just pinged me...'). You never express frustration or impatience even when plans keep changing. You treat each update as normal workplace coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're organizing a team lunch this Wednesday for our department. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with lunch planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate lunch planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Sarah, Dev, Marcus, and Priya. Sarah was diagnosed with celiac disease last year, she's really strict about it. Dev had a peanut allergy incident at a conference last month — his EpiPen saved him. And Marcus is doing keto right now, been on it for three months",
+          "success_criteria": "Agent acknowledges all team members and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "sarah_celiac",
+            "dev_peanut",
+            "marcus_preference"
+          ],
+          "required_constraint_keys": [
+            "sarah_gluten_free",
+            "dev_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities with 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Company card limit is about 25 per person. We were thinking of ordering from one of those Thai or Vietnamese places nearby",
+          "success_criteria": "Agent registers budget and cuisine direction",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info and cuisine preference"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Marcus just told me he got pulled into a client call at noon, so he won't make lunch. But he asked if I could grab him something to eat at his desk later",
+          "success_criteria": "Agent notes Marcus is out of the group lunch but needs food packed/saved for later",
+          "required_info_keys": [
+            "marcus_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Marcus leaves but wants food saved (keto constraint persists for his portion)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Priya mentioned she's 14 weeks pregnant now, she's being super careful about what she eats. Also, Tom from accounting is joining us — he transferred from the London office last week",
+          "success_criteria": "Agent registers Priya's pregnancy constraint and Tom joining",
+          "required_info_keys": [
+            "priya_constraint_update",
+            "new_joiner_tom"
+          ],
+          "required_constraint_keys": [
+            "priya_pregnancy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "New constraint (Priya pregnant) + late-joining entity (Tom)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Tom mentioned he ended up in hospital after eating prawns at his farewell dinner in London. Scary stuff",
+          "success_criteria": "Agent registers Tom's shellfish allergy",
+          "required_info_keys": [
+            "tom_shellfish"
+          ],
+          "required_constraint_keys": [
+            "tom_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity gets high-constraint (shellfish allergy)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Dev just pinged me — he's stuck in a code review that's running over, says don't wait for him and he'll just grab something from the vending machine",
+          "success_criteria": "Agent notes Dev is fully out — no food needed for him",
+          "required_info_keys": [
+            "dev_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with full removal — Dev leaves and doesn't want food, peanut constraint removed"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we eat in the break room or book the small meeting room? The meeting room has a nicer table but we'd need to reserve it",
+          "success_criteria": "Agent responds about logistics without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "lunch logistics",
+            "drift_topic": "where to eat — break room vs meeting room",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "How many dishes do you think we should get for four people eating together plus one packed portion?",
+          "success_criteria": "Agent responds about quantity without losing track of constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "portion planning",
+            "drift_topic": "how many dishes for 4 dining + 1 packed",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn for distance before probe"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "OK so I found this Thai place with good reviews. Their lunch specials are: pad thai with shrimp, green curry chicken, beef satay with peanut sauce, mango sticky rice, glass noodle salad with tofu. Any issues?",
+          "success_criteria": "Agent identifies: pad thai with shrimp problematic for Tom (shellfish) and Sarah (wheat noodles/soy sauce gluten); beef satay with peanut sauce is a trap — Dev left so peanut is fine, but must be flagged for Marcus's packed portion (satay often has sugar in sauce, not keto-friendly); green curry chicken is fine for the table; mango sticky rice is fine; glass noodle salad with tofu is fine for everyone",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "Pad thai with shrimp has two problems: shrimp is shellfish (Tom's allergy), and traditional pad thai uses wheat-based soy sauce and sometimes wheat noodles (Sarah's celiac — though rice noodles themselves are fine, the sauce typically contains gluten). Beef satay with peanut sauce: the peanut sauce is NOT a problem for the table since Dev left and doesn't need food, but for Marcus's packed portion the satay sauce is typically high in sugar (not keto-friendly). Green curry chicken is fine for everyone at the table and can work for Marcus's packed portion (curry with protein, no rice). Mango sticky rice is fine for the table. Glass noodle salad with tofu is fine for everyone — glass noodles are made from mung bean starch (gluten-free), tofu is safe for all current constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Pad thai with shrimp is problematic for Tom because shrimp is shellfish and he has a shellfish allergy",
+      "Pad thai is problematic for Sarah because traditional pad thai sauce contains soy sauce which typically has wheat/gluten",
+      "Beef satay with peanut sauce is NOT a problem for the table diners — Dev left and doesn't need food, so peanut allergy is no longer active",
+      "Agent acknowledges Marcus still needs a packed portion and considers keto-compatibility for his food",
+      "Glass noodle salad with tofu is fine for everyone currently attending including Sarah — glass noodles are gluten-free",
+      "Green curry chicken is acceptable for the table diners"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut sauce as a problem for the table diners (Dev left entirely and doesn't want food)",
+      "Flagging beef satay peanut sauce as dangerous due to Dev's allergy (Dev is fully out)",
+      "Saying Tom has a general seafood allergy (he specifically reacted to prawns — shellfish allergy, not all seafood)",
+      "Ignoring Tom's shellfish allergy on the pad thai with shrimp",
+      "Forgetting that Marcus needs a packed keto-friendly portion",
+      "Saying glass noodle salad is problematic for Sarah (glass noodles are mung bean based, not wheat)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking with scope-change exits. Key tracking challenges: (1) Sarah has celiac → gluten-free (inferential: celiac → no gluten → soy sauce in pad thai contains wheat), (2) Dev has severe peanut allergy but FULLY EXITS mid-conversation with no food needed — his constraint is completely removed, (3) Marcus EXITS the group lunch but wants food packed for later — his keto preference persists for his portion only, (4) Tom joins LATE with shellfish allergy (prawns → shellfish, NOT all seafood), (5) Priya is pregnant (constraint active but none of the 5 menu items violate pregnancy restrictions — no raw fish, no raw eggs present). The critical scope distinction: Dev's exit removes peanut constraint entirely (he said vending machine), while Marcus's exit preserves his keto need for the packed portion. The over-generalization trap: Tom's prawn reaction = shellfish allergy, not all seafood — so a fish dish would be fine for him."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

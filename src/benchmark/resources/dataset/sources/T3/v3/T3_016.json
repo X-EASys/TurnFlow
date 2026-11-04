@@ -1,0 +1,240 @@
+{
+  "scenario_id": "T3_016",
+  "domain": "choosing between 3 music lessons",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and sign up for a music lesson program. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I've been wanting to learn piano for a while now. I'm deciding between 3 music lesson programs.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 piano lesson programs: Studio A, Studio B, Studio C",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "program_details",
+        "value": "Studio A: private in-person lessons twice a week (Tuesday and Thursday evenings 7-8pm), 280 dollars per month, includes recital opportunities. Studio B: group weekend lessons Saturday mornings 10am-12pm, 120 dollars per month, includes ensemble practice. Studio C: online one-on-one lessons, flexible scheduling, 95 dollars per month, includes recorded session replays.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "volunteer_commitment",
+        "value": "User volunteers at a community center every Saturday morning from 9am to 1pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly budget for lessons is 100 dollars",
+        "surface_form": "I just started a new savings plan. I'm putting away 400 a month from my 1600 take-home pay, rent is 900, and I need the rest for groceries and transport. That leaves about 100 for something like this",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Take-home 1600 minus 400 savings minus 900 rent = 300 remaining",
+          "300 remaining covers groceries and transport with about 100 left",
+          "100 dollars is the maximum available for music lessons"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint_saturday",
+        "value": "Cannot attend anything on Saturday mornings because of a standing volunteer commitment from 9am to 1pm",
+        "surface_form": "Every Saturday morning I volunteer at the community center, 9am to 1pm. Been doing it for two years and I'm not giving that up",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers Saturday 9am-1pm → Saturday morning is blocked",
+          "Studio B meets Saturday 10am-12pm → direct conflict with volunteering",
+          "Studio B is impossible due to schedule overlap"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weeknight_constraint",
+        "value": "Cannot commit to fixed weeknight evening slots because of unpredictable overtime at work",
+        "surface_form": "My job has been throwing a lot of late nights at me lately. Some weeks I don't leave the office until 8 or 9pm, and I never know which days until that morning",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Unpredictable overtime means some evenings are unavailable on short notice",
+          "Studio A meets Tuesday and Thursday evenings 7-8pm on a fixed schedule",
+          "Fixed weeknight commitments are unreliable when overtime is unpredictable → Studio A attendance would be inconsistent"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 piano lesson programs (Studio A, Studio B, Studio C). You will share program details, your budget, your Saturday volunteering commitment, and your unpredictable work overtime across several turns. Your colleague and friend will praise Studio A and Studio B. At the very end, you will simply say you have made your decision and need to sign up this week — you must NEVER name which studio you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You never express frustration or impatience, even when discussing scheduling difficulties. You treat each piece of information as normal conversation.",
+        "description": "Prevents emotion escalation that could leak probe answers"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I've been wanting to learn piano for a while. I narrowed it down to three programs — Studio A, Studio B, and Studio C",
+          "success_criteria": "Agent engages with the 3-option piano lesson decision",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Studio A is private in-person lessons twice a week, Tuesday and Thursday evenings 7 to 8pm, 280 dollars a month, and they do recitals. Studio B is group lessons on Saturday mornings 10am to noon, 120 a month, with ensemble practice. Studio C is online one-on-one with flexible scheduling, 95 a month, and you get recorded replays of your sessions",
+          "success_criteria": "Agent processes all 3 options with prices, schedules, and features",
+          "required_info_keys": [
+            "program_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices, schedules, and features in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work started Studio A lessons a few months ago. She showed me a video of her playing at their recital and it was honestly impressive for someone who just started",
+          "success_criteria": "Agent responds to the positive Studio A experience",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "started Studio A a few months ago, played at their recital, impressive progress for a beginner",
+            "target_option": "Studio A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Studio A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I just started a new savings plan. I'm putting away 400 a month from my 1600 take-home pay, rent is 900, and I need the rest for groceries and transport. That leaves about 100 for something like this",
+          "success_criteria": "Agent registers the budget constraint and ideally recognizes Studio A at 280 and Studio B at 120 exceed the 100 dollar limit",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income breakdown — eliminates A and B on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague mentioned her Studio A instructor used to perform with the city philharmonic. She said the feedback after each lesson is incredibly detailed",
+          "success_criteria": "Agent responds to Studio A instructor credentials",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Studio A instructor performed with city philharmonic, gives incredibly detailed feedback",
+            "target_option": "Studio A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Studio A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Every Saturday morning I volunteer at the community center, 9am to 1pm. Been doing it for two years and I'm not giving that up",
+          "success_criteria": "Agent recognizes Saturday morning is blocked, eliminating Studio B which meets Saturday 10am-12pm",
+          "required_info_keys": [
+            "volunteer_commitment"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint_saturday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver Saturday schedule constraint — eliminates Studio B on schedule conflict"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "My job has been throwing a lot of late nights at me lately. Some weeks I don't leave the office until 8 or 9pm, and I never know which days until that morning",
+          "success_criteria": "Agent recognizes unpredictable overtime makes fixed weeknight commitments unreliable, further reinforcing that Studio A is impractical",
+          "required_constraint_keys": [
+            "weeknight_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver weeknight constraint — reinforces elimination of Studio A on schedule unreliability"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "A friend of mine goes to Studio B with her kids. She said the group dynamic is really fun, they play duets and everyone claps for each other",
+          "success_criteria": "Agent responds to the positive Studio B group experience",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "goes to Studio B with her kids, group dynamic is fun, duets and supportive atmosphere",
+            "target_option": "Studio B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Studio B"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My friend also said Studio B just brought in a new instructor who studied at Juilliard. Apparently the Saturday sessions have gotten even better since he joined",
+          "success_criteria": "Agent responds to Studio B's new instructor credentials",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Studio B hired a Juilliard-trained instructor, Saturday sessions improved",
+            "target_option": "Studio B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Studio B (already eliminated by budget and schedule)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I need to decide and sign up this week. Which option should I pick?",
+          "success_criteria": "Agent commits to recommending Studio C as the only option within the 100 dollar budget, compatible with Saturday volunteering, and accommodating unpredictable work overtime through flexible scheduling",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "compare",
+              "budget",
+              "afford",
+              "recommend"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up for Studio C (online one-on-one, 95 dollars per month, flexible scheduling). Studio A (280 per month) exceeds the 100 dollar budget and its fixed Tuesday/Thursday evening schedule conflicts with unpredictable work overtime. Studio B (120 per month) exceeds the 100 dollar budget and its Saturday 10am-12pm schedule directly conflicts with the user's Saturday 9am-1pm volunteering commitment. Only Studio C (95 dollars, under the 100 budget, flexible scheduling that accommodates both overtime and volunteering) survives all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Studio A at 280 dollars per month exceeds the derived budget of 100 dollars from the 1600 take-home minus 400 savings minus 900 rent breakdown",
+      "Agent shows that Studio B at 120 dollars per month exceeds the derived budget of 100 dollars",
+      "Agent shows that Studio B Saturday 10am-12pm sessions conflict with the user's Saturday 9am-1pm volunteering at the community center",
+      "Agent shows that Studio A fixed Tuesday and Thursday evening lessons are unreliable given the user's unpredictable overtime that sometimes runs until 8 or 9pm",
+      "Agent commits to Studio C as the only program fitting all three constraints: under 100 dollar budget, no Saturday morning conflict, and flexible scheduling for unpredictable work hours"
+    ],
+    "forbidden_elements": [
+      "Recommending Studio A despite it costing 280 dollars which is 2.8 times the 100 dollar budget",
+      "Recommending Studio B despite it costing 120 dollars which exceeds the 100 dollar budget and conflicting with Saturday volunteering",
+      "Ignoring the budget constraint derived from the income breakdown when making a recommendation",
+      "Ignoring the Saturday volunteering schedule conflict when evaluating Studio B",
+      "Asking the user which studio they decided on instead of determining it from the stated constraints",
+      "Suggesting the user could adjust savings or skip volunteering to afford a different option"
+    ],
+    "explanation": "Budget constraint: 1600 take-home minus 400 savings minus 900 rent = 300 for groceries and transport, leaving about 100 for lessons. Studio A at 280 is 2.8x the budget (eliminated). Studio B at 120 is 1.2x the budget (eliminated). Studio C at 95 is within budget. Schedule constraint 1 (Saturday): volunteering 9am-1pm blocks Studio B which meets 10am-12pm (eliminated). Schedule constraint 2 (weeknights): unpredictable overtime until 8-9pm makes Studio A's fixed Tuesday/Thursday 7-8pm unreliable (eliminated). Three distinct axes each eliminate at least one option. Studio B is eliminated by both budget and Saturday schedule. Studio A is eliminated by both budget and weeknight unpredictability. Only Studio C (95 dollars, flexible online scheduling) survives all three constraints. Four drift turns praising Studio A and Studio B create recency bias toward the eliminated options."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

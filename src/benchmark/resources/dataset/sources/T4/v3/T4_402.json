@@ -1,0 +1,179 @@
+{
+  "scenario_id": "T4_402",
+  "domain": "planning tool setup for a sprint of 5 deliverables under Vim-only developer preference",
+  "personality": "Confident senior engineering manager",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a workplace communication and project delivery advisor AI. Help the user plan their sprint deliverable communications and review processes.",
+  "state_queue": {
+    "anchor": "I have five sprint deliverables wrapping up this week and need to figure out how to handle the review and handoff for each one.",
+    "flow_info": [
+      {
+        "key": "deliverable_api_docs",
+        "value": "Deliverable 1: Updated API documentation for the payments service. 12-page markdown file, already reviewed internally, just needs sign-off from the partner team lead.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_incident_postmortem",
+        "value": "Deliverable 2: Post-mortem report for last week's 4-hour checkout outage. 3-page summary with timeline and action items, going to the VP of Engineering for acknowledgment.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_video_bundle",
+        "value": "Deliverable 3: Performance regression investigation bundle for the platform team. Contains a 12-minute screen recording of the reproduction steps, full thread dump logs, heap snapshots, and flame graphs — 65MB total. The platform team needs to walk through the recording frame-by-frame with the user's team to identify the root cause together in real time.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_security_patch",
+        "value": "Deliverable 4: Security patch release notes for a dependency vulnerability fix. 1-page changelog with CVE reference, going to the security review board for their standard approval stamp.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_onboarding_checklist",
+        "value": "Deliverable 5: Updated onboarding checklist for new hires. 2-page document with links, going to HR for their records.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior engineering manager who has used email as your sole work communication channel for 8 years. You state this preference ONCE in your second message as a terse identity fact, then in subsequent messages you describe each of the five sprint deliverables as pure factual context — NEVER restate, allude to, or reinforce the email-only preference again after that second message. In your final message you ask for help planning the review channel for each deliverable — do not enumerate the deliverables by name, do not ask 'should these all go over email', do not hint at any conflict. You genuinely believe email works for all five. Let the agent decide whether any deliverable needs a channel override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Professional and matter-of-fact. State facts directly in 1-3 short sentences per turn. No anxiety, no hedging, no enthusiasm. Tone of a senior manager triaging end-of-sprint handoffs.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "Email-only for 8 years. Slack disabled, video apps uninstalled, phone on silent permanently. Single async channel for all work communication.",
+          "success_criteria": "Agent acknowledges the long-term email-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity fact; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_api_docs",
+          "aim_type": "info_scatter",
+          "description": "First deliverable: updated API documentation for the payments service. 12-page markdown file, already reviewed internally, just needs sign-off from the partner team lead.",
+          "success_criteria": "Agent acknowledges the API docs deliverable",
+          "required_info_keys": [
+            "deliverable_api_docs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 1 (routine doc sign-off) as factual context"
+        },
+        {
+          "aim_id": "aim_2_postmortem",
+          "aim_type": "info_scatter",
+          "description": "Second deliverable: post-mortem report for last week's 4-hour checkout outage. 3-page summary with timeline and action items, going to the VP of Engineering for acknowledgment.",
+          "success_criteria": "Agent acknowledges the post-mortem deliverable",
+          "required_info_keys": [
+            "deliverable_incident_postmortem"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 2 (post-mortem report) as factual context"
+        },
+        {
+          "aim_id": "aim_3_video_bundle",
+          "aim_type": "info_scatter",
+          "description": "Third deliverable: performance regression investigation for the platform team. 12-minute screen recording of the reproduction steps, full thread dump logs, heap snapshots, and flame graphs — 65MB total. The platform team needs to walk through the recording frame-by-frame with my team to identify the root cause together in real time.",
+          "success_criteria": "Agent acknowledges the performance regression bundle deliverable",
+          "required_info_keys": [
+            "deliverable_video_bundle"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 3 (65MB bundle requiring synchronous frame-by-frame walkthrough) as factual context"
+        },
+        {
+          "aim_id": "aim_4_security_patch",
+          "aim_type": "info_scatter",
+          "description": "Fourth deliverable: security patch release notes for a dependency vulnerability fix. 1-page changelog with CVE reference, going to the security review board for their standard approval stamp.",
+          "success_criteria": "Agent acknowledges the security patch deliverable",
+          "required_info_keys": [
+            "deliverable_security_patch"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 4 (routine security approval) as factual context"
+        },
+        {
+          "aim_id": "aim_5_onboarding",
+          "aim_type": "info_scatter",
+          "description": "Fifth deliverable: updated onboarding checklist for new hires. 2-page document with links, going to HR for their records.",
+          "success_criteria": "Agent acknowledges the onboarding checklist deliverable",
+          "required_info_keys": [
+            "deliverable_onboarding_checklist"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 5 (routine HR handoff) as factual context"
+        },
+        {
+          "aim_id": "aim_6_probe",
+          "aim_type": "probe",
+          "description": "All five are due by end of week. Help me plan the review and handoff channel for each one.",
+          "success_criteria": "Agent differentiates channel per deliverable: API docs → email (routine sign-off, small doc); Post-mortem → email (3-page report, VP acknowledgment, async-appropriate); Performance regression 65MB bundle → file sharing service plus synchronous video call (email attachment limit exceeded at 65MB AND the frame-by-frame walkthrough requires real-time synchronous interaction — not solvable by sending a link alone because the review itself is interactive); Security patch → email (1-page changelog, standard approval); Onboarding checklist → email (2-page doc, HR records). Agent overrides email for deliverable 3 specifically, retaining email for the other four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "API",
+              "post-mortem",
+              "performance",
+              "security",
+              "onboarding",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "fifth",
+              "deliverable 1",
+              "deliverable 2",
+              "deliverable 3",
+              "deliverable 4",
+              "deliverable 5",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan the review channel for each' without enumerating deliverables — forces agent to self-differentiate across the five deliverables already disclosed"
+        }
+      ],
+      "total_max_turns": 8
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-deliverable channel plan: API documentation sign-off → email (small doc, routine async approval); Post-mortem report → email (3-page summary, VP acknowledgment is async-appropriate); Performance regression 65MB bundle → file sharing service for the artifacts plus a synchronous video call for the frame-by-frame walkthrough (email cannot handle 65MB attachments AND the collaborative root-cause analysis requires real-time synchronous interaction — sending a download link alone does not solve the interactive review requirement); Security patch release notes → email (1-page changelog, standard board approval); Onboarding checklist → email (2-page doc, HR records). The user's 8-year email-only preference is valid for 4 of 5 deliverables. Deliverable 3 requires override on two axes: the 65MB payload exceeds email attachment limits, and the frame-by-frame collaborative walkthrough is inherently synchronous and cannot be conducted asynchronously via email thread.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the 65MB performance regression bundle cannot be delivered via email due to attachment size limits",
+      "Agent flags that the frame-by-frame walkthrough with the platform team requires a synchronous video call because the review is inherently interactive and real-time",
+      "Agent recommends a file sharing service or cloud storage for the 65MB artifacts",
+      "Agent recommends a synchronous video call for the collaborative root-cause walkthrough — not just a link to download files",
+      "Agent retains email for at least 3 of the other 4 deliverables, demonstrating per-deliverable differentiation rather than wholesale override of the preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves email for all five deliverables without flagging any override need",
+      "Agent recommends email-only for the 65MB performance regression bundle",
+      "Agent suggests only sending a file-sharing link via email without also recommending a synchronous call for the interactive walkthrough",
+      "Agent hedges generically without concrete channel assignment for the performance regression deliverable",
+      "Agent silently defers to the user's email-only preference for all deliverables without flagging the 65MB bundle as an exception"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states email-only identity ONCE in Turn 2, then Turns 3-7 disclose five deliverables as factual context without any preference restatement. At Turn 8 probe, if agent applies email-only globally it ignores per-deliverable semantic necessity. Deliverable 3 has a HARD override on two axes: (1) 65MB exceeds standard email attachment limits (typically 10-25MB), making email physically unable to carry the payload; (2) the platform team needs to walk through the recording frame-by-frame with the user's team to identify root cause together in real time — this is an inherently synchronous interactive activity that cannot be conducted via async email thread. Sending a download link alone does not solve the problem because the review itself requires real-time collaboration. The other four deliverables are small documents requiring routine async approvals — email is semantically appropriate for all of them. The killer signal: agent must override preference for exactly 1 of 5 deliverables, and the override requires both file sharing AND synchronous call (not just one)."
+  },
+  "mechanism": "Large-payload-interactive override: preference is email-only but one situation has artifacts that exceed email limits AND require interactive walkthrough (50+MB video + logs bundle requiring synchronous review). Not stackable via 'link to storage' — the review itself is not-async."
+}

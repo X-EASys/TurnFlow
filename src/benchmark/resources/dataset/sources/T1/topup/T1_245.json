@@ -1,0 +1,311 @@
+{
+  "scenario_id": "T1_245",
+  "domain": "team dinner at a Japanese izakaya",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a team dinner this Saturday at a Japanese izakaya. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us initially: me, Sarah, Dev, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sarah_pregnancy",
+        "value": "Sarah is 5 months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_allergy",
+        "value": "Dev ate shrimp tempura at a work event last year and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around $40-50 per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reservation_size",
+        "value": "How many should I book the reservation for?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_healed",
+        "value": "Marcus just messaged me — turns out he got retested and his doctor says he doesn't actually have celiac, it was a misdiagnosis. He can eat whatever he wants now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_wife_joins",
+        "value": "Marcus wants to bring his wife Priya too",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sarah_exits",
+        "value": "Sarah just told me she's not feeling well and won't make it. She asked if I could bring her back some food though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "late_joiner_tom",
+        "value": "Oh, Dev's brother Tom wants to join us too, so that's five now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_peanut",
+        "value": "Tom had a really bad reaction to peanuts when he was a kid, his mom always made sure there were none around",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timing_question",
+        "value": "Should we do 6:30 or 7:30 reservation?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "The izakaya has these dishes I'm eyeing: salmon sashimi, chicken karaage, shrimp gyoza, cold tofu with peanut sauce, and beef teriyaki with soy glaze. Any issues with these for our group?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "sarah_raw_fish",
+        "value": "Cannot eat raw fish or raw seafood",
+        "disclosed": false,
+        "surface_form": "Sarah is 5 months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "5 months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw fish/seafood due to listeria and mercury risk"
+        ]
+      },
+      {
+        "key": "dev_shrimp_allergy",
+        "value": "Allergic to shrimp specifically (anaphylactic reaction)",
+        "disclosed": false,
+        "surface_form": "Dev ate shrimp tempura at a work event last year and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_peanut_allergy",
+        "value": "Severe peanut allergy",
+        "disclosed": false,
+        "surface_form": "Tom had a really bad reaction to peanuts when he was a kid, his mom always made sure there were none around",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_jain",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a strict Jain household in Gujarat and still follows all the practices",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Strict Jain household → follows Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs, no root vegetables (onion, garlic, potato)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at a Japanese izakaya. You will introduce your group (Sarah, Dev, Marcus) with their constraints, then the group changes: Marcus's celiac is removed (misdiagnosis), Sarah leaves but wants takeaway, Marcus's wife Priya joins (Jain), and Dev's brother Tom joins late (peanut allergy). At the end you will list 5 specific dishes and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative team organizer. You always refer to your colleagues by name in third person (e.g. 'Sarah told me...', 'Dev mentioned...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination among friends.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a team dinner this Saturday at a Japanese izakaya. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with izakaya dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Sarah, Dev, and Marcus. Sarah is 5 months pregnant. Dev ate shrimp tempura at a work event last year and his throat swelled up, had to use an EpiPen. And Marcus was diagnosed with celiac disease a couple years ago. Budget is around $40-50 per person",
+          "success_criteria": "Agent acknowledges all three members' dietary constraints and the budget",
+          "required_info_keys": [
+            "team_members",
+            "sarah_pregnancy",
+            "dev_allergy",
+            "marcus_celiac",
+            "budget"
+          ],
+          "required_constraint_keys": [
+            "sarah_raw_fish",
+            "dev_shrimp_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "How many should I book the reservation for — is four enough or should I leave a buffer?",
+          "success_criteria": "Agent responds about reservation size",
+          "required_info_keys": [
+            "reservation_size"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "reservation headcount",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn about logistics"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Marcus just messaged me — turns out he got retested and his doctor says he doesn't actually have celiac, it was a misdiagnosis. He can eat whatever he wants now. Oh and he wants to bring his wife Priya too",
+          "success_criteria": "Agent removes Marcus's celiac restriction and registers Priya as a new diner",
+          "required_info_keys": [
+            "marcus_healed",
+            "marcus_wife_joins"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Marcus celiac misdiagnosis) + entity JOIN (Priya)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Priya grew up in a strict Jain household in Gujarat and still follows all the practices",
+          "success_criteria": "Agent registers Priya's Jain dietary constraint",
+          "required_info_keys": [],
+          "required_constraint_keys": [
+            "priya_jain"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver inferential constraint for late-joining entity (Priya = Jain)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Sarah just told me she's not feeling well and won't make it. She asked if I could bring her back some food though",
+          "success_criteria": "Agent notes Sarah exits dinner but needs takeaway, her pregnancy constraint applies to takeaway",
+          "required_info_keys": [
+            "sarah_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Sarah's pregnancy constraint now applies to takeaway only"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh, Dev's brother Tom wants to join us too, so that's five at the table now. Tom had a really bad reaction to peanuts when he was a kid, his mom always made sure there were none around",
+          "success_criteria": "Agent registers Tom as new diner with peanut allergy",
+          "required_info_keys": [
+            "late_joiner_tom",
+            "tom_peanut"
+          ],
+          "required_constraint_keys": [
+            "tom_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity (Tom with peanut allergy)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we do 6:30 or 7:30 reservation? I'm thinking earlier so we're not rushed",
+          "success_criteria": "Agent responds about timing preference",
+          "required_info_keys": [
+            "timing_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "reservation timing",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "The izakaya has these dishes I'm eyeing: salmon sashimi, chicken karaage, shrimp gyoza, cold tofu with peanut sauce, and beef teriyaki with soy glaze. Any issues with these for our group?",
+          "success_criteria": "Agent identifies: shrimp gyoza problematic for Dev (shrimp allergy), cold tofu with peanut sauce problematic for Tom (peanut allergy), chicken karaage and beef teriyaki problematic for Priya (Jain — no meat), salmon sashimi fine for table but cannot be packed for Sarah's takeaway (pregnant — no raw fish). Soy glaze on beef teriyaki is fine for everyone (no gluten issue since Marcus's celiac was removed).",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Shrimp gyoza is problematic for Dev (shrimp allergy — anaphylactic). Cold tofu with peanut sauce is problematic for Tom (severe peanut allergy). Chicken karaage is problematic for Priya (Jain — no meat). Beef teriyaki is problematic for Priya (Jain — no meat). Salmon sashimi is fine for the table but must NOT be packed for Sarah's takeaway (she is pregnant — no raw fish). The soy glaze on beef teriyaki is NOT a problem — Marcus's celiac was a misdiagnosis, he can eat gluten now.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Shrimp gyoza is problematic: Dev has a shrimp allergy (throat swelled up, EpiPen used)",
+      "Cold tofu with peanut sauce is problematic: Tom has a severe peanut allergy",
+      "Chicken karaage is problematic: Priya is Jain and cannot eat meat",
+      "Beef teriyaki is problematic: Priya is Jain and cannot eat meat",
+      "Salmon sashimi is fine for the table but must be excluded from Sarah's takeaway because she is pregnant and cannot eat raw fish",
+      "Marcus has no dietary restrictions anymore — agent does not flag gluten or soy as a problem for him"
+    ],
+    "forbidden_elements": [
+      "Flagging gluten or soy as a problem for Marcus (his celiac was a misdiagnosis, restriction removed)",
+      "Saying salmon sashimi is problematic for the table (Sarah is not at the table, she only gets takeaway)",
+      "Saying Dev has a general seafood allergy (he specifically reacted to shrimp only)",
+      "Ignoring Tom's peanut allergy on the cold tofu with peanut sauce (late-joiner must be tracked)",
+      "Ignoring Priya's Jain constraint on chicken karaage or beef teriyaki"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns at a Japanese izakaya. The agent must track: (1) Sarah is pregnant → no raw fish (inferential, never explicitly stated as a food rule), (2) Dev has a shrimp allergy (direct from EpiPen story — must NOT over-generalize to all seafood), (3) Marcus's celiac is REMOVED mid-conversation (misdiagnosis), (4) Priya joins late with an inferential constraint (strict Jain household → no meat, no fish, no eggs, no root vegetables), (5) Tom joins LATE with a peanut allergy (primary failure mode — models forget late-joining entities), (6) Sarah EXITS the dinner but still needs takeaway (her pregnancy/raw fish constraint applies to takeaway only). At probe time, the current constraint state is: Dev=shrimp allergy, Tom=peanut allergy, Priya=Jain (no meat/fish/eggs/root veg), Sarah=pregnant (no raw fish, takeaway only). Marcus has NO restrictions. The over-generalization trap is Dev's shrimp allergy — salmon sashimi contains no shrimp and is fine for the table. The removed-constraint trap is Marcus's celiac — soy glaze is fine. The late-joiner trap is Tom — peanut sauce must be caught. The scope-distinction trap is salmon sashimi — fine for table, not for Sarah's takeaway."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

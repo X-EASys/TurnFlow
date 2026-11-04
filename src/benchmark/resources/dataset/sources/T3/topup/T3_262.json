@@ -1,0 +1,234 @@
+{
+  "scenario_id": "T3_262",
+  "domain": "choosing between 3 dog training programs",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and enroll in a dog training program. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to get my dog trained. I'm deciding between 3 programs.",
+    "flow_info": [
+      {
+        "key": "three_programs",
+        "value": "Choosing between 3 dog training programs: Program Alpha, Program Beta, Program Gamma",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "program_details",
+        "value": "Program Alpha: board-and-train (dog stays at facility 4 weeks), $2800, weekday drop-off required between 7-9am. Program Beta: group classes every Saturday morning 10am-12pm for 8 weeks, $900. Program Gamma: private sessions, trainer comes to your home, flexible scheduling including evenings and weekends, $650 for 6 sessions.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_volunteering",
+        "value": "User volunteers at an animal shelter every Saturday morning from 9am to 1pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is $800",
+        "surface_form": "My partner and I set aside $800 for dog training from our pet fund this year",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend Saturday morning sessions because of a standing volunteer commitment at an animal shelter every Saturday 9am-1pm",
+        "surface_form": "I volunteer at the animal shelter every Saturday morning, 9 to 1, been doing it for two years now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers every Saturday 9am-1pm → Saturday mornings are unavailable",
+          "Program Beta meets Saturday 10am-12pm → conflicts with shelter volunteering",
+          "Program Beta is impossible due to schedule conflict"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "separation_anxiety",
+        "value": "Dog has severe separation anxiety and cannot be boarded away from home for extended periods",
+        "surface_form": "My dog has really bad separation anxiety — last time we left him at a kennel overnight he destroyed the crate and wouldn't eat for two days",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Severe separation anxiety → dog cannot stay at a facility away from owner",
+          "Program Alpha requires 4-week board-and-train → dog stays at facility",
+          "Dog with severe separation anxiety cannot handle 4-week boarding → Program Alpha is impossible"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 dog training programs (Alpha, Beta, Gamma). You will share program details, your budget, your Saturday volunteering schedule, and your dog's separation anxiety across several turns. Your neighbor and coworker will praise Programs Alpha and Beta. At the very end, you will simply say you have decided and need to register this week — you must NEVER name which program you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative dog owner. You state facts plainly without strong emotion. You are not frustrated or impatient — you treat each piece of information as normal conversation.",
+        "description": "Prevents emotion escalation that could leak the answer"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to get my dog trained — he's a 2-year-old Lab mix and he pulls on leash, jumps on guests, and ignores recall. I'm deciding between 3 programs.",
+          "success_criteria": "Agent engages with dog training program selection",
+          "required_info_keys": [
+            "three_programs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Program Alpha is a board-and-train where the dog stays at their facility for 4 weeks, costs $2800, and requires weekday drop-off between 7 and 9am. Program Beta is group classes every Saturday morning 10am to noon for 8 weeks, $900. Program Gamma is private sessions where the trainer comes to your home, flexible scheduling including evenings and weekends, $650 for 6 sessions.",
+          "success_criteria": "Agent processes all 3 programs with their prices, formats, and schedules",
+          "required_info_keys": [
+            "program_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and schedules in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor sent his German Shepherd to Program Alpha last year. He said the transformation was incredible — the dog came back perfectly obedient, walks off-leash now.",
+          "success_criteria": "Agent responds to the positive Program Alpha review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "sent his German Shepherd to Program Alpha, incredible transformation, dog walks off-leash now",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Program Alpha"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My partner and I set aside $800 for dog training from our pet fund this year",
+          "success_criteria": "Agent registers the $800 budget cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Alpha ($2800) and Beta ($900)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at the animal shelter every Saturday morning, 9 to 1, been doing it for two years now",
+          "success_criteria": "Agent registers the Saturday morning conflict",
+          "required_info_keys": [
+            "saturday_volunteering"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Beta (Saturday 10am-12pm conflicts with shelter 9am-1pm)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "drift",
+          "description": "My coworker just started Program Beta with her Goldendoodle. She loves the group setting — says her dog is way more focused around other dogs now.",
+          "success_criteria": "Agent responds to the positive Program Beta review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "started Program Beta with her Goldendoodle, loves the group setting, dog more focused around other dogs",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: create positive recency bias toward Program Beta"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "My dog has really bad separation anxiety — last time we left him at a kennel overnight he destroyed the crate and wouldn't eat for two days",
+          "success_criteria": "Agent registers that the dog cannot handle being boarded away from home",
+          "required_constraint_keys": [
+            "separation_anxiety"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver third constraint — eliminates Alpha (4-week board-and-train impossible for dog with severe separation anxiety)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor mentioned Program Alpha's head trainer has 20 years of experience and used to train police K9 units. He said the facility is top-notch too.",
+          "success_criteria": "Agent responds to Program Alpha trainer credentials",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Program Alpha head trainer has 20 years experience, trained police K9 units, top-notch facility",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: more positive info about Program Alpha (eliminated by budget and separation anxiety)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My coworker told me Program Beta also does a graduation day where all the dogs show off their skills. She's already planning to invite her whole family to watch.",
+          "success_criteria": "Agent responds to Program Beta graduation event",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "Program Beta has graduation day, dogs show off skills, coworker inviting family to watch",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Program Beta (eliminated by budget and schedule)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I need to decide and register this week. Which option should I pick?",
+          "success_criteria": "Agent commits to recommending Program Gamma as the only option that fits within the $800 budget, does not conflict with Saturday morning volunteering, and accommodates the dog's separation anxiety",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "budget",
+              "afford"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to Program Gamma based on constraint elimination"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Program Gamma (private in-home sessions, $650 for 6 sessions). Program Alpha ($2800) exceeds the $800 budget and requires 4-week boarding which is impossible for a dog with severe separation anxiety. Program Beta ($900) exceeds the $800 budget and meets Saturday 10am-12pm which conflicts with the user's Saturday 9am-1pm animal shelter volunteering. Only Program Gamma ($650 < $800, flexible scheduling including evenings and weekends, trainer comes to the home so no separation from owner) survives all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent commits to recommending Program Gamma specifically",
+      "Agent shows that Program Alpha at $2800 exceeds the $800 budget derived from the pet fund allocation",
+      "Agent shows that Program Beta at $900 exceeds the $800 budget",
+      "Agent shows that Program Beta's Saturday 10am-12pm schedule conflicts with the user's Saturday 9am-1pm animal shelter volunteering",
+      "Agent shows that Program Alpha's 4-week board-and-train format is incompatible with the dog's severe separation anxiety"
+    ],
+    "forbidden_elements": [
+      "Recommending Program Alpha (exceeds budget by $2000 and dog cannot be boarded due to separation anxiety)",
+      "Recommending Program Beta (exceeds budget by $100 and conflicts with Saturday volunteering)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the dog's separation anxiety when evaluating Program Alpha",
+      "Ignoring the Saturday volunteering conflict when evaluating Program Beta",
+      "Asking the user which program they decided on instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint ($800 max): Alpha=$2800 exceeds budget, Beta=$900 exceeds budget, Gamma=$650 within budget. Schedule constraint (Saturday 9am-1pm volunteering): Beta meets Saturday 10am-12pm which overlaps with volunteering. Separation anxiety constraint (dog cannot be boarded): Alpha requires 4-week board-and-train. Three distinct axes each eliminate at least one option. Only Gamma survives all three constraints. Despite 4 drift turns praising Alpha and Beta, the agent must respect the hard constraints."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

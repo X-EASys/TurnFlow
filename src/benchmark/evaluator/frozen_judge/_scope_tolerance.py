@@ -19,7 +19,7 @@ def make_parser(base_parser):
     def parse_response(raw, spec):
         original = base_parser(raw, spec)
         if (original.get('technical_valid')
-                or spec.get('task') != 'T17'
+                or spec.get('task') != 'T2'
                 or spec.get('arm') != 'CANDIDATE'
                 or spec.get('repair_kind') != 'scope'):
             return original

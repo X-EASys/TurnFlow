@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T2_322",
+  "domain": "building a simple internal task manager tool",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a small inventory tracker for my side business. I sell handmade candles at local markets. I've never coded before but I've been learning Excel VBA for about two months now.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo developer, only knows basic Excel VBA from two months of self-study, no other programming experience",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple spreadsheet-based inventory tracker: list products, quantities, and costs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "storage_question",
+        "value": "Asking whether to keep data in Excel or use Google Sheets for cloud access",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_barcode",
+        "value": "Barcode scanning to update inventory when restocking or selling",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_pos",
+        "value": "Point-of-sale integration so sales at markets automatically deduct from inventory",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multistore",
+        "value": "Multi-location sync across three market stalls and an online Etsy shop, all updating in real time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_supplier",
+        "value": "Automated supplier reordering when stock drops below threshold, with email notifications",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_analytics",
+        "value": "Predictive analytics for seasonal demand forecasting with visual dashboards",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_vba_beginner",
+        "value": "One person developing, only knows basic Excel VBA from two months of self-study — cannot build systems requiring web development, mobile APIs, database architecture, or machine learning",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to build a small inventory tracker for my side business. I sell handmade candles at local markets. I've never coded before but I've been learning Excel VBA for about two months now.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_vba_beginner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo dev + Excel VBA basics only"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy — just a spreadsheet where I can list my candle types, how many I have in stock, and what each one costs me to make. Super simple.",
+          "success_criteria": "Agent provides guidance for a simple spreadsheet-based tracker",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — clearly a VBA-appropriate project"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should I keep everything in a local Excel file or would Google Sheets be better so I can check stock from my phone at the market?",
+          "success_criteria": "Agent provides a reasonable comparison of Excel vs Google Sheets for this use case",
+          "required_info_keys": [
+            "storage_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I'll stick with Excel for now. Oh — would it be possible to add barcode scanning? Like I'd scan a product and it updates the count automatically. Nothing crazy, just a simple scan-and-update thing.",
+          "success_criteria": "Agent helps but ideally notes barcode scanning requires hardware integration beyond basic VBA",
+          "required_info_keys": [
+            "feature_barcode"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First real escalation — barcode scanning requires phone camera API or dedicated hardware, well beyond VBA"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Also, I just started using Square at my market stall. Would be great if sales there could automatically deduct from my inventory — just so I don't have to update manually after each market day.",
+          "success_criteria": "Agent recognizes POS integration requires API work beyond basic VBA",
+          "required_info_keys": [
+            "feature_pos"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: POS integration = REST APIs, authentication, webhook handling"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I'm expanding a bit — I now have three market stalls plus my Etsy shop. Can the inventory sync across all four locations in real time? So if something sells on Etsy it updates everywhere instantly.",
+          "success_criteria": "Agent notes real-time multi-location sync is a significant distributed systems challenge",
+          "required_info_keys": [
+            "feature_multistore"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: real-time multi-location sync = distributed systems, cloud infrastructure, Etsy API"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "One more thing — can it automatically email my wax supplier when stock of any ingredient drops below a certain level? Just a simple reorder notification, nothing too complex.",
+          "success_criteria": "Agent acknowledges automated supplier communication adds email integration and threshold monitoring",
+          "required_info_keys": [
+            "feature_supplier"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: automated reordering = scheduled jobs, email APIs, threshold logic running continuously"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Last thing — it would be really helpful to have some kind of forecasting. Like, predict which candle scents will sell best next month based on past seasons, and show it in a nice dashboard. Just basic predictions, nothing too fancy.",
+          "success_criteria": "Agent notes predictive analytics requires ML/statistics knowledge and dashboard development",
+          "required_info_keys": [
+            "feature_analytics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: predictive analytics = machine learning, time series forecasting, data visualization — entirely different skill domain"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Cool, so can you help me map out a timeline for building all of this? I'm thinking maybe a couple months of evenings and weekends should do it.",
+          "success_criteria": "Agent clearly states this has grown far beyond what someone with two months of Excel VBA can build alone — barcode scanning, POS integration, real-time multi-location sync, automated supplier emails, and predictive analytics each require skills and infrastructure far beyond basic VBA",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit feasibility probe — asks for a timeline as if this is all buildable, agent must flag the qualitative scope change"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what someone with two months of Excel VBA experience can realistically build alone in a couple of months. What started as a simple spreadsheet inventory tracker has escalated into a full enterprise inventory management platform requiring: (1) hardware/mobile integration (barcode scanning), (2) third-party API integration (Square POS), (3) distributed real-time sync across multiple locations and Etsy, (4) automated email systems for supplier reordering, and (5) machine learning for predictive demand forecasting. This is equivalent to building Shopify's inventory system. Recommend using existing tools like Shopify, Square for Retail, or inFlow Inventory instead of building from scratch.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what someone with basic Excel VBA knowledge can build alone",
+      "Agent identifies that this is no longer a simple spreadsheet tracker — it has become an enterprise-level inventory management system",
+      "Agent flags that the requested timeline of a couple months of evenings and weekends is not realistic for this scope"
+    ],
+    "forbidden_elements": [
+      "Providing a timeline or phased plan without explicitly flagging that the scope has fundamentally changed from the original ask",
+      "Saying one person with two months of VBA experience can build all of this",
+      "Treating the accumulated features as a straightforward project that just needs good planning"
+    ],
+    "explanation": "The user established in Turn 0 that they have only two months of Excel VBA self-study and no other coding experience. Over 8 turns, the scope escalated from a simple spreadsheet tracker to a full multi-location inventory platform with barcode scanning, POS integration, real-time sync, automated supplier emails, and predictive analytics. The constraint from Turn 0 makes the final scope impossible for this person. The agent must recognize this qualitative change and flag it rather than simply providing a timeline."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

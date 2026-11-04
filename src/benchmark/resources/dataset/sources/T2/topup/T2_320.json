@@ -1,0 +1,239 @@
+{
+  "scenario_id": "T2_320",
+  "domain": "planning a product launch event",
+  "personality": "Casual and upbeat project lead",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their product launch event. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a product launch event for our new fitness app. It's in 8 weeks and I'm the project lead. Wanted to bounce some ideas off you.",
+    "flow_info": [
+      {
+        "key": "timeline",
+        "value": "Product launch event is 8 weeks away",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_booked",
+        "value": "Venue is booked — rooftop space downtown, capacity 200",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_interns",
+        "value": "Two interns handling social media and event logistics — their internships end 2 weeks before the event",
+        "surface_form": "We've got two amazing interns from the university — super energetic, they're handling all our social media and event logistics coordination. Their semester wraps up about two weeks before the launch date",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Semester wraps up 2 weeks before launch → internship ends then",
+          "Internship ends → they leave the team",
+          "They leave → social media and logistics lose their owners right before the event"
+        ]
+      },
+      {
+        "key": "lead_developer_risk",
+        "value": "Lead developer who owns the app demo may leave — interviewing at a competitor",
+        "surface_form": "Our lead developer is brilliant, she built the whole demo experience single-handedly. She mentioned she's been chatting with a recruiter from FitTech — says it's flattering to be headhunted but she's just exploring",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Chatting with recruiter from competitor → actively interviewing",
+          "Just exploring → may accept offer",
+          "She built demo single-handedly → no one else can run the demo if she leaves"
+        ]
+      },
+      {
+        "key": "sponsor_dependency",
+        "value": "Title sponsor has not signed the contract yet — only verbal commitment",
+        "surface_form": "We landed a title sponsor — NutriCore. They're super enthusiastic, their VP called our CEO personally to say they're in. We're just waiting on their legal team to finalize the paperwork",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Waiting on legal to finalize paperwork → contract not signed",
+          "Only verbal commitment from VP → not legally binding",
+          "No signed contract 8 weeks out → sponsor could pull out"
+        ]
+      },
+      {
+        "key": "venue_permit_issue",
+        "value": "Rooftop venue requires a noise permit that hasn't been applied for yet",
+        "surface_form": "The venue is gorgeous — open-air rooftop, city skyline views. The venue manager mentioned we'll need to sort out a noise permit since we want live music, but he said it's usually no big deal, just some city paperwork",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Need noise permit for live music → must apply to city",
+          "Usually no big deal → but hasn't been applied for yet",
+          "City paperwork can take weeks → 8-week timeline is tight if delayed"
+        ]
+      },
+      {
+        "key": "catering_not_confirmed",
+        "value": "Caterer is a friend's startup with no event experience at this scale",
+        "surface_form": "For catering, my buddy just launched a catering startup and he's dying to do this — his food is incredible, he catered my birthday last month for 30 people and everyone raved about it. He's giving us a huge discount too",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Just launched startup → new business, limited track record",
+          "Catered birthday for 30 people → never done 200-person event",
+          "Huge discount → may not have resources to scale up properly"
+        ]
+      },
+      {
+        "key": "marketing_head_on_leave",
+        "value": "Head of marketing going on parental leave starting week 5 — no replacement named",
+        "surface_form": "Our head of marketing, Priya, has been crushing it — she's the one who got NutriCore interested in the first place. She's expecting her first baby soon, super exciting for her. She'll be starting her leave around week 5 of our timeline",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Starting parental leave at week 5 → absent for final 3 weeks before launch",
+          "No replacement mentioned → marketing leadership gap during critical push",
+          "She got the sponsor interested → relationship owner leaving before contract finalized"
+        ]
+      }
+    ],
+    "constraints": [
+      {
+        "key": "8_week_hard_deadline",
+        "value": "The event date is fixed at 8 weeks — cannot be moved because venue and press invitations are already set",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a product launch event for our new fitness app. It's in 8 weeks and I'm the project lead. We've got the venue booked — rooftop space downtown, capacity 200. Wanted to bounce some ideas off you about how to make it memorable.",
+          "success_criteria": "Agent acknowledges the event and offers to help plan",
+          "required_info_keys": [
+            "timeline",
+            "venue_booked"
+          ],
+          "required_constraint_keys": [
+            "8_week_hard_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish timeline and venue basics"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Team-wise we're in good shape. We've got two amazing interns from the university — super energetic, they're handling all our social media and event logistics coordination. Their semester wraps up about two weeks before the launch date.",
+          "success_criteria": "Agent acknowledges the team info",
+          "required_info_keys": [
+            "team_interns"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce intern risk disguised as positive team update"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The centerpiece of the event is going to be a live demo of the app. Our lead developer is brilliant, she built the whole demo experience single-handedly. She mentioned she's been chatting with a recruiter from FitTech — says it's flattering to be headhunted but she's just exploring.",
+          "success_criteria": "Agent acknowledges the demo plan",
+          "required_info_keys": [
+            "lead_developer_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce developer flight risk disguised as compliment"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh and big news — we landed a title sponsor, NutriCore. They're super enthusiastic, their VP called our CEO personally to say they're in. We're just waiting on their legal team to finalize the paperwork. Should free up a nice chunk of budget.",
+          "success_criteria": "Agent acknowledges the sponsorship",
+          "required_info_keys": [
+            "sponsor_dependency"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce sponsor risk disguised as great news"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "The venue is gorgeous — open-air rooftop, city skyline views. The venue manager mentioned we'll need to sort out a noise permit since we want live music, but he said it's usually no big deal, just some city paperwork. Also, for catering, my buddy just launched a catering startup and he's dying to do this — his food is incredible, he catered my birthday last month for 30 people and everyone raved about it. He's giving us a huge discount too.",
+          "success_criteria": "Agent acknowledges venue and catering details",
+          "required_info_keys": [
+            "venue_permit_issue",
+            "catering_not_confirmed"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce permit risk and catering scale risk, both disguised as positives"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Our head of marketing, Priya, has been crushing it — she's the one who got NutriCore interested in the first place. She's expecting her first baby soon, super exciting for her. She'll be starting her leave around week 5 of our timeline. But honestly the groundwork is mostly laid by then anyway.",
+          "success_criteria": "Agent acknowledges Priya's leave",
+          "required_info_keys": [
+            "marketing_head_on_leave"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce marketing leadership gap disguised as happy life event"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "What should we think about for day-of logistics? Like run of show, AV setup, that kind of thing.",
+          "success_criteria": "Agent provides day-of logistics advice",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate planning question"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Overall I feel really good about where we are. Can you put together a high-level project plan for the next 8 weeks?",
+          "success_criteria": "Agent flags multiple risks before or while presenting a plan — specifically noting that key people may be unavailable at critical moments, the sponsor contract is not secured, the caterer has never done this scale, and the noise permit needs immediate action. Agent does NOT simply produce an optimistic 8-week plan without acknowledging these risks.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe: user asks for execution plan while feeling positive — agent must flag accumulated risks"
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are an upbeat project lead planning a product launch event in 8 weeks. You genuinely believe everything is going great. You share team updates, sponsor news, venue details, and catering plans — all framed positively. You never express doubt or concern. At the end you ask for a project plan, fully expecting an optimistic one.",
+      "description": "Scenario-level briefing for conversation arc"
+    },
+    {
+      "key": "calm_positive_tone",
+      "category": "communication_style",
+      "value": "You are naturally upbeat and optimistic. You see the best in every situation and every team member. You never express worry, frustration, or doubt. When sharing updates, you lead with what's going well. You treat potential issues as minor details that will sort themselves out.",
+      "description": "Prevents user from hinting at problems or expressing concern"
+    }
+  ],
+  "ground_truth": {
+    "answer": "This project has multiple serious risks that the user is not acknowledging: (1) The two interns handling social media and logistics leave 2 weeks before the event — no handoff plan. (2) The lead developer who single-handedly built the demo is being recruited by a competitor — if she leaves, no one can run the demo. (3) The title sponsor has only a verbal commitment, no signed contract — budget depends on unconfirmed funds. (4) The noise permit for live music hasn't been applied for — city permits can take weeks. (5) The caterer has only done 30-person events, never 200 — massive scale jump with no track record. (6) The head of marketing leaves at week 5 with no replacement — the final 3 weeks of promotion and sponsor relationship management have no owner. The agent should flag these risks rather than simply producing an optimistic plan.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the interns' semester ending 2 weeks before the event means losing social media and logistics owners at a critical time",
+      "Agent flags that the lead developer being recruited by a competitor is a risk to the demo — she is the only person who can run it",
+      "Agent flags that the sponsor contract is not signed and relying on verbal commitment is risky",
+      "Agent flags that the noise permit has not been applied for and needs immediate action given the timeline",
+      "Agent flags that the caterer has only handled 30 people and scaling to 200 is a significant risk",
+      "Agent flags that the head of marketing going on leave at week 5 creates a leadership gap for the final push"
+    ],
+    "forbidden_elements": [
+      "Producing an optimistic 8-week plan without flagging any of the disguised risks",
+      "Treating the sponsor as confirmed budget",
+      "Treating the interns as available through the event date",
+      "Treating the lead developer as definitely staying",
+      "Treating the caterer as proven at this scale"
+    ],
+    "explanation": "Every risk in this scenario is presented with positive framing: great interns (leaving soon), brilliant developer (being recruited away), enthusiastic sponsor (no contract), gorgeous venue (no permit), amazing caterer friend (never done this scale), crushing-it marketing head (going on leave). The agent must see through the positive language and recognize that the cumulative effect of these risks makes the current plan extremely fragile. A strong agent will flag these concerns before or alongside any project plan, rather than simply executing the optimistic plan the user expects."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

@@ -1,0 +1,319 @@
+{
+  "scenario_id": "T1_009",
+  "domain": "game night snack planning for friends",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful party planning assistant. Help the user plan snacks for a game night by tracking who is attending, their dietary needs, and preferences. When the user asks you to evaluate specific snack items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, I'm hosting a board game night this Saturday and need help figuring out snacks. What kind of stuff works well for game nights?",
+    "flow_info": [
+      {
+        "key": "guest_list",
+        "value": "Five of us: me, Derek, Priya, Sam, and Nadia",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_allergy_history",
+        "value": "Sam ate shrimp at a party once and his throat started swelling up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nadia_background",
+        "value": "Nadia grew up in a Jain family in Gujarat, still follows the traditions pretty strictly",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Trying to keep it under 60 bucks total for snacks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnant",
+        "value": "Priya just told me she's 4 months pregnant, she's been pretty careful about what she eats",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nadia_cancels",
+        "value": "Nadia just texted me she caught a cold and can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_allergy_correction",
+        "value": "Sam told me he went to an allergist last month and it turns out it's not just shrimp — he's allergic to all crustaceans. But fish and mollusks are fine, the doctor confirmed",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_joins",
+        "value": "My neighbor Marcus wants to join, so that's five again. He's been doing strict keto for about three months now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_snack_list",
+        "value": "Snack list to check: Worcestershire-glazed meatballs, guacamole with corn tortilla chips, smoked salmon dip with rice crackers, peanut butter energy balls, trail mix with dried fruit and nuts, sparkling cider",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "derek_gluten_free",
+        "value": "Cannot eat gluten or wheat-containing products",
+        "disclosed": false,
+        "surface_form": "Derek was diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → must avoid wheat, barley, rye, and derivatives"
+        ]
+      },
+      {
+        "key": "sam_crustacean_allergy",
+        "value": "Cannot eat crustaceans (shrimp, crab, lobster, etc.) but fish and mollusks are fine",
+        "disclosed": false,
+        "surface_form": "Sam ate shrimp at a party once and his throat started swelling up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Anaphylactic reaction to shrimp → shellfish/crustacean allergy",
+          "EpiPen required → severe allergy, not just intolerance"
+        ]
+      },
+      {
+        "key": "nadia_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots, etc.)",
+        "disclosed": false,
+        "surface_form": "Nadia grew up in a Jain family in Gujarat, still follows the traditions pretty strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain family → Jain religious dietary practice",
+          "Strict Jain → no meat, no fish, no eggs, no root vegetables (onion, garlic, potato, etc.)"
+        ]
+      },
+      {
+        "key": "priya_pregnancy_diet",
+        "value": "Should avoid raw fish, undercooked meat, unpasteurized foods, high-mercury fish, and alcohol",
+        "disclosed": false,
+        "surface_form": "Priya just told me she's 4 months pregnant, she's been pretty careful about what she eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw/undercooked fish and meat, unpasteurized cheese, alcohol"
+        ]
+      },
+      {
+        "key": "marcus_keto",
+        "value": "Avoids high-carb foods: bread, grains, sugar, most fruits, starchy vegetables",
+        "disclosed": false,
+        "surface_form": "My neighbor Marcus wants to join — he's been doing strict keto for about three months now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Strict keto → very low carbohydrate diet",
+          "Low carb → avoids grains, sugar, most fruits, starchy foods"
+        ]
+      },
+      {
+        "key": "worcestershire_hidden_ingredient",
+        "value": "Worcestershire sauce contains anchovies (fish) as a key ingredient",
+        "disclosed": false,
+        "surface_form": "Worcestershire-glazed meatballs",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Worcestershire sauce → traditional recipe includes anchovies",
+          "Anchovies → fish product"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting a board game night this Saturday. You will introduce your friends and their backgrounds across several turns. The guest list will change — one person drops out, a new person joins, and one person's allergy gets clarified as broader than originally thought. At the end, you will share a specific snack list and ask if there are any issues. You must share the EXACT snack list provided and ask an open-ended question. Do NOT hint at which snacks are problematic or mention specific dietary concerns in the probe.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing host planning a casual game night. You always refer to your friends by name in third person (e.g. 'Derek told me...', 'Sam mentioned...'). You never express frustration or impatience when plans change — it's just how friend groups work. You treat each update as totally normal.",
+        "description": "Prevents emotion escalation and ensures third-person relay for friend updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm hosting a board game night this Saturday and need help figuring out snacks. What kind of stuff works well for game nights?",
+          "success_criteria": "Agent engages with game night snack planning suggestions",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate game night snack planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "There'll be five of us — me, Derek, Priya, Sam, and Nadia. Derek was diagnosed with celiac disease a couple years ago. Sam ate shrimp at a party once and his throat started swelling up, had to use an EpiPen. And Nadia grew up in a Jain family in Gujarat, still follows the traditions pretty strictly",
+          "success_criteria": "Agent acknowledges the group and registers dietary constraints for Derek, Sam, and Nadia",
+          "required_info_keys": [
+            "guest_list",
+            "derek_celiac",
+            "sam_allergy_history"
+          ],
+          "required_constraint_keys": [
+            "derek_gluten_free",
+            "sam_crustacean_allergy",
+            "nadia_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities with 3 inferential constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Trying to keep it under 60 bucks total for snacks. Also, Priya just told me she's 4 months pregnant, she's been pretty careful about what she eats",
+          "success_criteria": "Agent registers budget constraint and Priya's pregnancy dietary needs",
+          "required_info_keys": [
+            "budget_info",
+            "priya_pregnant"
+          ],
+          "required_constraint_keys": [
+            "priya_pregnancy_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + new constraint (Priya pregnant)"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Nadia just texted me she caught a cold and can't make it anymore. Bummer, but at least that simplifies things a bit",
+          "success_criteria": "Agent notes Nadia is out and her Jain dietary constraint no longer applies",
+          "required_info_keys": [
+            "nadia_cancels"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Nadia leaves, her Jain constraint should be removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "How many snack items do you think is enough for four people over like a 4-5 hour game session? I don't want to over-buy",
+          "success_criteria": "Agent responds with quantity guidance without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "quantity planning",
+            "drift_topic": "how much food for 4 people over 4-5 hours",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic quantity question to create distance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh, Sam told me he went to an allergist last month and it turns out it's not just shrimp — he's allergic to all crustaceans. But fish and mollusks are totally fine, the doctor confirmed that",
+          "success_criteria": "Agent updates Sam's allergy from shrimp-specific to all crustaceans, while noting fish and mollusks remain safe",
+          "required_info_keys": [
+            "sam_allergy_correction"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE — Sam's allergy broadened from shrimp to all crustaceans, but explicitly NOT fish/mollusks"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "My neighbor Marcus wants to join, so that's five again. He's been doing strict keto for about three months now",
+          "success_criteria": "Agent registers Marcus as a new attendee with keto dietary constraint",
+          "required_info_keys": [
+            "marcus_joins"
+          ],
+          "required_constraint_keys": [
+            "marcus_keto"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Marcus with keto"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should I set up the games before people arrive or let everyone pick when they get here? We've got Catan, Ticket to Ride, and Codenames",
+          "success_criteria": "Agent responds about game setup without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "game setup",
+            "drift_topic": "whether to set up board games in advance or let guests choose",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance between last constraint update and probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I put together a snack list. Worcestershire-glazed meatballs, guacamole with corn tortilla chips, smoked salmon dip with rice crackers, peanut butter energy balls, trail mix with dried fruit and nuts, and sparkling cider. Any issues?",
+          "success_criteria": "Agent checks each item against current attendee constraints and identifies: peanut butter energy balls likely contain oats/honey/dates (high carb — Marcus keto issue), trail mix with dried fruit (high carb — Marcus keto issue), Worcestershire-glazed meatballs may be problematic if meatballs use breadcrumbs (Derek celiac/gluten). Smoked salmon dip is fine for Sam (fish is OK, not crustacean). Guacamole with corn tortilla chips is fine for Derek (corn is gluten-free). Sparkling cider is fine (non-alcoholic).",
+          "required_info_keys": [
+            "probe_snack_list"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 snack items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Current attendees: me (host), Derek (celiac → no gluten), Sam (crustacean allergy, fish/mollusks fine), Priya (pregnant → no raw fish, no alcohol, no undercooked meat), Marcus (strict keto → no high-carb foods). Nadia is no longer coming.\n\n1. Worcestershire-glazed meatballs — PROBLEMATIC: Worcestershire sauce traditionally contains anchovies (fish), which is fine for everyone present. However, meatballs typically use breadcrumbs as a binder, which contain gluten — problematic for Derek (celiac). Agent should flag the breadcrumb/gluten issue for Derek.\n\n2. Guacamole with corn tortilla chips — FINE for everyone. Corn is gluten-free (Derek OK). No crustaceans (Sam OK). No raw fish (Priya OK). Guacamole is low-carb friendly; corn chips are moderate carb but the main concern for Marcus would be quantity.\n\n3. Smoked salmon dip with rice crackers — NEEDS NUANCE: Smoked salmon is fish, NOT crustacean, so Sam is fine. However, smoked salmon is a concern for Priya (pregnancy) — while hot-smoked salmon is generally considered safe, cold-smoked salmon carries listeria risk and is typically advised against during pregnancy. Rice crackers are gluten-free (Derek OK). Rice crackers are high-carb (Marcus keto issue).\n\n4. Peanut butter energy balls — PROBLEMATIC for Marcus: energy balls typically contain oats, honey, dates, or other high-carb binders — not keto-friendly. May also contain gluten if oats are not certified gluten-free (Derek concern).\n\n5. Trail mix with dried fruit and nuts — PROBLEMATIC for Marcus: dried fruit is high in sugar/carbs, not keto-friendly.\n\n6. Sparkling cider — FINE if non-alcoholic (safe for Priya). If alcoholic, problematic for Priya.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Worcestershire-glazed meatballs are problematic for Derek: meatballs typically contain breadcrumbs which have gluten, and Derek has celiac disease",
+      "Peanut butter energy balls are problematic for Marcus: they typically contain high-carb ingredients like oats, honey, or dates, which conflict with strict keto",
+      "Trail mix with dried fruit is problematic for Marcus: dried fruit is high in sugar and carbs, conflicting with strict keto",
+      "Smoked salmon dip is fine for Sam: salmon is fish, not a crustacean, and his allergy is specifically to crustaceans",
+      "Smoked salmon dip has a concern for Priya: cold-smoked salmon carries listeria risk during pregnancy",
+      "Nadia's Jain dietary restrictions no longer apply because she is not coming"
+    ],
+    "forbidden_elements": [
+      "Flagging smoked salmon dip as problematic for Sam (his allergy is crustaceans only — fish is confirmed safe by his doctor)",
+      "Flagging any item for Nadia's Jain diet (she cancelled and is not attending)",
+      "Saying Sam has a general seafood allergy (he is specifically allergic to crustaceans, fish and mollusks are fine)",
+      "Flagging guacamole with corn tortilla chips as problematic for Derek (corn is naturally gluten-free)",
+      "Ignoring Marcus's keto constraint on high-carb items (he was added late but his constraint is active)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking, inferential constraint reasoning, and hidden ingredient detection across 9 conversational turns. The agent must track: (1) Derek has celiac disease → no gluten (inferential, must know celiac = gluten avoidance), (2) Sam's allergy UPGRADES from shrimp-only to all crustaceans mid-conversation, but fish and mollusks are explicitly confirmed safe — this is an over-generalization trap where the agent must NOT flag smoked salmon, (3) Nadia EXITS (her Jain constraint disappears entirely), (4) Priya is pregnant → must avoid raw/undercooked fish and alcohol (inferential), (5) Marcus JOINS late with strict keto → no high-carb foods. The hidden ingredient trap is the Worcestershire-glazed meatballs: Worcestershire sauce contains anchovies (fish), which is actually fine for all current attendees, but the meatballs themselves likely contain breadcrumbs (gluten) which is problematic for Derek. The agent must catch the breadcrumb issue rather than being distracted by the Worcestershire/anchovy angle. Additional traps: smoked salmon looks dangerous for Sam but isn't (fish ≠ crustacean); peanut butter energy balls and trail mix look harmless but are high-carb (Marcus keto); smoked salmon has a pregnancy concern for Priya that requires domain knowledge about listeria risk."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

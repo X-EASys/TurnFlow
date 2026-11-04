@@ -1,0 +1,316 @@
+{
+  "scenario_id": "T1_028",
+  "domain": "Lunar New Year dinner for family",
+  "personality": "Warm and family-oriented",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user plan a Lunar New Year family dinner by tracking who is attending, their dietary needs, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and any updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, my family is getting together for Lunar New Year dinner this year and I'm in charge of the menu. Can you help me plan it?",
+    "flow_info": [
+      {
+        "key": "family_members",
+        "value": "Five of us confirmed so far: me, my mom, my dad, my older sister Mei, and my brother-in-law Kevin",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dad_gout",
+        "value": "Dad had a bad gout flare-up last month, doctor put him on medication and told him to watch what he eats",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_pregnant",
+        "value": "Mei just told us she's 4 months pregnant, the whole family is thrilled",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kevin_peanut",
+        "value": "Kevin ate satay skewers at a hawker stall once and his throat swelled up so bad they had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Hoping to keep it around 300 total for ingredients since we're cooking at home",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nephew_joins",
+        "value": "My nephew Ethan, Mei's 4-year-old, is coming too — almost forgot about the little guy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dad_medication_done",
+        "value": "Dad just told me his doctor cleared him last week — gout is under control, medication is done, he can eat normally again",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_hong_joins",
+        "value": "Uncle Hong just called and said he's driving down to join us after all, so that's one more",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_hong_background",
+        "value": "Uncle Hong has been living in Chiang Mai for the past ten years, became really devout — he ordained as a monk for a while and even now he still keeps the precepts strictly, no alcohol, no killing, the whole thing",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "Dishes to check: whole steamed fish, kung pao chicken, longevity noodles with peanut sauce, raw salmon yusheng, braised pork belly, stir-fried vegetables with oyster sauce",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "dad_gout_diet",
+        "value": "Must avoid high-purine foods: organ meats, shellfish, red meat in excess, alcohol",
+        "disclosed": false,
+        "surface_form": "Dad had a bad gout flare-up last month, doctor put him on medication and told him to watch what he eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Gout flare-up → high uric acid",
+          "High uric acid → must avoid high-purine foods",
+          "High-purine foods → organ meats, shellfish, excessive red meat, alcohol"
+        ]
+      },
+      {
+        "key": "mei_pregnancy_diet",
+        "value": "Must avoid raw or undercooked fish/meat, high-mercury fish, alcohol",
+        "disclosed": false,
+        "surface_form": "Mei just told us she's 4 months pregnant, the whole family is thrilled",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "4 months pregnant → pregnancy dietary restrictions apply",
+          "Pregnancy → no raw fish/meat, no alcohol, avoid high-mercury fish"
+        ]
+      },
+      {
+        "key": "kevin_peanut_allergy",
+        "value": "Severe peanut allergy — anaphylactic reaction",
+        "disclosed": false,
+        "surface_form": "Kevin ate satay skewers at a hawker stall once and his throat swelled up so bad they had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Satay skewers → peanut sauce is the signature component",
+          "Throat swelling + EpiPen → anaphylactic allergic reaction",
+          "Allergic reaction to satay → peanut allergy"
+        ]
+      },
+      {
+        "key": "ethan_egg_allergy",
+        "value": "Ethan has an egg allergy",
+        "disclosed": false,
+        "surface_form": "Oh and Ethan can't have eggs — Mei found out the hard way when he broke out in hives after eating a custard bun",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hives after custard bun → allergic reaction",
+          "Custard bun → contains egg",
+          "Allergic reaction to custard bun → egg allergy"
+        ]
+      },
+      {
+        "key": "uncle_hong_vegetarian",
+        "value": "Strict Buddhist vegetarian — no meat, no fish, no alcohol, no killing of animals",
+        "disclosed": false,
+        "surface_form": "Uncle Hong has been living in Chiang Mai for the past ten years, became really devout — he ordained as a monk for a while and even now he still keeps the precepts strictly, no alcohol, no killing, the whole thing",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Ordained as Buddhist monk + still keeps precepts strictly → devout Buddhist",
+          "Devout Buddhist keeping precepts → vegetarian, no alcohol, no killing"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a Lunar New Year family dinner. You will introduce family members and their backgrounds across several turns. The guest list and constraints will change — your dad's gout clears up, your nephew joins, and your Uncle Hong joins late with strict dietary needs. At the end, you will present a list of dishes and ask if there are any issues. You must present the exact dish list and ask naturally. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_family_tone",
+        "category": "communication_style",
+        "value": "You are a warm, easygoing family member coordinating a holiday dinner. You relay updates about relatives in third person (e.g. 'Dad just told me...', 'Uncle Hong called and said...'). You never express frustration or impatience — changing plans are just how family gatherings work. You are matter-of-fact and cheerful.",
+        "description": "Prevents emotion escalation and ensures third-person relay for family updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, my family is getting together for Lunar New Year dinner this year and I'm in charge of the menu. Can you help me plan it?",
+          "success_criteria": "Agent engages with Lunar New Year dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So it's five of us confirmed: me, my mom, my dad, my older sister Mei, and my brother-in-law Kevin. Dad had a bad gout flare-up last month, doctor put him on medication and told him to watch what he eats. Oh and Mei just told us she's 4 months pregnant — the whole family is so excited! Kevin ate satay skewers at a hawker stall once and his throat swelled up so bad they had to use an EpiPen",
+          "success_criteria": "Agent acknowledges all family members and registers the dietary implications of dad's gout, Mei's pregnancy, and Kevin's satay reaction",
+          "required_info_keys": [
+            "family_members",
+            "dad_gout",
+            "mei_pregnant",
+            "kevin_peanut"
+          ],
+          "required_constraint_keys": [
+            "dad_gout_diet",
+            "mei_pregnancy_diet",
+            "kevin_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST — 4 entities with 3 inferential constraints in one dense turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're cooking at home this year, hoping to keep it around 300 total for ingredients. My nephew Ethan, Mei's 4-year-old, is coming too — almost forgot about the little guy. Oh and Ethan can't have eggs — Mei found out the hard way when he broke out in hives after eating a custard bun",
+          "success_criteria": "Agent registers budget, Ethan joining, and Ethan's egg allergy",
+          "required_info_keys": [
+            "budget_info",
+            "nephew_joins"
+          ],
+          "required_constraint_keys": [
+            "ethan_egg_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + entity JOIN (Ethan) with inferential egg allergy constraint"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "drift",
+          "description": "How many dishes do you think we need for seven people? We want it to feel festive but not have a ton of leftovers",
+          "success_criteria": "Agent gives reasonable dish count advice for 7 people",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "meal planning logistics",
+            "drift_topic": "number of dishes for the table",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic question about portion planning"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Dad just told me his doctor cleared him last week — gout is under control, medication is done, he can eat normally again. He's so happy, he's been craving shellfish for weeks",
+          "success_criteria": "Agent removes dad's gout dietary restriction",
+          "required_info_keys": [
+            "dad_medication_done"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — dad's gout restriction lifted"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Uncle Hong just called and said he's driving down to join us after all, so that's one more. He's been living in Chiang Mai for the past ten years, became really devout — he ordained as a monk for a while and even now he still keeps the precepts strictly, no alcohol, no killing, the whole thing",
+          "success_criteria": "Agent registers Uncle Hong as a new diner and infers strict Buddhist vegetarian dietary constraints",
+          "required_info_keys": [
+            "uncle_hong_joins",
+            "uncle_hong_background"
+          ],
+          "required_constraint_keys": [
+            "uncle_hong_vegetarian"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Uncle Hong with inferential Buddhist vegetarian constraint"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we do a hotpot setup or just regular dishes on the table? Mom thinks hotpot is easier but I feel like individual dishes look more festive",
+          "success_criteria": "Agent gives opinion on hotpot vs individual dishes",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "serving style",
+            "drift_topic": "hotpot vs individual dishes for festive feel",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance between Uncle Hong's constraint and probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "What time should we plan to eat? Uncle Hong is driving about 2 hours so we need to give him time to arrive",
+          "success_criteria": "Agent suggests a reasonable dinner time accounting for Uncle Hong's travel",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "scheduling",
+            "drift_topic": "dinner time considering Uncle Hong's drive",
+            "target_option": ""
+          },
+          "conversation_goal": "Additional noise turn — more distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I've been looking at recipes and here's what I'm thinking for the menu: whole steamed fish, kung pao chicken, longevity noodles with peanut sauce, raw salmon yusheng, braised pork belly, and stir-fried vegetables with oyster sauce. Any issues?",
+          "success_criteria": "Agent checks each dish against current constraints: Uncle Hong vegetarian (fish, chicken, pork belly all problematic), Kevin peanut allergy (peanut sauce noodles), Mei pregnancy (raw salmon yusheng), Ethan egg allergy (check noodle ingredients). Notes dad's gout restriction is gone. Does not flag spicy/rich food for dad.",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Four dishes have clear problems. Whole steamed fish: Uncle Hong is a strict Buddhist vegetarian, cannot eat fish. Kung pao chicken: Uncle Hong cannot eat chicken (vegetarian), and kung pao chicken traditionally contains peanuts which Kevin is severely allergic to. Longevity noodles with peanut sauce: Kevin has a severe peanut allergy (anaphylactic reaction to satay), peanut sauce is dangerous. Raw salmon yusheng: Mei is 4 months pregnant, cannot eat raw fish. Braised pork belly: Uncle Hong cannot eat pork (vegetarian). Stir-fried vegetables with oyster sauce is fine for everyone — it is a vegetable dish and oyster sauce is not a problem for anyone currently attending. Dad's gout restriction no longer applies since his doctor cleared him.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Whole steamed fish is problematic: Uncle Hong is a strict Buddhist vegetarian and cannot eat fish",
+      "Kung pao chicken is problematic: Uncle Hong cannot eat chicken (vegetarian), AND kung pao chicken contains peanuts which Kevin is severely allergic to",
+      "Longevity noodles with peanut sauce is problematic: Kevin has a severe peanut allergy — his throat swelled up from satay skewers and required an EpiPen",
+      "Raw salmon yusheng is problematic: Mei is 4 months pregnant and cannot eat raw fish",
+      "Braised pork belly is problematic: Uncle Hong is a strict Buddhist vegetarian and cannot eat pork",
+      "Agent confirms dad has no dietary restrictions anymore since his doctor cleared him last week"
+    ],
+    "forbidden_elements": [
+      "Flagging any dish as problematic for dad's gout (his doctor cleared him, restriction removed)",
+      "Saying Kevin has a general nut allergy or seafood allergy (he specifically has a peanut allergy inferred from satay reaction)",
+      "Flagging stir-fried vegetables with oyster sauce as problematic for Uncle Hong (oyster sauce is a condiment, not meat — standard Buddhist vegetarian practice varies but this is not a clear violation in common knowledge)",
+      "Saying Ethan cannot eat the longevity noodles due to egg allergy without verifying whether these specific noodles contain egg (noodles may or may not contain egg depending on recipe — agent should note the possibility, not assert it as certain)",
+      "Flagging dishes as too rich or heavy for dad (his restriction is fully removed)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 turns. The agent must track: (1) Dad's gout → high-purine diet restriction (inferential), which is then REMOVED when his doctor clears him — agent must not ghost this constraint onto the probe. (2) Mei's pregnancy → no raw fish/meat (inferential). (3) Kevin's satay reaction → peanut allergy (3-step inferential chain: satay → peanut sauce → peanut allergy). (4) Ethan joins with egg allergy (inferential from custard bun hives). (5) Uncle Hong joins LATE (turn 5 of 8) as a high-constraint entity: ordained Buddhist monk who keeps precepts → strict vegetarian, no alcohol, no killing. Uncle Hong is the primary difficulty driver — he joins late and his constraint affects 4 of 6 dishes. The over-generalization trap is on Kevin: peanut allergy ≠ all nut allergy. The removed-constraint trap is dad's gout. The stir-fried vegetables with oyster sauce is the 'looks bad but isn't' trap — oyster sauce is a common condiment and not a meat product in standard understanding."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

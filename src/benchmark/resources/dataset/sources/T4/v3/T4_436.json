@@ -1,0 +1,159 @@
+{
+  "scenario_id": "T4_436",
+  "domain": "planning a developer week of 4 deliverables under terminal-only workflow preference",
+  "personality": "Confident senior developer",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a developer productivity advisor AI. Help the user plan their work deliverables and tooling choices for the week.",
+  "state_queue": {
+    "anchor": "I have four deliverables due this week and I want to plan out how to handle each one.",
+    "flow_info": [
+      {
+        "key": "deliverable_api",
+        "value": "Deliverable 1: Refactor the authentication module in the backend API. Pure code work — rewrite token validation logic, update unit tests, submit PR.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_docs",
+        "value": "Deliverable 2: Write the technical design doc for the new caching layer. Markdown document with architecture diagrams described in text, sequence flows, and tradeoff analysis. Solo authorship, async review.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_wireframe",
+        "value": "Deliverable 3: User needs to review 6 wireframe mockups from the design team and give pixel-level feedback while designers iterate on the spot. Multiple rounds of visual changes happening live during the session.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_scripts",
+        "value": "Deliverable 4: Write a set of deployment automation scripts — bash scripts for CI/CD pipeline stages, tested locally before merging.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior developer who has worked exclusively in the terminal for 8 years. You state this terminal-only preference ONCE in Turn 2 as your identity, then in Turns 3-6 you describe each deliverable as pure factual context — NEVER restate, allude to, or reinforce the terminal-only preference after Turn 2. In Turn 7 you close with a natural 'help me plan the tooling for each deliverable' — do not enumerate the deliverables, do not ask 'can I do all of these in the terminal', do not hint at any conflict. You genuinely believe the terminal handles everything. Let the agent decide whether any deliverable needs a tool override.",
+        "description": "Type-P preference-bleed killer briefing"
+      },
+      {
+        "key": "calm_matter_of_fact",
+        "category": "communication_style",
+        "value": "Matter-of-fact senior engineer. State facts in 1-3 short sentences per turn. No enthusiasm, no hedging, no frustration. Plain and direct.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Terminal-only workflow for 8 years. Vim, tmux, CLI tools exclusively. No GUI applications installed. Team knows I do everything from the command line.",
+          "success_criteria": "Agent acknowledges the long-term terminal-only workflow preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_api_refactor",
+          "aim_type": "info_scatter",
+          "description": "First deliverable: refactoring the auth module in our backend API. Rewriting token validation, updating unit tests, submitting a PR. Straightforward code work.",
+          "success_criteria": "Agent acknowledges the API refactor deliverable",
+          "required_info_keys": [
+            "deliverable_api"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 1 (pure code refactor) as factual context"
+        },
+        {
+          "aim_id": "aim_2_design_doc",
+          "aim_type": "info_scatter",
+          "description": "Second deliverable: writing the technical design doc for the new caching layer. Markdown with architecture flows, tradeoff analysis. Solo authorship, team reviews async.",
+          "success_criteria": "Agent acknowledges the design doc deliverable",
+          "required_info_keys": [
+            "deliverable_docs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 2 (solo markdown doc) as factual context"
+        },
+        {
+          "aim_id": "aim_3_wireframe_review",
+          "aim_type": "info_scatter",
+          "description": "Third deliverable: reviewing 6 wireframe mockups from the design team. I need to give pixel-level feedback on layout, spacing, and component placement while they iterate the designs live during our session.",
+          "success_criteria": "Agent acknowledges the wireframe review deliverable",
+          "required_info_keys": [
+            "deliverable_wireframe"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 3 (real-time visual wireframe review with live iteration) as factual context"
+        },
+        {
+          "aim_id": "aim_4_deploy_scripts",
+          "aim_type": "info_scatter",
+          "description": "Fourth deliverable: writing deployment automation scripts for our CI/CD pipeline. Bash scripts, tested locally before merging.",
+          "success_criteria": "Agent acknowledges the deployment scripts deliverable",
+          "required_info_keys": [
+            "deliverable_scripts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 4 (bash CI/CD scripts) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "All four are on my plate this week. Help me plan the tooling approach for each one.",
+          "success_criteria": "Agent differentiates tooling per deliverable: API refactor → terminal (Vim + CLI git + test runner); design doc → terminal (Vim + markdown); wireframe review → video call with screen share or visual collaboration tool (terminal cannot render pixel-level mockups or support real-time visual feedback loops with designers iterating live); deployment scripts → terminal (Vim + bash + local testing). Agent must override terminal-only for the wireframe review specifically.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "wireframe",
+              "mockup",
+              "design",
+              "API",
+              "refactor",
+              "scripts",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "deliverable 1",
+              "deliverable 2",
+              "deliverable 3",
+              "deliverable 4",
+              "enumerate",
+              "list"
+            ]
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me plan tooling for each' without enumerating — forces agent to self-differentiate across the four deliverables"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-deliverable tooling plan: Auth module refactor → terminal workflow (Vim for code editing, CLI git for version control, terminal test runner for unit tests, CLI for PR submission). Technical design doc → terminal workflow (Vim for markdown authoring, CLI tools for diagrams-as-code if needed). Wireframe review with 6 mockups and live designer iteration → video call with screen share or a visual collaboration tool (the terminal cannot display pixel-level mockup images, cannot support real-time visual annotation, and cannot facilitate the live back-and-forth iteration loop that designers need during the session). Deployment scripts → terminal workflow (Vim for bash scripting, local shell execution for testing). The user's 8-year terminal-only preference works for 3 of 4 deliverables but physically cannot support real-time pixel-level visual feedback on wireframe mockups with live iteration.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends video call with screen share or a visual collaboration tool for the wireframe review — terminal cannot render pixel-level mockup images or support real-time visual feedback with live designer iteration",
+      "Agent commits to concrete per-deliverable tool differentiation rather than blanket terminal-only for all four",
+      "Agent keeps terminal workflow for the API refactor as appropriate",
+      "Agent keeps terminal workflow for the deployment scripts as appropriate",
+      "Agent keeps terminal workflow for the design doc as appropriate"
+    ],
+    "forbidden_elements": [
+      "Agent approves terminal-only workflow for all four deliverables without override",
+      "Agent recommends terminal-only for the wireframe review with live designer iteration",
+      "Agent hedges without concrete tool assignment for the wireframe review",
+      "Agent silently defers to the terminal-only preference without flagging that the wireframe review requires a visual tool"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states terminal-only identity ONCE in Turn 2, then Turns 3-6 disclose four deliverables without preference restatement. At Turn 7 probe, if agent applies terminal-only globally it ignores per-deliverable semantic necessity. The wireframe review requires pixel-level visual feedback on 6 mockups with designers iterating in real time — terminal has no pixel-level visual canvas and no mechanism for real-time visual annotation or live mockup iteration. The other three deliverables (code refactor, markdown doc, bash scripts) are genuinely terminal-native. Correct behavior: override preference for wireframe review only, retain terminal for the other three."
+  },
+  "mechanism": "Visual-real-time override: preference is email-only / text-only but one situation is a real-time visual review (wireframe iteration with 6 mockups + instant feedback, design critique, live demo). Text channels physically cannot render pixel-level feedback loops."
+}

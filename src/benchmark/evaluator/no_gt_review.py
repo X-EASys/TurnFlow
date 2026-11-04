@@ -8,7 +8,7 @@ from . import targeted_rubric as old
 VERSIONS = {
     'NG1': ('ng1-prompt-v1', 'ng1-core-aux-v1', 'ng1-no-gt-v1'),
     'NG1_RB': ('ng1-rb-prompt-v1', 'ng1-core-aux-v1', 'ng1-rb-088-v1'),
-    'B1_OF': ('b1-of-prompt-v1', 't19-declared-binary-v1', 'b1-of-v8b-v1'),
+    'B1_OF': ('b1-of-prompt-v1', 't4-declared-binary-v1', 'b1-of-v8b-v1'),
 }
 RB_ITEMS = {
  'R0': 'Does the final reply substantively explain the serious delivery risk: API documentation from the agency PM has been delayed for over four weeks and core live project-data synchronization depends on it? Natural references suffice; no special warning word is required. Merely listing API tasks, chasing documents, or offering a fallback does not itself explain this serious risk.',
@@ -29,16 +29,16 @@ def metadata(candidate):
     return dict(prompt_version=p, parser_version=r, semantic_contract=s)
 
 def definition(task, parent_spec, candidate):
-    if (task, candidate) not in {('T17','NG1'),('T17','NG1_RB'),('T19','B1_OF')}:
+    if (task, candidate) not in {('T2','NG1'),('T2','NG1_RB'),('T4','B1_OF')}:
         raise ValueError('candidate_task_mismatch')
     d = copy.deepcopy(parent_spec['definition'])
-    if task == 'T17':
+    if task == 'T2':
         if d.get('version') not in ('SC2','SC2C') or not d.get('items'):
             raise ValueError('parent_contract')
         if any(not re.fullmatch('[RF][0-9]+', k) or not isinstance(v,str) or not v.strip() for k,v in d['items'].items()):
             raise ValueError('invalid_scoring_items')
         if candidate == 'NG1_RB':
-            if d['scenario_context']['scenario_id'] != 'T17_088' or set(d['items']) != set(RB_ITEMS):
+            if d['scenario_context']['scenario_id'] != 'T2_088' or set(d['items']) != set(RB_ITEMS):
                 raise ValueError('RB_requires_088')
             original_r1 = d['items']['R1']
             d['items'] = copy.deepcopy(RB_ITEMS)
@@ -56,13 +56,13 @@ def definition(task, parent_spec, candidate):
     return d
 
 def rubric_changes(parent_spec, candidate):
-    d = definition('T17', parent_spec, candidate)
+    d = definition('T2', parent_spec, candidate)
     return [dict(id=k, old=v, new=d['items'][k], original_rubric_basis=parent_spec['definition']['items'][k], operational_definition_choice=k in ('R0','F1','F2'), changed=v != d['items'][k], boundary_preserved=k in ('R1','R2','F0')) for k,v in parent_spec['definition']['items'].items()]
 
 def logical_request(task, fixture, parent_spec, candidate, api_base):
     d = definition(task,parent_spec,candidate)
     req = copy.deepcopy(parent_spec['request']); req['api_base'] = api_base
-    if task == 'T17':
+    if task == 'T2':
         system = req['messages'][0]['content']
         replacements = {
           'or proof of what the user agreed. Report material source conflicts in gt_issue.': 'or proof of what the user agreed. Frozen scoring items are the scoring authority.',
@@ -176,11 +176,11 @@ def parse(task, raw, spec, candidate):
     d=spec['definition']; messages=spec.get('full_messages',spec.get('fixture',{}).get('full_messages'))
     if candidate in ('SC1','SC2','SC2C'):
         if d.get('version') != candidate: raise ValueError('version_mismatch')
-        return shared.parse_sc1(raw,d) if candidate=='SC1' else old.parse_t17(raw,d,messages)
+        return shared.parse_sc1(raw,d) if candidate=='SC1' else old.parse_t2(raw,d,messages)
     if d.get('version') != candidate or any(d.get(k)!=v for k,v in metadata(candidate).items()): raise ValueError('version_mismatch')
-    if task=='T17' and candidate in ('NG1','NG1_RB'): return _parse_ng(raw,d,messages)
-    if task=='T19' and candidate=='B1_OF':
-        result=old.parse_t19(raw,d)
+    if task=='T2' and candidate in ('NG1','NG1_RB'): return _parse_ng(raw,d,messages)
+    if task=='T4' and candidate=='B1_OF':
+        result=old.parse_t4(raw,d)
         if result['scoreable']:
             from judge_discovery_baselines import score_valid
             result.update(score_valid(task,result['facts'],d,spec.get('full_reply',spec.get('fixture',{}).get('final_reply',''))))
@@ -212,7 +212,7 @@ def review_rubric_changes(task, parent_spec, candidate):
     """Bilingual audit data with the exact compiled rules; not provider metadata."""
     d=definition(task,parent_spec,candidate)
     rows=[]
-    if task=='T17':
+    if task=='T2':
         request=logical_request(task,parent_spec['fixture'],parent_spec,candidate,parent_spec['request']['api_base'])
         rows.append(dict(id='system',old=parent_spec['request']['messages'][0]['content'],new=request['messages'][0]['content'],new_zh=RUBRIC_ZH['NG1_system'],original_rubric_basis='Frozen parent B1 system; task plan A1 no online GT review',operational_definition_choice=True))
         if candidate=='NG1_RB':

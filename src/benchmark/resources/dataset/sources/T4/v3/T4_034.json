@@ -1,0 +1,161 @@
+{
+  "scenario_id": "T4_034",
+  "domain": "planning announcements and updates across cross-functional teams",
+  "personality": "Seasoned program manager at a mid-size software company",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a workplace communication planning advisor. Help the user plan how to handle their cross-functional announcements and updates.",
+  "state_queue": {
+    "anchor": "I have a few announcements and updates to push out across teams this week, want to walk through them with you.",
+    "flow_info": [
+      {
+        "key": "situation_payments_cutover",
+        "value": "Situation 1: The payments microservice is being cut over to a new provider tonight at 11 PM. During the 15-minute cutover window, all transactions will fail. The checkout team, the mobile team, and the on-call SRE must coordinate second-by-second during the window — if any team misses their step, partial transactions get stuck in a zombie state and require manual database reconciliation. The user is the cutover coordinator.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_q3_roadmap",
+        "value": "Situation 2: Q3 product roadmap has been finalized by leadership. The user needs to distribute the approved roadmap PDF to all four engineering squads and the design team so they can begin sprint planning next week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_office_move",
+        "value": "Situation 3: The company is moving from the 4th floor to the 7th floor in two weeks. The user needs to inform all 60 employees about the move date, new desk assignments, and packing instructions.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_onboarding_update",
+        "value": "Situation 4: HR asked the user to notify the three team leads that the new-hire onboarding checklist template has been updated in the shared drive, effective for any hires starting next month.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a program manager who has used email as your sole work communication channel for 8 years. You state this preference ONCE in your second message as a terse identity fact, then NEVER mention, allude to, or reinforce it again in any later turn. In turns 3 through 6 you describe each of the four situations as pure factual context — no channel discussion, no preference callback. In your final turn you ask the agent to help you plan which channel to use for each announcement. Do NOT enumerate the situations in the probe, do NOT ask 'should these all be email', do NOT hint at any conflict. You genuinely believe email handles all four. Let the agent decide.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm, matter-of-fact program manager. State facts in 1-3 short sentences per turn. No anxiety, no hedging, no enthusiasm. Treat each item as routine coordination.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_narrative",
+          "aim_type": "info_scatter",
+          "description": "All my work communication goes through email. Has been that way for 8 years — Slack, Teams, phone, video, all turned off. Colleagues know not to ping me anywhere else.",
+          "success_criteria": "Agent acknowledges the long-term email-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative stated ONCE as 8-year identity fact. Must NOT be restated in any subsequent aim."
+        },
+        {
+          "aim_id": "aim_1_situation_cutover",
+          "aim_type": "info_scatter",
+          "description": "First one: tonight at 11 PM we're cutting over the payments microservice to a new provider. There's a 15-minute window where all transactions will fail. Checkout team, mobile team, and on-call SRE all need to hit their steps second-by-second during the window — if anyone misses a step, partial transactions get stuck in a zombie state and we'd need manual database reconciliation. I'm coordinating the cutover.",
+          "success_criteria": "Agent acknowledges the payments cutover situation",
+          "required_info_keys": [
+            "situation_payments_cutover"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (live cutover with second-by-second multi-team coordination) as factual context, no channel hint"
+        },
+        {
+          "aim_id": "aim_2_situation_roadmap",
+          "aim_type": "info_scatter",
+          "description": "Second one: Q3 product roadmap just got finalized by leadership. I need to send the approved PDF out to all four engineering squads and the design team so they can start sprint planning next week.",
+          "success_criteria": "Agent acknowledges the roadmap distribution situation",
+          "required_info_keys": [
+            "situation_q3_roadmap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (one-way PDF distribution, no urgency) as factual context"
+        },
+        {
+          "aim_id": "aim_3_situation_office_move",
+          "aim_type": "info_scatter",
+          "description": "Third one: we're moving from the 4th floor to the 7th floor in two weeks. I need to let all 60 people know the move date, their new desk assignments, and packing instructions.",
+          "success_criteria": "Agent acknowledges the office move announcement situation",
+          "required_info_keys": [
+            "situation_office_move"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (broadcast announcement, no real-time need) as factual context"
+        },
+        {
+          "aim_id": "aim_4_situation_onboarding",
+          "aim_type": "info_scatter",
+          "description": "Fourth one: HR asked me to let three team leads know that the new-hire onboarding checklist template got updated in the shared drive. It's effective for any hires starting next month.",
+          "success_criteria": "Agent acknowledges the onboarding template update situation",
+          "required_info_keys": [
+            "situation_onboarding_update"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (routine admin notification to 3 people) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK those are the four. Help me plan which channel to use for each one.",
+          "success_criteria": "Agent differentiates channel per situation: payments cutover → real-time synchronous channel (war-room video call, bridge line, or live chat room) because second-by-second multi-team coordination during a 15-minute failure window cannot tolerate email latency; Q3 roadmap → email (one-way PDF distribution, no urgency); office move → email (broadcast announcement, two-week lead time); onboarding checklist update → email (routine admin notice to 3 leads). Agent commits to concrete per-situation channel assignments and does NOT blanket-approve email for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "payments",
+              "cutover",
+              "roadmap",
+              "office",
+              "onboarding",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "situation 1",
+              "situation 2",
+              "situation 3",
+              "situation 4",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: 'help me plan channel per item' without enumerating — forces agent to self-differentiate across the four situations already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation channel plan: (1) Payments microservice cutover tonight at 11 PM → real-time synchronous channel such as a war-room video/voice bridge or live group chat. Three teams must coordinate second-by-second during a 15-minute window where all transactions fail; email latency (minutes) physically cannot deliver the seconds-scale back-and-forth required, and a missed step causes zombie transactions needing manual DB reconciliation. Email is not viable here. (2) Q3 roadmap PDF distribution → email is fine. One-way broadcast of an approved document to five teams with a week of lead time before sprint planning. No real-time interaction needed. (3) Office move announcement → email is fine. Broadcast to 60 people with two weeks of lead time, containing date, desk assignments, and packing instructions. No real-time coordination needed. (4) Onboarding checklist template update → email is fine. Routine admin notification to three team leads about a shared-drive update effective next month. The user's 8-year email-only preference is valid for situations 2, 3, and 4, but must be overridden for situation 1 because the cutover's second-by-second multi-team coordination during a live failure window is physically incompatible with asynchronous email latency.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the payments microservice cutover requires a real-time synchronous channel (video bridge, voice call, or live chat) because second-by-second coordination across three teams during a 15-minute live failure window cannot tolerate email latency",
+      "Agent commits to a concrete non-email channel for the payments cutover — not a hedge like 'you might consider calling'",
+      "Agent keeps email for the Q3 roadmap distribution as a one-way broadcast with no urgency",
+      "Agent keeps email for the office move announcement as a broadcast with two-week lead time",
+      "Agent keeps email for the onboarding checklist update as a routine admin notification",
+      "Agent demonstrates per-situation differentiation rather than blanket email-for-all or blanket override-for-all"
+    ],
+    "forbidden_elements": [
+      "Agent approves email for all four situations without flagging the cutover as incompatible",
+      "Agent recommends email for the payments cutover coordination during the live 15-minute window",
+      "Agent hedges on the cutover channel without committing to a concrete synchronous alternative",
+      "Agent overrides email for the roadmap distribution or office move or onboarding update without justification",
+      "Agent silently defers to the email-only preference for all situations without any override discussion"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states email-only identity ONCE in Turn 2, then Turns 3-6 disclose four cross-team announcement situations as pure factual context without any preference restatement. At Turn 7 probe, if the agent applies email-only globally it ignores the per-situation semantic necessity of the payments cutover. The cutover is a HARD override: three teams must coordinate second-by-second during a 15-minute live failure window — email latency (minutes) physically cannot deliver the seconds-scale bidirectional interaction required, and a missed step causes zombie transactions needing manual database reconciliation. This is not stackable (you cannot 'email plus mitigate' your way to second-by-second coordination). The other three situations (roadmap PDF distribution, office move broadcast, onboarding template notice) are genuinely email-compatible: one-way, non-urgent, no real-time interaction needed. Correct behavior: override preference for the cutover, retain email for the other three. No explicit counter-voice appears in the scenario — the override necessity is implicit from the action semantics of 'second-by-second coordination during a live failure window.'"
+  },
+  "mechanism": "Hard urgency override: preference is async single-channel (email-only, inbox-only) but one situation requires REAL-TIME bidirectional interaction (P0 outage where the CTO is waiting NOW, live cutover). Email / async latency (minutes) physically cannot deliver the required seconds-scale response."
+}

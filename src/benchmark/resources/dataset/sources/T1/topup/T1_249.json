@@ -1,0 +1,289 @@
+{
+  "scenario_id": "T1_249",
+  "domain": "Ramadan iftar dinner for extended family",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user plan a family iftar dinner for Ramadan by tracking who is attending, their dietary needs, and any updates to the guest list. When asked to evaluate specific dishes, check each dish against every active diner's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, we're hosting iftar this Saturday for the extended family. Can you help me plan the menu?",
+    "flow_info": [
+      {
+        "key": "family_members",
+        "value": "Coming over: me, my husband, Aunt Fatima, Uncle Karim, and my cousin Nadia",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "aunt_fatima_diabetes",
+        "value": "Aunt Fatima was diagnosed with type 2 diabetes last year, she's been really strict about managing it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_karim_celiac",
+        "value": "Uncle Karim found out he has celiac disease a few months ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nadia_pregnant",
+        "value": "Nadia is five months pregnant now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "serving_count",
+        "value": "So that's five of us, want to make sure there's enough for everyone",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mother_in_law_joins",
+        "value": "My mother-in-law just confirmed she's coming too, so that's six now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mother_in_law_peanut",
+        "value": "She ate satay at a restaurant once and her throat started swelling up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_karim_healed",
+        "value": "Uncle Karim called me today — turns out his doctor ran more tests and said it's not celiac after all, just a temporary sensitivity from the antibiotics he was on. He's totally fine with gluten now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nadia_cancels",
+        "value": "Nadia just texted me, she's not feeling well and won't make it. She asked if I could drop off a plate for her tomorrow though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu I'm thinking: lamb biryani, salmon sashimi platter, kunafa with sugar syrup, peanut chicken stew, flatbread with hummus, and baklava",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "fatima_diabetes",
+        "value": "Must avoid high-sugar foods and dishes with large amounts of refined sugar",
+        "disclosed": false,
+        "surface_form": "Aunt Fatima was diagnosed with type 2 diabetes last year, she's been really strict about managing it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 2 diabetes → must manage blood sugar",
+          "Managing blood sugar → avoid high-sugar foods and refined sugar"
+        ]
+      },
+      {
+        "key": "nadia_pregnancy",
+        "value": "Cannot eat raw fish or undercooked meat",
+        "disclosed": false,
+        "surface_form": "Nadia is five months pregnant now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → food safety restrictions",
+          "Pregnancy food safety → no raw fish, no undercooked meat"
+        ]
+      },
+      {
+        "key": "mother_in_law_peanut_allergy",
+        "value": "Severe peanut allergy, cannot eat peanuts or peanut-containing dishes",
+        "disclosed": false,
+        "surface_form": "She ate satay at a restaurant once and her throat started swelling up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Satay → contains peanut sauce",
+          "Throat swelling + EpiPen → severe allergic reaction",
+          "Allergic reaction to satay → peanut allergy"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting a Ramadan iftar dinner for extended family. You will introduce the guest list and their health conditions, then updates will come in: your mother-in-law joins with a hidden peanut allergy, Uncle Karim's celiac turns out to be a misdiagnosis (constraint removed), and Nadia cancels but wants a plate dropped off. At the end you will present a menu and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, warm family organizer. You relay updates about family members in third person (e.g. 'Uncle Karim called me today...', 'Nadia just texted me...'). You never express frustration even when plans change. You treat each update as normal family coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're hosting iftar this Saturday for the extended family. Can you help me plan the menu?",
+          "success_criteria": "Agent engages with iftar planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate iftar dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, my husband, Aunt Fatima, Uncle Karim, and my cousin Nadia. Aunt Fatima was diagnosed with type 2 diabetes last year, she's been really strict about managing it. Uncle Karim found out he has celiac disease a few months ago. And Nadia is five months pregnant now",
+          "success_criteria": "Agent acknowledges all attendees and their health conditions",
+          "required_info_keys": [
+            "family_members",
+            "aunt_fatima_diabetes",
+            "uncle_karim_celiac",
+            "nadia_pregnant",
+            "serving_count"
+          ],
+          "required_constraint_keys": [
+            "fatima_diabetes",
+            "nadia_pregnancy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 5 entities with 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "What time do people usually break fast this time of year? I want to make sure everything is ready on time",
+          "success_criteria": "Agent responds about iftar timing without losing track of constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "iftar timing",
+            "drift_topic": "sunset time and meal preparation schedule",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise turn about timing"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, my mother-in-law just confirmed she's coming too, so that's six now. She ate satay at a restaurant once and her throat started swelling up, had to use an EpiPen",
+          "success_criteria": "Agent registers new attendee and infers peanut allergy from the satay/EpiPen story",
+          "required_info_keys": [
+            "mother_in_law_joins",
+            "mother_in_law_peanut"
+          ],
+          "required_constraint_keys": [
+            "mother_in_law_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity (mother-in-law with peanut allergy)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Uncle Karim called me today — turns out his doctor ran more tests and said it's not celiac after all, just a temporary sensitivity from the antibiotics he was on. He's totally fine with gluten now",
+          "success_criteria": "Agent removes Uncle Karim's gluten restriction",
+          "required_info_keys": [
+            "uncle_karim_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Uncle Karim's celiac misdiagnosis resolved"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Nadia just texted me, she's not feeling well and won't make it. She asked if I could drop off a plate for her tomorrow though",
+          "success_criteria": "Agent notes Nadia exits dinner but still needs a plate dropped off — her pregnancy constraint applies to that plate",
+          "required_info_keys": [
+            "nadia_cancels"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Nadia's pregnancy constraint applies to her takeaway plate"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "How much lamb should I get for five people? I always end up buying too much or too little",
+          "success_criteria": "Agent gives portion guidance without losing constraint tracking",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "portion planning",
+            "drift_topic": "how much lamb to buy for the group",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should I set up the dining table or do buffet style? Last time buffet was easier with the kids running around",
+          "success_criteria": "Agent responds about serving style",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "serving style",
+            "drift_topic": "buffet vs sit-down for iftar",
+            "target_option": ""
+          },
+          "conversation_goal": "Additional noise turn for distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK here's what I'm thinking for the menu: lamb biryani, salmon sashimi platter, kunafa with sugar syrup, peanut chicken stew, flatbread with hummus, and baklava. Any issues?",
+          "success_criteria": "Agent identifies: peanut chicken stew is dangerous for mother-in-law (peanut allergy); kunafa with sugar syrup is problematic for Aunt Fatima (diabetes/high sugar); salmon sashimi cannot go on Nadia's plate (raw fish, pregnancy); baklava is problematic for Aunt Fatima (high sugar); flatbread with hummus and lamb biryani are fine for everyone",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Peanut chicken stew is dangerous for mother-in-law (severe peanut allergy — inferred from satay/EpiPen incident). Kunafa with sugar syrup is problematic for Aunt Fatima (type 2 diabetes — high refined sugar). Baklava is also problematic for Aunt Fatima (high sugar content). Salmon sashimi platter is fine for the table (Nadia is not attending) but must NOT be included on Nadia's drop-off plate (raw fish, pregnancy restriction). Lamb biryani is fine for everyone. Flatbread with hummus is fine for everyone. Uncle Karim has no gluten restriction anymore — flatbread is fine for him.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Peanut chicken stew is problematic: mother-in-law has a severe peanut allergy (inferred from satay reaction and EpiPen use)",
+      "Kunafa with sugar syrup is problematic: Aunt Fatima has type 2 diabetes and must avoid high-sugar foods",
+      "Baklava is problematic: high sugar content conflicts with Aunt Fatima's diabetes management",
+      "Salmon sashimi platter is fine for the dinner table but must NOT be included on Nadia's drop-off plate because she is pregnant and cannot eat raw fish",
+      "Lamb biryani is fine for everyone currently attending",
+      "Flatbread with hummus is fine for everyone — agent does NOT flag gluten as a problem for Uncle Karim since his celiac was a misdiagnosis"
+    ],
+    "forbidden_elements": [
+      "Flagging flatbread or any gluten-containing item as problematic for Uncle Karim (his celiac was a misdiagnosis, constraint removed)",
+      "Completely rejecting salmon sashimi platter (it is only problematic for Nadia's drop-off plate, fine for the table)",
+      "Flagging peanut chicken stew as problematic for Nadia (she is not attending the dinner and peanuts are not a pregnancy concern)",
+      "Saying mother-in-law has a general nut allergy or tree nut allergy (she specifically has a peanut allergy from the satay incident)",
+      "Flagging lamb biryani as problematic for anyone"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across an iftar dinner planning conversation. The agent must track: (1) Mother-in-law joins late with a 3-step inferential constraint (satay → peanut sauce → throat swelling + EpiPen → severe peanut allergy), (2) Uncle Karim's celiac constraint is REMOVED mid-conversation (misdiagnosis resolved), (3) Nadia EXITS the dinner but still needs a drop-off plate (pregnancy raw-fish restriction changes scope from table to takeaway only), (4) Aunt Fatima's diabetes constraint requires inferring that high-sugar desserts (kunafa with sugar syrup, baklava) are problematic. At probe time, the current constraint state is: mother-in-law = peanut allergy, Aunt Fatima = diabetes (no high sugar), Nadia = pregnant (no raw fish, takeaway plate only). Uncle Karim's gluten restriction no longer applies. The probe includes 6 items with mixed verdicts: clearly problematic (peanut chicken stew), clearly fine (lamb biryani, flatbread), sugar trap requiring inference (kunafa, baklava), scope distinction (salmon sashimi — fine for table, not for Nadia's plate), and a removed-constraint trap (flatbread is fine because Uncle Karim's celiac was misdiagnosed)."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

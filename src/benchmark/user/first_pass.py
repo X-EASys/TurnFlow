@@ -84,7 +84,7 @@ def repair(collector, name, fn, content, *args, **kwargs):
 def restore_checkpoint(simulator, checkpoint):
     """Restore the finite aim-driven state without replaying model calls.
 
-    Later checkpoints currently support the controller-free T16–T20 route;
+    Later checkpoints currently support the controller-free T1–T5 route;
     unsupported or underspecified state fails rather than guessing disclosure.
     """
     from benchmark.data_model.aim import AimStatus

@@ -1,0 +1,298 @@
+{
+  "scenario_id": "T1_231",
+  "domain": "team dinner at a Thai restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner at a Thai restaurant by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a team dinner at a Thai restaurant this Saturday. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us: me, David, Priya, Marcus, and Suki",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_peanut",
+        "value": "David ate peanut sauce at a party once and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_initial_constraint",
+        "value": "Priya mentioned she gets bloated and gassy whenever she has milk or ice cream",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Budget is around 30 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "suki_exits",
+        "value": "Suki just told me she has to fly to Chicago for a family emergency, so she can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_correction",
+        "value": "Priya texted me to correct something — she went to an allergist last week and it turns out it's not lactose intolerance, it's actually a milk protein allergy. The doctor told her to avoid all dairy completely, even things like butter and ghee",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_joins",
+        "value": "Marcus wants to bring his sister Nina. She's pregnant, about 7 months along",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reservation_time",
+        "value": "Should we book for 7 or 7:30?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "The restaurant's group set menu includes: pad thai with peanuts, green curry with coconut milk, som tum papaya salad, tom yum soup with shrimp, mango sticky rice with coconut cream, and beef larb",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "david_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "David ate peanut sauce at a party once and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_dairy_initial",
+        "value": "Cannot tolerate lactose — gets bloated and gassy from milk and ice cream",
+        "disclosed": false,
+        "surface_form": "Priya mentioned she gets bloated and gassy whenever she has milk or ice cream",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_dairy_upgraded",
+        "value": "Cannot consume any dairy products at all, including butter, ghee, and all milk proteins",
+        "disclosed": false,
+        "surface_form": "Priya texted me to correct something — she went to an allergist last week and it turns out it's not lactose intolerance, it's actually a milk protein allergy. The doctor told her to avoid all dairy completely, even things like butter and ghee",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac_constraint",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or soy sauce containing wheat",
+        "disclosed": false,
+        "surface_form": "Marcus was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → cannot eat gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Thai cooking often uses soy sauce → standard soy sauce contains wheat"
+        ]
+      },
+      {
+        "key": "nina_pregnancy",
+        "value": "Should avoid raw or undercooked food, and limit certain high-risk items",
+        "disclosed": false,
+        "surface_form": "Marcus wants to bring his sister Nina. She's pregnant, about 7 months along",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → dietary precautions",
+          "Pregnancy dietary rules → avoid raw/undercooked meat and fish, raw eggs, unpasteurized dairy"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at a Thai restaurant. You will introduce 5 people with dietary issues, then one person drops out, one constraint gets corrected to a broader allergy, and a new person joins late. At the end you will share a set menu and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative team organizer. You always refer to your colleagues by name in third person (e.g. 'David told me...', 'Priya said...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a team dinner at a Thai restaurant this Saturday. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with Thai dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate Thai dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, David, Priya, Marcus, and Suki. David ate peanut sauce at a party once and his throat swelled up, had to use an EpiPen. Priya mentioned she gets bloated and gassy whenever she has milk or ice cream. And Marcus was diagnosed with celiac disease last year.",
+          "success_criteria": "Agent acknowledges all three dietary constraints",
+          "required_info_keys": [
+            "team_members",
+            "david_peanut",
+            "priya_initial_constraint",
+            "marcus_celiac"
+          ],
+          "required_constraint_keys": [
+            "david_peanut_allergy",
+            "priya_dairy_initial",
+            "marcus_celiac_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 30 dollars per person. Any Thai dishes you'd recommend that work for everyone?",
+          "success_criteria": "Agent acknowledges budget and suggests Thai dishes considering constraints",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget and get initial recommendations"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Suki just told me she has to fly to Chicago for a family emergency, so she can't make it anymore. Down to four now.",
+          "success_criteria": "Agent registers Suki's departure and adjusts headcount",
+          "required_info_keys": [
+            "suki_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Suki leaves, no constraint impact since she had none"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Priya texted me to correct something — she went to an allergist last week and it turns out it's not lactose intolerance, it's actually a milk protein allergy. The doctor told her to avoid all dairy completely, even things like butter and ghee.",
+          "success_criteria": "Agent updates Priya's constraint from lactose intolerance to the broader milk protein allergy",
+          "required_info_keys": [
+            "priya_correction"
+          ],
+          "required_constraint_keys": [
+            "priya_dairy_upgraded"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE — lactose intolerance becomes milk protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh also, Marcus wants to bring his sister Nina. She's pregnant, about 7 months along. So we're back to five people.",
+          "success_criteria": "Agent registers Nina as a new diner and notes pregnancy dietary considerations",
+          "required_info_keys": [
+            "nina_joins"
+          ],
+          "required_constraint_keys": [
+            "nina_pregnancy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with inferential constraint (pregnant → dietary precautions)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we book for 7 or 7:30? Marcus said he might be a few minutes late coming from the gym.",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [
+            "reservation_time"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "scheduling",
+            "drift_topic": "reservation time and Marcus being late from gym",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How many dishes should we order for five people at a Thai place? I always over-order.",
+          "success_criteria": "Agent gives ordering quantity advice",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "ordering quantity",
+            "drift_topic": "how many dishes for 5 people",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I looked at their menu. The group set menu includes: pad thai with peanuts, green curry with coconut milk, som tum papaya salad, tom yum soup with shrimp, mango sticky rice with coconut cream, and beef larb. Any issues?",
+          "success_criteria": "Agent identifies pad thai with peanuts as problematic for David, green curry with coconut milk as problematic for Priya (milk protein allergy — coconut milk is NOT dairy, so this is actually fine), mango sticky rice with coconut cream as fine (coconut is not dairy), and checks all items against current constraints",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Pad thai with peanuts is problematic for David (peanut allergy — anaphylactic reaction). Green curry with coconut milk is fine — coconut milk is not dairy, so Priya's milk protein allergy is not triggered. Som tum papaya salad is fine for everyone (but agent should note it often contains fish sauce — not a constraint issue for anyone here, and the raw papaya is safe). Tom yum soup with shrimp is fine for everyone currently attending — no shellfish allergies present. Mango sticky rice with coconut cream is fine — coconut is not dairy, Priya is safe. Beef larb needs a gluten check for Marcus — traditional larb uses fish sauce (gluten-free) but some restaurants add soy sauce (contains wheat/gluten); also the raw meat variant (larb dib) would be unsafe for Nina (pregnant), but cooked beef larb is fine for her.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Pad thai with peanuts is problematic for David due to his peanut allergy",
+      "Green curry with coconut milk is fine for Priya — coconut milk is not dairy and does not contain milk protein",
+      "Beef larb needs verification for Marcus regarding gluten — soy sauce in the preparation may contain wheat",
+      "Agent correctly identifies that coconut cream in mango sticky rice is safe for Priya since coconut is not dairy",
+      "Agent considers Nina's pregnancy when evaluating dishes — raw or undercooked meat variants would be a concern"
+    ],
+    "forbidden_elements": [
+      "Flagging green curry with coconut milk as problematic for Priya (coconut milk is NOT dairy — this is the over-generalization trap)",
+      "Flagging mango sticky rice with coconut cream as problematic for Priya (coconut is NOT dairy)",
+      "Flagging any dish as problematic for Suki (she is no longer attending)",
+      "Treating Priya's constraint as only lactose intolerance (it was corrected to milk protein allergy, which is broader)",
+      "Flagging tom yum soup with shrimp as problematic when no one present has a shellfish allergy"
+    ],
+    "explanation": "This scenario tests constraint upgrade tracking and over-generalization resistance. The key difficulty mechanisms are: (1) Priya's constraint is UPGRADED from lactose intolerance to milk protein allergy mid-conversation — the agent must apply the broader constraint going forward. (2) The over-generalization trap: coconut milk and coconut cream are NOT dairy products despite having 'milk' and 'cream' in their names — the agent must NOT flag green curry or mango sticky rice as problematic for Priya. This tests whether the agent over-generalizes 'milk protein allergy' to anything with 'milk' in the name. (3) Marcus's celiac disease requires inferring that soy sauce (common in Thai cooking) contains wheat gluten. (4) Nina joins late (turn 5) with an inferential constraint (pregnant → avoid raw/undercooked food). (5) Suki exits with no constraint impact — tests if agent keeps ghost constraints. The probe has mixed verdicts: clearly bad (pad thai — peanuts for David), clearly fine (som tum, tom yum), trap items that look bad but aren't (green curry and mango sticky rice — coconut is not dairy), and a nuanced item (beef larb — depends on preparation method for both Marcus and Nina)."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

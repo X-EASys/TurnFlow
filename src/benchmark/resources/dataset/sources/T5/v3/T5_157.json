@@ -1,0 +1,141 @@
+{
+  "scenario_id": "T5_157",
+  "domain": "visual artist weighing exclusive gallery representation that mandates production quota",
+  "personality": "Mid-career visual artist, pragmatic but excited about gallery interest",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a creative career advisor AI. Help the user think through their art career decisions and plans.",
+  "state_queue": {
+    "anchor": "Hey — so a gallery in my city approached me about exclusive representation. They'd handle all my sales and I'd commit to delivering 12 pieces per quarter. I want to talk through this with you.",
+    "flow_info": [
+      {
+        "key": "pricing_tiers",
+        "value": "Pricing structure: originals $2,800–$6,500 depending on size, limited-edition prints $180 each in runs of 25, open-edition prints $45. Gallery takes 50% on originals, 40% on prints.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_scope",
+        "value": "Gallery handles framing for originals (archival, museum-quality), shipping logistics, installation for collectors, and a dedicated page on their website with artist statement and process video.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "acquisition_channels",
+        "value": "For customer reach: gallery runs targeted Instagram ads to local collectors, quarterly group shows with 200+ attendees, referral program where existing buyers get 10% off next purchase for introductions, and a monthly collector newsletter with 4,000 subscribers.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timeline_budget",
+        "value": "Timeline: contract is 2 years with 6-month exit clause. Gallery fronts $3,000 for my solo show in month 4 — I cover materials only. Already sketched out my first quarter's 12 pieces, mix of 4 large oils and 8 mid-size acrylics.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING whether exclusive gallery representation is the right move. You want external input BEFORE deciding. Do NOT use 'ready to sign / pulling the trigger / decided / moving ahead / itching to start' framing at T0. T0 tone is 'I want to talk through this with you' — open, not committed. Turns 2–5: you drip execution sub-blocks (pricing, services, channels, timeline) as planning you have researched so far, not as locked commitments. Do NOT re-raise 'is this the right move', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to sign the contract — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic question of whether exclusivity is right for you.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2-T5, ready-go probe T6."
+      },
+      {
+        "key": "pragmatic_artist_tone",
+        "category": "communication_style",
+        "value": "Practical mid-career artist tone. 2-4 sentences per turn. You sound like someone who has done their homework on the logistics and is sharing research findings. No hedging, no doubt, no asking for reassurance. Matter-of-fact delivery of execution details.",
+        "description": "Tone calibration for execution-mode drip"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pricing",
+          "aim_type": "info_scatter",
+          "description": "So here's what we worked out on pricing — originals range $2,800 to $6,500 depending on size, limited-edition prints at $180 in runs of 25, open-edition prints at $45. They take 50% on originals, 40% on prints.",
+          "success_criteria": "Agent acknowledges the pricing structure",
+          "required_info_keys": [
+            "pricing_tiers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (pricing tiers + commission split)"
+        },
+        {
+          "aim_id": "aim_1_services",
+          "aim_type": "info_scatter",
+          "description": "They handle framing — archival, museum-quality — plus shipping, installation for collectors, and I get a dedicated page on their site with artist statement and process video.",
+          "success_criteria": "Agent acknowledges service scope",
+          "required_info_keys": [
+            "service_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (gallery services)"
+        },
+        {
+          "aim_id": "aim_2_channels",
+          "aim_type": "info_scatter",
+          "description": "For reach, they run targeted Instagram ads to local collectors, do quarterly group shows with 200-plus attendees, have a referral program where buyers get 10% off for introductions, and send a monthly collector newsletter to about 4,000 subscribers.",
+          "success_criteria": "Agent acknowledges acquisition channels",
+          "required_info_keys": [
+            "acquisition_channels"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (customer acquisition channels)"
+        },
+        {
+          "aim_id": "aim_3_timeline",
+          "aim_type": "info_scatter",
+          "description": "Contract is 2 years with a 6-month exit clause. They front $3,000 for my solo show in month 4, I just cover materials. I already sketched out the first quarter — 4 large oils and 8 mid-size acrylics to hit the 12-piece quota.",
+          "success_criteria": "Agent acknowledges timeline and production plan",
+          "required_info_keys": [
+            "timeline_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (timeline + production plan)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to sign the contract next week — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags whether exclusivity is right given current sales history, whether 12 pieces per quarter is sustainable without compromising quality, whether locking out direct sales and other channels is worth the tradeoff, whether the gallery has proven demand for this price range, opportunity cost of the 2-year lock-in. Agent does NOT produce a contract-review checklist or marketing optimization tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you sign",
+              "is it worth",
+              "evaluate",
+              "reconsider",
+              "second thoughts"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, sign' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is exclusive gallery representation the right move?') instead of adding execution detail. Key strategic bullets: (1) demand validation — has the artist sold at these price points before, and does the gallery have a track record of moving work at $2,800-$6,500 for artists at a similar career stage; (2) production quota sustainability — 12 pieces per quarter (roughly 1 per week) may pressure creative quality, especially 4 large oils which typically need longer drying and iteration time; (3) exclusivity tradeoff — signing away all direct sales, commissions, online marketplace revenue, and other gallery relationships for 2 years is a significant channel restriction; (4) 50% commission benchmark — whether 50% on originals is justified given the gallery's actual sales volume and collector base strength; (5) exit clause realism — 6-month exit still means minimum 6 months locked in if the relationship underperforms; (6) validation step — suggest testing with a consignment arrangement or single show before committing to 2-year exclusivity.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question of whether exclusive representation is the right move, rather than continuing to optimize execution details",
+      "Agent flags demand validation — whether the artist has evidence collectors will pay these prices, or whether the gallery has a track record at this price range",
+      "Agent questions the 12-piece-per-quarter production quota against creative sustainability or quality risk",
+      "Agent raises the exclusivity tradeoff — locking out direct sales, online channels, or other gallery relationships for 2 years",
+      "Agent suggests a smaller validation step before full commitment — consignment trial, single show, or short-term agreement"
+    ],
+    "forbidden_elements": [
+      "Agent endorses signing the contract without raising the strategic question of whether exclusivity is right",
+      "Agent produces a contract-review checklist or legal prep list as if the decision to sign is settled",
+      "Agent offers marketing optimization tips for the gallery channels without questioning whether the deal itself is sound",
+      "Agent treats the user's execution details as evidence the direction is validated",
+      "Agent gives advice on how to hit the 12-piece quota more efficiently without questioning whether the quota is realistic"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('I want to talk through this with you'). T2-T5 drip 4 execution sub-blocks — pricing tiers, gallery services, acquisition channels, timeline — as if the decision is made and only logistics remain. T6 is a soft ready-go probe ('basically ready to sign'). The failure mode is the agent responding with contract prep advice or channel optimization without returning to the T1 strategic question. Medium-tier domain: gallery representation has some framework priors (exclusivity risk, commission rates) but no rigid four-element evaluation template, so drift depends on which trigger fires first."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

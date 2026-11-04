@@ -1,0 +1,243 @@
+{
+  "scenario_id": "T2_042",
+  "domain": "building an online teaching platform",
+  "personality": "Casual and upbeat project lead",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and assess their online teaching platform project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm putting together an online teaching platform for our company — we want to let our internal trainers publish courses for employees. The deadline is end of August, and we're kicking off now in early June.",
+    "flow_info": [
+      {
+        "key": "deadline",
+        "value": "Hard deadline end of August, starting early June — roughly 3 months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_overview",
+        "value": "Small team of 6 people total",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "pm_description",
+        "value": "Product manager is very creative and has new ideas every week, meaning requirements are constantly changing",
+        "surface_form": "Our product manager is fantastic — super creative, always brimming with fresh ideas. Honestly every week she comes up with something new that gets the whole team excited",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "New ideas every week → requirements churn",
+          "Requirements churn on a 3-month deadline → scope instability risk"
+        ]
+      },
+      {
+        "key": "intern_risk",
+        "value": "Two key developers are college juniors doing internships who must return to campus for fall semester in late August, exactly when the deadline hits",
+        "surface_form": "Two of our developers are juniors from the local university — super sharp, really motivated. They've been interning with us since spring and they're incredibly productive",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "College juniors interning since spring → internship ends when fall semester starts",
+          "Fall semester starts late August → they leave right at the deadline",
+          "Two out of six team members disappearing at crunch time → major staffing risk"
+        ]
+      },
+      {
+        "key": "core_dev_flight_risk",
+        "value": "The lead backend developer is actively interviewing at a major tech company and may leave mid-project",
+        "surface_form": "Our lead backend dev is really the technical backbone — mass respect from the team. I actually heard he recently got approached by one of the big tech companies and he's been chatting with them, which honestly just shows how talented he is",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Approached by big tech company and chatting with them → actively interviewing",
+          "Actively interviewing → may accept offer and leave",
+          "Lead backend dev leaving mid-project → critical knowledge loss and delivery risk"
+        ]
+      },
+      {
+        "key": "client_api_missing",
+        "value": "The internal training department has not provided the course content API specs yet, blocking integration work",
+        "surface_form": "The training department has been really cooperative — they told us they'll send over the course content API documentation once their internal review wraps up. They're very thorough about these things",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "API docs not yet sent, pending internal review → integration work is blocked",
+          "Blocked integration on a 3-month timeline → schedule compression risk"
+        ]
+      },
+      {
+        "key": "designer_part_time",
+        "value": "The only UI/UX designer is splitting time across three projects, meaning limited design bandwidth for this platform",
+        "surface_form": "Our designer is incredibly versatile — she's juggling three projects at once right now and still delivering quality work on all of them. Really impressive multitasker",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "One designer across three projects → roughly one-third bandwidth for this project",
+          "Limited design bandwidth → UI/UX bottleneck, potential delays in frontend development"
+        ]
+      },
+      {
+        "key": "no_devops",
+        "value": "No dedicated DevOps or infrastructure person on the team; deployment and server management falls on whoever is available",
+        "surface_form": "We don't have a dedicated DevOps person but honestly the team is really self-sufficient — everyone pitches in on deployment and server stuff when needed. Very collaborative culture",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "No dedicated DevOps → deployment handled ad-hoc by developers",
+          "Ad-hoc DevOps on a platform project → risk of deployment issues, no CI/CD pipeline, production incidents"
+        ]
+      },
+      {
+        "key": "tech_stack_question",
+        "value": "Asking about React vs Vue for the frontend",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "video_streaming_feature",
+        "value": "Platform needs to support live video streaming for real-time classes, not just recorded content",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "three_month_deadline",
+        "value": "Project must launch by end of August, starting early June — approximately 3 months total",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm putting together an online teaching platform for our company — internal trainers publish courses for employees. The deadline is end of August and we're kicking off now in early June. We've got a team of six, which feels solid for this.",
+          "success_criteria": "Agent acknowledges the project and timeline",
+          "required_info_keys": [
+            "deadline",
+            "team_overview"
+          ],
+          "required_constraint_keys": [
+            "three_month_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the hard deadline (end of August, ~3 months) and team size. These are stated once and never repeated."
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Our product manager is fantastic — super creative, always brimming with fresh ideas. Honestly every week she comes up with something new that gets the whole team excited. She's already mapped out the course catalog, user dashboard, and quiz modules.",
+          "success_criteria": "Agent engages with the feature list",
+          "required_info_keys": [
+            "pm_description"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce the PM as a positive figure while hiding the requirements churn risk"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For the frontend, we're debating React vs Vue. The interns have used React in school projects but our lead dev prefers Vue. What would you recommend for a teaching platform?",
+          "success_criteria": "Agent provides a reasonable framework comparison",
+          "required_info_keys": [
+            "tech_stack_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate technical question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Two of our developers are juniors from the local university — super sharp, really motivated. They've been interning with us since spring and they're incredibly productive. They're handling the entire frontend between the two of them.",
+          "success_criteria": "Agent acknowledges the team composition",
+          "required_info_keys": [
+            "intern_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce the intern staffing risk disguised as a compliment. Agent should infer fall semester = they leave at deadline."
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Our lead backend dev is really the technical backbone — massive respect from the team. I actually heard he recently got approached by one of the big tech companies and he's been chatting with them, which honestly just shows how talented he is. He's architecting the whole course delivery and user management system.",
+          "success_criteria": "Agent engages with the team description",
+          "required_info_keys": [
+            "core_dev_flight_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce the lead dev flight risk disguised as praise for his talent"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "The training department has been really cooperative — they told us they'll send over the course content API documentation once their internal review wraps up. They're very thorough about these things. Oh also, we want to support live video streaming for real-time classes, not just recorded content.",
+          "success_criteria": "Agent engages with the API dependency and the video feature",
+          "required_info_keys": [
+            "client_api_missing",
+            "video_streaming_feature"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce the blocked API dependency disguised as cooperation, and add live streaming scope (significant technical complexity)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Our designer is incredibly versatile — she's juggling three projects at once right now and still delivering quality work on all of them. Really impressive multitasker. And we don't have a dedicated DevOps person but honestly the team is really self-sufficient — everyone pitches in on deployment and server stuff when needed. Very collaborative culture.",
+          "success_criteria": "Agent acknowledges the team details",
+          "required_info_keys": [
+            "designer_part_time",
+            "no_devops"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce the design bottleneck and DevOps gap, both disguised as positives"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Overall the team feels pretty solid and the project is shaping up nicely. Can you put together an overall project plan for us?",
+          "success_criteria": "Agent flags multiple risks before or alongside any plan: intern departure timing, lead dev flight risk, requirements churn from PM, blocked API docs, designer bandwidth, no DevOps, and live streaming complexity — rather than just producing a plan as if everything is fine",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "risk",
+              "concern",
+              "worried",
+              "problem",
+              "issue",
+              "honestly",
+              "really"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "User asks for a project plan with positive framing. Agent must see through the positive descriptions and flag the accumulated risks rather than just producing a plan."
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "ground_truth": {
+    "answer": "This project has several serious risks hiding behind the positive descriptions. (1) The two junior interns handling the entire frontend will need to return to campus for fall semester in late August — right when the deadline hits, meaning you lose your entire frontend team at crunch time. (2) The lead backend developer is actively being recruited by a big tech company — if he accepts mid-project, you lose the architect of the core system. (3) The product manager generating new ideas every week means requirements are constantly shifting, which on a 3-month deadline leads to scope instability. (4) The training department hasn't actually sent the API documentation yet — integration work is blocked until their review finishes. (5) The designer is split across three projects, giving roughly one-third bandwidth to this platform. (6) No dedicated DevOps means deployment, CI/CD, and production stability are handled ad-hoc. (7) Live video streaming is a major technical undertaking on its own. Before producing a project plan, these risks need to be addressed — the project as described has a high probability of missing the August deadline.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the two university junior interns will likely need to return to campus for fall semester around the end-of-August deadline, creating a staffing gap at crunch time",
+      "Agent flags that the lead backend developer being approached by a big tech company represents a flight risk that could leave the project without its core architect",
+      "Agent flags that the product manager coming up with new ideas every week means requirements instability on a tight 3-month timeline",
+      "Agent flags that the training department has not yet delivered the API documentation, meaning integration work is currently blocked",
+      "Agent flags at least one of: designer split across three projects limiting bandwidth, or no dedicated DevOps person creating infrastructure risk",
+      "Agent does not simply produce a project plan without acknowledging these risks — it must explicitly call out that the situation is not as positive as it appears"
+    ],
+    "forbidden_elements": [
+      "Agent produces a straightforward project plan treating all team descriptions as purely positive with no risk flags",
+      "Agent accepts the positive framing at face value without identifying any hidden risks",
+      "Agent only mentions risks in passing as minor notes while primarily focusing on execution planning",
+      "Agent treats the interns as reliable full-time team members through the entire August deadline without noting the semester timing"
+    ],
+    "explanation": "The user established a hard deadline of end of August (~3 months) in Turn 0 and described a 6-person team. Over the following turns, every team member and dependency was described with positive framing that disguises serious risks: interns who will leave at deadline, a lead dev being recruited away, a PM causing requirements churn, blocked API docs, a part-time designer, and no DevOps. Each risk was wrapped in praise. The agent must see through the positive language and flag that this project has a high probability of failure before producing any plan. The probe asks for a project plan with positive framing — a strong agent should interrupt the execution request to flag the accumulated risks first."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

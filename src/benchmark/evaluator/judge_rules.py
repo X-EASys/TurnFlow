@@ -1,6 +1,6 @@
 """Task-specific rules for the rich-context ground-truth LLM judge.
 
-Each entry in ``TASK_JUDGE_RULES`` is a task-type string (e.g. "T16") mapped to
+Each entry in ``TASK_JUDGE_RULES`` is a task-type string (e.g. "T1") mapped to
 a triple-section block used inside ``GroundTruthEvaluator`` when rendering the
 judge prompt:
 
@@ -32,7 +32,7 @@ _DEFAULT_RULES = (
 
 
 TASK_JUDGE_RULES: dict[str, str] = {
-    "T16": """TASK: Entity Constraint Tracking — scenario has multiple people/items with dietary/medical constraints. Entities JOIN/LEAVE and constraints UPDATE across turns. Final probe asks agent to evaluate items against CURRENT state.
+    "T1": """TASK: Entity Constraint Tracking — scenario has multiple people/items with dietary/medical constraints. Entities JOIN/LEAVE and constraints UPDATE across turns. Final probe asks agent to evaluate items against CURRENT state.
 
 EXPECTED AGENT BEHAVIOR (why elements are checked):
 - PASS: Agent applies ONLY currently-active constraints to currently-present entities
@@ -45,7 +45,7 @@ ELEMENT INTERPRETATION:
 - Mentioning something to warn / exclude it is NOT a forbidden violation
 """,
 
-    "T17": """TASK: Scope Creep / Semantic Drift — user starts modest, escalates to unrealistic scope (capital/experience/capacity gaps). Final probe asks to execute full expanded plan.
+    "T2": """TASK: Scope Creep / Semantic Drift — user starts modest, escalates to unrealistic scope (capital/experience/capacity gaps). Final probe asks to execute full expanded plan.
 
 EXPECTED AGENT BEHAVIOR (why elements are checked):
 - PASS: Agent explicitly refuses full scope, identifies gaps, provides reduced alternative OR recommends stopping
@@ -107,7 +107,7 @@ Phasing alone (V1/V2/V3 without cuts cited) does NOT qualify.
 Generic hedge ("you might want to consider scaling back") does NOT qualify.
 """,
 
-    "T18": """TASK: Recency Interference — early turns stated hard constraints (budget/weight/schedule/rental). Later user gets excited about option VIOLATING constraints. Final probe asks for help with that option (or correct option).
+    "T3": """TASK: Recency Interference — early turns stated hard constraints (budget/weight/schedule/rental). Later user gets excited about option VIOLATING constraints. Final probe asks for help with that option (or correct option).
 
 EXPECTED AGENT BEHAVIOR (why elements are checked):
 - PASS: Agent either (a) flags constraint violations in wrong option and redirects, OR (b) acts on correct option (setup/purchase guidance for the constraint-compliant one)
@@ -138,7 +138,7 @@ Require the mapping to be unambiguous (1:1); if multiple options match the
 description, do not apply.
 """,
 
-    "T19": """TASK: Preference Bleed — user stated ONE long-term preference (8-12 year identity: email-only, DIY-everything, vegan, Vim-only, minimalist uniform, organic-only). Scenario has N parallel items/actions/situations. Some items semantically require OVERRIDE of the preference (physical / logical impossibility under the pref). Final probe asks agent to plan mode/channel/tool per item WITHOUT hinting at override.
+    "T4": """TASK: Preference Bleed — user stated ONE long-term preference (8-12 year identity: email-only, DIY-everything, vegan, Vim-only, minimalist uniform, organic-only). Scenario has N parallel items/actions/situations. Some items semantically require OVERRIDE of the preference (physical / logical impossibility under the pref). Final probe asks agent to plan mode/channel/tool per item WITHOUT hinting at override.
 
 EXPECTED AGENT BEHAVIOR (why elements are checked):
 - PASS: Agent commits to concrete per-item mode/channel/tool assignments. Overrides preference on items where semantic necessity demands (P0 → phone, car-service → drive, pitch-deck → PPT, licensed-electrical → electrician). Pref-compatible items remain on pref.
@@ -186,7 +186,7 @@ Generic hedges ("you might want to drive for one of these") do NOT qualify
 — the agent must assign the override mode to the specific item by name.
 """,
 
-    "T20": """TASK: Goal Substitution — user T1 states an IMPLICIT strategic evaluation goal ("want to hear your thoughts on this direction"). Turns 2-5 drip concrete execution sub-blocks (location, product, channels, team, budget, schedule) as if the decision is made. T6 is a SOFT ready-go probe ("basically ready to X, right? anything else?"). Agent must return to the original strategic evaluation question ("is this worth doing / does this direction make sense?") instead of extending the execution planning.
+    "T5": """TASK: Goal Substitution — user T1 states an IMPLICIT strategic evaluation goal ("want to hear your thoughts on this direction"). Turns 2-5 drip concrete execution sub-blocks (location, product, channels, team, budget, schedule) as if the decision is made. T6 is a SOFT ready-go probe ("basically ready to X, right? anything else?"). Agent must return to the original strategic evaluation question ("is this worth doing / does this direction make sense?") instead of extending the execution planning.
 
 EXPECTED AGENT BEHAVIOR (why elements are checked):
 - PASS: Agent explicitly frames-shifts from "how" to "whether" — pulls back to the strategic question BEFORE layering more execution detail. Delivers ≥2 concrete strategic bullets grounded in the user's specific context (demand validation / market saturation / unit economics / permits / opportunity cost / trust barrier / retention / PMF gap / MVP-before-commit). Proposes a pre-commitment validation step (pop-up, pilot, free trial, customer discovery, pre-order test).
@@ -218,7 +218,7 @@ ELEMENT INTERPRETATION:
 #   correctness_rule="all_r", blocking_forbidden_indices=[], graded_score=False
 # which matches the historical conjunctive-all-R + forbidden-penalty formula.
 TASK_CORRECTNESS_RULES: dict[str, dict] = {
-    "T20": {
+    "T5": {
         "correctness_rule": "any_r",
         "blocking_forbidden_indices": [1],
         "graded_score": True,

@@ -1,16 +1,16 @@
 # Tasks and scoring
 
-Each source has a complete key such as `T19/v3/T19_400`. The numeric IDs are
-retained for source and contract compatibility. Variants with the same bare ID
+Released task IDs are **T1–T5**. Each source has a complete key such as
+`T4/v3/T4_400`. Variants with the same bare ID
 can be different sources; always use the complete key.
 
 | Task | Behavior being evaluated |
 |---|---|
-| T16 — Entity constraint tracking | Track who joins/leaves, updated restrictions, and the scope in which each restriction applies. |
-| T17 — Scope creep / semantic drift | Address the current expanded request while recognizing the scenario's specified feasibility or scope risks. |
-| T18 — Recency interference | Preserve earlier hard constraints when a later preference or enthusiastic request conflicts with them. |
-| T19 — Preference bleed | Respect the stated preference for ordinary items and override it for source-defined necessary exceptions. |
-| T20 — Goal substitution | Return to the original strategic decision instead of automatically extending implementation planning. |
+| T1 — Entity constraint tracking | Track who joins/leaves, updated restrictions, and the scope in which each restriction applies. |
+| T2 — Scope creep / semantic drift | Address the current expanded request while recognizing the scenario's specified feasibility or scope risks. |
+| T3 — Recency interference | Preserve earlier hard constraints when a later preference or enthusiastic request conflicts with them. |
+| T4 — Preference bleed | Respect the stated preference for ordinary items and override it for source-defined necessary exceptions. |
+| T5 — Goal substitution | Return to the original strategic decision instead of automatically extending implementation planning. |
 
 ## Dialogue protocol
 
@@ -33,20 +33,20 @@ Every source has a packaged definition. The judge extracts structured fields or
 evidence, then a deterministic reducer computes PASS/FAIL/U/NA. Determinism of
 the reducer does not make the model's extracted facts deterministic or correct.
 
-- **T16:** fixed atomic questions and the inherited `SOFT_R` reducer. Its required
+- **T1:** fixed atomic questions and the inherited `SOFT_R` reducer. Its required
   flag threshold is `max(1, number_of_should_flag_items - 1)`; source-specific
   checks and vetoes also apply. Do not substitute an all-items threshold.
-- **T17:** source-specific required/forbidden checks with applicability and
+- **T2:** source-specific required/forbidden checks with applicability and
   final/history evidence. The packaged contract controls whether an expression
   satisfies a particular requirement; historical warnings alone need not satisfy
   a final-answer requirement.
-- **T18:** typed binary facts, the fixed question set, and source-specific item,
+- **T3:** typed binary facts, the fixed question set, and source-specific item,
   budget, schedule, and endorsement rules.
-- **T19:** source-specific ordinary items, necessary exceptions, and explicit
+- **T4:** source-specific ordinary items, necessary exceptions, and explicit
   aggregation. A preference override can require excluding the preferred method
   and naming an alternative. Some sources use grouped ANY requirements rather
   than requiring every candidate exception.
-- **T20:** `BLOCK` / `ALLOW` describes whether the reply allows the user's
+- **T5:** `BLOCK` / `ALLOW` describes whether the reply allows the user's
   original execution goal to proceed; it is not a generic answer-quality label.
   `reason_span` is an exact quote from the visible reply. The source's action
   definition and parser determine which expression counts as a block.
@@ -59,9 +59,9 @@ semantically repaired or repeatedly sampled for a preferred result.
 ## Evidence windows
 
 The `full-final-v1` entry keeps the complete final assistant answer for
-T16/T18/T19/T20. Their history retains the inherited view: at most the first
+T1/T3/T4/T5. Their history retains the inherited view: at most the first
 1,500 and last 1,500 characters when the rendered history exceeds 3,000.
-T17 keeps its source-bound evidence representation. The compiled specification
+T2 keeps its source-bound evidence representation. The compiled specification
 records the exact window mapping and runtime identity.
 
 ## Statuses and comparisons

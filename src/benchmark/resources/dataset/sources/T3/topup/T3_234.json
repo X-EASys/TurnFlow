@@ -1,0 +1,236 @@
+{
+  "scenario_id": "T3_234",
+  "domain": "choosing between 3 baby car seats with budget + age + safety-rating constraint",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and purchase a baby car seat. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to buy a baby car seat. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 baby car seats: the Graco SlimFit, the Britax Boulevard, and the Chicco NextFit",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "seat_details",
+        "value": "Graco SlimFit: $199, rear-facing 5-40 lbs, forward-facing 22-65 lbs, 4-star safety rating. Britax Boulevard: $330, rear-facing 5-40 lbs, forward-facing 20-65 lbs, 5-star safety rating. Chicco NextFit: $95, rear-facing 5-35 lbs, forward-facing 22-50 lbs, 3-star safety rating.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "baby_age_weight",
+        "value": "Baby is 14 months old and weighs 26 lbs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_volunteering",
+        "value": "User volunteers every Saturday morning at a community center and drives the baby there",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum budget is $250",
+        "surface_form": "My husband and I set aside $250 for the car seat from our baby gear fund",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "safety_rating_constraint",
+        "value": "Must have at least a 4-star safety rating",
+        "surface_form": "My pediatrician told me to only consider seats with at least 4 stars on the safety rating",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pediatrician recommended at least 4-star safety rating → seats below 4 stars are eliminated",
+          "Chicco NextFit has 3-star rating → Chicco NextFit is eliminated"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Needs the seat installed by this Saturday because user drives baby to volunteering every Saturday morning",
+        "surface_form": "I need it by this Saturday at the latest because I drive my daughter to the community center every Saturday morning for my volunteer shift",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Needs seat by Saturday → must be available for immediate purchase/delivery",
+          "Britax Boulevard is backordered for 3 weeks → Britax Boulevard cannot arrive by Saturday"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "britax_backorder",
+        "value": "The Britax Boulevard is backordered for 3 weeks at all local stores and online",
+        "surface_form": "I checked the Britax Boulevard and it's backordered everywhere — 3 weeks minimum wait at every store and online",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent choosing between 3 baby car seats (Graco SlimFit, Britax Boulevard, Chicco NextFit). You will share seat details, your budget, your pediatrician's safety recommendation, and the Britax backorder situation across several turns. Your neighbor and sister-in-law will praise the Britax Boulevard and Chicco NextFit. At the very end, you will say you have decided and ask what you need to know for installation — you must NEVER name which seat you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, practical parent. You state facts plainly without strong emotion. You never express frustration or impatience, even when options get eliminated. You treat each update as normal shopping research.",
+        "description": "Prevents emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to buy a baby car seat for my daughter. I've narrowed it down to 3 options — the Graco SlimFit, the Britax Boulevard, and the Chicco NextFit.",
+          "success_criteria": "Agent engages with car seat selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've found: the Graco SlimFit is $199, rear-facing 5-40 lbs, forward-facing 22-65 lbs, 4-star safety rating. The Britax Boulevard is $330, rear-facing 5-40 lbs, forward-facing 20-65 lbs, 5-star safety rating. The Chicco NextFit is $95, rear-facing 5-35 lbs, forward-facing 22-50 lbs, 3-star safety rating. My daughter is 14 months and weighs 26 lbs.",
+          "success_criteria": "Agent processes all 3 options with their prices, weight ranges, and safety ratings",
+          "required_info_keys": [
+            "seat_details",
+            "baby_age_weight"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with all attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor just got the Britax Boulevard for her twins. She said the side-impact protection is incredible and the harness system is super easy to adjust.",
+          "success_criteria": "Agent responds to the positive Britax review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "got the Britax Boulevard for her twins, loves the side-impact protection and easy harness adjustment",
+            "target_option": "Britax Boulevard"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Britax Boulevard"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My husband and I set aside $250 for the car seat from our baby gear fund. Also my pediatrician told me to only consider seats with at least 4 stars on the safety rating.",
+          "success_criteria": "Agent registers the $250 budget cap and the 4-star minimum safety requirement",
+          "required_constraint_keys": [
+            "budget_constraint",
+            "safety_rating_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint (eliminates Britax at $330) and safety constraint (eliminates Chicco at 3 stars)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned the Britax Boulevard won some kind of consumer safety award last year. She's really happy with it.",
+          "success_criteria": "Agent responds to more positive Britax info",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Britax Boulevard won a consumer safety award, neighbor is very happy with it",
+            "target_option": "Britax Boulevard"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Britax Boulevard (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I need it by this Saturday at the latest because I drive my daughter to the community center every Saturday morning for my volunteer shift. I checked the Britax Boulevard and it's backordered everywhere — 3 weeks minimum wait at every store and online.",
+          "success_criteria": "Agent recognizes the Saturday deadline and that Britax is unavailable within that timeframe",
+          "required_info_keys": [
+            "saturday_volunteering"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint",
+            "britax_backorder"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint and backorder info — triple-eliminates Britax (over budget + backordered + can't wait 3 weeks)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My sister-in-law got the Chicco NextFit for her son. She said it's super lightweight and easy to install, took her like 5 minutes.",
+          "success_criteria": "Agent responds to the positive Chicco review",
+          "drift_config": {
+            "drift_subject": "sister-in-law",
+            "drift_topic": "got the Chicco NextFit, loves how lightweight it is and easy 5-minute installation",
+            "target_option": "Chicco NextFit"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Chicco NextFit"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My sister-in-law also said the Chicco NextFit fabric is machine washable which is a lifesaver with toddlers. Her kid spills everything.",
+          "success_criteria": "Agent responds to more positive Chicco info",
+          "drift_config": {
+            "drift_subject": "sister-in-law",
+            "drift_topic": "Chicco NextFit has machine-washable fabric, great for messy toddlers",
+            "target_option": "Chicco NextFit"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Chicco NextFit (already eliminated by safety rating)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to get it installed before Saturday — what should I know about installation?",
+          "success_criteria": "Agent focuses on Graco SlimFit installation guidance (only option within $250 budget, with 4-star safety rating, and available immediately)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "rating"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: 'I've decided' — agent must determine which seat and focus on Graco SlimFit installation"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should purchase the Graco SlimFit ($199). The Britax Boulevard ($330) exceeds the $250 budget and is backordered for 3 weeks (user needs it by Saturday). The Chicco NextFit ($95) only has a 3-star safety rating (pediatrician required minimum 4 stars). Only the Graco SlimFit ($199 < $250, 4-star rating >= 4-star minimum, available immediately) survives all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent provides installation guidance specifically for the Graco SlimFit",
+      "Agent shows that the Britax Boulevard at $330 exceeds the $250 baby gear fund budget",
+      "Agent shows that the Chicco NextFit at 3-star safety rating fails the pediatrician's 4-star minimum requirement",
+      "Agent shows that the Britax Boulevard is backordered 3 weeks and cannot arrive by Saturday"
+    ],
+    "forbidden_elements": [
+      "Providing installation guidance for the Britax Boulevard ($330 exceeds $250 budget and backordered 3 weeks)",
+      "Providing installation guidance for the Chicco NextFit (3-star rating fails the 4-star minimum)",
+      "Ignoring the $250 budget constraint when identifying the chosen seat",
+      "Ignoring the pediatrician's 4-star safety rating requirement",
+      "Asking which seat the user decided on (should be determinable from constraints)"
+    ],
+    "explanation": "Budget constraint ($250 max): Britax=$330 exceeds budget, Graco=$199 within budget, Chicco=$95 within budget. Safety constraint (4-star minimum): Chicco=3-star eliminated, Graco=4-star passes, Britax=5-star passes. Schedule constraint (need by Saturday): Britax backordered 3 weeks eliminated, Graco available immediately, Chicco available immediately. Only Graco SlimFit survives all three constraints. Despite 4 drift turns praising Britax Boulevard and Chicco NextFit, the agent must respect the hard constraints and provide Graco SlimFit installation guidance."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

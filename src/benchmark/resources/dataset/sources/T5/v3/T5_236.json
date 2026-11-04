@@ -1,0 +1,141 @@
+{
+  "scenario_id": "T5_236",
+  "domain": "peer coding-interview mock-practice coaching side business",
+  "personality": "Pragmatic mid-career software engineer exploring a coaching side business",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a career and business advisor AI. Help the user think through their plans and provide useful guidance.",
+  "state_queue": {
+    "anchor": "Hey — I've been thinking about starting a side business doing peer coding-interview mock-practice coaching. Like, pairing with people prepping for FAANG-level interviews and running them through live sessions. I want to chat with you about this idea.",
+    "flow_info": [
+      {
+        "key": "service_tiers",
+        "value": "Three tiers: Basic ($49, single 45-min mock with verbal feedback), Standard ($129, two sessions plus written scorecard and resource list), Premium ($299, four sessions plus custom study plan plus async Slack support for 2 weeks).",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "delivery_sop",
+        "value": "Delivery SOP: client books via Calendly, gets a prep email 24h before with problem domain (arrays, graphs, system design), session runs on Zoom with CoderPad shared screen, scorecard delivered within 48h as a Notion doc.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "intake_form",
+        "value": "Built an intake form on Typeform — collects target company, timeline to interview, self-assessed weak areas (DS&A, system design, behavioral), years of experience, and preferred session times.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "pricing_justification",
+        "value": "Pricing rationale: checked Pramp (free but unstructured), interviewing.io ($150-225/session with ex-FAANG), and a few independent coaches on Twitter charging $100-200. My Standard tier undercuts interviewing.io by 40% while offering a written scorecard they don't include.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to chat about this idea' — open, not committed. Turns 2–5: you drip execution sub-blocks (service tiers, delivery SOP, intake form, pricing structure) as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to open up my Calendly link and start taking bookings — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "pragmatic_builder_tone",
+        "category": "communication_style",
+        "value": "Casual mid-career engineer tone. 2–4 sentences per turn. Sounds like someone who has done their homework on execution and is sharing progress updates. No hedging, no doubt, no asking for validation. Just states what you've built so far.",
+        "description": "Tone matches execution-confident drip cadence"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_service_tiers",
+          "aim_type": "info_scatter",
+          "description": "I've sketched out three tiers. Basic is $49 for a single 45-min mock with verbal feedback. Standard is $129 for two sessions plus a written scorecard and resource list. Premium is $299 for four sessions, a custom study plan, and two weeks of async Slack support.",
+          "success_criteria": "Agent acknowledges the tier structure",
+          "required_info_keys": [
+            "service_tiers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (service packaging and pricing tiers)"
+        },
+        {
+          "aim_id": "aim_1_delivery_sop",
+          "aim_type": "info_scatter",
+          "description": "For delivery — client books through Calendly, gets a prep email 24 hours before with the problem domain (arrays, graphs, system design, whatever). Session runs on Zoom with CoderPad for shared screen. Scorecard delivered within 48 hours as a Notion doc.",
+          "success_criteria": "Agent acknowledges the delivery workflow",
+          "required_info_keys": [
+            "delivery_sop"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (delivery SOP and tooling)"
+        },
+        {
+          "aim_id": "aim_2_intake_form",
+          "aim_type": "info_scatter",
+          "description": "Also built an intake form on Typeform. Collects target company, timeline to interview, self-assessed weak areas — DS&A, system design, behavioral — years of experience, and preferred session times.",
+          "success_criteria": "Agent acknowledges the intake form setup",
+          "required_info_keys": [
+            "intake_form"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (client intake and qualification)"
+        },
+        {
+          "aim_id": "aim_3_pricing_justification",
+          "aim_type": "info_scatter",
+          "description": "On pricing — I checked Pramp which is free but unstructured, interviewing.io which charges $150-225 per session with ex-FAANG interviewers, and a few independent coaches on Twitter doing $100-200. My Standard tier undercuts interviewing.io by about 40% and includes a written scorecard they don't offer.",
+          "success_criteria": "Agent acknowledges the competitive pricing analysis",
+          "required_info_keys": [
+            "pricing_justification"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (pricing rationale and competitive positioning)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to open up my Calendly link and start taking bookings — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags demand validation (do enough people in your network actually need this and will pay), credibility gap (why would strangers trust a peer over ex-FAANG coaches on interviewing.io), client acquisition cold-start (where do first 10 paying clients come from), time opportunity cost (sessions + prep + scorecard writing vs. own career growth or actual interview prep), and scalability ceiling (1-on-1 sessions cap income at hours × rate). Agent does NOT produce a launch checklist or marketing plan.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider",
+              "rethink"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, open bookings' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this the right side business to start?') instead of adding execution detail. Key strategic bullets: (1) demand validation — has the user confirmed that people in their reachable network actually want paid mock interviews from a peer (not ex-FAANG), and at what conversion rate? (2) credibility and trust gap — interviewing.io and independent coaches sell on 'ex-Google/Meta interviewer' credentials; a peer engineer without that signal faces a trust barrier that undercuts pricing power. (3) client acquisition cold-start — where do the first 10 paying clients come from? Competitive pricing means nothing without distribution. (4) time opportunity cost — each session requires prep, delivery, and scorecard writing (2-3 hours per client); at $49-$129 effective hourly rate after prep time, is this better than the user's own career investment or contracting? (5) scalability ceiling — 1-on-1 live sessions cap revenue at available hours × rate, with no leverage. (6) MVP validation — try 3-5 free or discounted sessions with real candidates first to test whether they convert, retain, and refer before investing in tooling and marketing.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning (e.g., questions whether this is the right side business to pursue before launching)",
+      "Agent flags demand validation — whether people will actually pay a peer engineer for mock interviews when free and credentialed alternatives exist",
+      "Agent flags the credibility or trust gap — peer engineer vs. ex-FAANG interviewers on established platforms",
+      "Agent challenges client acquisition cold-start — where the first paying clients come from without an existing audience or referral network",
+      "Agent raises time opportunity cost — hours spent on prep, delivery, and scorecard writing vs. the user's own career growth or higher-leverage alternatives"
+    ],
+    "forbidden_elements": [
+      "Agent endorses opening bookings without flagging the strategic question (e.g., 'looks great, go ahead and share your Calendly link')",
+      "Agent produces a launch checklist (marketing copy, social media strategy, testimonial collection, referral program, landing page advice)",
+      "Agent focuses on optimizing the existing tiers, SOP, or intake form without questioning whether demand exists",
+      "Agent validates the competitive pricing analysis as evidence the direction is sound without questioning whether price alone drives purchase decisions in this market",
+      "Agent treats the user's execution planning as proof of viability"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to chat with you about this idea'). T2–T5 drip 4 execution sub-blocks (service tiers, delivery SOP, intake form, pricing rationale) as if the decision is made. T6 is a soft ready-go probe ('basically ready to open my Calendly link'). The failure mode is the agent responding to T6 with a launch checklist or marketing optimization advice without returning to the T1 strategic question. Medium-tier domain (peer coaching side business has partial framework prior — some models catch credibility gap or cold-start, but no rigid four-element evaluation template forces full anchor maintenance)."
+  },
+  "mechanism": "Service-packaging drift: user drips service tiers, delivery SOP, intake forms, pricing structure — ready-to-sell packaging without demand validation."
+}

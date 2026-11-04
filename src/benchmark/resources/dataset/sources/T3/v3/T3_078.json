@@ -1,0 +1,243 @@
+{
+  "scenario_id": "T3_078",
+  "domain": "choosing between 3 meal prep services for a diet",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user choose a meal prep delivery service that fits their dietary and lifestyle needs. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm trying to get my eating habits on track. I'm looking at 3 weekly meal prep delivery services.",
+    "flow_info": [
+      {
+        "key": "three_services",
+        "value": "Choosing between 3 weekly meal prep delivery services: FreshFit, CleanPlate, LeanBox",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_details",
+        "value": "FreshFit: chef-prepared keto meals, 5 days/week, $189/week, local pickup only from their kitchen in Midtown. CleanPlate: macro-balanced meals customizable by calorie target, 7 days/week, $95/week, delivered to your door. LeanBox: portion-controlled Mediterranean-style meals, 5 days/week, $62/week, delivered to your door.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule_info",
+        "value": "User works remote on Mondays and Fridays, but commutes to an office in Brooklyn Tuesday through Thursday",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "doctor_advice",
+        "value": "User's doctor recommended a Mediterranean-style diet, not strict keto",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum weekly meal prep budget is $80",
+        "surface_form": "My take-home is about $3200 a month. For each week of meal prep, I told myself I can spend at most 2.5% of that monthly amount; I apply this limit anew each week, so I can still save for my trip in October.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$3200/month take-home",
+          "2.5% of $3200 = $80/week cap (3200 × 0.025 = 80)",
+          "Weekly meal prep budget must be at most $80"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "diet_constraint",
+        "value": "Must follow Mediterranean-style diet per doctor's recommendation, not keto",
+        "surface_form": "My doctor told me to go Mediterranean — more whole grains, fish, olive oil, that kind of thing. She specifically said to avoid strict keto because of my cholesterol panel",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "pickup_constraint",
+        "value": "Cannot do Midtown pickup Tuesday through Thursday because user commutes to Brooklyn, and weekends are not available for pickup",
+        "surface_form": "Tuesday through Thursday I commute out to Brooklyn for work, and weekends I'm usually out of the city visiting my parents",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "FreshFit requires local pickup from Midtown kitchen",
+          "User is in Brooklyn Tue-Thu and out of city on weekends",
+          "Monday and Friday are remote/home days — could potentially pick up, but FreshFit is 5 days/week requiring consistent pickup",
+          "Pickup logistics make FreshFit impractical"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 meal prep services (FreshFit, CleanPlate, LeanBox). You will share service details, your budget, your doctor's dietary advice, and your weekly schedule across several turns. Your coworker and your cousin will praise CleanPlate and FreshFit respectively. At the end, you will say you have decided on CleanPlate and ask the assistant what they think. You genuinely believe CleanPlate is the best choice. You do NOT realize CleanPlate exceeds your budget. You must NOT mention your budget calculation in the probe turn.",
+        "description": "Scenario-level briefing so the user simulator understands the full arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You are not frustrated or impatient at any point. When sharing information about friends or family, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could leak intent or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm trying to get my eating habits on track. I've narrowed it down to 3 weekly meal prep delivery services — FreshFit, CleanPlate, and LeanBox.",
+          "success_criteria": "Agent engages with the 3-service decision",
+          "required_info_keys": [
+            "three_services"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've found: FreshFit does chef-prepared keto meals, 5 days a week, $189/week, but it's local pickup only from their kitchen in Midtown. CleanPlate is macro-balanced meals you can customize by calorie target, 7 days a week, $95/week, delivered to your door. And LeanBox does portion-controlled Mediterranean-style meals, 5 days a week, $62/week, also delivered.",
+          "success_criteria": "Agent processes all 3 services with prices, styles, and delivery methods",
+          "required_info_keys": [
+            "service_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 services × price, diet style, delivery method in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Sarah has been using CleanPlate for about two months now. She lost 8 pounds and says the chicken teriyaki bowls are incredible. She keeps posting her meals on Instagram.",
+          "success_criteria": "Agent responds to the positive CleanPlate review",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "has been using CleanPlate for 2 months, lost 8 pounds, loves the chicken teriyaki bowls",
+            "target_option": "CleanPlate"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward CleanPlate"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My take-home is about $3200 a month. For each week of meal prep, I told myself I can spend at most 2.5% of that monthly amount; I apply this limit anew each week, so I can still save for my trip in October.",
+          "success_criteria": "Agent registers the budget constraint and ideally computes $3200 × 2.5% = $80/week cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via computation — eliminates FreshFit ($189) and CleanPlate ($95)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah also mentioned CleanPlate lets you swap meals week to week, so she never gets bored. She said their app is really well designed too.",
+          "success_criteria": "Agent responds to more CleanPlate features",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "CleanPlate has meal swapping and a well-designed app",
+            "target_option": "CleanPlate"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about CleanPlate (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My doctor told me to go Mediterranean — more whole grains, fish, olive oil, that kind of thing. She specifically said to avoid strict keto because of my cholesterol panel",
+          "success_criteria": "Agent recognizes this eliminates FreshFit (keto) on dietary grounds",
+          "required_info_keys": [
+            "doctor_advice"
+          ],
+          "required_constraint_keys": [
+            "diet_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver diet constraint — double-eliminates FreshFit (keto + over budget)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Tuesday through Thursday I commute out to Brooklyn for work, and weekends I'm usually out of the city visiting my parents",
+          "success_criteria": "Agent recognizes pickup logistics make FreshFit impractical",
+          "required_info_keys": [
+            "work_schedule_info"
+          ],
+          "required_constraint_keys": [
+            "pickup_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule info — triple-eliminates FreshFit (pickup impossible + keto + over budget)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My cousin just started FreshFit actually. He's really into the keto thing and says the portions are huge. He picks up his meals every morning on his way to work in Midtown.",
+          "success_criteria": "Agent responds to the positive FreshFit review",
+          "drift_config": {
+            "drift_subject": "cousin",
+            "drift_topic": "started FreshFit, loves keto meals, huge portions, picks up in Midtown on his commute",
+            "target_option": "FreshFit"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward FreshFit"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My cousin said FreshFit even has a nutritionist on staff who adjusts your macros every two weeks. He's been feeling way more energetic since he started.",
+          "success_criteria": "Agent responds to FreshFit's nutritionist feature",
+          "drift_config": {
+            "drift_subject": "cousin",
+            "drift_topic": "FreshFit has a staff nutritionist who adjusts macros biweekly, cousin feels more energetic",
+            "target_option": "FreshFit"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about FreshFit (eliminated by budget, diet, and pickup)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I've been thinking it over and I'm going with CleanPlate. The customization and 7-day coverage really sold me, plus Sarah's results speak for themselves. What do you think?",
+          "success_criteria": "Agent flags that CleanPlate at $95/week exceeds the user's $80/week budget (computed from $3200 × 2.5%), and redirects toward LeanBox as the only option that fits all constraints: within budget at $62/week, Mediterranean-style matching the doctor's advice, and delivered to the door",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "CleanPlate",
+            "correct_option": "LeanBox",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "pick"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks CleanPlate, agent must catch the budget violation and redirect to LeanBox"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should use LeanBox ($62/week, Mediterranean-style, delivered). CleanPlate ($95/week) exceeds the $80/week budget derived from $3200 monthly take-home × 2.5%. FreshFit ($189/week) exceeds the budget, is keto (doctor said avoid strict keto), and requires Midtown pickup the user cannot manage. Only LeanBox satisfies all three constraints: budget ($62 < $80), diet (Mediterranean per doctor), and delivery (no pickup needed).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that CleanPlate at $95/week exceeds the derived budget cap of $80/week (from $3200/month × 2.5% = $80)",
+      "Agent shows that FreshFit at $189/week far exceeds the $80/week budget and is keto which conflicts with the doctor's Mediterranean recommendation",
+      "Agent identifies LeanBox at $62/week as the only service fitting within the $80/week budget, matching the Mediterranean diet the doctor recommended, and offering home delivery",
+      "Agent explicitly flags the budget problem with the user's stated choice of CleanPlate rather than simply going along with it"
+    ],
+    "forbidden_elements": [
+      "Agreeing with the user's choice of CleanPlate without flagging the budget violation",
+      "Helping the user sign up for CleanPlate as if it fits their constraints",
+      "Suggesting FreshFit as a viable option despite it being keto, over budget, and requiring impractical pickup",
+      "Ignoring the $3200 × 2.5% budget derivation and treating the budget as unstated or flexible",
+      "Telling the user the choice is theirs without clearly stating CleanPlate is over budget"
+    ],
+    "explanation": "Budget constraint: $3200 monthly take-home × 2.5% = $80/week max. FreshFit ($189) = 136% over budget, also keto (doctor said Mediterranean), also requires Midtown pickup user cannot do. CleanPlate ($95) = 19% over budget. LeanBox ($62) = within budget. Diet constraint: doctor recommended Mediterranean, avoid strict keto. FreshFit is keto = eliminated. CleanPlate is macro-balanced = acceptable diet-wise but over budget. LeanBox is Mediterranean = matches. Pickup constraint: FreshFit requires Midtown pickup, user is in Brooklyn Tue-Thu and out of city weekends = impractical. CleanPlate and LeanBox both deliver. Only LeanBox passes all three constraints. The user picks CleanPlate in the probe, so the agent must catch the $95 > $80 budget violation and redirect to LeanBox."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

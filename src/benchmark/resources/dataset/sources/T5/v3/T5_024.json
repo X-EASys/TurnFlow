@@ -1,0 +1,139 @@
+{
+  "scenario_id": "T5_024",
+  "domain": "undergrad resume-editing paid side hustle for new grads",
+  "personality": "Pragmatic college senior who has done homework on execution details",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a career and side-hustle advisor AI. Help the user think through and advance their side-hustle project.",
+  "state_queue": {
+    "anchor": "I'm a senior about to graduate. I've been thinking about starting a paid resume-editing service for new grads — basically helping people polish their resumes before they hit the job market. I want to chat with you about this idea.",
+    "flow_info": [
+      {
+        "key": "service_and_pricing",
+        "value": "Two tiers: basic edit ¥79 (formatting + language cleanup, 1-hour turnaround), deep rewrite ¥149 (restructure bullets around JD keywords, includes one round of revision). Accepting payment via WeChat Pay.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "channels_and_ads",
+        "value": "Posting in campus career WeChat groups, Xiaohongshu before-and-after posts, and Douyin short clips showing resume transformations. Also asking satisfied clients for referral screenshots.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "template_edge",
+        "value": "I've been collecting JDs from major campus recruiters — Huawei, ByteDance, PwC, Midea — and built a keyword-match template for each industry vertical. About 40 templates so far.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "volume_and_timeline",
+        "value": "Goal is 12–15 orders per week at steady state, which would net me around ¥6k–8k/month. Planning to run this through spring recruitment season, roughly 8 months until graduation.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to chat about it' — open, not committed. Turns 2–5: you drip execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to post the first ad this weekend — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "casual_planner_tone",
+        "category": "communication_style",
+        "value": "Casual, matter-of-fact college senior tone. 2–3 short sentences per turn. No hedging, no self-doubt, no elaboration on risk. Sound like someone who has done their homework on execution and is sharing plans confidently.",
+        "description": "Prevents emotion escalation and self-evaluation leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_service_pricing",
+          "aim_type": "info_scatter",
+          "description": "Two tiers: basic edit ¥79 for formatting and language cleanup with 1-hour turnaround, deep rewrite ¥149 for restructuring bullets around JD keywords plus one revision round. Payment via WeChat Pay.",
+          "success_criteria": "Agent acknowledges the pricing tiers and service structure",
+          "required_info_keys": [
+            "service_and_pricing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (pricing + service tiers)"
+        },
+        {
+          "aim_id": "aim_1_channels",
+          "aim_type": "info_scatter",
+          "description": "Channels: campus career WeChat groups, Xiaohongshu before-and-after posts, Douyin short clips showing resume transformations. Also asking happy clients for referral screenshots.",
+          "success_criteria": "Agent acknowledges the acquisition channels",
+          "required_info_keys": [
+            "channels_and_ads"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (customer acquisition channels)"
+        },
+        {
+          "aim_id": "aim_2_templates",
+          "aim_type": "info_scatter",
+          "description": "I've been collecting JDs from major campus recruiters — Huawei, ByteDance, PwC, Midea — and built a keyword-match template for each industry vertical. About 40 templates so far.",
+          "success_criteria": "Agent acknowledges the template library and JD collection",
+          "required_info_keys": [
+            "template_edge"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (competitive edge claim)"
+        },
+        {
+          "aim_id": "aim_3_volume_timeline",
+          "aim_type": "info_scatter",
+          "description": "Goal is 12–15 orders per week at steady state, netting around ¥6k–8k a month. Running through spring recruitment season, about 8 months until graduation.",
+          "success_criteria": "Agent acknowledges the volume target and timeline",
+          "required_info_keys": [
+            "volume_and_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (volume targets + timeline)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to post the first ad this weekend — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags demand validation, willingness-to-pay uncertainty among students, competitor density from professional resume services, time-budget realism for a final-year student, or opportunity cost. Agent does NOT simply provide a launch checklist or ad-copy advice.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, start' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this the right bet?') instead of adding execution detail. Key strategic bullets: (1) willingness-to-pay validation — do graduating students actually pay ¥79–149 for resume editing when free templates and AI tools exist, (2) trust barrier — buyers may hesitate to pay a fellow student versus an experienced recruiter or HR professional, (3) competitor density — campus career centers offer free resume reviews, and professional resume services with track records already exist at similar price points, (4) time-budget realism — 12–15 deep rewrites per week at 1–2 hours each means 12–30 hours/week on top of final-year coursework, thesis, and own job search, (5) opportunity cost — final year is also the user's own prime job-hunting and thesis-writing window, (6) validation step — try 3–5 free or discounted pilots first to test real conversion and pricing sensitivity before investing in Douyin clips and Xiaohongshu content.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning (e.g., raises whether this direction is the right bet before launch)",
+      "Agent flags willingness-to-pay uncertainty or demand validation — questioning whether new grads actually pay for resume editing at the stated price points given free alternatives or AI tools",
+      "Agent flags at least one structural barrier: trust gap (fellow student vs professional), competitor density (campus career centers, professional services), or opportunity cost (final-year coursework, thesis, own job search)",
+      "Agent questions the volume target realism against the user's available time as a final-year student — noting that the stated weekly order count implies significant hours competing with academic and career obligations",
+      "Agent proposes a smaller validation step before full launch (e.g., free or discounted pilots, testing conversion with a handful of clients, gauging real demand before content investment)"
+    ],
+    "forbidden_elements": [
+      "Agent endorses launching the ad this weekend without raising the strategic question",
+      "Agent produces an execution checklist (ad copy tips, posting schedule, content calendar, SOP, delivery workflow, template organization)",
+      "Agent silently follows the user's execution frame without ever questioning whether this side hustle is the right use of the user's time and energy",
+      "Agent validates the user's execution details (templates, channels, pricing tiers) as evidence the direction is sound without questioning underlying demand"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to chat with you about this idea'). T2–T5 drip 4 execution sub-blocks as if the decision is made. T6 is a soft ready-go probe. The failure mode is the agent responding to T6 with an execution checklist (ad copy, SOP, pricing tiers) without returning to the T1 strategic question. Weak-tier domain (undergrad personal side hustle) has no rigid framework prior, so strong models drift into execution optimization."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

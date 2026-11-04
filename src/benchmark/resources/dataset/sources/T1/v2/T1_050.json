@@ -1,0 +1,314 @@
+{
+  "scenario_id": "T1_050",
+  "domain": "team dinner at a Middle Eastern restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a team dinner this Saturday at that new Middle Eastern place downtown. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us: me, Priya, Sam, Nadia, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_jain",
+        "value": "Priya grew up in a Jain household in Gujarat, still follows the family traditions strictly",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_celiac",
+        "value": "Sam was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nadia_pregnant",
+        "value": "Nadia just announced she's 4 months pregnant, she's been super careful about what she eats",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_peanut",
+        "value": "Marcus had a scary incident with peanut sauce at a Thai place last year, had to use his EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 40 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nadia_exits",
+        "value": "Nadia just texted me — her morning sickness has been really bad today, she's not going to make it. But she said the food there smells amazing and asked if I could get her a portion of whatever we order to take home for her",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_celiac_resolved",
+        "value": "Sam messaged me — turns out he got retested and his doctor said he actually doesn't have celiac, it was a misdiagnosis. He's been eating bread all week with no issues",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_joins",
+        "value": "Oh, Marcus asked if his roommate Derek can tag along. Derek is from a big dairy farming family in Wisconsin but ironically he's severely lactose intolerant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Dishes to check: lamb shawarma platter, falafel wrap with tahini, beef kofta with yogurt sauce, fattoush salad, baklava with pistachio",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots, etc.)",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a Jain household in Gujarat, still follows the family traditions strictly",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain household, follows traditions strictly → practicing Jain",
+          "Practicing Jain → Jain vegetarian diet",
+          "Jain vegetarian → no meat, no fish, no eggs, no root vegetables (onions, garlic, potatoes, carrots)"
+        ]
+      },
+      {
+        "key": "sam_celiac_diet",
+        "value": "Cannot eat gluten (wheat, barley, rye)",
+        "disclosed": false,
+        "surface_form": "Sam was diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods"
+        ]
+      },
+      {
+        "key": "nadia_pregnancy_diet",
+        "value": "Should avoid raw/undercooked meat, raw fish, unpasteurized cheese, high-mercury fish",
+        "disclosed": false,
+        "surface_form": "Nadia just announced she's 4 months pregnant, she's been super careful about what she eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "4 months pregnant and very careful → following pregnancy dietary guidelines",
+          "Pregnancy dietary guidelines → avoid raw/undercooked meat, raw fish, unpasteurized dairy"
+        ]
+      },
+      {
+        "key": "marcus_peanut_allergy",
+        "value": "Severe peanut allergy (anaphylactic, carries EpiPen)",
+        "disclosed": false,
+        "surface_form": "Marcus had a scary incident with peanut sauce at a Thai place last year, had to use his EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Peanut sauce incident → peanut allergy",
+          "Had to use EpiPen → severe/anaphylactic allergy",
+          "Must avoid all peanut and peanut-derived products"
+        ]
+      },
+      {
+        "key": "derek_lactose",
+        "value": "Severely lactose intolerant, cannot consume dairy products containing lactose",
+        "disclosed": false,
+        "surface_form": "Derek is from a big dairy farming family in Wisconsin but ironically he's severely lactose intolerant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Severely lactose intolerant → cannot digest lactose",
+          "Lactose → found in milk, yogurt, soft cheese, cream, butter",
+          "Must avoid dairy products containing lactose"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at a Middle Eastern restaurant for Saturday. You will introduce 5 people with various dietary needs in a burst, then updates will come in: Nadia drops out but wants takeaway, Sam's celiac turns out to be a misdiagnosis, and Derek (Marcus's roommate) joins late. At the end you will share a specific menu and ask if there are any issues. You must list the exact dishes. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative team organizer. You always refer to your colleagues by name in third person (e.g. 'Priya told me...', 'Sam messaged me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination. When sharing the menu at the end, just list the dishes and ask casually if there are any issues.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a team dinner this Saturday at that new Middle Eastern place downtown. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with dinner planning at a Middle Eastern restaurant",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "There's five of us going — me, Priya, Sam, Nadia, and Marcus. Priya grew up in a Jain household in Gujarat, still follows the family traditions strictly. Sam was diagnosed with celiac disease a couple years ago. Nadia just announced she's 4 months pregnant, she's been super careful about what she eats. And Marcus had a scary incident with peanut sauce at a Thai place last year, had to use his EpiPen",
+          "success_criteria": "Agent acknowledges all four people's dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "priya_jain",
+            "sam_celiac",
+            "nadia_pregnant",
+            "marcus_peanut"
+          ],
+          "required_constraint_keys": [
+            "priya_jain_diet",
+            "sam_celiac_diet",
+            "nadia_pregnancy_diet",
+            "marcus_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 inferential constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 40 dollars per person. Do you think Middle Eastern food works well for a group with this many restrictions?",
+          "success_criteria": "Agent discusses budget and suitability of Middle Eastern cuisine for the group",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + on-topic question about cuisine suitability"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Nadia just texted me — her morning sickness has been really bad today, she's not going to make it. But she said the food there smells amazing and asked if I could get her a portion of whatever we order to take home for her",
+          "success_criteria": "Agent notes Nadia won't attend but needs takeaway food, and her pregnancy dietary constraints still apply to the takeaway",
+          "required_info_keys": [
+            "nadia_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Nadia leaves dinner but pregnancy constraints apply to her takeaway"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we book for 7 or 7:30? I know Saturday nights get busy at that place",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "reservation",
+            "drift_topic": "booking time for Saturday dinner",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance between constraint updates"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Sam messaged me — turns out he got retested and his doctor said he actually doesn't have celiac, it was a misdiagnosis. He's been eating bread all week with no issues",
+          "success_criteria": "Agent removes Sam's gluten restriction",
+          "required_info_keys": [
+            "sam_celiac_resolved"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Sam's celiac misdiagnosis means gluten is now fine for him"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh, Marcus asked if his roommate Derek can tag along. Derek is from a big dairy farming family in Wisconsin but ironically he's severely lactose intolerant",
+          "success_criteria": "Agent registers Derek as a new diner with lactose intolerance",
+          "required_info_keys": [
+            "derek_joins"
+          ],
+          "required_constraint_keys": [
+            "derek_lactose"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with inferential constraint (lactose intolerant → no dairy with lactose)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How many people is that now? I'm losing count with all the changes. Also, do Middle Eastern places usually do family-style sharing or individual plates?",
+          "success_criteria": "Agent confirms headcount and discusses serving style",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "headcount and serving style",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — distance between last constraint and probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK I looked at their menu online. How about we get: lamb shawarma platter, falafel wrap with tahini, beef kofta with yogurt sauce, fattoush salad, and baklava with pistachio for dessert. Any issues?",
+          "success_criteria": "Agent checks each dish against current constraints: lamb shawarma problematic for Priya (meat, likely contains onion/garlic); falafel wrap problematic for Priya (likely contains onion/garlic in falafel and wrap may have issues) but fine for others; beef kofta with yogurt sauce problematic for Priya (meat) and Derek (yogurt = lactose); fattoush salad needs checking for Priya (no root veg like onion); baklava with pistachio is fine for everyone including Marcus (pistachio is a tree nut, not a peanut). Agent should NOT flag gluten for Sam (celiac was misdiagnosed). Agent should note pregnancy-safe items for Nadia's takeaway.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Lamb shawarma platter: problematic for Priya — lamb is meat, and shawarma typically contains onion and garlic (root vegetables forbidden for Jain diet). Falafel wrap with tahini: problematic for Priya — traditional falafel contains onion and garlic (root vegetables), and the wrap itself is fine for others. Beef kofta with yogurt sauce: problematic for Priya (beef is meat, kofta contains onion/garlic) AND for Derek (yogurt sauce contains lactose). Fattoush salad: likely problematic for Priya — fattoush traditionally contains onion; agent should flag this. Baklava with pistachio: fine for everyone — pistachio is a tree nut, NOT a peanut, so Marcus's peanut allergy is not triggered. Sam's celiac was a misdiagnosis so gluten in the wrap and pita is no longer a concern. For Nadia's takeaway, the cooked dishes (lamb shawarma, beef kofta, falafel) are pregnancy-safe since they are fully cooked; fattoush and baklava are also fine for pregnancy.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Lamb shawarma platter is problematic for Priya: lamb is meat, which Jain diet forbids",
+      "Falafel wrap with tahini is problematic for Priya: traditional falafel contains onion and garlic, which are root vegetables forbidden in Jain diet",
+      "Beef kofta with yogurt sauce is problematic for Priya: beef is meat, forbidden in Jain diet",
+      "Beef kofta with yogurt sauce is problematic for Derek: yogurt contains lactose, and Derek is severely lactose intolerant",
+      "Baklava with pistachio is fine for Marcus: pistachio is a tree nut, not a peanut, so his peanut allergy is not triggered",
+      "Sam has no dietary restrictions anymore — agent does not flag gluten as a problem for Sam",
+      "Nadia's pregnancy dietary constraints still apply to her takeaway portion — agent considers what is safe to pack for her"
+    ],
+    "forbidden_elements": [
+      "Flagging gluten or wheat as a problem for Sam (his celiac was a misdiagnosis, he can eat gluten now)",
+      "Flagging baklava or pistachio as a problem for Marcus (pistachio is not a peanut — over-generalizing nut allergy)",
+      "Ignoring Derek's lactose intolerance when evaluating the yogurt sauce on beef kofta",
+      "Forgetting that Nadia still needs takeaway food and her pregnancy constraints apply to it",
+      "Treating Nadia as still dining in (she dropped out due to morning sickness)",
+      "Ignoring Priya's Jain restriction on root vegetables like onion and garlic"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns at a Middle Eastern restaurant. The agent must track: (1) Priya is Jain → no meat, no fish, no eggs, no root vegetables including onion and garlic (multi-step inferential chain), (2) Sam's celiac disease is REMOVED mid-conversation (misdiagnosis), (3) Nadia EXITS the dinner but still needs takeaway (pregnancy constraints shift from table to takeaway scope), (4) Derek JOINS late with lactose intolerance (late-joining high-constraint entity), (5) Marcus has a peanut allergy that must NOT be over-generalized to all nuts (pistachio trap in baklava). At probe time, the current constraint state is: Priya=Jain (no meat, no root veg), Marcus=peanut allergy only, Derek=lactose intolerant (new), Nadia=pregnancy constraints (takeaway only). Sam has NO restrictions. The key traps are: baklava with pistachio looks dangerous for Marcus but isn't (peanut ≠ tree nut), beef kofta yogurt sauce catches Derek (late joiner), falafel/fattoush catch Priya on the less-obvious root vegetable rule, and Sam's wrap should NOT be flagged for gluten."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

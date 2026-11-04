@@ -1,0 +1,296 @@
+{
+  "scenario_id": "T1_017",
+  "domain": "picnic in the park for a group",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user plan food for a group picnic in the park. Track who is attending, their dietary needs, and any changes to the guest list. When the user asks you to evaluate specific food items, check each item against every active attendee's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a picnic in the park this Saturday for a few friends. Can you help me figure out what food to bring?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Four of us: me, Rachel, Dev, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_pregnancy",
+        "value": "Rachel is 7 months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_celiac",
+        "value": "Dev got diagnosed with celiac disease a few months ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_peanut",
+        "value": "Marcus had a peanut allergy scare as a kid, carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Trying to keep it under 20 bucks per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_exits",
+        "value": "Dev just texted me — his flight got moved up, he's leaving Friday night now. He asked if I could drop off a container of picnic food at his place before he goes though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_healed",
+        "value": "Marcus told me he saw an allergist last month and did a food challenge — turns out he outgrew the peanut allergy completely, doctor cleared him",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_joins",
+        "value": "Rachel's asking if her sister Sophie can come too",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_jain",
+        "value": "Sophie moved back from her ashram in India last year, she's been practicing Jain for about three years now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_items",
+        "value": "Picnic spread to check: smoked salmon pinwheels, peanut satay noodle salad, sourdough bread with hummus, egg salad sandwiches on white bread, roasted root vegetable medley with garlic and onions, fresh fruit platter",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "rachel_no_raw_fish",
+        "value": "Cannot eat raw fish or undercooked seafood due to pregnancy",
+        "disclosed": false,
+        "surface_form": "Rachel is 7 months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "7 months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw/undercooked fish and seafood (listeria/mercury risk)"
+        ]
+      },
+      {
+        "key": "dev_no_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or cross-contaminated grains",
+        "disclosed": false,
+        "surface_form": "Dev got diagnosed with celiac disease a few months ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods"
+        ]
+      },
+      {
+        "key": "marcus_peanut_allergy",
+        "value": "Severe peanut allergy, carries EpiPen",
+        "disclosed": false,
+        "surface_form": "Marcus had a peanut allergy scare as a kid, carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots, etc.)",
+        "disclosed": false,
+        "surface_form": "Sophie moved back from her ashram in India last year, she's been practicing Jain for about three years now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Practicing Jain → follows Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs",
+          "Jain diet → no root vegetables (onions, garlic, potatoes, carrots) as harvesting kills the plant"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a Saturday picnic in the park for friends. You will introduce the group and their backgrounds, then relay updates as people join and leave. At the end you will present a specific list of 6 food items and ask if there are any issues. You never hint at what the problems might be — you just ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person organizing a casual weekend picnic. You always refer to your friends by name in third person (e.g. 'Rachel told me...', 'Dev just texted me...'). You never express frustration or impatience when plans change — it's just how group events go. You treat each update as totally normal.",
+        "description": "Prevents emotion escalation and ensures third-person relay for friend updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a picnic in the park this Saturday for a few friends. Can you help me figure out what food to bring?",
+          "success_criteria": "Agent engages with picnic food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate picnic planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Rachel, Dev, and Marcus. Rachel is 7 months pregnant. Dev got diagnosed with celiac disease a few months ago. And Marcus had a peanut allergy scare as a kid, carries an EpiPen everywhere",
+          "success_criteria": "Agent acknowledges all three friends and their dietary situations",
+          "required_info_keys": [
+            "group_members",
+            "rachel_pregnancy",
+            "dev_celiac",
+            "marcus_peanut"
+          ],
+          "required_constraint_keys": [
+            "rachel_no_raw_fish",
+            "dev_no_gluten",
+            "marcus_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're trying to keep it under 20 bucks per person. Also, should we bring a cooler or just do room-temp stuff?",
+          "success_criteria": "Agent responds about budget and food temperature logistics",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + noise question about cooler logistics"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Dev just texted me — his flight got moved up, he's leaving Friday night now. He asked if I could drop off a container of picnic food at his place before he goes though",
+          "success_criteria": "Agent notes Dev won't be at the picnic but needs food dropped off, so his celiac constraint still applies to his container",
+          "required_info_keys": [
+            "dev_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Dev leaves but his gluten constraint applies to his drop-off container"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "What about drinks? Should I just grab a case of sparkling water and some juice boxes?",
+          "success_criteria": "Agent responds about drink options",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "drinks",
+            "drift_topic": "sparkling water and juice for the picnic",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn about beverages to create distance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Marcus told me he saw an allergist last month and did a food challenge — turns out he outgrew the peanut allergy completely, doctor cleared him. Pretty wild right?",
+          "success_criteria": "Agent registers that Marcus no longer has a peanut allergy",
+          "required_info_keys": [
+            "marcus_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Marcus's peanut allergy is gone"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Rachel's asking if her sister Sophie can come too. Sophie moved back from her ashram in India last year, she's been practicing Jain for about three years now",
+          "success_criteria": "Agent registers Sophie as a new attendee and infers Jain dietary restrictions",
+          "required_info_keys": [
+            "sophie_joins",
+            "sophie_jain"
+          ],
+          "required_constraint_keys": [
+            "sophie_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Sophie is Jain (no meat, no fish, no eggs, no root vegetables)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think we need a blanket or should I just grab one of those foldable picnic tables? The grass might still be damp from the rain",
+          "success_criteria": "Agent responds about seating logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "blanket vs foldable table for damp grass",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I found some recipes and deli options. Here's what I'm thinking for the spread: smoked salmon pinwheels, peanut satay noodle salad, sourdough bread with hummus, egg salad sandwiches on white bread, roasted root vegetable medley with garlic and onions, and a fresh fruit platter. Any issues?",
+          "success_criteria": "Agent checks each item against current constraints: Rachel (pregnant — no raw fish), Dev (celiac — no gluten, applies to drop-off container), Sophie (Jain — no meat/fish/eggs/root vegetables/onions/garlic), Marcus (cleared, no restrictions)",
+          "required_info_keys": [
+            "probe_items"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 food items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Smoked salmon pinwheels: problematic for Sophie (Jain — no fish) and potentially for Rachel (if raw/smoked salmon is considered unsafe during pregnancy due to listeria risk). Peanut satay noodle salad: fine for the picnic table (Marcus's peanut allergy is gone), but contains noodles which are likely wheat-based so cannot go in Dev's drop-off container. Sourdough bread with hummus: contains gluten (sourdough = wheat), cannot go in Dev's container; also fine for the picnic table attendees. Egg salad sandwiches on white bread: problematic for Sophie (Jain — no eggs), and contains gluten (white bread) so cannot go in Dev's container. Roasted root vegetable medley with garlic and onions: problematic for Sophie (Jain — no root vegetables, no onions, no garlic). Fresh fruit platter: fine for everyone including Dev's container.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Smoked salmon pinwheels are problematic for Sophie because Jain diet forbids fish",
+      "Smoked salmon pinwheels are flagged for Rachel because smoked/raw salmon poses listeria risk during pregnancy",
+      "Egg salad sandwiches are problematic for Sophie because Jain diet forbids eggs",
+      "Egg salad sandwiches on white bread cannot go in Dev's drop-off container because white bread contains gluten and Dev has celiac disease",
+      "Roasted root vegetable medley with garlic and onions is problematic for Sophie because Jain diet forbids root vegetables, onions, and garlic",
+      "Fresh fruit platter is fine for everyone currently attending and for Dev's container",
+      "Peanut satay noodle salad is fine for the picnic table — Marcus's peanut allergy has been medically cleared"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut satay noodle salad as problematic due to peanut allergy (Marcus was cleared by his allergist)",
+      "Saying Marcus cannot eat peanuts (his allergy was removed)",
+      "Ignoring Sophie's Jain dietary constraints (late-joiner must be tracked)",
+      "Saying Sophie is simply vegetarian without noting the root vegetable and onion/garlic restrictions",
+      "Applying Dev's gluten restriction to the picnic table food (he is not attending the picnic itself)",
+      "Ignoring Dev's gluten restriction entirely (his drop-off container still needs gluten-free food)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 turns. The agent must track: (1) Rachel is 7 months pregnant → no raw/smoked fish (inferential, listeria risk), (2) Dev has celiac → no gluten, then Dev EXITS the picnic but still needs a drop-off container (scope change: gluten constraint applies to container only, not table), (3) Marcus has peanut allergy → then allergy is REMOVED (doctor cleared him), (4) Sophie JOINS late as a high-constraint entity: practicing Jain → no meat, no fish, no eggs, no root vegetables including onions and garlic (inferential chain). At probe time, the agent must apply CURRENT state: Sophie=Jain (no fish, no eggs, no root veg/onion/garlic), Rachel=pregnant (no raw/smoked fish), Dev=celiac (container only), Marcus=no restrictions. The peanut satay noodle salad is the trap item — looks dangerous but Marcus is cleared. The roasted root vegetable medley tests whether the agent correctly applies the full scope of Jain restrictions (not just no-meat). The sourdough/sandwiches test scope distinction for Dev's container vs the table."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

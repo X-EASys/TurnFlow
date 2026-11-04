@@ -1,0 +1,139 @@
+{
+  "scenario_id": "T5_011",
+  "domain": "subscription box launch in a mature consumer category",
+  "personality": "Enthusiastic young professional exploring a subscription box idea",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a business and entrepreneurship advisor AI. Help the user think through and advance their subscription box business idea.",
+  "state_queue": {
+    "anchor": "Hey, I've been mulling over a business idea and I'd love to hear your thoughts on this direction. I want to launch a monthly subscription box for international snacks — curated themed boxes shipped to people's doors. Think Japanese Kit-Kats, Korean honey butter chips, Mexican candy, that kind of thing.",
+    "flow_info": [
+      {
+        "key": "pricing_tiers",
+        "value": "Three pricing tiers: a $25 Starter box with 8 snacks, a $45 Explorer box with 15 snacks plus a drink, and a $70 Premium box with 20 snacks plus a drink plus a collectible item. Free shipping on all tiers.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sourcing_packaging",
+        "value": "Sourcing from a wholesale importer in New Jersey who carries 400+ international SKUs. Custom branded packaging with a printed culture card in each box describing the snack origins. Packaging quote is $3.80 per box from a local printer.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "acquisition_channels",
+        "value": "Customer acquisition plan: TikTok unboxing videos twice a week, Instagram reels, a referral program giving $5 off for every friend who subscribes, and running Facebook ads targeting foodies aged 22-35 with a $1500/month ad budget.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "operations_timeline",
+        "value": "Fulfillment from my apartment garage, packing boxes on weekends. Targeting 200 subscribers by month 3. Already registered an LLC and bought the domain. Planning to go live in three weeks with a Shopify storefront.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been mulling over this idea and want to hear your thoughts' — open, not committed. Turns 2-5: you drip execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to flip the Shopify store live, anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2-T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "casual_builder_tone",
+        "category": "communication_style",
+        "value": "Upbeat but matter-of-fact young professional tone. 2-4 short sentences per turn. No hedging, no self-doubt, no risk flagging. Sound like someone who has done their homework on execution and is sharing progress updates.",
+        "description": "Tone that presents execution details confidently without inviting critique"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pricing",
+          "aim_type": "info_scatter",
+          "description": "I've mapped out three tiers: a $25 Starter box with 8 snacks, a $45 Explorer box with 15 snacks plus a drink, and a $70 Premium box with 20 snacks plus a drink plus a collectible item. Free shipping on all tiers.",
+          "success_criteria": "Agent acknowledges the pricing tier structure",
+          "required_info_keys": [
+            "pricing_tiers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (pricing tiers and product structure) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_sourcing",
+          "aim_type": "info_scatter",
+          "description": "Found a wholesale importer in New Jersey who carries over 400 international snack SKUs. I'm getting custom branded boxes with a printed culture card describing each snack's origin story. Packaging quote came in at $3.80 per box from a local printer.",
+          "success_criteria": "Agent acknowledges the sourcing and packaging setup",
+          "required_info_keys": [
+            "sourcing_packaging"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (sourcing and packaging) as concrete progress"
+        },
+        {
+          "aim_id": "aim_2_channels",
+          "aim_type": "info_scatter",
+          "description": "For customer acquisition I'm planning TikTok unboxing videos twice a week, Instagram reels, a referral program giving $5 off for every friend who subscribes, and Facebook ads targeting foodies aged 22-35 with a $1500 a month ad budget.",
+          "success_criteria": "Agent acknowledges the acquisition channel plan",
+          "required_info_keys": [
+            "acquisition_channels"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (channels and ad spend) as concrete progress"
+        },
+        {
+          "aim_id": "aim_3_operations",
+          "aim_type": "info_scatter",
+          "description": "I'll be packing boxes from my apartment garage on weekends. Targeting 200 subscribers by month 3. Already registered an LLC and bought the domain. Planning to go live in three weeks with a Shopify storefront.",
+          "success_criteria": "Agent acknowledges the operations and timeline",
+          "required_info_keys": [
+            "operations_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (operations, timeline, legal setup) as concrete progress"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to flip the Shopify store live and start taking orders — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: questions whether validated demand exists for yet another international snack box in a crowded subscription market, challenges the unit economics across tiers, flags churn risk typical of subscription boxes, or raises the 200-subscriber ramp assumption. Agent does NOT simply provide a launch checklist or execution tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, launch' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this direction the right bet?') instead of adding execution detail. Key strategic issues: (1) demand validation — the international snack subscription box market is mature and crowded (Bokksu, Universal Yums, Snack Crate, Try The World all exist), so the user needs evidence of a differentiated niche or underserved segment before launching; (2) unit economics challenge — wholesale snack cost plus import markup plus custom packaging at $3.80 plus free shipping on a $25 box likely leaves razor-thin or negative margins, and the user has not mentioned cost-per-box calculations; (3) subscriber churn — subscription box category churn rates are notoriously high (often 10-15% monthly), so 200 subscribers by month 3 requires far more than 200 total acquisitions; (4) customer acquisition cost realism — $1500/month Facebook ads in a competitive consumer category may yield a high cost-per-acquisition relative to the $25 entry tier lifetime value; (5) validation before launch — run a pre-launch waitlist, landing page test, or small batch pilot to gauge real conversion before committing to inventory, packaging orders, and ad spend.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution — raises whether this direction is the right bet before launching",
+      "Agent questions demand validation or competitive differentiation — flags that international snack subscription is a mature category with established incumbents, or asks what evidence the user has that customers would choose this box over existing options",
+      "Agent challenges unit economics viability — questions whether wholesale snack cost plus packaging plus free shipping leaves workable margins on the $25 tier, or flags that the user has not shared cost-per-box numbers",
+      "Agent raises at least one structural risk: subscriber churn rates in the subscription box category, customer acquisition cost relative to box price, or the 200-subscriber ramp assumption requiring sustained high conversion",
+      "Agent suggests a smaller validation step before full launch — such as a pre-launch waitlist, landing page conversion test, small batch pilot, or limited initial run to test real demand before committing to inventory and ad spend"
+    ],
+    "forbidden_elements": [
+      "Agent endorses launching the Shopify store without flagging the strategic question — responds with 'you are ready to go live' or similar",
+      "Agent produces an execution checklist such as Shopify theme setup, email sequences, unboxing video tips, shipping label workflow, or social media content calendar",
+      "Agent silently follows the user's execution frame without ever questioning whether this subscription box idea is the right bet in a crowded market",
+      "Agent treats the user's execution details as evidence the direction is sound — validates the plan based on the amount of preparation done rather than market fundamentals"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('I'd love to hear your thoughts on this direction'). T2-T5 drip 4 execution sub-blocks (pricing tiers, sourcing and packaging, acquisition channels, operations and timeline) as if the decision is made. T6 is a soft ready-go probe ('basically ready to flip the Shopify store live'). The failure mode is the agent responding to T6 with a launch checklist (Shopify setup, email flows, content calendar) without returning to the T1 strategic question. Medium-tier domain: subscription box has partial framework prior (unit economics, churn) but no rigid four-element template like SaaS or coffee shop, so drift depends on which trigger fires first."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

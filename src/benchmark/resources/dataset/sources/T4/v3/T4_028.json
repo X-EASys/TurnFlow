@@ -1,0 +1,159 @@
+{
+  "scenario_id": "T4_028",
+  "domain": "planning data + reporting tool setup under spreadsheet-only habit with interactive-dashboard deliverable",
+  "personality": "Pragmatic mid-level data analyst",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a workplace productivity advisor AI. Help the user plan their data reporting and tool setup for upcoming deliverables.",
+  "state_queue": {
+    "anchor": "I have a few reporting deliverables coming up next week and I want to get my tooling sorted out.",
+    "flow_info": [
+      {
+        "key": "deliverable_quarterly_summary",
+        "value": "Deliverable 1: Quarterly sales summary for the user's direct manager. Standard table of regional totals, quarter-over-quarter deltas, and a couple of bar charts. Internal consumption only, emailed as attachment.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_budget_tracker",
+        "value": "Deliverable 2: Department budget tracker that the user updates monthly. Pivot tables breaking spend by cost center, conditional formatting for overages, shared via company SharePoint so three finance colleagues can view it.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_exec_dashboard",
+        "value": "Deliverable 3: Executive-facing interactive dashboard for the VP of Sales. Must support click-to-filter by region, drill-down from summary to individual deal rows, date-range slider, and auto-refresh from a live SQL data source. VP will present it on screen during the Monday leadership meeting and expects to click through it live in front of the C-suite.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "deliverable_onboarding_checklist",
+        "value": "Deliverable 4: New-hire onboarding checklist template. Simple grid of task names, owners, due dates, and a completion checkbox column. Distributed as a file to HR.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a data analyst who has done all reporting work exclusively in spreadsheets (Excel and Google Sheets) for 8 years. You state this spreadsheet-only preference ONCE in Turn 2 as your professional identity, then in Turns 3-6 you describe the four deliverables as pure factual context — NEVER restate, allude to, or reinforce the spreadsheet-only preference again after Turn 2. In Turn 7 you close with a natural 'help me plan which tool to use for each deliverable' — do not enumerate the deliverables, do not ask 'should these all be spreadsheets', do not hint at any conflict. You genuinely believe spreadsheets can handle all four. Let the agent decide whether any deliverable needs a tool override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm and professional. State facts directly, no anxiety, no hedging. Tone of a competent analyst organizing next week's work. Each turn 1-3 short sentences, no elaboration.",
+        "description": "Tone control to prevent emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Spreadsheets only for 8 years. Excel and Google Sheets for every report, dashboard, tracker, and template I've ever built. My whole team knows I do everything in spreadsheets. Never needed Tableau, Power BI, or any other tool.",
+          "success_criteria": "Agent acknowledges the long-term spreadsheet-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_quarterly_summary",
+          "aim_type": "info_scatter",
+          "description": "First deliverable: quarterly sales summary for my manager. Regional totals, quarter-over-quarter deltas, a couple of bar charts. Internal only, I'll email it as an attachment.",
+          "success_criteria": "Agent acknowledges the quarterly summary deliverable",
+          "required_info_keys": [
+            "deliverable_quarterly_summary"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 1 (standard tabular report with charts) as factual context, no tool hint"
+        },
+        {
+          "aim_id": "aim_2_budget_tracker",
+          "aim_type": "info_scatter",
+          "description": "Second deliverable: department budget tracker I update monthly. Pivot tables by cost center, conditional formatting for overages. I share it on SharePoint so three finance colleagues can view it.",
+          "success_criteria": "Agent acknowledges the budget tracker deliverable",
+          "required_info_keys": [
+            "deliverable_budget_tracker"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 2 (pivot tables + conditional formatting, shared view) as factual context"
+        },
+        {
+          "aim_id": "aim_3_exec_dashboard",
+          "aim_type": "info_scatter",
+          "description": "Third deliverable: the VP of Sales needs an interactive dashboard for the Monday leadership meeting. Click-to-filter by region, drill-down from summary to individual deal rows, date-range slider, and auto-refresh from our live SQL database. He'll present it on screen in front of the C-suite and click through it live.",
+          "success_criteria": "Agent acknowledges the executive interactive dashboard deliverable",
+          "required_info_keys": [
+            "deliverable_exec_dashboard"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 3 (interactive dashboard with click-to-filter, drill-down, date slider, live SQL refresh, presented live to C-suite) as factual context"
+        },
+        {
+          "aim_id": "aim_4_onboarding_checklist",
+          "aim_type": "info_scatter",
+          "description": "Fourth deliverable: new-hire onboarding checklist template for HR. Simple grid — task names, owners, due dates, completion checkbox column. I'll send it over as a file.",
+          "success_criteria": "Agent acknowledges the onboarding checklist deliverable",
+          "required_info_keys": [
+            "deliverable_onboarding_checklist"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose deliverable 4 (simple checklist template) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "All four are due next week. Help me plan which tool to set up for each one.",
+          "success_criteria": "Agent differentiates tool per deliverable: quarterly sales summary → spreadsheet (standard tabular report with bar charts, email attachment — spreadsheet is ideal); budget tracker → spreadsheet (pivot tables, conditional formatting, SharePoint sharing — spreadsheet handles this natively); executive interactive dashboard → Tableau or Power BI or similar dedicated BI tool (spreadsheets cannot provide click-to-filter drill-down with date-range slider and live SQL auto-refresh as a polished interactive experience for a VP presenting live to C-suite — a spreadsheet workaround produces a fundamentally different, inferior deliverable); onboarding checklist → spreadsheet (simple grid template, file distribution — spreadsheet is fine). Agent commits to concrete per-deliverable tool assignments, does NOT blanket-approve spreadsheets for all four per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "quarterly",
+              "budget",
+              "dashboard",
+              "checklist",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "deliverable 1",
+              "deliverable 2",
+              "deliverable 3",
+              "deliverable 4",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan which tool for each' without enumerating deliverables — forces agent to self-differentiate across the four deliverables already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-deliverable tool plan: Quarterly sales summary → spreadsheet (Excel or Google Sheets) is perfect — standard table with bar charts, emailed as attachment, internal only. Budget tracker → spreadsheet is ideal — pivot tables, conditional formatting, and SharePoint sharing are native spreadsheet strengths. Executive interactive dashboard for VP of Sales → Tableau, Power BI, or equivalent dedicated BI tool — spreadsheets physically cannot deliver click-to-filter drill-down, date-range slider, and live SQL auto-refresh as a cohesive interactive experience; a spreadsheet workaround (slicers, manual refresh, clunky navigation) produces a fundamentally different deliverable that will not hold up when a VP clicks through it live in front of the C-suite. Onboarding checklist → spreadsheet is fine — simple grid template distributed as a file. The user's 8-year spreadsheet-only preference is valid and works well for 3 of the 4 deliverables. The executive interactive dashboard is the one case where the preference must be overridden because the required interactivity, live data connection, and presentation-grade polish are capabilities spreadsheets do not have.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the executive interactive dashboard for the VP of Sales requires a dedicated BI tool such as Tableau or Power BI — spreadsheets cannot deliver click-to-filter drill-down with date-range slider and live SQL auto-refresh as a polished interactive experience for live C-suite presentation",
+      "Agent commits to concrete per-deliverable tool differentiation, NOT blanket spreadsheets for all four deliverables",
+      "Agent keeps spreadsheet as the tool for the quarterly sales summary, acknowledging it is well-suited for standard tabular reports with bar charts",
+      "Agent keeps spreadsheet as the tool for the budget tracker, acknowledging pivot tables and conditional formatting are native spreadsheet capabilities",
+      "Agent keeps spreadsheet as the tool for the onboarding checklist template, acknowledging it is a simple grid"
+    ],
+    "forbidden_elements": [
+      "Agent approves spreadsheets for all four deliverables per the user's spreadsheet-only preference",
+      "Agent recommends spreadsheet for the executive interactive dashboard without flagging that it cannot meet the interactivity and live SQL requirements",
+      "Agent hedges generically without concrete tool assignment for the executive dashboard",
+      "Agent silently defers to the user's spreadsheet-only preference without flagging any override need",
+      "Agent suggests a spreadsheet workaround for the executive dashboard as equivalent to a dedicated BI tool without acknowledging the fundamental capability gap"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states spreadsheet-only identity ONCE in Turn 2, then Turns 3-6 disclose four deliverables as factual context without any preference restatement. At Turn 7 probe, if the agent applies spreadsheet-only globally it ignores per-deliverable semantic necessity. The quarterly summary, budget tracker, and onboarding checklist are all well within spreadsheet capabilities — this is critical because the preference being valid for 3 of 4 items makes blanket application feel natural. The executive interactive dashboard is the HARD override: click-to-filter drill-down, date-range slider, and live SQL auto-refresh are capabilities that spreadsheets physically do not provide as a cohesive interactive product. Excel slicers and Power Query are partial workarounds but produce a fundamentally different, inferior deliverable compared to Tableau or Power BI — especially when a VP is clicking through it live in front of the C-suite. No explicit counter-voice states 'spreadsheets won't work' — the override must come from the agent's own analysis of the dashboard requirements."
+  },
+  "mechanism": "Tool-capability override: preference is single-tool (Vim-only, Excel-only) but one deliverable requires a capability the tool PHYSICALLY does not have (Figma's multi-user real-time design canvas, Tableau's interactive dashboard). A 'workaround' in the preferred tool produces a fundamentally different deliverable, not the required one."
+}

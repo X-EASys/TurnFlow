@@ -1,0 +1,308 @@
+{
+  "scenario_id": "T1_033",
+  "domain": "family dinner at a Mexican restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a family dinner at a Mexican restaurant by tracking who is attending, their dietary needs, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and any constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a family dinner this Saturday at a Mexican restaurant. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "family_members",
+        "value": "Five of us: me, my husband Mark, my sister Julie, my mom Linda, and my daughter Emma who's 7",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mark_celiac",
+        "value": "Mark was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "julie_pregnancy",
+        "value": "Julie just found out she's 10 weeks pregnant, she's been super careful about what she eats",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "emma_peanut",
+        "value": "Emma ate a peanut butter cookie at school once and her face swelled up, we had to use the EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Hoping to keep it around 30 bucks a head",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "linda_exits",
+        "value": "Mom just called — her knee is acting up again, she's not going to make it. She asked if we could bring her something back though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mark_celiac_update",
+        "value": "Mark told me his gastro cleared him last week — turns out it wasn't celiac after all, just a sensitivity that's resolved. He can eat whatever now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "cousin_diego_joins",
+        "value": "Oh, my cousin Diego just texted — he's in town and wants to join us. He moved to Austin about two years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "diego_shellfish",
+        "value": "Diego ate shrimp at a wedding last summer and broke out in hives all over, had to go to urgent care",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reservation_time",
+        "value": "Should we book for 6:30 or 7?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "OK so I'm looking at their menu. How about these: chicken mole enchiladas, shrimp tacos, carne asada, queso fundido, and a churros platter for dessert. Any issues?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "julie_pregnant_diet",
+        "value": "Cannot eat raw or undercooked fish, unpasteurized cheese, raw meat",
+        "disclosed": false,
+        "surface_form": "Julie just found out she's 10 weeks pregnant, she's been super careful about what she eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "10 weeks pregnant → early pregnancy",
+          "Pregnant → must avoid raw/undercooked seafood, unpasteurized cheese, raw meat"
+        ]
+      },
+      {
+        "key": "emma_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Emma ate a peanut butter cookie at school once and her face swelled up, we had to use the EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "linda_low_sodium",
+        "value": "Must eat low-sodium food",
+        "disclosed": false,
+        "surface_form": "Mom's been on a strict low-sodium diet ever since her blood pressure scare last fall",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Blood pressure scare → hypertension concern",
+          "Hypertension → doctor-prescribed low-sodium diet"
+        ]
+      },
+      {
+        "key": "diego_shellfish_allergy",
+        "value": "Cannot eat shrimp or shellfish",
+        "disclosed": false,
+        "surface_form": "Diego ate shrimp at a wedding last summer and broke out in hives all over, had to go to urgent care",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mole_contains_peanuts",
+        "value": "Traditional mole sauce often contains peanuts or peanut butter as an ingredient",
+        "disclosed": false,
+        "surface_form": "",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Chicken mole enchiladas → mole sauce",
+          "Traditional mole sauce → commonly contains peanuts/peanut butter",
+          "Peanuts → Emma's peanut allergy"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a family dinner at a Mexican restaurant. You will introduce your family members and their backgrounds across several turns. The guest list will change — your mom drops out but wants takeaway, your husband's dietary restriction gets cleared, and a cousin joins late with his own allergy. At the end you will list specific menu items and ask if there are any issues. You must deliver the menu items exactly as written and never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly family organizer. You always refer to family members by name in third person (e.g. 'Mark told me...', 'Julie mentioned...'). You never express frustration or impatience even when plans keep changing. You treat each update as normal family coordination — people dropping in and out is just how family dinners go.",
+        "description": "Prevents emotion escalation and ensures third-person relay for family updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a family dinner this Saturday at a Mexican restaurant. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with Mexican dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, my husband Mark, my sister Julie, my mom Linda, and my daughter Emma who's 7. Mark was diagnosed with celiac disease last year so he's been gluten-free. Julie just found out she's 10 weeks pregnant, she's been super careful about what she eats. And Emma ate a peanut butter cookie at school once and her face swelled up, we had to use the EpiPen. Mom's been on a strict low-sodium diet ever since her blood pressure scare last fall",
+          "success_criteria": "Agent acknowledges all family members and their dietary situations",
+          "required_info_keys": [
+            "family_members",
+            "mark_celiac",
+            "julie_pregnancy",
+            "emma_peanut"
+          ],
+          "required_constraint_keys": [
+            "julie_pregnant_diet",
+            "emma_peanut_allergy",
+            "linda_low_sodium"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Hoping to keep it around 30 bucks a head. We've been eyeing this place called Casa Bonita — have you heard of it?",
+          "success_criteria": "Agent acknowledges budget and engages with restaurant discussion",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + noise about restaurant choice"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Mom just called — her knee is acting up again, she's not going to make it. She asked if we could bring her something back though",
+          "success_criteria": "Agent notes Linda is out of the dinner but needs takeaway, her low-sodium constraint applies to takeaway only",
+          "required_info_keys": [
+            "linda_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Linda's low-sodium constraint now applies to takeaway only"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Mark told me his gastro cleared him last week — turns out it wasn't celiac after all, just a sensitivity that's resolved. He can eat whatever now",
+          "success_criteria": "Agent removes Mark's gluten-free restriction",
+          "required_info_keys": [
+            "mark_celiac_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Mark's celiac/gluten-free restriction is gone"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh, my cousin Diego just texted — he's in town and wants to join us. He moved to Austin about two years ago. Diego ate shrimp at a wedding last summer and broke out in hives all over, had to go to urgent care",
+          "success_criteria": "Agent registers Diego as a new diner with a shrimp/shellfish allergy",
+          "required_info_keys": [
+            "cousin_diego_joins",
+            "diego_shellfish"
+          ],
+          "required_constraint_keys": [
+            "diego_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Diego joins with shellfish allergy"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we book for 6:30 or 7? Emma has a bedtime at 8:30 so we can't go too late",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [
+            "reservation_time"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "reservation timing",
+            "drift_topic": "what time to book considering Emma's bedtime",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How much should we tip? Is 20% standard for a group our size?",
+          "success_criteria": "Agent responds about tipping without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "tipping",
+            "drift_topic": "appropriate tip percentage for group dinner",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I'm looking at their menu. How about these: chicken mole enchiladas, shrimp tacos, carne asada, queso fundido, and a churros platter for dessert. Any issues?",
+          "success_criteria": "Agent identifies: chicken mole enchiladas problematic for Emma (mole contains peanuts); shrimp tacos problematic for Diego (shellfish allergy); carne asada is fine for everyone at the table; queso fundido is fine for the table but may need to check sodium for Linda's takeaway; churros platter is fine for everyone. Agent does NOT flag gluten as a problem for Mark (cleared). Agent does NOT flag queso fundido for Julie unless it contains unpasteurized cheese.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Two dishes have clear problems: chicken mole enchiladas are problematic because traditional mole sauce commonly contains peanuts, which is dangerous for Emma (peanut allergy — EpiPen-level reaction). Shrimp tacos are problematic for Diego (shrimp allergy — broke out in hives, went to urgent care). Carne asada is fine for everyone at the table. Queso fundido is fine for the table but should be checked for sodium content if packing takeaway for Linda (low-sodium diet). Churros platter is fine for everyone. Mark's celiac was cleared by his gastro — no gluten restriction applies. Linda is not attending the dinner so her low-sodium constraint only applies to her takeaway.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Chicken mole enchiladas are problematic: mole sauce commonly contains peanuts, which is dangerous for Emma who has a severe peanut allergy",
+      "Shrimp tacos are problematic: Diego has a shrimp allergy and cannot eat them",
+      "Carne asada is fine for everyone currently attending the dinner",
+      "Queso fundido is fine for the table but Linda's takeaway should be low-sodium — agent notes the sodium concern for her portion",
+      "Churros platter is fine for everyone attending",
+      "Mark has no dietary restrictions anymore — agent does not flag gluten as a problem"
+    ],
+    "forbidden_elements": [
+      "Flagging any dish as problematic for Mark due to gluten or celiac (his restriction was cleared by his gastro)",
+      "Flagging carne asada or other dishes as problematic for Linda at the table (she is not attending, only getting takeaway)",
+      "Saying Diego has a general seafood allergy (he specifically reacted to shrimp — shellfish allergy, not all seafood)",
+      "Ignoring the chicken mole enchiladas peanut risk for Emma (mole sauce commonly contains peanuts)",
+      "Ignoring Diego's shrimp allergy when evaluating shrimp tacos"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns at a Mexican restaurant. The agent must track: (1) Emma has a severe peanut allergy (direct from EpiPen story), and must infer that mole sauce commonly contains peanuts — a 3-step inference chain (chicken mole → mole sauce → contains peanuts → Emma's allergy). (2) Julie is 10 weeks pregnant → must avoid raw/undercooked seafood, unpasteurized cheese, raw meat (inferential). Queso fundido uses melted cooked cheese, so it is generally fine for Julie unless made with unpasteurized cheese. (3) Linda EXITS the dinner but wants takeaway → her low-sodium constraint applies only to the takeaway portion, not to what the table orders. (4) Mark's celiac restriction is REMOVED mid-conversation (gastro cleared him). (5) Diego JOINS late with a shrimp/shellfish allergy (late-joining high-constraint entity). At probe time, the current constraint state is: Emma = peanut allergy, Julie = pregnancy dietary restrictions, Diego = shellfish allergy, Linda = low-sodium (takeaway only). Mark has NO restrictions. The over-generalization trap is Diego's shrimp reaction being expanded to all seafood — it should only be shellfish. The hidden ingredient trap is mole sauce containing peanuts, which many people don't realize. The removed constraint trap is flagging gluten for Mark after his celiac was cleared."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

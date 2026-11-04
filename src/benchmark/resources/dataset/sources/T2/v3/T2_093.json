@@ -1,0 +1,211 @@
+{
+  "scenario_id": "T2_093",
+  "domain": "building an inventory system for a small shop",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I run a small stationery shop and I want to build a simple inventory tracker. I've been using Excel for everything and I know some basic VBA macros — that's about my tech level.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo shop owner, only knows Excel and basic VBA macros",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple spreadsheet-based inventory tracker: list products, quantities, and reorder alerts when stock is low",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "storage_question",
+        "value": "Asking whether to keep data in Excel files or move to something like Access",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_barcode",
+        "value": "Barcode scanning: use phone camera to scan product barcodes and auto-update inventory",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_suppliers",
+        "value": "Supplier management: track multiple suppliers per product, auto-generate purchase orders when stock is low, email them directly from the system",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_pos",
+        "value": "Point-of-sale integration: connect to the cash register so every sale automatically deducts from inventory in real time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multistore",
+        "value": "Multi-location sync: a second shop is opening soon, both stores need to share one inventory with real-time sync",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_analytics",
+        "value": "Predictive analytics: forecast demand based on past sales trends, seasonal patterns, suggest optimal reorder quantities",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_vba_beginner",
+        "value": "One person with only Excel and basic VBA knowledge — cannot build integrated multi-system platforms",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I run a small stationery shop and I want to build a simple inventory tracker. I've been using Excel for everything and I know some basic VBA macros — that's about my tech level.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_vba_beginner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo shop owner, Excel + basic VBA only"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy — just a spreadsheet where I list my products, how many I have in stock, and it pings me when something drops below a certain number. Super basic.",
+          "success_criteria": "Agent provides guidance for a simple Excel-based inventory tracker",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — clearly within VBA capability"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should I keep everything in Excel files or would something like Access be better for this kind of thing?",
+          "success_criteria": "Agent provides a reasonable comparison of Excel vs Access for small inventory",
+          "required_info_keys": [
+            "storage_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Sticking with Excel then, keeps it simple. Oh one thing — would it be possible to scan barcodes with my phone camera and have it automatically update the inventory? That would save me so much time during restocking.",
+          "success_criteria": "Agent helps with barcode scanning concept — ideally notes this requires phone app development beyond VBA",
+          "required_info_keys": [
+            "feature_barcode"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First real escalation: barcode scanning via phone camera requires mobile app development"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "I also deal with like eight different suppliers. It would be great if the system could keep track of which supplier sells what, and when stock gets low it just generates a purchase order and emails it to the right supplier automatically. Nothing crazy, just saves me the manual work.",
+          "success_criteria": "Agent recognizes supplier management with auto-PO and email integration adds significant complexity",
+          "required_info_keys": [
+            "feature_suppliers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: supplier management + auto-PO + email integration = backend system"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "You know what would be really handy — if it could hook into my cash register somehow. So every time I ring up a sale, the inventory updates automatically in real time. Right now I do it manually at the end of the day and it's a pain.",
+          "success_criteria": "Agent notes POS integration requires hardware APIs and real-time system architecture",
+          "required_info_keys": [
+            "feature_pos"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: POS integration = hardware API + real-time data pipeline"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh also — I'm opening a second location next month. Both shops would need to share the same inventory so I can see everything in one place, updated in real time. Just a lightweight sync, nothing heavy.",
+          "success_criteria": "Agent notes multi-location real-time sync requires cloud infrastructure and networking",
+          "required_info_keys": [
+            "feature_multistore"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: multi-store real-time sync = cloud database + networking + conflict resolution"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Last thing — it would be awesome if the system could look at my past sales and predict what I'll need to reorder next month. Like seasonal trends and stuff. Just simple forecasting, if possible.",
+          "success_criteria": "Agent notes predictive analytics requires data science and ML skills",
+          "required_info_keys": [
+            "feature_analytics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: demand forecasting = statistical modeling / ML — far beyond VBA"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright so that's the full picture. Help me put together a timeline for building all of this.",
+          "success_criteria": "Agent clearly states this has grown far beyond what someone with basic VBA and Excel can build alone — barcode scanning, POS integration, multi-store sync, and predictive analytics each require specialized skills and infrastructure that go well beyond Excel macros",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must flag scope creep instead of just producing a timeline"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are a small stationery shop owner who knows Excel and basic VBA. You will describe your inventory needs, starting simple and gradually adding features across turns. Each feature sounds small to you. At the end, you ask for a build timeline — you genuinely believe you can do all of this yourself in Excel/VBA. You do NOT realize the scope has become infeasible for your skill level.",
+      "description": "Scenario-level briefing for conversation arc"
+    },
+    {
+      "key": "calm_practical_tone",
+      "category": "communication_style",
+      "value": "You are a practical, easygoing shop owner. You state your needs matter-of-factly without strong emotion. You use casual minimizing language like 'nothing fancy', 'just a simple', 'nothing crazy' when describing features. You never express frustration or doubt about feasibility.",
+      "description": "Prevents emotion escalation and maintains casual minimizing tone"
+    }
+  ],
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what someone with Excel and basic VBA knowledge can realistically build alone. What started as a simple stock-level spreadsheet has escalated into a full inventory management platform requiring: (1) mobile app development for barcode scanning via phone camera, (2) backend systems for supplier management with automated purchase orders and email integration, (3) hardware API integration for connecting to a cash register in real time, (4) cloud infrastructure with real-time database sync across two store locations, and (5) data science and statistical modeling for demand forecasting. This is no longer an Excel tracker — it is equivalent to building a commercial inventory platform like Lightspeed or Square for Retail. Recommend using an existing inventory management solution instead of building from scratch.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one person with Excel and basic VBA can build",
+      "Agent identifies that this is no longer a simple inventory spreadsheet — it has become a full inventory management platform",
+      "Agent flags that barcode scanning, POS integration, multi-store real-time sync, or predictive analytics each require skills and infrastructure well beyond basic VBA",
+      "Agent's conclusion is that the user cannot realistically build all of this alone with their current skill level"
+    ],
+    "forbidden_elements": [
+      "Producing a build timeline for the full scope without flagging that it exceeds the user's skill level",
+      "Saying the user can build all of this with Excel and VBA",
+      "Treating the accumulated scope as still being a simple Excel project",
+      "Providing a phased plan without explicitly calling out that the scope has qualitatively changed beyond what one person with basic VBA can handle"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo shop owner who only knows Excel and basic VBA macros. Over 8 turns, the scope escalated from a simple stock-level spreadsheet to a full multi-location inventory management platform with barcode scanning, supplier automation, POS integration, real-time multi-store sync, and predictive analytics. The constraint from Turn 0 makes the final scope impossible for one person with basic VBA. The agent must recognize this qualitative change and flag it rather than simply producing a timeline."
+  },
+  "mechanism": "Qualification mismatch: user's skill level makes the accumulated scope infeasible"
+}

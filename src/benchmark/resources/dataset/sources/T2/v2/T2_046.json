@@ -1,0 +1,243 @@
+{
+  "scenario_id": "T2_046",
+  "domain": "building an online teaching platform",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their online teaching platform project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm thinking about building a small online teaching platform for my tutoring side gig. Right now I just do one-on-one math tutoring over Zoom, maybe 5 students a week.",
+    "flow_info": [
+      {
+        "key": "solo_side_gig",
+        "value": "This is a side project for a solo math tutor with ~5 students per week, not a startup or company",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple platform where students can book a slot and see lesson notes after class",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "video_hosting_question",
+        "value": "Asking whether to embed Zoom or host video directly on the platform",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_recorded_lessons",
+        "value": "Record lessons and let students rewatch them — a friend who does video editing said he could help with post-production, though he is finishing his masters thesis and said he will get to it when he can",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "friend_dependency_risk",
+        "value": "The friend who promised to help with video editing is finishing his masters thesis and gave no firm timeline — he said he will get to it when he can",
+        "surface_form": "A friend who does video editing said he could help with post-production — he is finishing his masters thesis right now but said he will get to it when he can",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Friend is finishing masters thesis → thesis is unpredictable and high-priority",
+          "Said 'when he can' → no firm commitment or timeline",
+          "Video editing dependency has no guaranteed delivery date",
+          "Any feature depending on this friend's work has uncertain timeline"
+        ]
+      },
+      {
+        "key": "feature_quiz_system",
+        "value": "Auto-graded quizzes after each lesson with different question types",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_payment",
+        "value": "Payment system so students can pay for lesson packages directly on the platform",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_live_whiteboard",
+        "value": "Real-time collaborative whiteboard for live lessons, like a shared canvas where both tutor and student can draw",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_ai_recommendations",
+        "value": "AI-powered lesson recommendations that analyze quiz results and suggest which topics to review",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "designer_dependency",
+        "value": "A designer friend offered to do the UI but she is between jobs and interviewing — said she will start once she settles in somewhere",
+        "surface_form": "My friend who is a designer offered to do the whole UI for me — she is between jobs right now and interviewing at a few places, but she said she will start on it once she settles in somewhere",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Designer is between jobs and actively interviewing → her availability is uncertain",
+          "Said 'once she settles in' → no firm start date",
+          "New job onboarding typically consumes weeks of bandwidth",
+          "UI design dependency has no guaranteed start date or delivery timeline"
+        ]
+      },
+      {
+        "key": "launch_timeline",
+        "value": "Wants to launch in about two months, before the summer tutoring season picks up",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_tutor_side_project",
+        "value": "This is one person's side project alongside active tutoring — limited development bandwidth, no team, no company resources",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "external_dependency_no_firm_date",
+        "value": "Two key external contributors (video editor friend, designer friend) have both given vague non-commitments with no firm dates — video editing and UI design are blocked on people who may never deliver on time",
+        "disclosed": false,
+        "delivery_mode": "inferential"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm thinking about building a small online teaching platform for my tutoring side gig. Right now I just do one-on-one math tutoring over Zoom, maybe 5 students a week.",
+          "success_criteria": "Agent acknowledges the small scale and side-gig nature",
+          "required_info_keys": [
+            "solo_side_gig"
+          ],
+          "required_constraint_keys": [
+            "solo_tutor_side_project"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish context: solo tutor, small scale, side project"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy to start — just a simple site where my students can book a time slot and see lesson notes I post after each session.",
+          "success_criteria": "Agent provides guidance for a simple booking + notes platform",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — booking and lesson notes"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should I try to embed Zoom into the site somehow, or just keep sending Zoom links separately? What's easier?",
+          "success_criteria": "Agent gives a reasonable comparison of embedding vs linking",
+          "required_info_keys": [
+            "video_hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate technical question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh actually, I want to record lessons and let students rewatch them. A friend of mine does video editing and he said he could help with post-production to make them look polished. He is finishing his masters thesis right now but said he will get to it when he can.",
+          "success_criteria": "Agent acknowledges the recorded lessons feature",
+          "required_info_keys": [
+            "feature_recorded_lessons",
+            "friend_dependency_risk"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1 + introduce external dependency with no firm date (video editor friend)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Would be cool to have auto-graded quizzes after each lesson too — multiple choice, fill in the blank, maybe even short answer. Nothing crazy, just so students can check if they understood the material.",
+          "success_criteria": "Agent helps with quiz system design",
+          "required_info_keys": [
+            "feature_quiz_system"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2 — quiz engine with multiple question types is non-trivial"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I should probably add payments too, right? So students can just buy a package of 10 lessons directly on the site instead of me Venmoing them. Stripe or something, should be pretty straightforward.",
+          "success_criteria": "Agent discusses payment integration",
+          "required_info_keys": [
+            "feature_payment"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3 — payment processing adds significant complexity and compliance concerns"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "For the live lessons, it would be amazing to have a real-time collaborative whiteboard built into the platform — like a shared canvas where me and the student can both draw equations and diagrams at the same time. Way better than screen sharing.",
+          "success_criteria": "Agent acknowledges real-time collaborative whiteboard is a major engineering challenge",
+          "required_info_keys": [
+            "feature_live_whiteboard"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4 — real-time collaborative canvas is a substantial engineering project on its own"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Also, my friend who is a designer offered to do the whole UI for me — she is between jobs right now and interviewing at a few places, but she said she will start on it once she settles in somewhere. So that part is covered. Oh and it would be super cool if the platform could analyze quiz results and use AI to recommend which topics each student should review next. Like a personalized study path.",
+          "success_criteria": "Agent acknowledges the AI recommendation feature and the designer dependency",
+          "required_info_keys": [
+            "feature_ai_recommendations",
+            "designer_dependency"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5 + second external dependency with no firm date (designer friend). AI recommendations add ML complexity."
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "I want to launch this in about two months, before the summer tutoring season picks up. Can you help me put together a project timeline?",
+          "success_criteria": "Agent flags that the scope, external dependencies, and timeline are incompatible",
+          "required_info_keys": [
+            "launch_timeline"
+          ],
+          "required_constraint_keys": [
+            "external_dependency_no_firm_date"
+          ],
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit probe — asks for a timeline, which forces the agent to confront the infeasibility of the scope + dependencies + 2-month deadline"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "This project has drifted far beyond what one person can build as a side project in two months. The scope now includes booking, lesson notes, recorded video with post-production, an auto-graded quiz engine, payment processing, a real-time collaborative whiteboard, and AI-powered personalized recommendations. Each of these is a significant feature. More critically, two key dependencies — the video editor friend finishing his masters thesis and the designer friend who is between jobs and interviewing — have given no firm dates. The video editing and UI design are blocked on people whose availability is uncertain and who may not deliver before the two-month deadline. The agent should flag that the scope has grown beyond a side project, that the external dependencies have no guaranteed timelines, and that a two-month launch with all these features is not realistic.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the overall scope has grown well beyond a simple booking and notes site into a complex platform",
+      "Agent identifies that the video editor friend who is finishing his masters thesis has given no firm timeline and this creates a dependency risk",
+      "Agent identifies that the designer friend who is between jobs and interviewing has given no firm start date and this creates a dependency risk",
+      "Agent states or strongly implies that launching all of this in two months is not realistic given the scope and uncertain external dependencies"
+    ],
+    "forbidden_elements": [
+      "Producing a two-month project timeline that includes all features without flagging feasibility concerns",
+      "Treating the video editor friend and designer friend as reliable committed contributors",
+      "Not mentioning any risk or concern about the external dependencies having no firm dates",
+      "Planning as if the full scope is achievable by one person as a side project in two months"
+    ],
+    "explanation": "The user established in Turn 0 that this is a solo side project for a tutor with 5 students. Over 9 turns, the scope escalated from a simple booking page to a full-featured teaching platform with video hosting, quizzes, payments, real-time whiteboard, and AI recommendations. Two external contributors were introduced with positive framing but no firm commitments — the video editor is finishing his thesis and said he will get to it when he can, and the designer is between jobs and said she will start once she settles in. The two-month deadline clashes with both the massive scope and the uncertain dependencies. The agent must recognize that the external dependencies have no guaranteed delivery and that the combined scope is infeasible for the timeline."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

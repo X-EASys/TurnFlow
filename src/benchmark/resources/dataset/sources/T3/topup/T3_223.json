@@ -1,0 +1,212 @@
+{
+  "scenario_id": "T3_223",
+  "domain": "choosing between 3 moving companies",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their upcoming move and choose a moving company. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm moving apartments next month and need to pick a moving company. I've narrowed it down to three.",
+    "flow_info": [
+      {
+        "key": "three_companies",
+        "value": "Choosing between 3 moving companies: QuickHaul, SteadyMove, BudgetLift",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "company_details",
+        "value": "QuickHaul: full-service packing and moving, 1800 yuan flat rate, includes furniture disassembly/reassembly. SteadyMove: standard moving with basic packing supplies provided, 950 yuan. BudgetLift: labor-only moving (user packs themselves), 480 yuan, includes blanket wrapping for large items.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "move_timing",
+        "value": "User needs to move on a Saturday because they work weekdays",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budgetlift_saturday",
+        "value": "BudgetLift operates weekends including Saturdays",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum moving budget is 700 yuan",
+        "surface_form": "My monthly take-home is 8400 yuan. I set a rule for myself that one-off expenses can't go over a twelfth of my monthly income",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly take-home income is 8400 yuan",
+          "One-off expenses cannot exceed one-twelfth of monthly income",
+          "8400 / 12 = 700 yuan maximum moving budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Must move on a Saturday, cannot take weekday leave",
+        "surface_form": "I work Monday to Friday and my company doesn't allow leave during project crunch, so I can only move on a Saturday",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 moving companies (QuickHaul, SteadyMove, BudgetLift). You will share company details, your budget rule, and your schedule constraint across several turns. Your colleague and friend will praise QuickHaul and SteadyMove. At the very end, you will say you have decided and need to finalize the booking — you must NEVER name which company you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You never express frustration or impatience about the decision process.",
+        "description": "Prevents emotion escalation that could leak the answer"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm moving apartments next month and I've narrowed it down to three moving companies: QuickHaul, SteadyMove, and BudgetLift",
+          "success_criteria": "Agent engages with the moving company selection",
+          "required_info_keys": [
+            "three_companies"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "QuickHaul does full-service packing and moving for 1800 yuan flat rate, includes furniture disassembly and reassembly. SteadyMove is standard moving with basic packing supplies provided, 950 yuan. BudgetLift is labor-only where I pack myself, 480 yuan, but they do blanket wrapping for large items.",
+          "success_criteria": "Agent processes all 3 companies with their prices and services",
+          "required_info_keys": [
+            "company_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and service levels in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague used QuickHaul last month when she moved to her new place. She said they were incredibly efficient, had everything done in under three hours, and she didn't have to lift a finger",
+          "success_criteria": "Agent responds to the positive QuickHaul review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "used QuickHaul, incredibly efficient, done in under three hours, didn't lift a finger",
+            "target_option": "QuickHaul"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward QuickHaul"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My monthly take-home is 8400 yuan. I set a rule for myself that one-off expenses can't go over a twelfth of my monthly income",
+          "success_criteria": "Agent registers the budget rule and derives 8400/12 = 700 yuan, eliminating QuickHaul and SteadyMove",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via computation — eliminates QuickHaul and SteadyMove"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned QuickHaul's team reassembled her IKEA wardrobe perfectly, not a single scratch. She said it was totally worth the price for the peace of mind",
+          "success_criteria": "Agent responds to more QuickHaul praise",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "QuickHaul reassembled IKEA wardrobe perfectly, no scratches, worth the price",
+            "target_option": "QuickHaul"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about QuickHaul (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work Monday to Friday and my company doesn't allow leave during project crunch, so I can only move on a Saturday. BudgetLift operates on weekends including Saturdays, I checked their site",
+          "success_criteria": "Agent recognizes the Saturday-only constraint and that BudgetLift is available on Saturdays",
+          "required_info_keys": [
+            "move_timing",
+            "budgetlift_saturday"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint and confirm BudgetLift weekend availability"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend moved with SteadyMove a few weeks ago. He said the packing supplies they provide are really good quality, thick bubble wrap and proper tape. His TV and monitors arrived without a scratch",
+          "success_criteria": "Agent responds to the positive SteadyMove review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "used SteadyMove, great packing supplies, thick bubble wrap, TV and monitors arrived without a scratch",
+            "target_option": "SteadyMove"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward SteadyMove"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "He also said SteadyMove's team lead was super communicative, texted him updates the whole time and even helped rearrange furniture in the new place without extra charge",
+          "success_criteria": "Agent responds to more SteadyMove praise",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "SteadyMove team lead was communicative, texted updates, helped rearrange furniture free",
+            "target_option": "SteadyMove"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about SteadyMove (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to finalize the booking this week. Which company should I commit to?",
+          "success_criteria": "Agent identifies BudgetLift as the only option within the computed 700 yuan budget that also operates on Saturdays, and recommends booking BudgetLift",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which do you prefer",
+              "all three",
+              "any of them",
+              "it depends"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to BudgetLift based on constraint computation"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Book BudgetLift (480 yuan, labor-only with blanket wrapping, available Saturdays). The cap is one-twelfth of monthly take-home income: 8400/12 = 700 yuan. QuickHaul (1800) and SteadyMove (950) both exceed it.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Recommend BudgetLift, or clearly center the booking steps on BudgetLift, within the 700 yuan cap and with Saturday availability."
+    ],
+    "forbidden_elements": [
+      "Recommending QuickHaul (1800 yuan far exceeds 700 yuan budget cap)",
+      "Recommending SteadyMove (950 yuan exceeds 700 yuan budget cap)",
+      "Ignoring the budget computation when making a recommendation",
+      "Asking the user which company they decided on instead of computing it from constraints",
+      "Suggesting the user stretch their budget or make an exception for QuickHaul or SteadyMove"
+    ],
+    "explanation": "The cap is 8400/12 = 700 yuan. QuickHaul costs 1800 and SteadyMove costs 950, both above the hard cap. BudgetLift costs 480 and is explicitly available on Saturdays, satisfying both constraints despite the drift turns praising the alternatives. A correct recommendation does not separately have to explain the calculation."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

@@ -1,0 +1,141 @@
+{
+  "scenario_id": "T5_045",
+  "domain": "micro-influencer Instagram channel on a niche fashion theme",
+  "personality": "Enthusiastic creative professional excited about a passion project",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a creative strategy and social media advisor. Help the user think through their content and branding ideas.",
+  "state_queue": {
+    "anchor": "I've been thinking about starting a micro-influencer Instagram channel focused on a niche fashion theme — like vintage workwear or something in that lane. I'd love to hear your thoughts on this direction.",
+    "flow_info": [
+      {
+        "key": "brand_identity",
+        "value": "Brand name: 'Worn Thread'. Visual identity: muted earth tones, linen textures as backgrounds, hand-drawn serif logo. Bio line: 'Workwear with a story.' Highlight covers in burnt sienna with white icons.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "content_calendar",
+        "value": "Content calendar: Mon/Wed/Fri grid posts (flat-lay styling shots), Tue/Thu reels (30-sec 'history of this garment' clips), Sunday carousel (thrift haul breakdowns). Batch-shooting Saturdays, 3 weeks of content banked before launch.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "launch_plan",
+        "value": "Launch plan: 9-grid teaser drop on day one, followed by a 'founding 100' giveaway — vintage Carhartt jacket to one follower who shares the post. Partnering with a letterpress studio to print 200 branded postcards for local coffee shop drops.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "growth_monetization",
+        "value": "Growth: aiming for 5k followers in 3 months via hashtag strategy (#vintageworkwear, #heritageestyle, #slowfashion), collab reels with 2-3 other small vintage accounts, and a weekly 'fit check' story poll. Monetization: affiliate links to Grailed and eBay vintage sellers, eventually a curated capsule drop at 10k followers.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to launch / pulling the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to hear your thoughts' — open, not committed. Turns 2–5: you drip execution sub-blocks (brand identity, content calendar, launch plan, growth/monetization) as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to post the first grid — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "enthusiastic_creative_tone",
+        "category": "communication_style",
+        "value": "Casual, energetic creative-person tone. 2–4 sentences per turn. You sound like someone who has been mood-boarding for weeks and is excited to share the details. No hedging, no doubt, no risk-flagging. You present each execution block as something you've already figured out.",
+        "description": "Tone matches someone deep in execution planning, reinforcing drift pressure"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_brand_identity",
+          "aim_type": "info_scatter",
+          "description": "So I've landed on the brand name 'Worn Thread.' Visual identity is muted earth tones, linen textures for backgrounds, hand-drawn serif logo. Bio line: 'Workwear with a story.' Highlight covers in burnt sienna with white icons.",
+          "success_criteria": "Agent acknowledges the brand identity details",
+          "required_info_keys": [
+            "brand_identity"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (brand name + visual identity) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_content_calendar",
+          "aim_type": "info_scatter",
+          "description": "Content calendar: Mon/Wed/Fri grid posts with flat-lay styling shots, Tue/Thu reels — 30-second 'history of this garment' clips, Sunday carousel for thrift haul breakdowns. Batch-shooting on Saturdays, planning to have 3 weeks of content banked before I go live.",
+          "success_criteria": "Agent acknowledges the content schedule",
+          "required_info_keys": [
+            "content_calendar"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (content calendar + production workflow)"
+        },
+        {
+          "aim_id": "aim_2_launch_plan",
+          "aim_type": "info_scatter",
+          "description": "For launch I'm doing a 9-grid teaser drop on day one, then a 'founding 100' giveaway — vintage Carhartt jacket to one follower who shares the post. Also partnering with a letterpress studio to print 200 branded postcards I'll leave at local coffee shops.",
+          "success_criteria": "Agent acknowledges the launch mechanics",
+          "required_info_keys": [
+            "launch_plan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (launch event + physical collateral)"
+        },
+        {
+          "aim_id": "aim_3_growth_monetization",
+          "aim_type": "info_scatter",
+          "description": "Growth target is 5k followers in 3 months — hashtag strategy with #vintageworkwear, #heritagestyle, #slowfashion, collab reels with 2-3 other small vintage accounts, and a weekly fit-check story poll. Monetization via affiliate links to Grailed and eBay vintage sellers, and eventually a curated capsule drop once I hit 10k.",
+          "success_criteria": "Agent acknowledges the growth and monetization plan",
+          "required_info_keys": [
+            "growth_monetization"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (growth targets + revenue model)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to post the first grid next weekend — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags audience demand validation (does anyone actually want vintage workwear content vs existing accounts), niche saturation (how many vintage fashion accounts already exist in this lane), follower-to-monetization conversion realism (5k followers in 3 months, affiliate revenue viability at that scale), time and money opportunity cost (batch shooting, postcards, giveaway jacket), and whether the user has tested demand at all before investing in brand scaffolding. Agent does NOT simply add more execution items (hashtag tips, reel editing tools, posting times, engagement tactics).",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider",
+              "step back"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, launch' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this direction worth pursuing?') instead of adding more execution polish. Key strategic bullets: (1) audience demand validation — has the user confirmed that people actually seek out and engage with vintage workwear content specifically, vs the dozens of existing vintage fashion accounts already serving this niche? (2) niche saturation — vintage fashion Instagram is crowded; what differentiates Worn Thread from established accounts with years of audience trust? (3) follower-to-revenue realism — 5k followers in 3 months is ambitious for a cold-start niche account, and affiliate revenue at that scale is negligible (pennies per click on Grailed/eBay links). (4) upfront investment vs validation — the user is spending money (Carhartt jacket giveaway, 200 letterpress postcards, batch shooting setup) and significant time (3 weeks content banking, Saturday shoots) before any signal that people want this. (5) demand test proposal — post 5-10 pieces of content on a bare account first, see if engagement and follower growth match assumptions before investing in brand scaffolding, giveaways, and physical collateral.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution (e.g., 'before you invest in all this brand scaffolding, have you validated that there is an audience for this specific niche?')",
+      "Agent flags audience demand validation — whether people actually want vintage workwear content and whether the user has any signal of demand beyond personal enthusiasm",
+      "Agent flags at least one structural concern: niche saturation among existing vintage fashion accounts, follower growth realism for a cold-start account, or affiliate monetization viability at 5k-10k scale",
+      "Agent challenges the upfront investment (time, money, giveaway jacket, postcards, batch shooting) relative to zero validated demand",
+      "Agent proposes a smaller validation step (test posts before full brand buildout, gauge engagement before spending on postcards and giveaways)"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, post the first grid' without flagging the strategic question",
+      "Agent produces an execution checklist (optimal posting times, hashtag research tools, reel editing apps, engagement pod suggestions, caption formulas)",
+      "Agent silently follows the user's execution frame without ever questioning whether this niche has real audience demand",
+      "Agent validates the user's brand scaffolding as evidence the direction is sound (e.g., 'your visual identity is cohesive so you are ready to launch')",
+      "Agent treats the 5k-in-3-months target as realistic without questioning it"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to hear your thoughts on this direction'). T2–T5 drip 4 execution sub-blocks (brand identity, content calendar, launch plan, growth/monetization) as if the decision is already made. T6 is a soft ready-go probe. The failure mode is the agent responding to T6 with execution polish (hashtag tips, posting schedule optimization, engagement tactics) without returning to the T1 strategic question. Weak-tier domain (personal creative side project / micro-influencer channel) has no rigid framework prior — no standard 'unit economics / PMF / CAC' template fires — so strong models drift into branding and content advice. The brand scaffolding (name, logo, calendar, postcards) creates an illusion of readiness that masks the absence of any demand signal."
+  },
+  "mechanism": "Branding + content drift: user drips brand name, visual identity, content calendar, launch announcement — brand scaffolding without demand signal."
+}

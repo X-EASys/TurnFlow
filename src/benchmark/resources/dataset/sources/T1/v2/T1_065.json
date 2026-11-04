@@ -1,0 +1,287 @@
+{
+  "scenario_id": "T1_065",
+  "domain": "neighborhood block party food",
+  "personality": "Friendly neighborhood organizer",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan food for a neighborhood block party by tracking who is attending, their dietary needs, and any logistics. When the user asks you to evaluate specific food items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, I'm organizing a block party for our cul-de-sac this Saturday and I need help figuring out the food situation.",
+    "flow_info": [
+      {
+        "key": "initial_families",
+        "value": "Four households confirmed: mine, the Nguyens, the Garcias, and old Mr. Henderson",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nguyen_background",
+        "value": "Mrs. Nguyen grew up Jain in Gujarat before she married and moved here",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "garcia_son_incident",
+        "value": "The Garcias' son Mateo ate a peanut butter cookie at school last month and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "henderson_health",
+        "value": "Mr. Henderson just got diagnosed with type 2 diabetes a couple months ago, his doctor has him on a strict low-sugar regimen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "potluck_format",
+        "value": "We're doing potluck style, everyone brings a dish or two, but I want to coordinate so nothing clashes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "garcia_exit",
+        "value": "Mrs. Garcia just texted me — she and her husband have to leave by 2pm for a family thing across town, but Mateo is staying because he wants to play with the other kids. The Nguyens said they'd keep an eye on him",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "henderson_update",
+        "value": "Ran into Mr. Henderson this morning — he told me his doctor cleared him last week, said his blood sugar levels have been great and he can eat normally now as long as he's sensible about it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "chen_family_joins",
+        "value": "Oh, the Chens from number 14 just moved in last month and they want to come too. Mrs. Chen mentioned her daughter Lily is five and was recently diagnosed as celiac",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timing_question",
+        "value": "We're thinking of starting around noon — does that work for a block party or should we push to 1pm?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "So here's what people are planning to bring: pulled pork sliders, a big garden salad with root vegetables and ranch dressing, peanut satay chicken skewers, a fruit platter, and brownies made with almond flour. Any problems with this lineup?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "nguyen_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots, etc.)",
+        "disclosed": false,
+        "surface_form": "Mrs. Nguyen grew up Jain in Gujarat before she married and moved here",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Grew up Jain → practices Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs",
+          "Jain diet → no root vegetables (onions, garlic, potatoes, carrots)"
+        ]
+      },
+      {
+        "key": "mateo_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "The Garcias' son Mateo ate a peanut butter cookie at school last month and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "henderson_diabetes",
+        "value": "Must avoid high-sugar foods due to type 2 diabetes diagnosis",
+        "disclosed": false,
+        "surface_form": "Mr. Henderson just got diagnosed with type 2 diabetes a couple months ago, his doctor has him on a strict low-sugar regimen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_celiac",
+        "value": "Cannot eat gluten (wheat, barley, rye, and derivatives)",
+        "disclosed": false,
+        "surface_form": "Mrs. Chen mentioned her daughter Lily is five and was recently diagnosed as celiac",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a friendly neighbor organizing a Saturday block party potluck for your cul-de-sac. You will introduce the attending households and their backgrounds across several turns. Some people will drop out, one person's health restriction gets lifted, and a new family joins late. At the end you will list specific dishes people plan to bring and ask if there are any problems. You must NEVER hint at what the specific problems are — just list the dishes and ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly neighborhood organizer. You always refer to your neighbors by name in third person (e.g. 'Mrs. Nguyen told me...', 'Mr. Henderson said...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal party coordination — people dropping in and out is just how block parties work.",
+        "description": "Prevents emotion escalation and ensures third-person relay for neighbor updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm organizing a block party for our cul-de-sac this Saturday and I need help figuring out the food situation.",
+          "success_criteria": "Agent engages with block party food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate block party food planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So we've got four households confirmed: mine, the Nguyens, the Garcias, and old Mr. Henderson from the corner house. Mrs. Nguyen grew up Jain in Gujarat before she married and moved here. The Garcias' son Mateo ate a peanut butter cookie at school last month and his throat swelled up, they had to use an EpiPen. And Mr. Henderson just got diagnosed with type 2 diabetes a couple months ago, his doctor has him on a strict low-sugar regimen.",
+          "success_criteria": "Agent acknowledges all four households and registers the dietary constraints for Mrs. Nguyen, Mateo, and Mr. Henderson",
+          "required_info_keys": [
+            "initial_families",
+            "nguyen_background",
+            "garcia_son_incident",
+            "henderson_health"
+          ],
+          "required_constraint_keys": [
+            "nguyen_jain_diet",
+            "mateo_peanut_allergy",
+            "henderson_diabetes"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 households + 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're doing potluck style — everyone brings a dish or two, but I want to coordinate so nothing clashes and everyone has something to eat. What's the best way to handle that?",
+          "success_criteria": "Agent provides potluck coordination advice considering the dietary constraints",
+          "required_info_keys": [
+            "potluck_format"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish potluck format and get coordination advice"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Mrs. Garcia just texted me — she and her husband have to leave by 2pm for a family thing across town, but Mateo is staying because he wants to play with the other kids. The Nguyens said they'd keep an eye on him.",
+          "success_criteria": "Agent registers that the Garcia parents are leaving but Mateo stays, meaning his peanut allergy remains active for all shared food",
+          "required_info_keys": [
+            "garcia_exit"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope distinction — parents leave but child stays, child's peanut allergy remains active"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Ran into Mr. Henderson this morning — he told me his doctor cleared him last week, said his blood sugar levels have been great and he can eat normally now as long as he's sensible about it.",
+          "success_criteria": "Agent removes Mr. Henderson's strict low-sugar dietary restriction",
+          "required_info_keys": [
+            "henderson_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Mr. Henderson's diabetes restriction lifted"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh, the Chens from number 14 just moved in last month and they want to come too. Mrs. Chen mentioned her daughter Lily is five and was recently diagnosed as celiac.",
+          "success_criteria": "Agent registers the Chen family as new attendees and notes Lily's celiac constraint (no gluten)",
+          "required_info_keys": [
+            "chen_family_joins"
+          ],
+          "required_constraint_keys": [
+            "lily_celiac"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Lily (celiac/no gluten)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "We're thinking of starting around noon — does that work for a block party or should we push to 1pm?",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [
+            "timing_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party logistics",
+            "drift_topic": "start time for the block party",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should I set up tables in my driveway or in the middle of the cul-de-sac? Last year we did the driveway but it got cramped.",
+          "success_criteria": "Agent responds about setup logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party setup",
+            "drift_topic": "table placement for the block party",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "So here's what people are planning to bring: pulled pork sliders, a big garden salad with root vegetables and ranch dressing, peanut satay chicken skewers, a fruit platter, and brownies made with almond flour. Any problems with this lineup?",
+          "success_criteria": "Agent identifies: pulled pork sliders problematic for Mrs. Nguyen (Jain, no meat); garden salad with root vegetables problematic for Mrs. Nguyen (Jain, no root vegetables); peanut satay chicken skewers problematic for Mateo (peanut allergy) AND Mrs. Nguyen (no meat); brownies with almond flour problematic for Lily (celiac — must verify if flour contains gluten, almond flour is actually gluten-free so brownies are FINE for Lily IF no wheat flour mixed in); fruit platter is fine for everyone. Agent should NOT flag sugar content for Mr. Henderson (restriction lifted).",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three dishes have clear problems. Pulled pork sliders: Mrs. Nguyen is Jain (no meat). Peanut satay chicken skewers: Mateo has a severe peanut allergy (peanut satay) AND Mrs. Nguyen is Jain (chicken is meat). Garden salad with root vegetables and ranch dressing: Mrs. Nguyen is Jain (root vegetables like carrots, potatoes, onions are forbidden in Jain diet). Fruit platter is fine for everyone. Brownies made with almond flour are fine — almond flour is gluten-free, so they work for Lily (celiac), and Mr. Henderson's sugar restriction has been lifted by his doctor. The agent should NOT flag high sugar for Mr. Henderson (his doctor cleared him). The agent should NOT remove Mateo's peanut allergy just because his parents left — Mateo is still at the party.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Pulled pork sliders are problematic: Mrs. Nguyen grew up Jain, cannot eat meat",
+      "Peanut satay chicken skewers are problematic for Mateo: he had a severe peanut allergy reaction (throat swelled, EpiPen used), peanut satay contains peanuts",
+      "Peanut satay chicken skewers are also problematic for Mrs. Nguyen: chicken is meat, Jain diet forbids meat",
+      "Garden salad with root vegetables is problematic for Mrs. Nguyen: Jain diet forbids root vegetables",
+      "Fruit platter is fine for everyone currently attending",
+      "Brownies made with almond flour are fine — almond flour is gluten-free, safe for Lily who is celiac",
+      "Mr. Henderson has no dietary restrictions anymore — agent does not flag sugar content for him"
+    ],
+    "forbidden_elements": [
+      "Flagging brownies or sweet items as problematic for Mr. Henderson (his doctor cleared him, restriction removed)",
+      "Removing Mateo's peanut allergy because his parents left the party (Mateo himself is still there)",
+      "Saying Mateo has a general nut allergy or tree nut allergy (he specifically has a peanut allergy — almond flour brownies are fine for him unless agent has reason to flag cross-reactivity, but the scenario specifies peanut only)",
+      "Ignoring Mrs. Nguyen's Jain dietary constraints entirely",
+      "Ignoring the root vegetable restriction for Mrs. Nguyen (Jain diet specifically forbids root vegetables, not just meat)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across a block party planning conversation. The agent must track: (1) Mrs. Nguyen grew up Jain → Jain dietary laws → no meat, no fish, no eggs, no root vegetables (inferential chain, never explicitly stated as dietary rules), (2) Mateo has a severe peanut allergy (direct from EpiPen incident), (3) Mr. Henderson's diabetes/low-sugar restriction is REMOVED mid-conversation (doctor cleared him), (4) Garcia parents EXIT but Mateo STAYS — his peanut allergy remains active for all shared food (scope distinction: child stays after parents leave), (5) The Chen family JOINS late with Lily who is celiac (late-joining high-constraint entity). At probe time, the agent must apply CURRENT constraint state: Mrs. Nguyen = Jain (no meat, no root vegetables), Mateo = peanut allergy (still present at party), Lily = celiac (no gluten). Mr. Henderson's sugar restriction no longer applies. Key traps: brownies with almond flour LOOK problematic for celiac Lily but almond flour is gluten-free (trap — looks bad but isn't); garden salad with root vegetables requires knowing Jain diet forbids root vegetables (not just meat); Mr. Henderson being flagged for sugar despite being cleared (removed constraint ghost); Mateo's peanut allergy disappearing because his parents left (scope error — child stays)."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

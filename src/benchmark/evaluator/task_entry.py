@@ -5,14 +5,14 @@ or change any task's scoring formula.
 """
 from __future__ import annotations
 
-SUPPORTED_TASKS = ('T16', 'T17', 'T18', 'T19', 'T20')
+SUPPORTED_TASKS = ('T1', 'T2', 'T3', 'T4', 'T5')
 
 
 def _adapter(task):
-    if task in ('T17', 'T19'):
+    if task in ('T2', 'T4'):
         from . import frozen_entry
         return frozen_entry
-    if task in ('T16', 'T18', 'T20'):
+    if task in ('T1', 'T3', 'T5'):
         from . import verifiable_entry
         return verifiable_entry
     raise ValueError('unsupported_verifiable_task:' + str(task))
@@ -30,7 +30,7 @@ def manifest():
     from .full_final import WINDOW_POLICY, WINDOW_TASKS
     return {'release_revision': 'dev490-priority-repair-20261029-rc5',
             'window_policy': WINDOW_POLICY, 'window_tasks': list(WINDOW_TASKS),
-            'contracts': {'T17_T19': frozen_manifest(), 'T16_T18_T20': other_manifest()},
+            'contracts': {'T2_T4': frozen_manifest(), 'T1_T3_T5': other_manifest()},
             'catalog': get_catalog()}
 
 
@@ -43,7 +43,7 @@ def compile_spec(task, scenario_key, full_messages, model, api_base='', **kwargs
 def compile_legacy_spec(task, scenario_key, full_messages, model, api_base='', **kwargs):
     """Explicit historical compiler for archived window comparisons only."""
     runtime_profile = kwargs.pop('runtime_profile', None)
-    if task in ('T17', 'T19'):
+    if task in ('T2', 'T4'):
         from .frozen_judge import compile_spec as compiler
     else:
         compiler = _adapter(task).compile_legacy_spec
@@ -54,7 +54,7 @@ def compile_legacy_spec(task, scenario_key, full_messages, model, api_base='', *
 
 def verify_source(scenario_key, document):
     task = scenario_key.split('/')[0]
-    if task in ('T17', 'T19'):
+    if task in ('T2', 'T4'):
         from .frozen_judge import verify_source as verify_frozen
         return verify_frozen(scenario_key, document)
     return _adapter(task).verify_source(scenario_key, document)
@@ -93,11 +93,11 @@ def _incomplete_simulation_result(task, simulation, *, source_path=None, scenari
             entry = get_catalog()[key]
             row.update(scenario_key=key, profile=entry['profile'],
                        source_content_sha256=entry['source_content_sha256'])
-            if task_type in ('T17', 'T19'):
+            if task_type in ('T2', 'T4'):
                 from .frozen_judge import revision
             else:
                 revision = _adapter(task_type).manifest()['revision']
-            if task_type != 'T17':
+            if task_type != 'T2':
                 from .full_final import WINDOW_POLICY
                 row.update(revision=WINDOW_POLICY, window_policy=WINDOW_POLICY,
                            contract_revision=revision)

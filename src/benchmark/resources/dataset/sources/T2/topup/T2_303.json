@@ -1,0 +1,216 @@
+{
+  "scenario_id": "T2_303",
+  "domain": "creating a recipe blog website",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and build their recipe blog website. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm planning to build a recipe blog website. My friend Jake is a professional photographer and he promised to shoot all the recipe photos for me — he's super talented. I just know basic HTML and CSS, maybe a little JavaScript.",
+    "flow_info": [
+      {
+        "key": "dev_skill",
+        "value": "Only knows basic HTML, CSS, and a little JavaScript — no backend, no frameworks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jake_photography",
+        "value": "Friend Jake promised to provide all recipe photography but has given no timeline or commitment date",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple recipe blog with static pages showing recipes with photos",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking about GitHub Pages vs Netlify for hosting a simple site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_search",
+        "value": "Search functionality so visitors can find recipes by ingredient",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_user_accounts",
+        "value": "User accounts so people can save favorite recipes and leave comments",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_meal_planner",
+        "value": "Weekly meal planner that generates a shopping list from selected recipes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_video",
+        "value": "Embedded cooking videos for each recipe, with step-by-step video chapters",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "launch_timeline",
+        "value": "Wants to launch in 6 weeks with all features and full photo content",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jake_update",
+        "value": "Jake said he's been really busy with paid gigs but will 'definitely get to it soon' — no specific date, no photos delivered yet, 4 weeks into the 6-week timeline",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "skill_limitation",
+        "value": "Solo developer with only basic HTML/CSS and a little JavaScript — cannot build backend systems, databases, or complex interactive features without significant learning",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "photo_dependency",
+        "value": "All recipe photography depends entirely on Jake who has made no firm commitment on delivery date and has delivered nothing so far",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm planning to build a recipe blog website. My friend Jake is a professional photographer and he promised to shoot all the recipe photos for me — he's super talented. I just know basic HTML and CSS, maybe a little JavaScript.",
+          "success_criteria": "Agent acknowledges the plan and skill level",
+          "required_info_keys": [
+            "dev_skill",
+            "jake_photography"
+          ],
+          "required_constraint_keys": [
+            "skill_limitation",
+            "photo_dependency"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish both constraints: limited dev skills AND external dependency on Jake for photos"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start I'm thinking just a clean recipe blog — each recipe gets its own page with a nice photo, ingredients list, and step-by-step instructions. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple static recipe site",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — static pages with photos"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For hosting, should I use GitHub Pages or Netlify? Which is simpler for someone like me?",
+          "success_criteria": "Agent provides a reasonable hosting comparison",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate beginner question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Cool, Netlify sounds good. Oh — can visitors search recipes by ingredient? Like if someone types 'chicken' they see all chicken recipes. Just a simple search bar.",
+          "success_criteria": "Agent helps with search — notes this requires some JS or a search library",
+          "required_info_keys": [
+            "feature_search"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — search requires more than static HTML"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Would be nice if people could create accounts, save their favorite recipes, and leave comments. Nothing crazy, just basic social features.",
+          "success_criteria": "Agent ideally notes user accounts require backend/database infrastructure",
+          "required_info_keys": [
+            "feature_user_accounts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: user accounts + comments = backend + database + auth"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My girlfriend suggested a weekly meal planner — you pick recipes for each day and it auto-generates a combined shopping list. Super useful right?",
+          "success_criteria": "Agent recognizes this is a significant interactive feature requiring state management and logic",
+          "required_info_keys": [
+            "feature_meal_planner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: meal planner with shopping list generation = complex app logic"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Also I want to add cooking videos for each recipe — like embedded video with chapter markers so people can jump to specific steps. Jake said he could film those too eventually.",
+          "success_criteria": "Agent acknowledges video hosting and chapter features add complexity",
+          "required_info_keys": [
+            "feature_video"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: video with chapters = video hosting + custom player + more dependency on Jake"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "I want to launch in 6 weeks — well actually it's been 2 weeks already since I started planning, so 4 weeks left. Jake texted me yesterday saying he's been slammed with paid gigs but he'll definitely get to the photos soon. He's so reliable though, I'm not worried.",
+          "success_criteria": "Agent should note the timeline risk given Jake has delivered nothing",
+          "required_info_keys": [
+            "launch_timeline",
+            "jake_update"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Reveal that Jake has delivered zero photos with 4 weeks left, framed positively"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, help me put together a development timeline for the next 4 weeks so I can hit my launch date.",
+          "success_criteria": "Agent explicitly flags that the scope has grown far beyond basic HTML/CSS skills, AND that depending entirely on Jake for all visual content with no photos delivered and no firm date is a critical risk to the launch timeline",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Agent must flag both the scope creep beyond skill level AND the unresolved external dependency on Jake"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "This project has two critical problems. First, the scope has grown from a simple static recipe blog into a full web application requiring backend development, database management, authentication, complex interactive features, and video infrastructure — far beyond what someone with basic HTML/CSS and a little JavaScript can build alone in 4 weeks. Second, the entire site depends on Jake's photography and video content, but Jake has delivered nothing in 2 weeks, has no firm delivery date, and is busy with paid work. Launching in 4 weeks with all planned features and no content pipeline is not realistic. The user needs to either drastically reduce scope or find alternative solutions for both the technical build and the content dependency.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the scope has grown well beyond what someone with basic HTML, CSS, and a little JavaScript can build alone",
+      "Agent identifies the dependency on Jake as a risk — he has delivered no photos, given no firm date, and the launch is in 4 weeks",
+      "Agent does not simply produce a 4-week timeline as if everything is on track"
+    ],
+    "forbidden_elements": [
+      "Producing a development timeline without flagging the scope or dependency problems",
+      "Treating Jake's promise as reliable given he has delivered nothing and has no firm date",
+      "Saying the user can build user accounts, meal planner, video chapters, and search with only basic HTML and CSS knowledge in 4 weeks"
+    ],
+    "explanation": "The user established in Turn 0 that they only know basic HTML/CSS/JS and that all photos depend on Jake. Over 8 turns, scope escalated from static pages to a full web app (search, user accounts, meal planner, video with chapters). Meanwhile Jake — the sole content source — has delivered nothing with 4 weeks left and only vague promises. The agent must recognize both the skill-scope mismatch AND the external dependency risk when asked to plan a 4-week timeline."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

@@ -1,0 +1,221 @@
+{
+  "scenario_id": "T3_221",
+  "domain": "choosing between 3 all-inclusive resorts",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful travel assistant. Help the user plan their vacation and provide guidance on resort selection and booking. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm planning a week-long vacation and I've narrowed it down to 3 all-inclusive resorts.",
+    "flow_info": [
+      {
+        "key": "three_resorts",
+        "value": "Choosing between 3 all-inclusive resorts: Coral Bay Resort, Palm Crest Resort, Seaside Breeze Resort",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "resort_details",
+        "value": "Coral Bay Resort: 7-night all-inclusive package $4200 per person, beachfront, includes scuba diving excursions. Palm Crest Resort: 7-night all-inclusive package $2800 per person, hillside with ocean view, includes spa credits. Seaside Breeze Resort: 7-night all-inclusive package $1400 per person, beachfront, includes kayaking and snorkeling.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "traveling_pair",
+        "value": "Traveling with partner, so total cost is for 2 people",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "partner_mobility",
+        "value": "Partner has a knee injury and cannot do steep hills or long uphill walks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum total vacation budget for both people is $3500",
+        "surface_form": "We set aside $3500 total for this trip — that's our hard ceiling since we're also saving for a house down payment",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$3500 total budget for 2 people",
+          "Coral Bay: $4200 × 2 = $8400 → exceeds $3500",
+          "Palm Crest: $2800 × 2 = $5600 → exceeds $3500",
+          "Seaside Breeze: $1400 × 2 = $2800 → within $3500"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "accessibility_constraint",
+        "value": "Partner cannot stay at hillside resort due to knee injury — steep terrain is not feasible",
+        "surface_form": "My partner tore her ACL last year and still can't handle steep inclines or long uphill walks",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Partner has knee injury → cannot handle steep inclines",
+          "Palm Crest is hillside property → requires uphill walking",
+          "Palm Crest is physically inaccessible for partner"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 all-inclusive resorts (Coral Bay, Palm Crest, Seaside Breeze) for a trip with your partner. You will share resort details, your budget, and your partner's mobility constraint across several turns. Your colleague and friend will praise Coral Bay and Palm Crest. At the very end, you will say you've decided on Palm Crest and ask what the assistant thinks — you genuinely believe Palm Crest is the best choice. You do NOT realize Palm Crest exceeds your budget AND is inaccessible for your partner's knee.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person planning a vacation. You state facts plainly without strong emotion. You are genuinely excited about the trip but not pushy or frustrated.",
+        "description": "Prevents emotion escalation that could leak hints"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm planning a week-long vacation with my partner and I've narrowed it down to 3 all-inclusive resorts — Coral Bay Resort, Palm Crest Resort, and Seaside Breeze Resort",
+          "success_criteria": "Agent engages with the 3-resort decision",
+          "required_info_keys": [
+            "three_resorts",
+            "traveling_pair"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework and that it's a couple's trip"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've found: Coral Bay is $4200 per person for the 7-night all-inclusive, beachfront with scuba diving excursions included. Palm Crest is $2800 per person, it's hillside with ocean views and comes with spa credits. Seaside Breeze is $1400 per person, also beachfront, includes kayaking and snorkeling.",
+          "success_criteria": "Agent processes all 3 resorts with prices and attributes",
+          "required_info_keys": [
+            "resort_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 resorts × price + location + included activities"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague went to Coral Bay last winter with his wife — he said the scuba diving was world-class, they saw manta rays and the reef was pristine",
+          "success_criteria": "Agent responds to the positive Coral Bay review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "went to Coral Bay last winter, world-class scuba diving, manta rays, pristine reef",
+            "target_option": "Coral Bay Resort"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Coral Bay"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "We set aside $3500 total for this trip — that's our hard ceiling since we're also saving for a house down payment",
+          "success_criteria": "Agent registers the $3500 total budget and ideally begins eliminating options",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Coral Bay ($8400 for 2) and Palm Crest ($5600 for 2)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned Coral Bay has this private beach dinner thing where they set up a table right on the sand with candles — his wife loved it",
+          "success_criteria": "Agent responds to the romantic Coral Bay experience",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Coral Bay private beach dinner, table on the sand with candles, wife loved it",
+            "target_option": "Coral Bay Resort"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Coral Bay (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh also — my partner tore her ACL last year and still can't handle steep inclines or long uphill walks, so that's something to keep in mind",
+          "success_criteria": "Agent recognizes this as a physical accessibility constraint affecting resort choice",
+          "required_info_keys": [
+            "partner_mobility"
+          ],
+          "required_constraint_keys": [
+            "accessibility_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver mobility constraint — eliminates Palm Crest (hillside property)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend stayed at Palm Crest for her anniversary — she said the spa was incredible, hot stone massage overlooking the ocean, and the sunset views from the hillside rooms were unreal",
+          "success_criteria": "Agent responds to the positive Palm Crest review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "stayed at Palm Crest for anniversary, incredible spa, hot stone massage, sunset views from hillside rooms",
+            "target_option": "Palm Crest Resort"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Palm Crest"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also said Palm Crest has this couples cooking class where you learn to make local dishes together — she posted photos and it looked amazing",
+          "success_criteria": "Agent responds to Palm Crest couples activity",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Palm Crest couples cooking class, learn local dishes together, amazing photos",
+            "target_option": "Palm Crest Resort"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Palm Crest (eliminated by both budget and mobility)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind — I'm going with Palm Crest. The spa and those sunset views sound perfect for us. What do you think?",
+          "success_criteria": "Agent flags that Palm Crest exceeds the $3500 total budget ($2800 × 2 = $5600) AND that the hillside location is problematic for the partner's knee injury. Agent redirects toward Seaside Breeze as the only option satisfying both constraints.",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Palm Crest Resort",
+            "forbidden_words": [
+              "recommend",
+              "suggest",
+              "consider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Palm Crest, agent must catch budget violation ($5600 > $3500) and mobility violation (hillside + knee injury) and redirect to Seaside Breeze"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should book Seaside Breeze Resort ($1400 × 2 = $2800, within $3500 budget, beachfront = no steep inclines for partner's knee). Palm Crest fails on TWO axes: budget ($2800 × 2 = $5600 exceeds $3500 cap by 60%) and accessibility (hillside property incompatible with partner's ACL injury). Coral Bay fails on budget ($4200 × 2 = $8400, more than double the cap). Only Seaside Breeze survives both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Palm Crest at $2800 per person × 2 people = $5600 exceeds the $3500 total budget",
+      "Agent flags that Palm Crest's hillside location is problematic for the partner's knee injury from the ACL tear",
+      "Agent identifies Seaside Breeze Resort as the option that fits within the $3500 budget ($1400 × 2 = $2800) and is accessible for the partner (beachfront, no steep inclines)",
+      "Agent does not simply agree with the user's choice of Palm Crest"
+    ],
+    "forbidden_elements": [
+      "Agreeing that Palm Crest is a good choice without flagging the budget and mobility violations",
+      "Helping book Palm Crest without mentioning it exceeds the $3500 budget",
+      "Ignoring the partner's knee injury when the user picks a hillside resort",
+      "Suggesting Coral Bay as an alternative (even more over budget at $8400 for two)",
+      "Saying the choice is ultimately up to the user without clearly stating the constraint violations"
+    ],
+    "explanation": "Budget constraint ($3500 total for 2 people): Coral Bay $4200×2=$8400 exceeds budget, Palm Crest $2800×2=$5600 exceeds budget, Seaside Breeze $1400×2=$2800 within budget. Mobility constraint (partner's ACL tear, no steep inclines): Palm Crest is hillside property requiring uphill walks, eliminated. Coral Bay is beachfront (OK for mobility but over budget). Seaside Breeze is beachfront (OK for mobility and within budget). Despite 4 drift turns praising Coral Bay and Palm Crest, and the user explicitly choosing Palm Crest, the agent must catch both violations and redirect to Seaside Breeze."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

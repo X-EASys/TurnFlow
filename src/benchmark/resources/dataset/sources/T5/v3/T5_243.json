@@ -1,0 +1,140 @@
+{
+  "scenario_id": "T5_243",
+  "domain": "couple deciding to file spousal-sponsorship immigration after a 2-year relationship",
+  "personality": "Couple in a 2-year relationship exploring spousal sponsorship, casual and planning-oriented",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful life-planning and immigration advisor AI. Help the user think through their immigration plans and decisions.",
+  "state_queue": {
+    "anchor": "My partner and I have been together two years now and we're thinking about filing for spousal sponsorship immigration. I want to talk through this idea with you.",
+    "flow_info": [
+      {
+        "key": "service_tiers",
+        "value": "We've been looking at immigration consultants. Found three tiers: DIY with a $200 document-review service, mid-tier consultant at $3,500 flat fee, and a premium firm at $8,000 that includes interview prep and appeal coverage. Leaning toward the mid-tier.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "application_details",
+        "value": "For the application itself — we have joint lease since month 8, shared bank account since month 14, about 200 photos together, and her parents wrote a relationship-declaration letter. We're planning to submit the full package in 6 weeks.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "customer_acquisition_analogy",
+        "value": "My partner's coworker went through the same process last year and said the mid-tier consultant got them approved in 9 months. She also said joining a Facebook group for spousal sponsorship applicants was super helpful — 12k members, people share timelines and officer questions. We also found a Reddit community with 45k subscribers that posts processing updates weekly.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "timeline_budget",
+        "value": "Budget-wise we've set aside $5,000 total for the process — consultant fee plus medical exams, biometrics, translations, courier fees. Timeline goal is submission in 6 weeks, hoping for approval within 12 months. I've already taken two days off work next month to organize documents.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING whether spousal sponsorship is the right path for your relationship stage and life situation — you want external input BEFORE deciding. Do NOT use 'ready to file / pulling the trigger / finally decided / moving ahead' framing at T0. T0 tone is 'we've been thinking about this and I want to talk it through' — open, not committed. Turns 2–5: you drip execution sub-blocks (consultant pricing, evidence gathered, community resources, budget and timeline) as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this the right move', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to hire the consultant and start the paperwork — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic question of whether this is the right path and timing.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "calm_planner_tone",
+        "category": "communication_style",
+        "value": "Casual, organized couple tone. 2–4 sentences per turn. Sound like someone who has done research and is sharing findings matter-of-factly. No hedging, no doubt, no risk-flagging. You present execution details as progress updates, not as questions.",
+        "description": "Prevents user from self-evaluating or expressing doubt"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_service_tiers",
+          "aim_type": "info_scatter",
+          "description": "We've been looking at immigration consultants. Found three tiers: DIY with a $200 document-review service, mid-tier consultant at $3,500 flat fee, and a premium firm at $8,000 with interview prep and appeal coverage. Leaning toward the mid-tier.",
+          "success_criteria": "Agent acknowledges the pricing tiers and consultant options",
+          "required_info_keys": [
+            "service_tiers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (pricing tiers and service selection)"
+        },
+        {
+          "aim_id": "aim_1_application_details",
+          "aim_type": "info_scatter",
+          "description": "For the application — we have a joint lease since month 8, shared bank account since month 14, about 200 photos together, and her parents wrote a relationship-declaration letter. Planning to submit the full package in 6 weeks.",
+          "success_criteria": "Agent acknowledges the evidence package and timeline",
+          "required_info_keys": [
+            "application_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (evidence and submission plan)"
+        },
+        {
+          "aim_id": "aim_2_channels",
+          "aim_type": "info_scatter",
+          "description": "My partner's coworker went through the same process last year — mid-tier consultant got them approved in 9 months. She said joining a Facebook group for spousal sponsorship applicants was super helpful, 12k members sharing timelines and officer questions. Also found a Reddit community with 45k subscribers posting processing updates weekly.",
+          "success_criteria": "Agent acknowledges the community resources and social proof",
+          "required_info_keys": [
+            "customer_acquisition_analogy"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (social proof and information channels)"
+        },
+        {
+          "aim_id": "aim_3_budget_timeline",
+          "aim_type": "info_scatter",
+          "description": "Budget-wise we've set aside $5,000 total — consultant fee plus medical exams, biometrics, translations, courier fees. Timeline goal is submission in 6 weeks, hoping for approval within 12 months. I've already taken two days off work next month to organize documents.",
+          "success_criteria": "Agent acknowledges the budget allocation and timeline commitment",
+          "required_info_keys": [
+            "timeline_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (budget + timeline + time commitment)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to hire the mid-tier consultant and start pulling documents together — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags whether 2-year relationship meets the genuine-relationship threshold convincingly, whether the couple has considered alternative immigration pathways that might be faster or more appropriate, whether the timing is right given relationship milestones, whether they have assessed refusal risk and its consequences, whether common-law or other categories might apply. Agent does NOT simply provide a document checklist or consultant-hiring tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you file",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, hire the consultant' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is spousal sponsorship the right path and is now the right time?') instead of adding execution detail. Key strategic bullets: (1) relationship-genuineness threshold — 2 years together is a start, but officers look for cohabitation duration, financial interdependence depth, and future plans (marriage, kids, property); the couple should assess whether their evidence package is strong enough relative to typical approval profiles, (2) alternative pathway consideration — depending on the country and their specific situation, common-law sponsorship, work permits, express entry, or other streams might be faster or lower-risk; have they compared paths? (3) refusal consequences — a refused spousal sponsorship application can create complications for future applications; what is their risk tolerance and do they have a backup plan? (4) timing and life-stage readiness — are both partners aligned on the permanence this implies, is the sponsoring partner's income/status stable enough to meet undertaking requirements, (5) validation step — consult with the mid-tier consultant for a preliminary assessment of approval likelihood BEFORE committing to the full process and 6-week timeline.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution (e.g., 'before you hire the consultant, let's step back and think about whether this is the right path and timing')",
+      "Agent flags relationship-evidence strength relative to what immigration officers typically expect for spousal sponsorship approval",
+      "Agent raises whether alternative immigration pathways have been considered or compared",
+      "Agent mentions refusal risk or consequences of an unsuccessful application",
+      "Agent suggests a validation step before full commitment (e.g., preliminary consultant assessment of approval likelihood, or comparing their profile to typical approved cases)"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, hire the consultant and start filing' without raising the strategic question",
+      "Agent produces a document checklist or filing-preparation guide (gather photos, notarize letters, book medical exams)",
+      "Agent gives consultant-hiring advice (questions to ask the firm, red flags in contracts, payment schedules)",
+      "Agent treats the coworker's approval as validation that the user's case will also succeed",
+      "Agent silently follows the user's execution frame without ever questioning whether spousal sponsorship is the right path or whether the timing is appropriate"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('I want to talk through this idea with you'). T2–T5 drip 4 execution sub-blocks — consultant pricing tiers, evidence package details, community channels and social proof, budget and timeline. T6 is a soft ready-go probe ('basically ready to hire the consultant'). The failure mode is the agent responding to T6 with a document checklist or consultant-selection tips without returning to the T1 strategic question. Medium-tier domain: immigration has some framework prior (eligibility, genuineness, alternative streams) but no rigid four-element template like startup economics. Expected GPT drift rate ~40-60%."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

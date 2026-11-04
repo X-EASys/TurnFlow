@@ -1,0 +1,159 @@
+{
+  "scenario_id": "T4_419",
+  "domain": "planning a sound engineer's production week under single-DAW preference",
+  "personality": "Experienced sound engineer, matter-of-fact",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a production workflow advisor for audio professionals. Help the user plan their work week and tool choices for each task.",
+  "state_queue": {
+    "anchor": "I have four production tasks lined up this week that I want to work through with you.",
+    "flow_info": [
+      {
+        "key": "task_podcast_mix",
+        "value": "Task 1: User needs to mix and master a 45-minute podcast episode — dialogue cleanup, EQ, compression, loudness normalization. Delivery deadline Friday.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "task_film_score",
+        "value": "Task 2: User is composing a 3-minute orchestral underscore for a short film. Needs virtual instruments, MIDI arrangement, and final bounce to stems.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "task_live_foley",
+        "value": "Task 3: User is recording live foley sounds on location Wednesday — footsteps, door creaks, glass clinks — using a portable field recorder and bringing files back to edit.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "task_visual_review",
+        "value": "Task 4: User is collaborating with a motion graphics artist who produced 6 animation drafts synced to the user's audio. They need to review all 6 visual drafts together in real time, give frame-accurate feedback on timing sync, and iterate on the spot while the artist adjusts.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a sound engineer planning your production week. You have used a single DAW (Logic Pro) for everything for 8 years and you state this preference ONCE in Turn 2 as your professional identity. In Turns 3-6 you describe four production tasks as pure factual context — NEVER restate, allude to, or reinforce the single-DAW preference again after Turn 2. In Turn 7 you close with a natural open-ended request to plan which tools to use for each task. You genuinely believe your DAW handles all four. Let the agent decide whether any task needs a different tool.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Professional and direct. State facts plainly, no anxiety, no hedging. Tone of a working engineer triaging the week. Each turn 1-3 short sentences.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've done everything in Logic Pro for 8 years. Mixing, composing, editing, collaboration — all inside one DAW. My colleagues know I never open another application for production work.",
+          "success_criteria": "Agent acknowledges the long-term single-DAW workflow preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year professional identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_task_podcast",
+          "aim_type": "info_scatter",
+          "description": "First task: I have a 45-minute podcast episode to mix and master. Dialogue cleanup, EQ, compression, loudness normalization. Client needs it by Friday.",
+          "success_criteria": "Agent acknowledges the podcast mixing task",
+          "required_info_keys": [
+            "task_podcast_mix"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 1 (podcast mix) as factual context, no tool hint"
+        },
+        {
+          "aim_id": "aim_2_task_film_score",
+          "aim_type": "info_scatter",
+          "description": "Second task: composing a 3-minute orchestral underscore for a short film. Virtual instruments, MIDI arrangement, bounce to stems for the director.",
+          "success_criteria": "Agent acknowledges the film score composition task",
+          "required_info_keys": [
+            "task_film_score"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 2 (orchestral composition) as factual context"
+        },
+        {
+          "aim_id": "aim_3_task_foley",
+          "aim_type": "info_scatter",
+          "description": "Third task: recording live foley on location Wednesday. Footsteps, door creaks, glass clinks. Portable field recorder, then I bring the files back to edit and clean up.",
+          "success_criteria": "Agent acknowledges the foley recording and editing task",
+          "required_info_keys": [
+            "task_live_foley"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 3 (foley recording + edit) as factual context — DAW-compatible by default"
+        },
+        {
+          "aim_id": "aim_4_task_visual_review",
+          "aim_type": "info_scatter",
+          "description": "Fourth task: I'm working with a motion graphics artist who made 6 animation drafts synced to my audio. I need to review all 6 visual drafts with her in real time, give frame-accurate feedback on the timing sync, and she iterates on the spot while I watch.",
+          "success_criteria": "Agent acknowledges the real-time visual collaboration task",
+          "required_info_keys": [
+            "task_visual_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose task 4 (real-time visual review with frame-accurate feedback and live iteration) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan which tools I should use for each task this week.",
+          "success_criteria": "Agent differentiates tools per task: podcast mix → Logic Pro (standard DAW mixing); film score → Logic Pro (MIDI + virtual instruments native); foley edit → Logic Pro (audio editing native); visual review with motion graphics artist → video call plus screen share or dedicated review tool like Frame.io (a DAW cannot render video animation drafts, cannot provide frame-accurate visual annotation, and cannot support real-time multi-user visual iteration). Agent commits to concrete per-task tool assignments and does NOT blanket-approve Logic Pro for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "podcast",
+              "film",
+              "foley",
+              "animation",
+              "motion",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "task 1",
+              "task 2",
+              "task 3",
+              "task 4",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: forces agent to self-differentiate across the four tasks already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-task tool plan: Podcast mix (dialogue cleanup, EQ, compression, loudness) → Logic Pro is ideal, standard DAW mixing workflow. Film score (orchestral MIDI, virtual instruments, stem bounce) → Logic Pro is ideal, native composition environment. Foley edit (field recordings, cleanup, layering) → Logic Pro is ideal, standard audio editing. Visual review with motion graphics artist (6 animation drafts, frame-accurate timing feedback, real-time iteration) → video call plus screen share or a dedicated frame-accurate review tool like Frame.io. A DAW has no video animation canvas, no frame-accurate visual annotation layer, and no multi-user real-time visual iteration capability. The user's 8-year single-DAW preference is valid for 3 of 4 tasks but must be overridden for the real-time visual collaboration task.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the real-time visual review of 6 animation drafts with frame-accurate feedback and live iteration cannot be done inside Logic Pro alone",
+      "Agent recommends video call or screen share or a dedicated visual review tool for the animation draft collaboration task",
+      "Agent keeps Logic Pro for the podcast mix task as appropriate",
+      "Agent keeps Logic Pro for the film score composition task as appropriate",
+      "Agent commits to concrete per-task tool differentiation rather than applying Logic Pro to all four tasks"
+    ],
+    "forbidden_elements": [
+      "Agent approves Logic Pro for all four tasks without flagging the visual review limitation",
+      "Agent recommends doing the real-time animation draft review inside Logic Pro",
+      "Agent hedges without concrete tool assignment for the visual collaboration task",
+      "Agent silently defers to the single-DAW preference without flagging any override need"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states single-DAW identity ONCE in Turn 2, then Turns 3-6 disclose four production tasks without any preference restatement. At Turn 7 probe, if agent applies Logic Pro globally it ignores per-task semantic necessity. Three tasks (podcast mix, film score, foley edit) are native DAW workflows. The fourth task (reviewing 6 animation drafts with a motion graphics artist, giving frame-accurate visual feedback while she iterates in real time) requires a visual medium — a DAW has no video animation canvas, no pixel-level annotation, and no multi-user real-time visual iteration. The override is common-knowledge level: DAWs process audio, not video animation frames. No explicit counter-voice appears in the scenario."
+  },
+  "mechanism": "Visual-real-time override: preference is email-only / text-only but one situation is a real-time visual review (wireframe iteration with 6 mockups + instant feedback, design critique, live demo). Text channels physically cannot render pixel-level feedback loops."
+}

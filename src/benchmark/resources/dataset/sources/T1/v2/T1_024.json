@@ -1,0 +1,274 @@
+{
+  "scenario_id": "T1_024",
+  "domain": "company holiday party buffet",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan a company holiday party buffet by tracking who is attending, their dietary needs, and preferences. When the user asks you to evaluate specific menu items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and any constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning our company holiday party this year and I'm in charge of the buffet. Got any tips for picking a catering menu?",
+    "flow_info": [
+      {
+        "key": "attendees",
+        "value": "Four of us confirmed so far: me, Rachel, Derek, and Priya",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_pregnant",
+        "value": "Rachel is five months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "party_details",
+        "value": "Party is next Friday evening, around 30 people total but these are the ones with specific needs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_joins",
+        "value": "Marcus from accounting just confirmed he's coming too, so add him to the list of people with dietary needs. He ended up in the hospital last year after accidentally eating something with peanuts at a work event",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_exits",
+        "value": "Rachel just told me she has to leave the party early — her prenatal appointment got moved to that evening. She asked if I could save her a plate though so she can grab it the next morning from the office fridge",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_update",
+        "value": "Derek just messaged the group chat — he got retested last month and turns out he never actually had celiac, it was a misdiagnosis. He's been eating bread and pasta all week with zero issues",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_question",
+        "value": "Budget is about 25 dollars a head, does that sound reasonable for a catered buffet?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_question",
+        "value": "We booked the big conference room on the third floor — should we set up one long table or a few stations?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "OK so the caterer sent over their holiday package. The dishes are: beef satay skewers, mushroom risotto, shrimp cocktail, Caesar salad with croutons, roasted root vegetable medley, and salmon sashimi. How does that look?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "rachel_pregnancy_diet",
+        "value": "Cannot eat raw or undercooked fish, should avoid alcohol-based preparations",
+        "disclosed": false,
+        "surface_form": "Rachel is five months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Five months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw/undercooked fish (listeria/parasites risk)",
+          "Pregnancy → avoid alcohol-based dishes"
+        ]
+      },
+      {
+        "key": "priya_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a strict Jain household in Gujarat and still follows all the traditions",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain household, follows traditions → practicing Jain",
+          "Jain dietary practice → no meat, no fish, no eggs",
+          "Strict Jain → also no root vegetables (onion, garlic, potato, carrot etc.)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are the office party organizer planning a holiday buffet. You will share attendee details and their dietary situations across several turns. The guest list will change — someone joins late, someone has to leave early but wants food saved, and one person's dietary restriction turns out to be a misdiagnosis. At the end you will share a catering menu and ask how it looks. You must NEVER hint at which dishes are problematic or safe — just ask for the assistant's take on the menu.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, upbeat office organizer. You always refer to your colleagues by name in third person (e.g. 'Rachel told me...', 'Derek messaged...'). You never express frustration even when plans keep changing — you treat each update as normal party planning chaos. Keep your tone light and matter-of-fact.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning our company holiday party this year and I'm in charge of the buffet. Got any tips for picking a catering menu?",
+          "success_criteria": "Agent engages with buffet planning suggestions",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate holiday party buffet planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So there are four of us with specific dietary stuff I need to watch out for — me, Rachel, Derek, and Priya. Rachel is five months pregnant. Derek was diagnosed with celiac disease a couple years ago. And Priya grew up in a strict Jain household in Gujarat and still follows all the traditions. Party is next Friday evening, about 30 people total but these four are the tricky ones",
+          "success_criteria": "Agent acknowledges all three people's dietary situations",
+          "required_info_keys": [
+            "attendees",
+            "rachel_pregnant",
+            "derek_celiac",
+            "party_details"
+          ],
+          "required_constraint_keys": [
+            "rachel_pregnancy_diet",
+            "priya_jain_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 3 entities with inferential and direct constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is about 25 dollars a head, does that sound reasonable for a catered buffet?",
+          "success_criteria": "Agent responds about budget feasibility",
+          "required_info_keys": [
+            "budget_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Noise turn — on-topic budget question to create distance"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, Marcus from accounting just confirmed he's coming too, so add him to the dietary needs list. He ended up in the hospital last year after accidentally eating something with peanuts at a work event",
+          "success_criteria": "Agent registers Marcus and his peanut allergy",
+          "required_info_keys": [
+            "marcus_joins"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity (Marcus, peanut allergy)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Rachel just told me she has to leave the party early — her prenatal appointment got moved to that evening. She asked if I could save her a plate though so she can grab it the next morning from the office fridge",
+          "success_criteria": "Agent notes Rachel is leaving early but needs a plate saved, and her pregnancy dietary constraints still apply to the saved plate",
+          "required_info_keys": [
+            "rachel_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Rachel leaves but her pregnancy constraints apply to saved plate"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Derek just messaged the group chat — he got retested last month and turns out he never actually had celiac, it was a misdiagnosis. He's been eating bread and pasta all week with zero issues",
+          "success_criteria": "Agent removes Derek's celiac restriction",
+          "required_info_keys": [
+            "derek_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Derek's celiac was a misdiagnosis"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "We booked the big conference room on the third floor — should we set up one long table or a few stations?",
+          "success_criteria": "Agent responds about setup without losing track of dietary constraints",
+          "required_info_keys": [
+            "venue_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "venue setup",
+            "drift_topic": "conference room layout for buffet — one long table vs stations",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think we need to label the dishes with little cards? Like ingredient cards or something?",
+          "success_criteria": "Agent responds about labeling without hinting at specific constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "whether to use ingredient label cards at the buffet",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance between constraints and probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so the caterer sent over their holiday package. The dishes are: beef satay skewers, mushroom risotto, shrimp cocktail, Caesar salad with croutons, roasted root vegetable medley, and salmon sashimi. How does that look?",
+          "success_criteria": "Agent checks each dish against current constraint state: beef satay (peanut sauce — Marcus allergy), shrimp cocktail (animal/seafood — Priya Jain), root vegetable medley (root veg — Priya Jain), salmon sashimi (raw fish — cannot go on Rachel's saved plate but fine for buffet table). Caesar salad with croutons is fine (Derek's celiac was misdiagnosis). Mushroom risotto is fine for everyone.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three dishes have clear problems: (1) Beef satay skewers contain peanut sauce — Marcus has a severe peanut allergy (hospitalized last year). (2) Shrimp cocktail — Priya is a practicing Jain, cannot eat seafood or any animal product. (3) Roasted root vegetable medley — Priya as a strict Jain cannot eat root vegetables (onion, garlic, potato, carrot, etc.). One dish has a scope distinction: (4) Salmon sashimi is fine on the buffet table, but it is raw fish and must NOT be put on Rachel's saved plate (she is pregnant — raw fish is unsafe during pregnancy). Two dishes are fine: (5) Mushroom risotto is safe for everyone. (6) Caesar salad with croutons is fine — Derek's celiac was a misdiagnosis, he can eat gluten now.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Beef satay skewers are problematic: satay sauce contains peanuts, and Marcus has a peanut allergy (was hospitalized after eating peanuts at a work event)",
+      "Shrimp cocktail is problematic: Priya follows strict Jain dietary practice, which prohibits meat, fish, and seafood",
+      "Roasted root vegetable medley is problematic: Priya as a strict Jain cannot eat root vegetables",
+      "Salmon sashimi must NOT be included on Rachel's saved plate because she is pregnant and raw fish is unsafe during pregnancy — but it is fine for the buffet table",
+      "Mushroom risotto is fine for everyone currently attending",
+      "Caesar salad with croutons is fine — Derek's celiac was a misdiagnosis, he can eat gluten now"
+    ],
+    "forbidden_elements": [
+      "Flagging Caesar salad croutons as a problem for Derek (his celiac was a misdiagnosis, constraint removed)",
+      "Saying salmon sashimi is completely off the menu (it is only problematic for Rachel's saved plate, fine for the buffet table)",
+      "Flagging any dish as problematic for Rachel at the buffet table (she is leaving early, constraints only apply to her saved plate)",
+      "Over-generalizing Priya's Jain diet to all vegetables (only root vegetables are restricted, not mushrooms or leafy greens)",
+      "Ignoring Marcus's peanut allergy on the beef satay skewers (late-joining entity, most commonly forgotten)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns. The agent must track: (1) Rachel is pregnant → no raw fish, no alcohol (inferential, never explicitly stated as a dietary rule), (2) Priya is from a strict Jain household → no meat, no fish, no eggs, no root vegetables (inferential chain, never explicitly stated), (3) Marcus joins late with a peanut allergy (late-joining entity — primary error source), (4) Rachel EXITS the party early but wants a plate saved → her pregnancy constraints still apply to the saved plate only, not to the buffet table (scope change), (5) Derek's celiac is REMOVED (misdiagnosis) → gluten is fine for him now. At probe time, the agent must apply CURRENT constraint state: Marcus=peanut allergy (satay skewers), Priya=Jain (shrimp cocktail + root vegetables), Rachel=pregnant but only for saved plate (salmon sashimi). Derek has no restrictions. The Caesar salad with croutons is a trap — it looks problematic for celiac but Derek's constraint was removed. The root vegetable medley tests whether the agent knows strict Jain practice avoids root vegetables specifically."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

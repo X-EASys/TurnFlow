@@ -1,4 +1,4 @@
-"""Single-call production adapter for the frozen T17/T19 judge.
+"""Single-call production adapter for the frozen T2/T4 judge.
 
 Compilation and parsing live in ``frozen_judge``. This adapter owns only the
 transport boundary and status accounting shared by CLI and benchmark paths.
@@ -107,7 +107,7 @@ def judge_once(task, scenario_key, full_messages, model, *, source_document=None
 
     ``source_document`` is the original scenario JSON when supplied by a
     benchmark loader. Standalone callers may select the packaged, hash-checked
-    source by its full ``T17/v2/T17_026`` identity instead.
+    source by its full ``T2/v2/T2_026`` identity instead.
     """
     preflight_metadata = {}
     try:
@@ -115,7 +115,7 @@ def judge_once(task, scenario_key, full_messages, model, *, source_document=None
         if source_document is not None:
             core.verify_source(scenario_key, source_document)
         # Preserve the verified source contract even when the input cannot be
-        # compiled (e.g. the frozen T19 context limit). Resume must keep these
+        # compiled (e.g. the frozen T4 context limit). Resume must keep these
         # INVALID positions, not quietly rerun them. Never attach this identity
         # before an explicitly supplied source has passed verification.
         catalog_entry = core.get_catalog().get(scenario_key)
@@ -123,7 +123,7 @@ def judge_once(task, scenario_key, full_messages, model, *, source_document=None
             preflight_metadata = dict(revision=core.revision,
                 profile=catalog_entry['profile'], provisional=catalog_entry.get('provisional'),
                 source_content_sha256=catalog_entry['source_content_sha256'])
-            if task == 'T19':
+            if task == 'T4':
                 from .full_final import WINDOW_POLICY
                 preflight_metadata.update(revision=WINDOW_POLICY, window_policy=WINDOW_POLICY,
                                           contract_revision=core.revision)
@@ -241,7 +241,7 @@ def evaluate_simulation(task, simulation, model, *, source_path=None, scenario_k
         success=row['passed'] is True,
         scores=ScoreBreakdown(correctness=float(row['passed']) if row['scoreable'] else None,
                               overall=float(row['passed'] is True)),
-        turn_count=simulation.turn_count, evaluator_type='frozen_t17_t19',
+        turn_count=simulation.turn_count, evaluator_type='frozen_t2_t4',
         feedback=row['decision_status'], metadata={'judge': row,
             'scoreable': row['scoreable'], 'decision_status': row['decision_status'],
             'legacy_success_is_pass_indicator': True})

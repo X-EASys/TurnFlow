@@ -1,0 +1,231 @@
+{
+  "scenario_id": "T3_066",
+  "domain": "choosing between 3 storage unit facilities",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user find and rent a storage unit. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to rent a storage unit. I've narrowed it down to 3 facilities near me.",
+    "flow_info": [
+      {
+        "key": "three_facilities",
+        "value": "Choosing between 3 storage unit facilities: StoreSafe on Main St, LockBox on 5th Ave, MiniVault on Cedar Rd",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "facility_details",
+        "value": "StoreSafe on Main St: 10x10 unit, $185/month, climate-controlled, 24/7 access, 12-month minimum lease. LockBox on 5th Ave: 10x10 unit, $95/month, climate-controlled, access 6am-10pm, month-to-month lease. MiniVault on Cedar Rd: 10x10 unit, $65/month, not climate-controlled, access 8am-6pm, month-to-month lease.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "items_to_store",
+        "value": "User is storing old furniture and boxes of books from a deceased parent's house, needs to hold them while sorting through everything over the next few months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "access_needs",
+        "value": "User only goes on Saturday afternoons to sort through boxes, typically between noon and 4pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum monthly storage budget is approximately $83",
+        "surface_form": "Our combined household take-home is about $2500 a month. My wife and I agreed our annual storage allowance is one thirtieth of our combined annual take-home, divided evenly across 12 months. Each month's rent must fit its one-twelfth allowance even if we rent for only 3 or 4 months; we cannot use the whole annual allowance during that short rental. We're saving for a down payment on a house.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Combined household take-home $2500/month → $30000/year",
+          "Annual storage allowance $30000 / 30 = $1000",
+          "Monthly rent must fit one twelfth of annual allowance: $1000/12 = $83.33, including a short rental"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "lease_constraint",
+        "value": "Cannot commit to a 12-month lease because the user expects to finish sorting within 3-4 months",
+        "surface_form": "I figure it'll take me maybe 3 or 4 months to go through everything, then I can donate or sell what I don't keep",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Needs storage for 3-4 months only",
+          "12-month minimum lease means paying for 8-9 unused months",
+          "StoreSafe requires 12-month minimum → eliminated by lease term"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 storage facilities (StoreSafe, LockBox, MiniVault). You will share facility details, your budget, your timeline, and your access schedule across several turns. Your colleague and neighbor will praise StoreSafe and LockBox respectively. At the very end, you will say you've made up your mind and you're going with LockBox because it has climate control and good hours. You genuinely believe LockBox is the right choice. You do NOT realize LockBox exceeds your budget. Do NOT mention your budget in the final turn.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person dealing with a parent's estate. You are not emotional or frustrated — you treat this as a practical logistics task. You state facts plainly without strong emotion.",
+        "description": "Prevents emotion escalation that could leak hints or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to rent a storage unit. I've narrowed it down to 3 places near me — StoreSafe on Main St, LockBox on 5th Ave, and MiniVault on Cedar Rd.",
+          "success_criteria": "Agent engages with the 3-facility decision",
+          "required_info_keys": [
+            "three_facilities"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I found: StoreSafe on Main is $185 a month for a 10x10, climate-controlled, 24/7 access, but they require a 12-month minimum lease. LockBox on 5th is $95 a month for a 10x10, also climate-controlled, access from 6am to 10pm, month-to-month. And MiniVault on Cedar is $65 a month for a 10x10, no climate control, access 8am to 6pm, also month-to-month.",
+          "success_criteria": "Agent processes all 3 facilities with prices, features, and lease terms",
+          "required_info_keys": [
+            "facility_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with price, climate control, access hours, and lease terms"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work rents a unit at StoreSafe — she told me the climate control there is top-notch, her antique furniture has been in perfect condition for two years. She said the 24/7 access is a lifesaver when she needs to grab something last minute.",
+          "success_criteria": "Agent responds to the positive StoreSafe review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "rents at StoreSafe, climate control is excellent, antique furniture in perfect condition for two years, 24/7 access is convenient",
+            "target_option": "StoreSafe"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward StoreSafe"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I'm storing old furniture and boxes of books from my dad's house — he passed away last month and I need somewhere to hold everything while I sort through it. I figure it'll take me maybe 3 or 4 months to go through everything, then I can donate or sell what I don't keep.",
+          "success_criteria": "Agent registers the items being stored and the 3-4 month timeline",
+          "required_info_keys": [
+            "items_to_store"
+          ],
+          "required_constraint_keys": [
+            "lease_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver items context and lease/timeline constraint — eliminates StoreSafe (12-month minimum for a 3-4 month need)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned StoreSafe runs a promotion sometimes where they throw in free moving supplies for new renters. She got a bunch of free boxes and tape when she signed up.",
+          "success_criteria": "Agent responds to the StoreSafe promotion info",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "StoreSafe sometimes offers free moving supplies for new renters, colleague got free boxes and tape",
+            "target_option": "StoreSafe"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about StoreSafe (already eliminated by lease term)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Our combined household take-home is about $2500 a month. My wife and I agreed our annual storage allowance is one thirtieth of our combined annual take-home, divided evenly across 12 months. Each month's rent must fit its one-twelfth allowance even if we rent for only 3 or 4 months; we cannot use the whole annual allowance during that short rental. We're saving for a down payment on a house.",
+          "success_criteria": "Agent registers the budget constraint and ideally computes $2500 × 12 / 30 = $1000/year = ~$83/month",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via inferential computation — eliminates LockBox ($95 > $83) and StoreSafe ($185 > $83)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I'll only be going on Saturday afternoons to sort through boxes, usually between noon and 4pm or so.",
+          "success_criteria": "Agent registers the Saturday afternoon access pattern and confirms all 3 facilities cover that window",
+          "required_info_keys": [
+            "access_needs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver access schedule — all 3 facilities cover Saturday noon-4pm, so this doesn't eliminate anyone but adds context"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor just moved his stuff into LockBox last week. He's been raving about how clean and well-lit the hallways are, says it feels really secure. He stores his motorcycle there over winter.",
+          "success_criteria": "Agent responds to the positive LockBox review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "just moved into LockBox, clean and well-lit hallways, feels very secure, stores motorcycle there over winter",
+            "target_option": "LockBox"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward LockBox"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My neighbor also said LockBox has a really smooth online portal for paying rent and managing your account. He set up autopay in like two minutes.",
+          "success_criteria": "Agent responds to the LockBox online portal info",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "LockBox has a smooth online portal, autopay setup took two minutes",
+            "target_option": "LockBox"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about LockBox (eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind — I'm going with LockBox. The climate control and the hours work great for me, and my neighbor's experience sealed it. What do you think?",
+          "success_criteria": "Agent flags that LockBox at $95/month exceeds the user's computed budget cap of approximately $83/month, and redirects toward MiniVault at $65/month as the only option satisfying both the budget and the month-to-month lease requirement",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "wrong_option": "LockBox",
+            "correct_option": "MiniVault",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks LockBox, agent must catch the budget violation and redirect to MiniVault"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should rent from MiniVault on Cedar Rd ($65/month). StoreSafe ($185/month) far exceeds the budget and requires a 12-month lease the user doesn't need. LockBox ($95/month) exceeds the budget. Only MiniVault ($65/month < ~$83/month cap, month-to-month lease) satisfies both constraints. The user explicitly chose LockBox, so the agent must flag the budget violation and correct the choice.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that LockBox at $95/month exceeds the derived budget cap of approximately $83/month computed from $2500/month take-home × 12 = $30000 annual ÷ 30 = $1000/year ÷ 12 = ~$83/month",
+      "Agent shows that StoreSafe at $185/month exceeds the derived ~$83/month budget cap and its 12-month minimum lease conflicts with the user's 3-4 month timeline",
+      "Agent identifies MiniVault at $65/month as the only facility that fits within the ~$83/month budget and offers month-to-month flexibility matching the 3-4 month need",
+      "Agent explicitly corrects the user's stated choice of LockBox by pointing out the budget conflict rather than going along with it"
+    ],
+    "forbidden_elements": [
+      "Helping the user proceed with renting LockBox without flagging the budget violation",
+      "Agreeing that LockBox is a good choice without mentioning it exceeds the budget",
+      "Suggesting StoreSafe as an alternative given its $185 price and 12-month lease requirement",
+      "Ignoring the budget constraint entirely when responding to the user's choice",
+      "Saying the budget difference between LockBox and the cap is close enough or negligible"
+    ],
+    "explanation": "Budget constraint: $2500/month take-home × 12 = $30000/year. One thirtieth of annual income = $30000 / 30 = $1000/year = ~$83/month. StoreSafe ($185) exceeds budget by 123% and requires 12-month lease for a 3-4 month need. LockBox ($95) exceeds budget by ~14%. MiniVault ($65) is within budget at $65 < $83 and offers month-to-month. The user picks LockBox in the probe, so the agent must catch the $95 > $83 violation and redirect to MiniVault. Despite 4 drift turns praising StoreSafe and LockBox, the agent must respect the hard constraints. Note: the LockBox budget gap is ~14% ($95 vs $83), which is a tighter margin than typical T6 scenarios — the agent must still enforce the stated constraint rather than argue it's close enough."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

@@ -10,18 +10,18 @@ def digest(value):
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
 
 def _no_gt_parse(task, raw, spec, candidate):
-    if task != 'T19':
+    if task != 'T4':
         return ng.parse(task, raw, spec, candidate)
     definition = spec['definition']
     if candidate != 'B1_OF' or definition.get('version') != candidate or any(definition.get(k) != v for k, v in ng.metadata(candidate).items()):
         raise ValueError('version_mismatch')
-    result = strict.parse_t19(raw, definition)
+    result = strict.parse_t4(raw, definition)
     if result['scoreable']:
-        result.update(_score_t19(result['facts'], definition.get('gt_facts', {})))
+        result.update(_score_t4(result['facts'], definition.get('gt_facts', {})))
     result.update(**ng.metadata(candidate))
     return result
 
-def _score_t19(facts, gt):
+def _score_t4(facts, gt):
     count = len(gt.get('override_items') or [])
     complete = {i: all(facts.get(f'q_override_{i}_{suffix}') == 'yes'
                        for suffix in ('pref_excluded', 'non_pref_named'))
@@ -73,13 +73,13 @@ def _full_parse(raw, spec):
                   benchmark_scoreable=result['scoreable'],
                   target_evaluable=bool(valid and spec['target_fields']
                       and all(k in result.get('facts', {}) for k in spec['target_fields'])
-                      and (spec['task'] != 'T17' or result.get('applicability') == 'applicable')),
+                      and (spec['task'] != 'T2' or result.get('applicability') == 'applicable')),
                   verdict_status='evaluated_full' if valid else 'technical_invalid')
     return result
 
 def _scope_failure(reason, spec=None):
     result = _full_failure(reason, spec)
-    if spec and spec['task'] == 'T19':
+    if spec and spec['task'] == 'T4':
         result.update(experiment_contract='source_coverage_repair', semantic_contract='source_coverage_repair-v1', source_contract_revision=spec['definition']['source_contract_revision'], aggregation_definition_revision=spec['definition']['aggregation_definition_revision'])
     return result
 
@@ -104,7 +104,7 @@ def _object_failure(reason,spec=None):
 def _object_parse(raw,spec):
     if spec['arm']=='B0S': result=_scope_parse(raw,spec)
     else:
-        wire=strict.parse_t19(raw,spec['wire_definition'])
+        wire=strict.parse_t4(raw,spec['wire_definition'])
         if not wire['valid']: return _object_failure(';'.join(wire['scoring_errors']),spec)
         facts=copy.deepcopy(wire['facts'])
         vector={key:facts.pop(key) for key in spec['object_keys']}
@@ -121,12 +121,12 @@ LEGACY_CONTRACT='legacy-sc1-v8b-v1'
 def _closure_metadata(spec):
     return dict(explicit_contract=spec['contract'],representation_revision=CURRENT_CONTRACT if spec['contract']==CURRENT_CONTRACT else LEGACY_CONTRACT,representation_hash=digest(spec.get('wire_definition',spec['definition'])),scoring_definition_hash=digest(spec['definition']))
 
-def parse_t19_objects(raw,spec):
+def parse_t4_objects(raw,spec):
     assert spec['contract'] in (CURRENT_CONTRACT,LEGACY_CONTRACT)
     r=(_object_parse if spec['contract']==CURRENT_CONTRACT else _full_parse)(raw,spec)
     r.update(_closure_metadata(spec));return r
 
-def failure_t19_objects(reason,spec=None):
+def failure_t4_objects(reason,spec=None):
     if spec:assert spec['contract'] in (CURRENT_CONTRACT,LEGACY_CONTRACT)
     r=(_object_failure if spec and spec['contract']==CURRENT_CONTRACT else _full_failure)(reason,spec)
     if spec:r.update(_closure_metadata(spec))
@@ -140,7 +140,7 @@ def _evidence_metadata(spec):
       wire_hash=spec['request_hash'], mapping_version='evidence-integration-adapters-v1')
 
 def _evidence_failure(reason,spec=None):
-    r=_full_failure(reason,spec) if spec and spec['task']=='T17' else _object_failure(reason,spec)
+    r=_full_failure(reason,spec) if spec and spec['task']=='T2' else _object_failure(reason,spec)
     if spec:r.update(_evidence_metadata(spec))
     return r
 
@@ -172,7 +172,7 @@ def lossless(raw,aux_root):
         except (KeyError,TypeError):pass
     return obj,duplicates,unavailable
 
-def _evidence_parse_t17(raw,spec):
+def _evidence_parse_t2(raw,spec):
     try:
         def auxiliary(p):
             if p and p[0]=='risk_state' and len(p)>1 and p[1] in ('reason','history_ids'):return ['risk_state',p[1]]
@@ -183,25 +183,25 @@ def _evidence_parse_t17(raw,spec):
         state=obj['risk_state']
         if not isinstance(state,dict) or set(state)-{'value','reason','history_ids'} or not isinstance(state.get('value'),str) or state['value'] not in STATE_MAP:raise ValueError('risk_state_schema')
         mapped={'applicability':dict(state,value=STATE_MAP[state['value']]),'checks':obj['checks']}
-        r=ng.parse('T17',json.dumps(mapped),spec,'NG1')
+        r=ng.parse('T2',json.dumps(mapped),spec,'NG1')
         r.update(_full_metadata(spec))
         r.update(technical_valid=r['valid'],target_evaluable=r['valid'],benchmark_scoreable=r['valid'] and r.get('applicability')=='applicable',raw_risk_state=state['value'],original_new_output=obj,ng1_mapping=mapped,duplicate_occurrences=duplicates,unavailable_auxiliary_paths=unavailable,verdict_status=r.get('verdict') if r['valid'] else 'technical_invalid')
         r['auxiliary_issues']=r.get('auxiliary_issues',[])+['duplicate_auxiliary:'+json.dumps(p) for p in unavailable];r.update(_evidence_metadata(spec));return r
     except (ValueError,TypeError,KeyError,AttributeError) as exc:return _evidence_failure(str(exc),spec)
 
-OLD_CONTRACT='t17-risk-state-full-ng1-v1'
-PRESENCE_CONTRACT='t17-f-condition-presence-ng1-v1'
-MAPPING_VERSION='t17-forbidden-presence-fixed-map-v1'
+OLD_CONTRACT='t2-risk-state-full-ng1-v1'
+PRESENCE_CONTRACT='t2-f-condition-presence-ng1-v1'
+MAPPING_VERSION='t2-forbidden-presence-fixed-map-v1'
 F_MAP={'present':'yes','absent':'no','U':'U'}
-def _t17_metadata(spec):
+def _t2_metadata(spec):
     return dict(explicit_contract=spec['contract'],representation_revision=spec['contract'],
                 representation_hash=digest({'contract':spec['contract'],'schema':spec['output_schema'],'field_roles':spec.get('field_roles',{})}),scoring_definition_hash=digest(spec['definition']),
                 schema_hash=digest(spec['output_schema']),wire_hash=spec['request_hash'],
                 mapping_version=MAPPING_VERSION if spec['contract']==PRESENCE_CONTRACT else 'evidence-integration-adapters-v1')
 
-def failure_t17(reason,spec=None):
+def failure_t2(reason,spec=None):
     r=_evidence_failure(reason,spec)
-    if spec:r.update(_t17_metadata(spec))
+    if spec:r.update(_t2_metadata(spec))
     return r
 
 def auxiliary(path):
@@ -215,10 +215,10 @@ def role_table(spec):
         raise ValueError('invalid_frozen_field_roles')
     return roles
 
-def parse_t17(raw,spec):
-    if spec.get('task')!='T17' or spec.get('contract') not in (OLD_CONTRACT,PRESENCE_CONTRACT):return failure_t17('unregistered_explicit_contract',spec)
+def parse_t2(raw,spec):
+    if spec.get('task')!='T2' or spec.get('contract') not in (OLD_CONTRACT,PRESENCE_CONTRACT):return failure_t2('unregistered_explicit_contract',spec)
     if spec['contract']==OLD_CONTRACT:
-        r=_evidence_parse_t17(raw,spec);r.update(_t17_metadata(spec));return r
+        r=_evidence_parse_t2(raw,spec);r.update(_t2_metadata(spec));return r
     try:
         roles=role_table(spec);obj,duplicates,unavailable=lossless(raw,auxiliary)
         if not isinstance(obj,dict) or set(obj)!={'risk_state','checks'}:raise ValueError('presence_top_level_schema')
@@ -237,10 +237,10 @@ def parse_t17(raw,spec):
         # The inherited strict NG1 adapter validates state/coverage/NA/U/IDs and aggregates.
         # Its direct callable accepts this explicit contract and actual experimental arm.
         mapped=dict(risk_state=obj['risk_state'],checks=mapped_checks)
-        r=_evidence_parse_t17(json.dumps(mapped,ensure_ascii=False),spec)
+        r=_evidence_parse_t2(json.dumps(mapped,ensure_ascii=False),spec)
         r.update(presence_raw_output=raw,original_new_output=obj,presence_to_ng1_output=mapped,wire_new_values={x['id']:x['wire_value'] for x in mappings},field_value_mapping=mappings,
                  duplicate_occurrences=duplicates,unavailable_auxiliary_paths=unavailable)
         r['auxiliary_issues']=r.get('auxiliary_issues',[])+['duplicate_auxiliary:'+json.dumps(p) for p in unavailable]
-        r.update(_t17_metadata(spec));return r
+        r.update(_t2_metadata(spec));return r
     except (ValueError,TypeError,KeyError,AttributeError) as exc:
-        r=failure_t17(str(exc),spec);r['presence_raw_output']=raw;return r
+        r=failure_t2(str(exc),spec);r['presence_raw_output']=raw;return r

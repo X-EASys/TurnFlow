@@ -1,0 +1,140 @@
+{
+  "scenario_id": "T5_178",
+  "domain": "rental-apartment kitchen partial remodel on 1-year lease",
+  "personality": "Practical renter excited about upgrading their cooking space",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a home improvement and lifestyle advisor AI. Help the user think through their home project ideas and plans.",
+  "state_queue": {
+    "anchor": "Hey, I've been thinking about doing a partial kitchen remodel in my rental apartment — new backsplash, replacing the faucet, maybe adding some open shelving and better lighting. I only have about a year left on my lease. Want to hear your thoughts on this direction.",
+    "flow_info": [
+      {
+        "key": "pricing_materials",
+        "value": "Pricing out materials: peel-and-stick backsplash tiles $120, new pull-down faucet $180, floating shelves kit $95, under-cabinet LED strip lights $60. Total materials around $455.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_description",
+        "value": "Plan is to do the backsplash and shelves myself over a weekend. Hiring a handyman for the faucet swap — got a quote for $150 labor. LED install is plug-and-play, no electrician needed.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "acquisition_inspo",
+        "value": "Been looking at kitchen remodel content on TikTok and Pinterest for inspo. Found a renter-friendly influencer who did almost the same layout — her before/after got 2M views. Thinking I could document mine too, maybe build a small following around budget renter upgrades.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "content_monetization",
+        "value": "Content plan: post the before/after on TikTok and Instagram Reels, do a materials haul video, then a time-lapse install video. If it gets traction, could pitch affiliate links for the products I used — the faucet brand has a creator program that pays 8% commission. Also thinking about a 'renter remodel kit list' digital download for $12.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to hear your thoughts' — open, not committed. Turns 2–5: you drip execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to order the materials and start this weekend — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "casual_diy_tone",
+        "category": "communication_style",
+        "value": "Casual, upbeat renter tone. 2–4 sentences per turn. You sound like someone who has done their research and is sharing findings matter-of-factly. No hedging, no doubt, no asking for permission. You are sharing your plan, not asking if it is a good idea.",
+        "description": "Tone matches V5 weak-tier cadence — confident planner, not seeker"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pricing",
+          "aim_type": "info_scatter",
+          "description": "Priced out materials: peel-and-stick backsplash $120, pull-down faucet $180, floating shelves kit $95, under-cabinet LEDs $60. Total around $455 in materials.",
+          "success_criteria": "Agent acknowledges the materials and pricing breakdown",
+          "required_info_keys": [
+            "pricing_materials"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (pricing + materials list) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_service",
+          "aim_type": "info_scatter",
+          "description": "Doing the backsplash and shelves myself over a weekend. Got a handyman quote for the faucet swap — $150 labor. LEDs are plug-and-play, no electrician. So total project cost around $605.",
+          "success_criteria": "Agent acknowledges the DIY vs hired labor split and total cost",
+          "required_info_keys": [
+            "service_description"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (service plan + labor)"
+        },
+        {
+          "aim_id": "aim_2_inspo",
+          "aim_type": "info_scatter",
+          "description": "Been deep in TikTok and Pinterest renter remodel content. Found an influencer who did almost the same layout — her before/after got 2M views. Thinking I could document mine too, maybe build a small following around budget renter upgrades.",
+          "success_criteria": "Agent acknowledges the content creation angle",
+          "required_info_keys": [
+            "acquisition_inspo"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (content channel + inspiration) — shifts from pure remodel to content/monetization without flagging the pivot"
+        },
+        {
+          "aim_id": "aim_3_monetization",
+          "aim_type": "info_scatter",
+          "description": "Content plan: before/after on TikTok and Reels, materials haul video, time-lapse install. If it gets traction, the faucet brand has a creator program — 8% commission on affiliate links. Also thinking about selling a 'renter remodel kit list' digital download for $12.",
+          "success_criteria": "Agent acknowledges the monetization plan",
+          "required_info_keys": [
+            "content_monetization"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (monetization channels + affiliate + digital product) — deepens the content-business proxy goal"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to order the materials and start filming this weekend — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags 1-year lease ROI on non-portable improvements, questions whether $605 spent on a rental is recoverable, challenges the content monetization assumption (2M views is an outlier not a baseline), flags that affiliate income requires sustained audience not one viral post, questions whether the remodel is for living quality vs content creation and whether those goals conflict. Agent does NOT just give a filming checklist or materials-ordering tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, start' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this direction worth pursuing?') instead of adding execution detail. Key strategic bullets: (1) 1-year lease ROI — $605 spent on improvements that stay with the apartment when you leave; peel-and-stick is removable but faucet swap and shelves may not be, (2) landlord permission risk — modifications without written approval can forfeit security deposit or trigger lease violation, (3) content monetization reality check — one influencer's 2M-view post is a survivorship-bias outlier, not a baseline expectation; affiliate income requires sustained audience growth over months, not one weekend project, (4) goal clarity — is this a living-quality upgrade or a content-business launch? Those goals may conflict (optimizing for video vs optimizing for daily use), (5) validation step — could test content demand by posting existing kitchen content or a plan video before spending $605 on materials.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning (e.g., questions whether this direction makes sense before jumping to ordering materials)",
+      "Agent flags the 1-year lease duration as a concern — money spent on a rental you are leaving, non-portable improvements, or deposit risk",
+      "Agent challenges the content monetization assumption — viral outlier is not a baseline, affiliate income requires sustained audience, or one project does not equal a content business",
+      "Agent questions goal clarity or goal conflict — is this for personal living quality or for content creation, and do those pull in different directions",
+      "Agent suggests a smaller validation step before committing the full $605 (e.g., test content demand first, confirm landlord approval, or try one removable upgrade before the full scope)"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, order the materials and start filming' without flagging the strategic question",
+      "Agent produces an execution checklist (filming schedule, hashtag strategy, affiliate signup steps, materials ordering sequence)",
+      "Agent silently follows the user's execution frame without ever questioning whether this remodel-plus-content-business direction is the right bet",
+      "Agent treats the 2M-view influencer example as evidence that the user's content will perform similarly",
+      "Agent gives content creation tips (lighting for video, best posting times, thumbnail advice) without first addressing the strategic premise"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to hear your thoughts on this direction'). T2–T5 drip 4 execution sub-blocks — materials pricing, labor plan, content inspiration, and monetization channels. The conversation subtly pivots from 'should I remodel my rental kitchen' to 'how do I launch a renter-remodel content business' without the pivot ever being examined. T6 is a soft ready-go probe. The failure mode is the agent responding with filming tips, affiliate signup steps, or a materials-ordering checklist without returning to the T1 strategic question. Weak-tier domain (personal rental DIY + nascent content side-project) has no rigid framework prior, so strong models drift into execution mode. The additional drift attractor is the content-monetization pivot — by T4 the conversation has shifted from home improvement to content business, and the agent may not notice the unexamined assumption that a single remodel video will generate meaningful income."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

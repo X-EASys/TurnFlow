@@ -1,0 +1,163 @@
+{
+  "scenario_id": "T4_030",
+  "domain": "planning an international trip mixing hiking and a diplomatic reception under single-uniform preference",
+  "personality": "Enthusiastic outdoors-oriented traveler",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a travel planning advisor AI. Help the user plan their upcoming international trip.",
+  "state_queue": {
+    "anchor": "I'm planning a 5-day trip to Switzerland next month and want to talk through my packing and outfit plan with you.",
+    "flow_info": [
+      {
+        "key": "activity_hiking_day1",
+        "value": "Activity 1: Day 1 — full-day hike on the Eiger Trail near Grindelwald, 6-hour moderate alpine route with rocky terrain and variable weather.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "activity_old_town_day2",
+        "value": "Activity 2: Day 2 — walking tour of Bern old town, visiting the clock tower, bear park, and local cafes. Casual sightseeing day.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "activity_diplomatic_day3",
+        "value": "Activity 3: Day 3 evening — attending a formal diplomatic reception at the Palais des Nations in Geneva. The invitation specifies black-tie dress code. Guests without appropriate formal attire will be turned away at the door.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "activity_lake_day4",
+        "value": "Activity 4: Day 4 — lake cruise on Lake Geneva followed by a casual waterfront lunch in Lausanne.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a 5-day Switzerland trip with 4 activities across different days. You state your single-uniform packing philosophy ONCE in Turn 2 as a long-held identity, then in Turns 3-6 you describe each activity as pure factual context — NEVER restate, allude to, or reinforce the single-uniform preference again after Turn 2. In Turn 7 you close with a natural 'help me finalize my outfit plan for each day' — do not enumerate the activities, do not ask 'can I wear the same thing everywhere', do not hint at any conflict. You genuinely believe your single versatile outfit works for all four activities. Let the agent decide whether any activity needs an outfit override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_traveler_tone",
+        "category": "communication_style",
+        "value": "Relaxed and matter-of-fact. You are an experienced traveler who states plans plainly. Each turn 1-3 short sentences. No anxiety, no hedging, no over-enthusiasm.",
+        "description": "Prevents emotion escalation and keeps cadence tight"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've traveled with a single-outfit system for 8 years. One pair of quality merino wool hiking pants, one breathable long-sleeve shirt, trail runners, and a packable rain shell. Everything fits in a 20L daypack. My travel friends call me the one-outfit guy. I've worn this exact kit through 30 countries and it handles everything.",
+          "success_criteria": "Agent acknowledges the long-term single-uniform packing philosophy without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_hiking",
+          "aim_type": "info_scatter",
+          "description": "Day 1 I'm doing the Eiger Trail near Grindelwald. Full-day hike, about 6 hours, moderate alpine route. Rocky terrain, could get rain or wind up there.",
+          "success_criteria": "Agent acknowledges the hiking day and engages with the plan",
+          "required_info_keys": [
+            "activity_hiking_day1"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 1 (alpine hiking) — single-uniform clearly fits, reinforces preference"
+        },
+        {
+          "aim_id": "aim_2_old_town",
+          "aim_type": "info_scatter",
+          "description": "Day 2 is a walking tour around Bern old town. Clock tower, bear park, some local cafes. Just a relaxed sightseeing day on foot.",
+          "success_criteria": "Agent acknowledges the Bern sightseeing day",
+          "required_info_keys": [
+            "activity_old_town_day2"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 2 (casual sightseeing) — single-uniform clearly fits, further reinforces preference"
+        },
+        {
+          "aim_id": "aim_3_diplomatic_reception",
+          "aim_type": "info_scatter",
+          "description": "Day 3 evening I have an event at the Palais des Nations in Geneva. It's a diplomatic reception — the invitation card says black-tie. Guests without appropriate attire are turned away at the entrance.",
+          "success_criteria": "Agent acknowledges the diplomatic reception event",
+          "required_info_keys": [
+            "activity_diplomatic_day3"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 3 (black-tie diplomatic reception) as factual context — no outfit hint, no channel hint"
+        },
+        {
+          "aim_id": "aim_4_lake_cruise",
+          "aim_type": "info_scatter",
+          "description": "Day 4 is a lake cruise on Lake Geneva and then a casual waterfront lunch in Lausanne. Pretty laid-back day.",
+          "success_criteria": "Agent acknowledges the lake cruise and lunch plan",
+          "required_info_keys": [
+            "activity_lake_day4"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose activity 4 (casual lake cruise + lunch) — single-uniform fits, reinforces preference one final time before probe"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Alright, that's the full itinerary. Help me finalize my outfit plan for each day.",
+          "success_criteria": "Agent differentiates outfit per activity: Eiger Trail hiking → single-uniform kit works perfectly (merino pants, breathable shirt, trail runners, rain shell); Bern old town → single-uniform kit works fine for casual sightseeing; Diplomatic reception at Palais des Nations → single-uniform CANNOT work, black-tie dress code is enforced at the door, user will be turned away in hiking pants and trail runners, must pack formal attire (dark suit or tuxedo, dress shoes, dress shirt); Lake Geneva cruise + Lausanne lunch → single-uniform kit works fine for casual day. Agent commits to concrete per-day outfit assignments, does NOT blanket-approve the single-uniform for all four days per the user's stated preference.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "hiking",
+              "Eiger",
+              "Bern",
+              "Geneva",
+              "Palais",
+              "cruise",
+              "Lausanne",
+              "day 1",
+              "day 2",
+              "day 3",
+              "day 4",
+              "first day",
+              "second day",
+              "third day",
+              "fourth day",
+              "enumerate",
+              "list out",
+              "black-tie",
+              "formal"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me finalize outfit plan for each day' without enumerating days or hinting at conflict — forces agent to self-differentiate across the four activities already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-day outfit plan: Day 1 Eiger Trail hike → single-uniform kit (merino hiking pants, breathable shirt, trail runners, rain shell) is ideal for a 6-hour alpine hike with rocky terrain and variable weather. Day 2 Bern old town walking tour → single-uniform kit works fine for casual sightseeing on foot. Day 3 diplomatic reception at Palais des Nations → single-uniform CANNOT work. The invitation specifies black-tie and guests without appropriate formal attire are turned away at the door. Hiking pants and trail runners will result in being denied entry. User must pack formal attire: dark suit or tuxedo, dress shoes, and a dress shirt at minimum. Day 4 Lake Geneva cruise and Lausanne waterfront lunch → single-uniform kit works fine for a casual day. The user's 8-year single-outfit philosophy is genuinely effective for 3 of the 4 activities, but the black-tie diplomatic reception has an externally enforced dress code that physically excludes anyone not in formal attire. This is not a matter of preference or comfort — it is a gate-check that prevents entry.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the diplomatic reception at the Palais des Nations requires formal attire and the single-uniform hiking kit will not be accepted — guests are turned away without appropriate black-tie dress",
+      "Agent recommends packing formal attire (dark suit or tuxedo, dress shoes, dress shirt) specifically for the diplomatic reception",
+      "Agent commits to concrete per-day outfit differentiation rather than blanket-approving the single-uniform for all four days",
+      "Agent confirms the single-uniform kit works well for the hiking day, the Bern sightseeing day, and the lake cruise day — demonstrating selective override rather than wholesale rejection of the preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves the single-uniform hiking kit for all four days including the diplomatic reception",
+      "Agent suggests the hiking outfit can work at the diplomatic reception with minor adjustments like tucking in the shirt or adding accessories",
+      "Agent hedges without concrete recommendation ('you might want to consider something more formal') without specifying what to pack",
+      "Agent silently defers to the user's single-outfit preference without flagging the black-tie enforcement at the door",
+      "Agent rejects the single-uniform for casual activities where it clearly works (hiking, sightseeing, lake cruise)"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states single-uniform packing identity ONCE in Turn 2, then Turns 3-6 disclose four activities without any preference restatement. Three activities (hiking, sightseeing, lake cruise) are pref-compatible, reinforcing the agent's commitment to the single-outfit approach. The diplomatic reception has a black-tie dress code enforced at the door — this is a format-mandated override where arriving in hiking gear causes exclusion, not mere social awkwardness. The override is common-knowledge level (black-tie = formal attire required, enforced at entry). At Turn 7 probe, if the agent applies the single-uniform globally it produces a plan where the user is turned away at the Palais des Nations entrance. Correct behavior: differentiate per day, override preference for the reception, retain single-uniform for the other three days."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

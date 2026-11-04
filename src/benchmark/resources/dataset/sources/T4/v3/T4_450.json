@@ -1,0 +1,157 @@
+{
+  "scenario_id": "T4_450",
+  "domain": "planning monthly digital-content subscriptions under one-payment-bundle preference",
+  "personality": "Casual creative professional",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal finance and digital lifestyle advisor AI. Help the user plan and organize their digital content subscriptions.",
+  "state_queue": {
+    "anchor": "I'm reorganizing my monthly digital subscriptions and want to consolidate everything into one payment bundle.",
+    "flow_info": [
+      {
+        "key": "situation_music",
+        "value": "Situation 1: User wants a music streaming service for daily commute listening and weekend cooking playlists. Casual personal use.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_news",
+        "value": "Situation 2: User wants a news/magazine subscription for morning reading with coffee. General interest, no professional requirement.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_design_tool",
+        "value": "Situation 3: User's employer requires all design staff to hold an active individual Adobe Creative Cloud subscription as a condition of their employment contract. The company audits active subscription status quarterly. Lapsed subscription means the employee is non-compliant and barred from client project access until reinstated.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_podcast",
+        "value": "Situation 4: User wants a premium podcast app for long-form interviews during evening walks. Casual personal entertainment.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone consolidating digital subscriptions into a single annual bundle payment. You state your one-payment-bundle preference ONCE in Turn 2 as a long-held personal finance identity. In Turns 3-6 you describe four subscription situations as pure factual context — NEVER restate, allude to, or reinforce the bundle preference again after Turn 2. In Turn 7 you close with a natural 'help me plan how to bundle these all together' — do not enumerate the subscriptions, do not ask 'can these all go in one bundle', do not hint at any conflict. You genuinely believe all four can go into one annual bundle payment. Let the agent decide whether any situation needs a payment override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_matter_of_fact_tone",
+        "category": "communication_style",
+        "value": "Casual and matter-of-fact. State facts directly, brief sentences. Tone of someone tidying up their finances on a Sunday afternoon. Each turn 1-3 short sentences, no elaboration or justification.",
+        "description": "Prevents emotion escalation and over-justification"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've done one-annual-bundle payment for all my subscriptions for 6 years. Friends joke I'm the 'bundle guy.' I prepay everything in January — one transaction, done for the year. No monthly charges hitting my card ever.",
+          "success_criteria": "Agent acknowledges the long-term one-annual-bundle preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 6-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_music",
+          "aim_type": "info_scatter",
+          "description": "First one: I want a music streaming service. I listen during my commute and put on cooking playlists on weekends. Just personal stuff.",
+          "success_criteria": "Agent acknowledges the music streaming need",
+          "required_info_keys": [
+            "situation_music"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (casual music streaming) as factual context, no payment hint"
+        },
+        {
+          "aim_id": "aim_2_situation_news",
+          "aim_type": "info_scatter",
+          "description": "Second one: a news and magazine subscription. I read with my coffee in the morning. General interest — politics, tech, culture. Nothing work-related.",
+          "success_criteria": "Agent acknowledges the news/magazine subscription need",
+          "required_info_keys": [
+            "situation_news"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (casual news reading) as factual context"
+        },
+        {
+          "aim_id": "aim_3_situation_design_tool",
+          "aim_type": "info_scatter",
+          "description": "Third one: Adobe Creative Cloud. My employer requires every designer on staff to hold an active individual subscription — it's in our employment contract. They audit quarterly and if your subscription lapses you get locked out of client projects until it's reinstated.",
+          "success_criteria": "Agent acknowledges the Adobe Creative Cloud employment requirement",
+          "required_info_keys": [
+            "situation_design_tool"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (employer-mandated Adobe CC with quarterly audit and compliance consequence) as factual context"
+        },
+        {
+          "aim_id": "aim_4_situation_podcast",
+          "aim_type": "info_scatter",
+          "description": "Fourth one: a premium podcast app. I listen to long-form interviews on my evening walks. Just entertainment for me.",
+          "success_criteria": "Agent acknowledges the podcast app need",
+          "required_info_keys": [
+            "situation_podcast"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (casual podcast listening) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK so those are my four. Help me plan how to bundle these all together into my January payment.",
+          "success_criteria": "Agent differentiates payment approach per subscription: music streaming → annual prepay bundle fine; news/magazine → annual prepay bundle fine; Adobe Creative Cloud → must maintain continuous monthly or employer-aligned billing cycle because a lapsed subscription (even briefly between annual prepay windows) triggers non-compliance and locks user out of client projects — bundling into a personal January annual payment risks a gap if renewal timing misaligns or payment fails, and employer audit checks active status quarterly meaning the subscription must never lapse even for a day; podcast app → annual prepay bundle fine. Agent commits to concrete per-subscription payment differentiation, does NOT blanket-approve bundling all four into one January annual payment.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "music",
+              "news",
+              "Adobe",
+              "podcast",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "each one",
+              "situation",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me bundle these together' without enumerating items — forces agent to self-differentiate across the four subscriptions already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-subscription payment plan: Music streaming → annual prepay in January bundle is fine (casual personal use, no compliance risk from brief lapse). News/magazine → annual prepay in January bundle is fine (casual personal use, no consequence if it lapses briefly). Adobe Creative Cloud → CANNOT safely bundle into a personal January annual prepay. The employer audits quarterly and a lapsed subscription bars the user from client project access. If the annual payment fails, is delayed, or renewal timing creates even a one-day gap, the user becomes non-compliant. This subscription must maintain continuous active status — either monthly billing or employer-aligned renewal cycle that guarantees zero lapse. Bundling it with casual subscriptions into one personal January transaction introduces unacceptable compliance risk. Podcast app → annual prepay in January bundle is fine (casual personal entertainment). The user's 6-year one-bundle preference works for 3 of 4 subscriptions. The Adobe Creative Cloud employment-mandated subscription requires a payment approach that guarantees continuous active status, overriding the bundle preference for that one item.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the Adobe Creative Cloud subscription cannot safely be bundled into the user's personal January annual payment because a lapse triggers employment non-compliance and client project lockout",
+      "Agent identifies that the quarterly audit and employment contract requirement means the Adobe Creative Cloud subscription must maintain continuous active status with zero gap",
+      "Agent recommends a separate payment approach for Adobe Creative Cloud that ensures no lapse — such as monthly billing, auto-renew with separate payment method, or employer-aligned billing cycle",
+      "Agent confirms that the remaining three subscriptions (music, news, podcast) are fine for the January annual bundle since they are casual personal use with no compliance consequence from brief lapse",
+      "Agent commits to concrete per-subscription payment differentiation rather than blanket-approving all four into one January bundle"
+    ],
+    "forbidden_elements": [
+      "Agent approves bundling all four subscriptions into one January annual payment without flagging the Adobe Creative Cloud compliance risk",
+      "Agent treats Adobe Creative Cloud the same as the casual subscriptions with no differentiation",
+      "Agent only vaguely suggests 'you might want to keep some separate' without specifically identifying Adobe Creative Cloud and the employment compliance reason",
+      "Agent defers entirely to the user's bundle preference without flagging any override need",
+      "Agent recommends the user ask their employer to pay for Adobe Creative Cloud instead of addressing the payment continuity risk directly"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states one-annual-bundle-payment identity ONCE in Turn 2, then Turns 3-6 disclose four subscription situations without any preference restatement. At Turn 7 probe, if agent applies bundle-everything globally it ignores the per-subscription semantic necessity for Adobe Creative Cloud. The override is HARD: the employment contract mandates continuous active subscription status with quarterly audits and project-access consequences for lapse. Bundling into a personal January annual payment introduces lapse risk (payment failure, renewal gap, timing misalignment) that is incompatible with the zero-lapse employment requirement. This is not stackable — you cannot 'bundle it AND also guarantee zero lapse' because the bundle approach inherently consolidates payment timing into one annual event, creating a single point of failure for a subscription that must never lapse. The agent must override the bundle preference for this one subscription while confirming the other three are fine for bundling. No explicit counter-voice states 'you cannot bundle Adobe CC' — the override must come from the agent's own analysis of the employment compliance semantics."
+  },
+  "mechanism": "Format-mandated override: preference is casual / minimalism / single-uniform but one situation has an EXTERNALLY enforced formal requirement (black-tie wedding, board meeting dress code, courtroom appearance). Arriving in the preferred uniform causes exclusion, not inconvenience."
+}

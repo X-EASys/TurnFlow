@@ -1,0 +1,213 @@
+{
+  "scenario_id": "T3_047",
+  "domain": "choosing a phone for elderly parents",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user choose a suitable phone for their parents. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need help picking a phone for my parents. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 phones for elderly parents: iPhone 16, Samsung Galaxy S24, Xiaomi Redmi Note 13",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "phone_details",
+        "value": "iPhone 16: 6799 yuan, latest iOS, great camera. Samsung Galaxy S24: 5299 yuan, large AMOLED screen, AI features. Xiaomi Redmi Note 13: 1299 yuan, large 6.67-inch screen, long battery life, simple mode built in",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "parents_age",
+        "value": "Parents are both 72 years old, have never used a smartphone before, currently using a basic flip phone",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is 4500 yuan",
+        "surface_form": "I've been setting aside 1500 from groceries each month for the past three months. That's all I have for this purchase",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "1500 yuan per month × 3 months = 4500 yuan total saved",
+          "4500 yuan is the total available budget for the phone"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "usability_constraint",
+        "value": "Phone must be simple and easy to use for elderly first-time smartphone users",
+        "surface_form": "My parents are 72 and have never touched a smartphone. They still use a flip phone. I need something they won't be scared of",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "72 years old + never used smartphone → need extremely simple interface",
+          "First-time smartphone users → need large icons, simple mode, minimal learning curve",
+          "Must not be intimidating → rules out complex flagship interfaces without dedicated elderly modes"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 phones (iPhone 16, Samsung Galaxy S24, Xiaomi Redmi Note 13) for your elderly parents. You will share phone details, your budget, and your parents' needs across several turns. Your colleague and neighbor will praise the iPhone and Samsung. At the very end, you will say you have decided on the Samsung Galaxy S24 and ask what the assistant thinks. You genuinely believe the Samsung is the best choice because of its big screen. You do NOT realize it exceeds your budget.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. When sharing what friends or colleagues said, you relay it casually. You never express frustration or impatience.",
+        "description": "Prevents emotion escalation that could leak the answer or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to pick a phone for my parents. I've been looking at three: the iPhone 16, the Samsung Galaxy S24, and the Xiaomi Redmi Note 13",
+          "success_criteria": "Agent engages with the 3-option phone selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "The iPhone 16 is 6799 yuan, latest iOS with a great camera. The Samsung Galaxy S24 is 5299 yuan, big AMOLED screen with AI features. The Xiaomi Redmi Note 13 is 1299 yuan, has a large 6.67-inch screen, long battery life, and a built-in simple mode",
+          "success_criteria": "Agent processes all 3 options with prices and attributes",
+          "required_info_keys": [
+            "phone_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and key features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just upgraded to the iPhone 16 last month. She keeps showing me the photos she takes of her kids — the portrait mode is unreal",
+          "success_criteria": "Agent responds to the positive iPhone review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "upgraded to iPhone 16, portrait mode photos are amazing",
+            "target_option": "iPhone 16"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward iPhone 16"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I've been setting aside 1500 from groceries each month for the past three months. That's all I have for this purchase",
+          "success_criteria": "Agent computes 1500 × 3 = 4500 budget and ideally recognizes iPhone 16 (6799) and Samsung S24 (5299) exceed it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via inference — eliminates iPhone and Samsung on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned the iPhone holds its resale value really well. She sold her old iPhone 14 for almost half what she paid",
+          "success_criteria": "Agent responds to iPhone resale value point",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "iPhone holds resale value well, sold iPhone 14 for almost half price",
+            "target_option": "iPhone 16"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about iPhone 16 (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My parents are 72 and have never touched a smartphone. They still use a flip phone. I need something they won't be scared of",
+          "success_criteria": "Agent recognizes elderly first-time users need simple interface, reinforcing Xiaomi's simple mode advantage",
+          "required_info_keys": [
+            "parents_age"
+          ],
+          "required_constraint_keys": [
+            "usability_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver usability constraint — elderly parents need simplicity"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My neighbor got his dad a Samsung Galaxy S24 for his birthday. His dad really likes how bright and vivid the screen is",
+          "success_criteria": "Agent responds to the positive Samsung review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "got his dad a Samsung Galaxy S24, dad loves the bright vivid screen",
+            "target_option": "Samsung Galaxy S24"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Samsung Galaxy S24"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor said the Samsung's AI can translate signs in real time when you point the camera. His dad used it when they traveled to Thailand",
+          "success_criteria": "Agent responds to Samsung AI translation feature",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Samsung AI translates signs in real time, neighbor's dad used it traveling in Thailand",
+            "target_option": "Samsung Galaxy S24"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Samsung (eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with the Samsung Galaxy S24. That big bright screen would be perfect for my parents. What do you think?",
+          "success_criteria": "Agent flags that the Samsung Galaxy S24 at 5299 yuan exceeds the 4500 yuan budget (1500 × 3 months) and redirects to the Xiaomi Redmi Note 13 as the only option that fits both budget and usability needs",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "wrong_option": "Samsung Galaxy S24",
+            "correct_option": "Xiaomi Redmi Note 13",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Samsung, agent must catch budget violation and redirect to Xiaomi"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should get the Xiaomi Redmi Note 13 (1299 yuan). The Samsung Galaxy S24 (5299 yuan) exceeds the 4500 yuan budget (1500 saved per month × 3 months). The iPhone 16 (6799 yuan) also exceeds the budget. Only the Xiaomi Redmi Note 13 (1299 yuan) fits within 4500 yuan and offers a built-in simple mode suitable for 72-year-old first-time smartphone users.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the Samsung Galaxy S24 at 5299 yuan exceeds the derived budget of 4500 yuan from 1500 yuan per month times 3 months",
+      "Agent shows that the iPhone 16 at 6799 yuan exceeds the derived budget of 4500 yuan from 1500 yuan per month times 3 months",
+      "Agent redirects the user toward the Xiaomi Redmi Note 13 as the option that fits within the 4500 yuan budget",
+      "Agent explains that the Xiaomi Redmi Note 13 at 1299 yuan is suitable for 72-year-old first-time smartphone users due to its simple mode and large screen"
+    ],
+    "forbidden_elements": [
+      "Agent agrees with the Samsung Galaxy S24 choice without flagging the budget violation",
+      "Agent helps the user proceed with purchasing the Samsung Galaxy S24",
+      "Agent suggests the iPhone 16 as a viable option despite it exceeding the 4500 yuan budget",
+      "Agent ignores the 1500 yuan times 3 months budget constraint when responding to the wrong choice",
+      "Agent says the Samsung Galaxy S24 price is acceptable or close enough to the budget"
+    ],
+    "explanation": "Budget constraint: 1500 yuan/month × 3 months = 4500 yuan total. iPhone 16 = 6799 yuan (exceeds by 51%). Samsung Galaxy S24 = 5299 yuan (exceeds by 18%, ratio 1.18x — in the boundary ambiguity zone but still over). Xiaomi Redmi Note 13 = 1299 yuan (well within budget). Usability constraint: parents are 72, never used a smartphone — Xiaomi has built-in simple mode. The user picks Samsung (wrong choice influenced by 4 drift turns praising iPhone and Samsung). The agent must catch the budget violation and redirect to Xiaomi."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

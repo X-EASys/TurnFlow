@@ -24,7 +24,7 @@ def load_candidate_bindings(path):
         if not isinstance(row, dict) or not required <= row.keys():
             raise ValueError('invalid_candidate_binding_schema')
         key = (row['source_key'], row['aim_id'])
-        if key in seen or row['task'] not in ('T17', 'T20') or not row['source_key'].startswith(row['task'] + '/'):
+        if key in seen or row['task'] not in ('T2', 'T5') or not row['source_key'].startswith(row['task'] + '/'):
             raise ValueError('duplicate_or_invalid_candidate_binding')
         if row['arms'] != ['R'] or row['turn_role'] != 'material' or not isinstance(row['dependencies'], list):
             raise ValueError('invalid_candidate_binding_role')

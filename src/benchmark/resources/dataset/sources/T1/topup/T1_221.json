@@ -1,0 +1,297 @@
+{
+  "scenario_id": "T1_221",
+  "domain": "picnic in the park for a group",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal and event planning assistant. Help the user plan a group picnic by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific food items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a picnic in the park this Saturday for a few friends. Can you help me figure out what food to bring?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Five of us: me, Rachel, Dev, Tomoko, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_celiac",
+        "value": "Rachel was diagnosed with celiac disease last year, she's been super strict about it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_peanut",
+        "value": "Dev had a peanut allergy incident at a work potluck — his throat swelled up and he needed an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_diabetes",
+        "value": "Marcus got diagnosed with type 2 diabetes a few months ago, his doctor told him to cut way back on sugar",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "time_preference",
+        "value": "We're thinking around noon, maybe 11:30 to set up",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tomoko_exits",
+        "value": "Tomoko just texted me — she caught a stomach bug and can't make it. She said don't worry about her",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_healed",
+        "value": "Marcus told me his latest bloodwork came back totally normal, his doctor said his diabetes is in remission and he doesn't need to restrict sugar anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_joins",
+        "value": "Oh, Rachel's sister Nina is coming too. She just had a baby three months ago and she's breastfeeding",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "drinks_question",
+        "value": "Should we bring a cooler for drinks or just water bottles?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_items",
+        "value": "Food list to check: peanut butter sandwiches, caprese salad skewers, gluten-free brownies, spicy tuna hand rolls, fruit salad with honey-lime dressing",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "tomoko_raw_fish",
+        "value": "Cannot eat raw fish or raw seafood",
+        "disclosed": false,
+        "surface_form": "Tomoko is about five months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → prenatal dietary restrictions",
+          "Prenatal restrictions → avoid raw fish/seafood (listeria/mercury risk)"
+        ]
+      },
+      {
+        "key": "rachel_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or cross-contaminated products",
+        "disclosed": false,
+        "surface_form": "Rachel was diagnosed with celiac disease last year, she's been super strict about it",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products — severe allergy",
+        "disclosed": false,
+        "surface_form": "Dev had a peanut allergy incident at a work potluck — his throat swelled up and he needed an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_sugar",
+        "value": "Must avoid high-sugar foods due to type 2 diabetes",
+        "disclosed": false,
+        "surface_form": "Marcus got diagnosed with type 2 diabetes a few months ago, his doctor told him to cut way back on sugar",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_breastfeeding",
+        "value": "Should avoid raw fish, high-mercury fish, and alcohol while breastfeeding",
+        "disclosed": false,
+        "surface_form": "Rachel's sister Nina just had a baby three months ago and she's breastfeeding",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Breastfeeding → dietary caution for infant",
+          "Breastfeeding restrictions → avoid alcohol, limit high-mercury fish, avoid raw fish"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a Saturday picnic for friends. You will introduce the group and their health situations, then update the guest list as people drop out or join. At the end you will share a specific food list and ask if there are any issues. You never hint at what the problems might be — you just ask openly.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person organizing a casual weekend picnic. You always refer to your friends by name in third person (e.g. 'Rachel told me...', 'Marcus said...'). You never express frustration or impatience when plans change. You treat each update as totally normal friend-group coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for friend updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a picnic in the park this Saturday for a few friends. Can you help me figure out what food to bring?",
+          "success_criteria": "Agent engages with picnic food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate picnic planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, Rachel, Dev, Tomoko, and Marcus. Rachel was diagnosed with celiac disease last year, she's been super strict about it. Dev had a peanut allergy incident at a work potluck — his throat swelled up and he needed an EpiPen. Tomoko is about five months pregnant. And Marcus got diagnosed with type 2 diabetes a few months ago, his doctor told him to cut way back on sugar.",
+          "success_criteria": "Agent acknowledges all four friends and their dietary situations",
+          "required_info_keys": [
+            "group_members",
+            "rachel_celiac",
+            "dev_peanut",
+            "marcus_diabetes"
+          ],
+          "required_constraint_keys": [
+            "tomoko_raw_fish",
+            "rachel_gluten",
+            "dev_peanut_allergy",
+            "marcus_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're thinking around noon, maybe 11:30 to set up. Any tips on what kinds of food travel well for a picnic?",
+          "success_criteria": "Agent provides picnic food suggestions that account for the constraints",
+          "required_info_keys": [
+            "time_preference"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Add timing info and ask general picnic food advice"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Tomoko just texted me — she caught a stomach bug and can't make it. She said don't worry about her.",
+          "success_criteria": "Agent notes Tomoko is no longer attending and her pregnancy-related constraint is removed",
+          "required_info_keys": [
+            "tomoko_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Tomoko leaves, her raw fish constraint should be removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Marcus told me his latest bloodwork came back totally normal — his doctor said his diabetes is in remission and he doesn't need to restrict sugar anymore. He was so happy about it.",
+          "success_criteria": "Agent removes Marcus's sugar restriction",
+          "required_info_keys": [
+            "marcus_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Marcus's diabetes is in remission, sugar restriction lifted"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh, Rachel's sister Nina is coming too. She just had a baby three months ago and she's breastfeeding.",
+          "success_criteria": "Agent registers Nina as a new attendee with breastfeeding-related dietary considerations",
+          "required_info_keys": [
+            "nina_joins"
+          ],
+          "required_constraint_keys": [
+            "nina_breastfeeding"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with inferential constraint (breastfeeding → avoid raw fish, alcohol, high-mercury fish)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we bring a cooler for drinks or just water bottles? I don't want to lug too much stuff.",
+          "success_criteria": "Agent responds about drink logistics without losing track of dietary constraints",
+          "required_info_keys": [
+            "drinks_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "cooler vs water bottles for the picnic",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "How many people should I plan portions for? I always make too much or too little.",
+          "success_criteria": "Agent helps with portion planning based on current headcount",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "portions",
+            "drift_topic": "how much food to prepare for the group",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to increase distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so here's what I'm thinking of bringing: peanut butter sandwiches, caprese salad skewers, gluten-free brownies, spicy tuna hand rolls, and a fruit salad with honey-lime dressing. Any issues?",
+          "success_criteria": "Agent identifies peanut butter sandwiches as dangerous for Dev, flags spicy tuna hand rolls as problematic for Nina (breastfeeding → raw fish), notes peanut butter sandwiches also contain gluten (bread) for Rachel, confirms caprese salad skewers and fruit salad are fine for everyone, confirms gluten-free brownies are fine (Marcus's sugar restriction is lifted)",
+          "required_info_keys": [
+            "probe_items"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 food items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Two items have clear problems: (1) Peanut butter sandwiches — Dev has a severe peanut allergy (EpiPen-level), and the bread contains gluten which Rachel (celiac) cannot eat. (2) Spicy tuna hand rolls — contain raw fish, which Nina should avoid while breastfeeding. Three items are fine: caprese salad skewers (safe for everyone), gluten-free brownies (safe — Marcus's sugar restriction has been lifted, and they're gluten-free for Rachel), and fruit salad with honey-lime dressing (safe for everyone).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Peanut butter sandwiches are problematic: Dev has a severe peanut allergy",
+      "Peanut butter sandwiches are also problematic for Rachel: the bread contains gluten and she has celiac disease",
+      "Spicy tuna hand rolls are problematic: Nina is breastfeeding and should avoid raw fish",
+      "Caprese salad skewers are fine for everyone currently attending",
+      "Gluten-free brownies are fine — agent does NOT flag sugar as a problem for Marcus since his diabetes is in remission",
+      "Fruit salad with honey-lime dressing is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging raw fish as a problem for Tomoko (she is no longer attending)",
+      "Flagging sugar or brownies as a problem for Marcus (his diabetes is in remission, restriction lifted)",
+      "Saying Dev has a general nut allergy or tree nut allergy (he specifically has a peanut allergy)",
+      "Flagging spicy tuna hand rolls as problematic because of Tomoko's pregnancy (she dropped out)",
+      "Saying Nina cannot eat tuna because of mercury alone without mentioning raw fish concern"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint removal across 9 conversational turns. The agent must track: (1) Rachel has celiac → no gluten (direct), (2) Dev has severe peanut allergy (direct), (3) Tomoko is pregnant → no raw fish (inferential, but she EXITS the picnic so this constraint disappears), (4) Marcus has diabetes → low sugar (direct, but this constraint is REMOVED when his doctor confirms remission), (5) Nina joins late and is breastfeeding → should avoid raw fish and alcohol (inferential, late-joining entity). At probe time, the current active constraints are: Rachel=celiac (no gluten), Dev=peanut allergy, Nina=breastfeeding (no raw fish). Marcus and Tomoko have NO active restrictions. The key traps are: gluten-free brownies look like they might be a sugar problem for Marcus (but his restriction was lifted), and spicy tuna hand rolls look like they might be a Tomoko problem (but she left — however Nina the late-joiner also can't have raw fish)."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

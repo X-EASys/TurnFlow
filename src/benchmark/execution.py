@@ -66,7 +66,7 @@ def run(config, output, *, agent_model=None, tasks=None, keys=None, smoke=None,
     routes = routes_from_file(config, agent_model)
     selection = dataset.select(tasks=tasks, keys=keys, smoke=smoke)
     dataset.verify()
-    identity = dict(version="0.3.0", routes=routes, selection=selection,
+    identity = dict(version="0.4.0", routes=routes, selection=selection,
                     dataset_manifest_sha256=hashlib.sha256((dataset.ROOT / "manifest.json").read_bytes()).hexdigest(),
                     code_sha256=code_fingerprint())
     if (output / "run.json").exists():

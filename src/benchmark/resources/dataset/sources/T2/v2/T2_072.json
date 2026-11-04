@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T2_072",
+  "domain": "planning a community sports league",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their community project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm thinking about organizing a casual sports league in our neighborhood. I've never organized anything like this before — I just play pickup basketball on weekends at the park. No budget really, just whatever I can cover out of pocket.",
+    "flow_info": [
+      {
+        "key": "organizer_constraint",
+        "value": "No organizing experience, no budget beyond personal pocket money, solo organizer",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Casual weekend basketball games at the local park, maybe 10-15 people",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_question",
+        "value": "Asking whether to use the public park courts or look for an indoor gym",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multisport",
+        "value": "Add soccer and volleyball alongside basketball",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_teams_schedule",
+        "value": "Formal team rosters, a round-robin schedule, and standings",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_refs_equipment",
+        "value": "Referees for each game and proper equipment like jerseys and scoreboards",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_website_registration",
+        "value": "A website with online registration, team profiles, and live score updates",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_sponsors_awards",
+        "value": "Sponsors, an end-of-season awards ceremony with trophies, and a closing event with food trucks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_no_experience_no_budget",
+        "value": "One person with zero organizing experience and no real budget — cannot run a multi-sport league with referees, sponsors, a website, and an awards ceremony",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm thinking about organizing a casual sports league in our neighborhood. I've never organized anything like this before — I just play pickup basketball on weekends at the park. No budget really, just whatever I can cover out of pocket.",
+          "success_criteria": "Agent acknowledges the casual scope and the user's experience and budget level",
+          "required_info_keys": [
+            "organizer_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_no_experience_no_budget"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the constraint: solo organizer, no experience, no budget"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Yeah, nothing fancy — just getting maybe 10 or 15 people together for basketball on Saturday mornings at the park. Keep it super chill.",
+          "success_criteria": "Agent provides guidance for organizing casual pickup games",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — casual weekend pickup basketball"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should we just stick with the public park courts or would it be worth looking into an indoor gym? The park is free obviously.",
+          "success_criteria": "Agent provides a reasonable comparison of park vs gym options",
+          "required_info_keys": [
+            "venue_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate venue question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Park it is, way simpler. Oh, a few neighbors mentioned they'd love soccer and volleyball too. Could we add those? Nothing crazy, just rotating which sport we play each week.",
+          "success_criteria": "Agent helps plan multi-sport rotation — notes it adds coordination but still seems manageable",
+          "required_info_keys": [
+            "feature_multisport"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — multi-sport adds coordination complexity but sounds small"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "People are getting into it. Can we set up actual teams with rosters, do a round-robin schedule, and keep standings? Just to make it a bit more competitive and fun.",
+          "success_criteria": "Agent helps with team structure and scheduling",
+          "required_info_keys": [
+            "feature_teams_schedule"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — formal teams and standings require ongoing administration"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "If we're doing real standings, we probably need refs for each game to keep things fair, right? And maybe proper jerseys for the teams and a portable scoreboard — nothing too expensive, just something decent.",
+          "success_criteria": "Agent notes referees and equipment add cost and logistics",
+          "required_info_keys": [
+            "feature_refs_equipment"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — referees cost money, equipment costs money, logistics multiply"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "It would be really cool to have a simple website where people can register online, see their team profiles, and check live score updates during games. Just a lightweight thing.",
+          "success_criteria": "Agent acknowledges a website with live scores is a significant technical undertaking",
+          "required_info_keys": [
+            "feature_website_registration"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — website with registration and live scores requires development skills or paid platform"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "I was also thinking we could get some local businesses to sponsor us — maybe put their logos on the jerseys. And at the end of the season, do an awards ceremony with trophies for MVP, best team, that kind of thing. Maybe get a couple food trucks for a closing event.",
+          "success_criteria": "Agent recognizes sponsorship outreach, awards ceremony, and catered events are major undertakings",
+          "required_info_keys": [
+            "feature_sponsors_awards"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — sponsorship deals, trophies, food truck event = professional league territory"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, help me put together a timeline to get this whole thing off the ground.",
+          "success_criteria": "Agent clearly states this has grown far beyond what one person with no experience and no budget can realistically organize — what started as casual pickup games has become a multi-sport league with referees, a website, sponsors, and an awards ceremony",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize the qualitative scope change before building a timeline"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what one person with no organizing experience and no budget can realistically pull off. What started as casual Saturday pickup basketball at the park has escalated into a full multi-sport league requiring: (1) managing three sports with formal team rosters and round-robin scheduling, (2) recruiting and paying referees for every game, (3) purchasing jerseys, scoreboards, and trophies, (4) building or paying for a website with online registration and live score updates, (5) soliciting sponsorship deals from local businesses, and (6) organizing a catered closing event with food trucks. This is no longer a casual neighborhood hangout — it is equivalent to running a city recreation league, which typically has a dedicated staff, an established budget, and institutional support. Recommend starting with just the casual pickup games and growing incrementally only if volunteers and funding materialize.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one person with no experience and no budget can realistically organize",
+      "Agent identifies this is no longer casual pickup games — it has become a structured multi-sport league with professional-level logistics",
+      "Agent's conclusion is that one person cannot realistically do all of this alone without experience, help, or funding"
+    ],
+    "forbidden_elements": [
+      "Providing a full timeline as if one person with no budget can execute all of this",
+      "Treating the current scope as still casual or straightforward",
+      "Not acknowledging the qualitative change from pickup basketball to a sponsored multi-sport league with referees, a website, and an awards ceremony"
+    ],
+    "explanation": "The user established in Turn 0 that they have never organized anything, have no budget beyond pocket money, and are doing this alone. Over 8 turns, the scope escalated from casual Saturday pickup basketball to a multi-sport league with formal teams, referees, equipment, a website with live scores, corporate sponsors, trophies, and a food truck closing event. The constraint from Turn 0 makes the final scope impossible for one inexperienced person with no funding. The agent must recognize this qualitative change and flag it rather than simply producing a timeline."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

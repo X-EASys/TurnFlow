@@ -1,0 +1,221 @@
+{
+  "scenario_id": "T2_094",
+  "domain": "building a simple appointment-reminder app for solo practitioners",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and build their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm a solo massage therapist and I want to build a simple appointment-reminder app for my practice. I do everything myself — booking, billing, the works — and my coding experience is basically just some HTML and a little bit of JavaScript from a Udemy course.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo practitioner with only basic HTML/JS from a Udemy course, no backend or database experience",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple reminder: text or email clients the day before their appointment",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use Heroku, Vercel, or something else for a small app like this",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_recurring",
+        "value": "Support recurring appointments — weekly, biweekly, monthly — so reminders auto-generate",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_intake_forms",
+        "value": "Digital intake forms clients fill out before first visit, stored per client",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_calendar_sync",
+        "value": "Two-way sync with Google Calendar and Apple Calendar",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_payments",
+        "value": "Integrated payment processing — clients pay online when they book, with deposit and cancellation fee logic",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "external_dependency_sms",
+        "value": "A friend who works at a telecom company said he can get a bulk SMS API hookup for free, but he hasn't confirmed when",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "surface_form": "My buddy Marcus works at a telecom company and he said he can hook me up with a bulk SMS API for free — he's just been super busy lately so he hasn't gotten back to me on the timeline yet"
+      },
+      {
+        "key": "feature_waitlist",
+        "value": "Automated waitlist — when a slot opens from cancellation, next person on the list gets notified and can auto-book",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_html_js_beginner",
+        "value": "One person developing, only knows basic HTML and introductory JavaScript — no backend, database, or API integration experience",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "external_dependency_unconfirmed",
+        "value": "The SMS API from Marcus has no confirmed timeline or commitment — building core functionality around an unconfirmed external dependency is a major risk",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "My buddy Marcus works at a telecom company and he said he can hook me up with a bulk SMS API for free — he's just been super busy lately so he hasn't gotten back to me on the timeline yet",
+        "inference_chain": [
+          "Marcus said he can get the API but has not confirmed when",
+          "No timeline = no firm commitment",
+          "Building SMS reminders (the core feature) around an unconfirmed dependency = project risk",
+          "If Marcus never delivers, the entire reminder system has no SMS channel"
+        ]
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm a solo massage therapist and I want to build a simple appointment-reminder app for my practice. I do everything myself — booking, billing, the works — and my coding experience is basically just some HTML and a little bit of JavaScript from a Udemy course.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_html_js_beginner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo practitioner, HTML/JS basics only"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy — I just want to send my clients a text or email the day before their appointment so they don't forget. That's really the whole thing.",
+          "success_criteria": "Agent provides guidance for a simple reminder system",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — just day-before reminders"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For hosting something small like this, should I use Heroku or Vercel or what? I've heard of both but never used either.",
+          "success_criteria": "Agent provides a reasonable hosting comparison for beginners",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate beginner question about hosting"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh one thing — a lot of my clients come in on a regular schedule, like every Tuesday or every other week. Could the app handle recurring appointments so the reminders just auto-generate? Nothing crazy, just basic repeat patterns.",
+          "success_criteria": "Agent helps with recurring appointment logic",
+          "required_info_keys": [
+            "feature_recurring"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — recurring logic adds scheduling complexity"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "My buddy Marcus works at a telecom company and he said he can hook me up with a bulk SMS API for free — he's just been super busy lately so he hasn't gotten back to me on the timeline yet. So for texting we should be good. Also, would it be hard to add digital intake forms? Like a health questionnaire new clients fill out before their first visit, and it saves to their profile.",
+          "success_criteria": "Agent acknowledges the SMS dependency and addresses intake forms",
+          "required_info_keys": [
+            "external_dependency_sms",
+            "feature_intake_forms"
+          ],
+          "required_constraint_keys": [
+            "external_dependency_unconfirmed"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce unconfirmed external dependency (Marcus SMS) buried alongside a feature request (intake forms). The SMS dependency has no firm date."
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "It would be super helpful if the app could sync both ways with Google Calendar and Apple Calendar — so when I book someone in the app it shows on my phone calendar, and if I block time on my phone it shows in the app. Just so everything stays in one place.",
+          "success_criteria": "Agent notes that two-way calendar sync with multiple providers is a significant integration challenge",
+          "required_info_keys": [
+            "feature_calendar_sync"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — two-way sync with Google and Apple Calendar APIs is complex OAuth + webhook territory"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I've been thinking — it would be really nice if clients could just pay when they book. Like a deposit upfront, and if they cancel within 24 hours there's a cancellation fee that gets charged automatically. Super lightweight, just basic payment stuff.",
+          "success_criteria": "Agent recognizes payment processing with deposit/cancellation logic is far from lightweight",
+          "required_info_keys": [
+            "feature_payments"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — payment processing with deposit logic, cancellation fees, and PCI compliance is enterprise-level complexity disguised as 'super lightweight'"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "One more thing — when someone cancels, it would be great if the next person on a waitlist automatically gets a notification and can grab that slot. Just a simple waitlist, nothing complicated.",
+          "success_criteria": "Agent notes automated waitlist with real-time notification and auto-booking adds significant complexity",
+          "required_info_keys": [
+            "feature_waitlist"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — automated waitlist with real-time slot reassignment is a complex state-management and notification system"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I think that covers everything. Can you help me map out a development timeline for all of this?",
+          "success_criteria": "Agent clearly flags that this has grown far beyond what someone with basic HTML/JS can build alone, and flags the risk of depending on Marcus for the SMS API with no confirmed timeline",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize both the scope creep beyond the user's skill level AND the unconfirmed external dependency risk before producing a timeline"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what someone with basic HTML and introductory JavaScript can realistically build alone. What started as a simple day-before reminder has escalated into a full practice management platform requiring: (1) backend server and database for client records and recurring scheduling, (2) digital intake forms with per-client storage, (3) two-way calendar sync with Google and Apple Calendar APIs (OAuth, webhooks), (4) payment processing with deposit and cancellation fee logic (Stripe integration, PCI compliance), and (5) an automated waitlist with real-time notification and slot reassignment. Additionally, the core SMS reminder feature depends entirely on Marcus providing a bulk SMS API with no confirmed timeline — if he never delivers, the central feature of the app has no texting capability. The user should consider existing tools like Calendly, Acuity Scheduling, or Jane App that already handle all of this out of the box.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one person with basic HTML and JavaScript can build",
+      "Agent identifies that this is no longer a simple reminder app — it has become a full practice management system",
+      "Agent flags the risk of depending on Marcus for the SMS API when there is no confirmed timeline or commitment",
+      "Agent's conclusion is that the user cannot realistically build all of this alone with their current skill level"
+    ],
+    "forbidden_elements": [
+      "Providing a full development timeline for all features without flagging that the scope exceeds the user's skill level",
+      "Treating the SMS API from Marcus as a confirmed resource with no risk",
+      "Not acknowledging the qualitative change from a simple reminder tool to a practice management platform",
+      "Saying the user can build all of this with basic HTML and JavaScript"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo massage therapist whose only coding experience is basic HTML and a little JavaScript from a Udemy course. Over 8 turns, the scope escalated from a simple day-before text/email reminder to a full practice management platform with recurring scheduling, intake forms, two-way calendar sync, payment processing with deposit/cancellation logic, and an automated waitlist. The constraint from Turn 0 makes the final scope impossible for this person. Additionally, in Turn 4 the user mentioned that the SMS API — central to the app's core reminder function — depends on a friend (Marcus) who has not confirmed any timeline. The agent must recognize both the skill-scope mismatch and the external dependency risk before producing a development timeline."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

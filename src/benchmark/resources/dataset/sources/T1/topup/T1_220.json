@@ -1,0 +1,295 @@
+{
+  "scenario_id": "T1_220",
+  "domain": "team dinner at a Middle Eastern restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning a team dinner this Saturday at that new Middle Eastern place downtown. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us going: me, Sarah, Dev, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sarah_celiac",
+        "value": "Sarah was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_background",
+        "value": "Dev grew up in a Jain family in Gujarat, still follows the traditions",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_allergy",
+        "value": "Marcus ate something with sesame at a conference last month and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Budget is around 40 dollars per person, company is reimbursing",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_exits",
+        "value": "Marcus just texted me — his kid has a fever so he's staying home. He said don't worry about him",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sarah_update",
+        "value": "Sarah mentioned she actually got retested and her doctor said she doesn't have celiac after all, it was a misdiagnosis. She can eat whatever now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_joins",
+        "value": "Dev's wife Priya wants to come too, so that's four again",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnancy",
+        "value": "Priya is about five months pregnant right now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_nut_allergy",
+        "value": "Priya had a bad reaction to pistachios as a kid — her mom told Dev she's allergic to tree nuts",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu items to check: lamb shawarma platter, hummus with tahini, falafel wrap with garlic sauce, beef kibbeh, pistachio baklava, fattoush salad",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "dev_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onions, garlic, potatoes, carrots)",
+        "disclosed": false,
+        "surface_form": "Dev grew up in a Jain family in Gujarat, still follows the traditions",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain family, still follows traditions → practicing Jain",
+          "Practicing Jain → Jain vegetarian diet",
+          "Jain vegetarian → no meat, no fish, no eggs, no root vegetables (onions, garlic, potatoes, carrots)"
+        ]
+      },
+      {
+        "key": "marcus_sesame",
+        "value": "Severe sesame allergy (anaphylactic reaction requiring EpiPen)",
+        "disclosed": false,
+        "surface_form": "Marcus ate something with sesame at a conference last month and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_tree_nut",
+        "value": "Allergic to tree nuts (pistachios confirmed, tree nuts generally)",
+        "disclosed": false,
+        "surface_form": "Priya had a bad reaction to pistachios as a kid — her mom told Dev she's allergic to tree nuts",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnancy_constraint",
+        "value": "Should avoid raw/undercooked meat and unpasteurized foods",
+        "disclosed": false,
+        "surface_form": "Priya is about five months pregnant right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Five months pregnant → pregnancy dietary restrictions apply",
+          "Pregnancy → should avoid raw/undercooked meat, unpasteurized cheese, raw fish"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a team dinner at a Middle Eastern restaurant. You will introduce your group (me, Sarah, Dev, Marcus) with their dietary issues in one burst. Over several turns, Marcus will drop out, Sarah's celiac will be revealed as a misdiagnosis, and Dev's wife Priya will join late with her own constraints (pregnant + tree nut allergy). At the end you will present a list of menu items and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative team organizer. You always refer to your colleagues by name in third person (e.g. 'Sarah mentioned...', 'Dev told me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning a team dinner this Saturday at that new Middle Eastern place downtown. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with dinner planning at a Middle Eastern restaurant",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Sarah, Dev, and Marcus. Sarah was diagnosed with celiac disease last year so she's been gluten-free. Dev grew up in a Jain family in Gujarat, still follows the traditions. And Marcus ate something with sesame at a conference last month and his throat swelled up, had to use an EpiPen",
+          "success_criteria": "Agent acknowledges all three dietary constraints",
+          "required_info_keys": [
+            "team_members",
+            "sarah_celiac",
+            "marcus_allergy"
+          ],
+          "required_constraint_keys": [
+            "dev_jain_diet",
+            "marcus_sesame"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 40 dollars per person, company is reimbursing. Should be plenty for Middle Eastern food right?",
+          "success_criteria": "Agent confirms budget is reasonable for the restaurant type",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget context"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Marcus just texted me — his kid has a fever so he's staying home. He said don't worry about him",
+          "success_criteria": "Agent notes Marcus is no longer attending and his sesame constraint no longer applies to the dinner",
+          "required_info_keys": [
+            "marcus_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Marcus leaves, sesame constraint removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Do you think we should do family-style sharing plates or individual orders? The restaurant does both",
+          "success_criteria": "Agent responds about ordering style",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "ordering format",
+            "drift_topic": "family-style vs individual plates",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic question about ordering format"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh good news — Sarah mentioned she actually got retested and her doctor said she doesn't have celiac after all, it was a misdiagnosis. She can eat whatever now",
+          "success_criteria": "Agent removes Sarah's gluten-free constraint",
+          "required_info_keys": [
+            "sarah_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Sarah's celiac misdiagnosis corrected"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Dev's wife Priya wants to come too, so that's four again. She's about five months pregnant right now. Oh and Dev mentioned that Priya had a bad reaction to pistachios as a kid — her mom told him she's allergic to tree nuts",
+          "success_criteria": "Agent registers Priya as new diner with pregnancy and tree nut allergy constraints",
+          "required_info_keys": [
+            "priya_joins",
+            "priya_pregnancy",
+            "priya_nut_allergy"
+          ],
+          "required_constraint_keys": [
+            "priya_tree_nut",
+            "priya_pregnancy_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Priya with pregnancy + tree nut allergy"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we book for 7 or 7:30? Saturday nights get busy",
+          "success_criteria": "Agent responds about reservation timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "reservation",
+            "drift_topic": "what time to book on Saturday",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I looked at their menu online. How about we get: lamb shawarma platter, hummus with tahini, falafel wrap with garlic sauce, beef kibbeh, pistachio baklava, and fattoush salad. Any issues?",
+          "success_criteria": "Agent identifies problems with each dish against current constraint state for all active diners (me, Sarah, Dev, Priya)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Current diners: me, Sarah, Dev, Priya. Active constraints: Dev (Jain — no meat, no eggs, no root vegetables including onions and garlic), Priya (tree nut allergy + pregnant). Sarah has NO restrictions (celiac was misdiagnosis). Marcus is not attending (sesame allergy irrelevant). Dish analysis: (1) Lamb shawarma platter — PROBLEM for Dev (meat, Jain diet forbids it). (2) Hummus with tahini — tahini is made from sesame, but Marcus (sesame allergy) is no longer coming, so this is FINE. However, hummus contains garlic — PROBLEM for Dev (Jain, no root vegetables/garlic). (3) Falafel wrap with garlic sauce — garlic sauce is a PROBLEM for Dev (Jain, no garlic/root vegetables). (4) Beef kibbeh — PROBLEM for Dev (meat). (5) Pistachio baklava — PROBLEM for Priya (tree nut allergy, pistachios specifically). (6) Fattoush salad — FINE for everyone (it's a vegetable salad with no root vegetable issues for standard fattoush).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Lamb shawarma platter is problematic for Dev because it contains meat and Dev follows a Jain diet",
+      "Hummus with tahini is problematic for Dev because hummus typically contains garlic, which is a root vegetable forbidden in Jain diet",
+      "Falafel wrap with garlic sauce is problematic for Dev because garlic is a root vegetable forbidden in Jain diet",
+      "Beef kibbeh is problematic for Dev because it contains meat and Dev follows a Jain diet",
+      "Pistachio baklava is problematic for Priya because she has a tree nut allergy and pistachios are tree nuts",
+      "Fattoush salad is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging hummus with tahini as problematic due to sesame (Marcus is no longer attending, his sesame allergy is irrelevant)",
+      "Flagging any dish as problematic for Sarah due to gluten (her celiac was a misdiagnosis, she has no restrictions)",
+      "Saying Dev cannot eat sesame or tahini (Jain diet does not restrict sesame)",
+      "Flagging fattoush salad as problematic for Dev (standard fattoush uses lettuce, tomatoes, cucumber, radish, and herbs — no onion or garlic required)",
+      "Over-generalizing Priya's tree nut allergy to all nuts including sesame or peanuts"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 turns at a Middle Eastern restaurant. The agent must track: (1) Dev is from a Jain family and still follows traditions → Jain vegetarian → no meat, no fish, no eggs, no root vegetables including onions and garlic (multi-step inferential chain), (2) Marcus EXITS mid-conversation (his sesame allergy becomes irrelevant — this is the over-generalization trap since hummus with tahini contains sesame but Marcus isn't coming), (3) Sarah's celiac constraint is REMOVED (misdiagnosis corrected), (4) Priya JOINS LATE with two constraints: tree nut allergy (direct) and pregnancy (inferential — should avoid raw/undercooked meat). The probe includes 6 items: lamb shawarma (meat → Dev problem), hummus with tahini (contains garlic → Dev problem; contains sesame but Marcus gone → trap item that looks bad but isn't for sesame reasons), falafel wrap with garlic sauce (garlic → Dev problem), beef kibbeh (meat → Dev problem), pistachio baklava (tree nut → Priya problem), fattoush salad (fine for everyone). The key failure modes are: forgetting Priya (late-joiner), keeping Marcus's sesame constraint active (removed entity ghost), keeping Sarah's celiac active (removed constraint), and missing garlic as a root vegetable in Jain diet (inferential depth)."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

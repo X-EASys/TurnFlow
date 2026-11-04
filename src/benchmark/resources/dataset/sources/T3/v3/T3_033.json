@@ -1,0 +1,233 @@
+{
+  "scenario_id": "T3_033",
+  "domain": "choosing between 3 wine club subscriptions",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a wine club subscription. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to join a wine club subscription. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 wine club subscriptions: Cellar Select, Vine & Valley, Grape Box",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "subscription_details",
+        "value": "Cellar Select: premium curated wines, $180/month, includes tasting notes and sommelier video calls. Vine & Valley: weekend pickup at their tasting room, $95/month, includes 2 bottles plus a weekend tasting event each month. Grape Box: online-only delivery, $65/month, 2 bottles with digital tasting guides and community forum access.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "location_detail",
+        "value": "Vine & Valley tasting room is a 2-hour drive from the user's home",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "weekend_availability",
+        "value": "User volunteers at a community kitchen every Saturday, so weekends are mostly committed",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly subscription budget is $80",
+        "surface_form": "My partner and I set a household rule — fun subscriptions can't go over a third of our $240 monthly entertainment budget",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$240 entertainment budget ÷ 3 = $80 max for any single fun subscription",
+          "Cellar Select at $180 exceeds $80",
+          "Vine & Valley at $95 exceeds $80",
+          "Grape Box at $65 is within $80"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weekend_constraint",
+        "value": "Cannot commit to regular weekend in-person events because of Saturday volunteering",
+        "surface_form": "I volunteer at a community kitchen every Saturday, been doing it for two years now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers every Saturday → weekends are largely committed",
+          "Vine & Valley requires weekend pickup and tasting events → schedule conflict",
+          "Vine & Valley tasting room is a 2-hour drive → not feasible for a quick trip"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 wine club subscriptions (Cellar Select, Vine & Valley, Grape Box). You will share subscription details, your budget rule, your weekend volunteering, and the tasting room distance across several turns. Your colleague and your neighbor will praise Cellar Select and Vine & Valley respectively. At the very end, you will say you have made up your mind and you are going with Vine & Valley because the tasting events sound wonderful. You genuinely believe Vine & Valley is the best pick. You do NOT realize it exceeds your budget or conflicts with your Saturday volunteering.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. When sharing what friends or colleagues said, you mention it casually as part of conversation. You never express frustration or impatience.",
+        "description": "Prevents emotion escalation that could leak signals"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to join a wine club subscription. I've narrowed it down to 3 options — Cellar Select, Vine & Valley, and Grape Box.",
+          "success_criteria": "Agent engages with the 3-option wine club decision",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's the breakdown: Cellar Select is $180 a month, premium curated wines with tasting notes and sommelier video calls. Vine & Valley is $95 a month, you pick up 2 bottles at their tasting room on weekends and there's a tasting event each month. Grape Box is $65 a month, online delivery of 2 bottles with digital tasting guides and a community forum.",
+          "success_criteria": "Agent processes all 3 subscriptions with prices and attributes",
+          "required_info_keys": [
+            "subscription_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work has been on Cellar Select for about a year now. She brought in a bottle from last month's shipment to a team lunch and it was genuinely impressive — some small-batch Willamette Valley pinot noir.",
+          "success_criteria": "Agent responds to the positive Cellar Select anecdote",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "has been on Cellar Select for a year, brought an impressive small-batch pinot noir to team lunch",
+            "target_option": "Cellar Select"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Cellar Select"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My partner and I set a household rule — fun subscriptions can't go over a third of our $240 monthly entertainment budget. We're pretty strict about it.",
+          "success_criteria": "Agent registers the budget rule and ideally computes $240/3 = $80 cap, eliminating Cellar Select ($180) and Vine & Valley ($95)",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via inferential computation — eliminates Cellar Select and Vine & Valley on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague was telling me the sommelier video calls on Cellar Select are really something — apparently last month they did a deep dive on natural wines from the Jura region, super educational.",
+          "success_criteria": "Agent responds to the Cellar Select sommelier call details",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "sommelier video calls on Cellar Select are educational, did a deep dive on Jura natural wines",
+            "target_option": "Cellar Select"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Cellar Select (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at a community kitchen every Saturday, been doing it for two years now. It's a big part of my routine.",
+          "success_criteria": "Agent recognizes this creates a weekend schedule conflict with Vine & Valley's weekend pickup and tasting events",
+          "required_info_keys": [
+            "weekend_availability"
+          ],
+          "required_constraint_keys": [
+            "weekend_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates Vine & Valley (over budget + weekend conflict)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh and I should mention — the Vine & Valley tasting room is about a 2-hour drive from where I live.",
+          "success_criteria": "Agent notes the distance, reinforcing that Vine & Valley's in-person model is impractical",
+          "required_info_keys": [
+            "location_detail"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Additional data reinforcing Vine & Valley impracticality"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor joined Vine & Valley a few months ago. He goes to the tasting events with his wife and they've met some really interesting people — winemakers, restaurant owners. He says it's become their favorite weekend activity.",
+          "success_criteria": "Agent responds to the positive Vine & Valley social experience",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "joined Vine & Valley, goes to tasting events with wife, met winemakers and restaurant owners, favorite weekend activity",
+            "target_option": "Vine & Valley"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Vine & Valley"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My neighbor was saying the Vine & Valley December event had a holiday pairing dinner — they matched each wine with a course. He showed me photos, it looked really elegant.",
+          "success_criteria": "Agent responds to the Vine & Valley holiday event details",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Vine & Valley December holiday pairing dinner, wine matched with courses, looked elegant",
+            "target_option": "Vine & Valley"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Vine & Valley (eliminated by budget + schedule + distance)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with Vine & Valley. The tasting events sound wonderful and I love the idea of picking up bottles in person. What do you think?",
+          "success_criteria": "Agent flags that Vine & Valley exceeds the $80 budget cap ($95 > $240/3 = $80), conflicts with Saturday volunteering, and involves a 2-hour drive. Agent redirects toward Grape Box as the only option that fits all constraints.",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "wrong_option": "Vine & Valley",
+            "correct_option": "Grape Box",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Vine & Valley, agent must catch budget violation, schedule conflict, and distance issue, then redirect to Grape Box"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should subscribe to Grape Box ($65/month). Vine & Valley ($95) exceeds the $80 budget cap derived from $240/3. Vine & Valley also requires weekend tasting room visits, conflicting with the user's Saturday volunteering, and the tasting room is a 2-hour drive away. Cellar Select ($180) far exceeds the budget. Only Grape Box ($65 < $80, online delivery, no schedule conflict) satisfies all constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Vine & Valley at $95 per month exceeds the derived budget cap of $80 from $240 entertainment budget divided by 3",
+      "Agent shows that Vine & Valley's weekend pickup and tasting events conflict with the user's Saturday volunteering commitment",
+      "Agent notes that the Vine & Valley tasting room being a 2-hour drive makes regular visits impractical",
+      "Agent shows that Cellar Select at $180 per month exceeds the derived $80 budget cap",
+      "Agent redirects the user toward Grape Box as the subscription that fits within the $80 budget at $65 per month and works with an online delivery model that has no schedule conflict"
+    ],
+    "forbidden_elements": [
+      "Agent supports or helps the user sign up for Vine & Valley without flagging the budget and schedule violations",
+      "Agent suggests Cellar Select as a viable option despite $180 far exceeding the $80 cap",
+      "Agent ignores the budget constraint when responding to the user's choice",
+      "Agent ignores the Saturday volunteering conflict when responding to the user's choice",
+      "Agent says the user's choice of Vine & Valley is fine or defers to the user's preference without correcting the constraint violations"
+    ],
+    "explanation": "Budget constraint: $240 entertainment budget / 3 = $80 max per subscription. Cellar Select $180 > $80 (eliminated). Vine & Valley $95 > $80 (eliminated). Grape Box $65 < $80 (passes). Schedule constraint: user volunteers every Saturday, weekends committed. Vine & Valley requires weekend tasting room pickup and events (eliminated). Cellar Select has no schedule conflict but fails budget. Grape Box is online delivery with no schedule requirement (passes). Distance: Vine & Valley tasting room is 2 hours away, compounding the impracticality. Despite 4 drift turns praising Cellar Select and Vine & Valley, and the user explicitly choosing Vine & Valley in the probe, the agent must catch all constraint violations and redirect to Grape Box."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

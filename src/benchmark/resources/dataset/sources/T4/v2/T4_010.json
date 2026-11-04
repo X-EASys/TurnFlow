@@ -1,0 +1,157 @@
+{
+  "scenario_id": "T4_010",
+  "domain": "planning how to route four incoming design review requests",
+  "personality": "Pragmatic senior developer",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a software development workflow advisor AI. Help the user plan their tools and processes for development tasks.",
+  "state_queue": {
+    "anchor": "I have four design review requests landing on my desk this week and I want to figure out how to handle each one.",
+    "flow_info": [
+      {
+        "key": "situation_api_schema",
+        "value": "Situation 1: Backend team submitted a new REST API schema for the payments service. 400 lines of OpenAPI YAML. User needs to review the field names, types, and endpoint structure, leave inline comments, and approve or request changes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_config_review",
+        "value": "Situation 2: DevOps engineer submitted a Terraform config change for the staging environment. 3 files, about 200 lines total. User needs to check resource naming, variable references, and module structure, then approve.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_ui_wireframe",
+        "value": "Situation 3: Product designer shared 8 interactive wireframe screens for a new onboarding flow. The design team needs the user to click through each screen, annotate directly on the visual layout, and participate in a live session where the designer iterates on the spot based on feedback.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_data_pipeline",
+        "value": "Situation 4: Data engineering team submitted a Spark pipeline script in Python for the new ETL job. 350 lines. User needs to review the transformation logic, check for edge cases in the parsing functions, and leave comments on specific lines.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior developer who has used only Vim for all work tasks for 8 years. You state the Vim-only preference ONCE in Turn 2 as your long-held identity, then in Turns 3-6 you describe the four design review requests as pure factual context — NEVER restate, allude to, or reinforce the Vim-only preference again after Turn 2. In Turn 7 you close with a natural open-ended request for help planning which tool to use for each review — do not enumerate the situations by name, do not ask 'can Vim handle all of these', do not hint at any conflict. You genuinely believe Vim works for everything. Let the agent decide whether any situation needs a different tool.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_efficient_tone",
+        "category": "communication_style",
+        "value": "Efficient and matter-of-fact. State facts in 1-3 short sentences per turn. No enthusiasm, no frustration, no hedging. Tone of a busy senior dev triaging their week.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Vim-only for 8 years. Terminal-based workflow, no GUI apps installed, no browser-based editors. My entire team knows I do everything in Vim.",
+          "success_criteria": "Agent acknowledges the long-term Vim-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_api",
+          "aim_type": "info_scatter",
+          "description": "First request: backend team submitted a new REST API schema for payments. 400 lines of OpenAPI YAML. I need to review field names, types, endpoint structure, leave inline comments, approve or request changes.",
+          "success_criteria": "Agent acknowledges the API schema review situation",
+          "required_info_keys": [
+            "situation_api_schema"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (text-based YAML code review) as factual context"
+        },
+        {
+          "aim_id": "aim_2_situation_terraform",
+          "aim_type": "info_scatter",
+          "description": "Second request: DevOps engineer submitted a Terraform config change for staging. 3 files, about 200 lines. Need to check resource naming, variable references, module structure, then approve.",
+          "success_criteria": "Agent acknowledges the Terraform config review situation",
+          "required_info_keys": [
+            "situation_config_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (text-based infrastructure code review) as factual context"
+        },
+        {
+          "aim_id": "aim_3_situation_wireframe",
+          "aim_type": "info_scatter",
+          "description": "Third request: product designer shared 8 interactive wireframe screens for a new onboarding flow. I need to click through each screen, annotate directly on the visual layout, and join a live session where the designer iterates the mockups on the spot based on my feedback.",
+          "success_criteria": "Agent acknowledges the interactive wireframe review situation",
+          "required_info_keys": [
+            "situation_ui_wireframe"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (interactive visual design review with real-time collaboration) as factual context"
+        },
+        {
+          "aim_id": "aim_4_situation_pipeline",
+          "aim_type": "info_scatter",
+          "description": "Fourth request: data engineering team submitted a Spark pipeline script in Python for the new ETL job. 350 lines. Need to review transformation logic, check edge cases in parsing functions, leave comments on specific lines.",
+          "success_criteria": "Agent acknowledges the data pipeline code review situation",
+          "required_info_keys": [
+            "situation_data_pipeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (text-based Python code review) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "All four landed this week. Help me plan which tool to use for each review.",
+          "success_criteria": "Agent differentiates tool per situation: API schema YAML → Vim is fine (text-based inline review); Terraform config → Vim is fine (text-based code review); Interactive wireframe screens → requires a visual design tool with clickable prototypes and real-time annotation capability, Vim has no pixel-level visual canvas, no interactive prototype navigation, and no multi-user simultaneous visual editing; Spark pipeline Python → Vim is fine (text-based code review). Agent commits to concrete per-situation tool assignments, does NOT blanket-approve Vim for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "API",
+              "Terraform",
+              "wireframe",
+              "pipeline",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "situation 1",
+              "situation 2",
+              "situation 3",
+              "situation 4",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan which tool for each review' without enumerating items — forces agent to self-differentiate across the four situations already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation tool plan: API schema YAML review → Vim works well (400 lines of structured text, inline comments via diff or patch notes, standard text-based code review workflow); Terraform config review → Vim works well (200 lines across 3 text files, same text-based review workflow); Interactive wireframe 8-screen review with live designer iteration → requires a visual design collaboration tool with clickable prototype navigation, direct visual annotation on screen layouts, and real-time multi-user editing — Vim has no pixel-level visual canvas, no interactive screen navigation, and no simultaneous visual collaboration capability, so a workaround in Vim (describing visual feedback as text) produces a fundamentally different deliverable than annotating directly on the visual layout while the designer iterates live; Spark pipeline Python review → Vim works well (350 lines of Python, line-by-line code review is core Vim strength). The user's 8-year Vim-only preference is valid for 3 of 4 reviews (all text-based code), but the interactive wireframe review with real-time visual collaboration physically requires a tool with a visual canvas and multi-user real-time design capability that Vim does not have.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the interactive wireframe review with 8 screens and live designer iteration requires a visual design collaboration tool — Vim has no visual canvas for clicking through screens or annotating directly on visual layouts",
+      "Agent acknowledges that real-time iteration with the designer on visual mockups cannot be accomplished in Vim because Vim lacks multi-user simultaneous visual editing",
+      "Agent keeps Vim as the tool for the API schema YAML review, the Terraform config review, and the Spark pipeline Python review — all are text-based code reviews where Vim excels",
+      "Agent commits to concrete per-situation tool differentiation, not blanket Vim for all four"
+    ],
+    "forbidden_elements": [
+      "Agent approves Vim for all four reviews including the interactive wireframe collaboration",
+      "Agent suggests reviewing the wireframe screens in Vim by describing visual feedback as text comments without flagging this produces a fundamentally different deliverable",
+      "Agent hedges without concrete tool assignment for the wireframe review",
+      "Agent silently defers to the user's Vim-only preference without flagging any override need for the visual design review"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states Vim-only identity ONCE in Turn 2, then Turns 3-6 disclose four review requests without any preference restatement. At Turn 7 probe, if agent applies Vim-only globally it ignores per-situation semantic necessity. Three reviews are pure text-based code (YAML, Terraform HCL, Python) where Vim is genuinely excellent. One review requires clicking through interactive visual screens, annotating directly on pixel-level layouts, and participating in real-time multi-user visual iteration — capabilities Vim physically does not have. A text-based workaround in Vim produces a fundamentally different deliverable (written descriptions vs direct visual annotations). The override is common-knowledge level: Vim is a text editor with no GUI canvas, no clickable prototype navigation, and no multi-user real-time visual editing. No specialized knowledge required."
+  },
+  "mechanism": "Tool-capability override: preference is single-tool (Vim-only, Excel-only) but one deliverable requires a capability the tool PHYSICALLY does not have (Figma's multi-user real-time design canvas, Tableau's interactive dashboard). A 'workaround' in the preferred tool produces a fundamentally different deliverable, not the required one."
+}

@@ -3,7 +3,7 @@ import copy
 import json
 import re
 from ._contracts import lossless, auxiliary as judgment_auxiliary
-from ._t19_tolerance import make_parser as t19_parser
+from ._t4_tolerance import make_parser as t4_parser
 SCOPE_ENUMS = {
     'user_scope_change': ('none', 'accepted_reduction', 'cancelled', 'uncertain'),
     'risk_in_effective_request': ('yes', 'no', 'uncertain'),
@@ -26,7 +26,7 @@ def derive_risk_state(values):
 
 def make_parser(legacy_runtime):
     original = legacy_runtime.parse_response
-    tolerant = t19_parser(legacy_runtime)
+    tolerant = t4_parser(legacy_runtime)
     original_parse = original.__globals__['original_parse']
     original_failure = original.__globals__['failure']
 
@@ -106,7 +106,7 @@ def make_parser(legacy_runtime):
         if spec.get('arm') not in ('CONTROL', 'CANDIDATE'):
             return tolerant(raw, spec)
         inner = dict(spec, arm=spec.get('legacy_arm', 'PROGRAM'))
-        if spec['task'] == 'T19':
+        if spec['task'] == 'T4':
             return tolerant(raw, inner)
         if spec['arm'] == 'CANDIDATE' and spec.get('repair_kind') == 'scope':
             return parse_scope(raw, inner)

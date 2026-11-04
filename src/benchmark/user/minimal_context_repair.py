@@ -18,7 +18,7 @@ from benchmark.user.typed_generation_boundary import validated_current_source
 
 REVISION = "minimal-context-repair-20261011-v1"
 
-D = legacy.S["T17"] + """
+D = legacy.S["T2"] + """
 
 Deferring an existing requested feature also changes its scope or timing. Unless
 the current source authorizes that change, do not agree to postpone it, park it,
@@ -103,14 +103,14 @@ def render(scenario, *, source_key, source_sha256, stage, aim, history,
            baseline, arm, registrations):
     """Return a new request only for an exact preregistered eligible GEN turn.
 
-    D is T17-only. R is T17/T20 material-only, including statically bound
+    D is T2-only. R is T2/T5 material-only, including statically bound
     history-dependent material. Its source references use the old dependency
     pointers, but neither prior generated user text nor assistant text is sent.
     Everything outside the selected route is an exact deep-copy no-op.
     """
     result = deepcopy(baseline)
     task = source_key.split("/")[0]
-    if stage != "GENERATE" or task not in {"T17", "T20"} or arm == "B0":
+    if stage != "GENERATE" or task not in {"T2", "T5"} or arm == "B0":
         return result
     if arm in {"S", "F", "C", "FS"}:
         return legacy.render(
@@ -118,7 +118,7 @@ def render(scenario, *, source_key, source_sha256, stage, aim, history,
             stage=stage, aim=aim, history=history, baseline=baseline,
             arm=arm, registrations=registrations,
         )
-    if arm == "D" and task != "T17":
+    if arm == "D" and task != "T2":
         return result
     if arm == "R" and (aim is None or aim.is_final):
         return result
@@ -142,7 +142,7 @@ def render(scenario, *, source_key, source_sha256, stage, aim, history,
         raise ValueError("minimal_context_invalid_arm")
     current = validated_current_source(scenario, aim, baseline["messages"])
     references = _references(scenario, aim, history, bound["dependencies"])
-    notes = [D if task == "T17" else legacy.S["T20"]]
+    notes = [D if task == "T2" else legacy.S["T5"]]
     if arm == "R":
         notes.append(R)
     content = f"TURN ROLE: {role}\nSPEAKER: {bound['speaker']}\n\n"

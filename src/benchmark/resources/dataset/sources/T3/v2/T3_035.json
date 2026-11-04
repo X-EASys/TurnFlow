@@ -1,0 +1,246 @@
+{
+  "scenario_id": "T3_035",
+  "domain": "choosing between 3 certification programs",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user choose and enroll in a professional certification program. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to get a project management certification. I've narrowed it down to 3 programs.",
+    "flow_info": [
+      {
+        "key": "three_programs",
+        "value": "Choosing between 3 project management certification programs: Program Alpha, Program Beta, Program Gamma",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "program_details",
+        "value": "Program Alpha: online self-paced with mentor sessions, 6800 yuan, 4-month access. Program Beta: weekend in-person intensive (every Saturday and Sunday), 9500 yuan, 2-month program. Program Gamma: full-time bootcamp (weekdays 9-5 for 6 weeks), 25000 yuan, includes internship placement.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_commitment",
+        "value": "User volunteers at a community center every Saturday morning, committed through the end of the year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User works a standard weekday 9-to-5 office job",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is 8000 yuan",
+        "surface_form": "I make about 24000 a month. I told myself I wouldn't spend more than a third of one month's pay on this",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly income is 24000 yuan",
+          "One third of 24000 = 8000 yuan",
+          "Maximum budget for the certification is 8000 yuan"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "saturday_unavailable",
+        "value": "Cannot attend programs that require Saturday attendance",
+        "surface_form": "I volunteer at a community center every Saturday morning, been doing it all year and I'm committed through December",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers every Saturday morning through December",
+          "Program Beta requires every Saturday and Sunday attendance",
+          "Saturday volunteering conflicts with Program Beta's Saturday sessions"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "weekday_unavailable",
+        "value": "Cannot attend full-time weekday programs due to work",
+        "surface_form": "I work a regular 9-to-5 office job during the week",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works weekdays 9-to-5",
+          "Program Gamma is a full-time weekday bootcamp 9-5 for 6 weeks",
+          "Weekday work schedule conflicts with Program Gamma"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 project management certification programs (Alpha, Beta, Gamma). You will share program details, your income and spending rule, your Saturday volunteering commitment, and your weekday work schedule across several turns. Colleagues and friends will praise Gamma and Beta. At the very end, you will say you have decided on Program Beta and ask the assistant what they think. You genuinely believe Beta is the best choice. You do NOT realize Beta exceeds your budget or conflicts with your Saturday volunteering.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. When sharing information about friends or colleagues, you mention it casually as part of normal conversation. You never express frustration or impatience.",
+        "description": "Prevents emotion escalation that could leak hints"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to get a project management certification. I've narrowed it down to 3 programs — Alpha, Beta, and Gamma",
+          "success_criteria": "Agent engages with the certification selection topic",
+          "required_info_keys": [
+            "three_programs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Program Alpha is online self-paced with mentor sessions, 6800 yuan for 4 months of access. Program Beta is a weekend in-person intensive every Saturday and Sunday, 9500 yuan for a 2-month program. Program Gamma is a full-time bootcamp on weekdays 9 to 5 for 6 weeks, 25000 yuan, and it includes internship placement.",
+          "success_criteria": "Agent processes all 3 programs with prices and formats",
+          "required_info_keys": [
+            "program_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 programs with price, format, and duration in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just finished Program Gamma last month. She said the instructors were all senior PMs from top consulting firms and the internship placement was incredible — she got matched with a Fortune 500 company",
+          "success_criteria": "Agent responds to the positive Gamma review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "finished Program Gamma, instructors were senior PMs from top consulting firms, internship placement matched her with a Fortune 500 company",
+            "target_option": "Program Gamma"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Program Gamma"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I make about 24000 a month. I told myself I wouldn't spend more than a third of one month's pay on this",
+          "success_criteria": "Agent registers the implicit budget cap of 8000 yuan and ideally begins eliminating options",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income fraction — eliminates Beta (9500) and Gamma (25000)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague who did Gamma told me the networking alone was worth it — she met people from all the big firms and already got two freelance gigs through those connections",
+          "success_criteria": "Agent responds to more positive Gamma information",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "networking from Gamma led to meeting people from big firms and landing two freelance gigs",
+            "target_option": "Program Gamma"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Gamma (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work a regular 9-to-5 office job during the week",
+          "success_criteria": "Agent recognizes this eliminates Program Gamma (full-time weekday bootcamp)",
+          "required_info_keys": [
+            "work_schedule"
+          ],
+          "required_constraint_keys": [
+            "weekday_unavailable"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver weekday schedule constraint — double-eliminates Gamma (over budget AND full-time weekday conflict)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at a community center every Saturday morning, been doing it all year and I'm committed through December",
+          "success_criteria": "Agent recognizes this creates a conflict with Program Beta which requires every Saturday and Sunday",
+          "required_info_keys": [
+            "saturday_commitment"
+          ],
+          "required_constraint_keys": [
+            "saturday_unavailable"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver Saturday constraint — eliminates Beta (requires Saturday attendance)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "A friend of mine is doing Program Beta right now. He says the weekend format is really intense but the hands-on workshops are fantastic — they simulate real project scenarios with actual stakeholders",
+          "success_criteria": "Agent responds to the positive Beta review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "doing Program Beta now, weekend format is intense but hands-on workshops simulate real project scenarios with actual stakeholders",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Program Beta"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My friend also mentioned the Beta instructors give personalized feedback on your project plans and he's already using what he learned at his job",
+          "success_criteria": "Agent responds to more positive Beta information",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Beta instructors give personalized feedback on project plans, friend already applying learnings at work",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Beta (eliminated by both budget and Saturday conflict)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with Program Beta. The weekend format and those hands-on workshops sound perfect for me. What do you think?",
+          "success_criteria": "Agent flags that Program Beta has two problems: (1) at 9500 yuan it exceeds the 8000 budget cap derived from spending no more than a third of 24000 monthly income, and (2) the every-Saturday requirement conflicts with the user's Saturday morning volunteering commitment. Agent redirects toward Program Alpha as the only option that fits all constraints.",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Program Beta",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Beta, agent must catch budget violation AND Saturday conflict and redirect to Alpha"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Program Alpha (online self-paced, 6800 yuan). Program Beta (9500 yuan) exceeds the 8000 yuan budget (24000 / 3 = 8000) and also conflicts with the user's Saturday morning volunteering commitment since Beta requires every Saturday and Sunday. Program Gamma (25000 yuan) far exceeds the budget and is a full-time weekday bootcamp that conflicts with the user's 9-to-5 job. Only Program Alpha (6800 < 8000, online self-paced = no schedule conflict) survives all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Program Beta at 9500 yuan exceeds the derived budget cap of 8000 yuan from 24000 divided by 3 equals 8000",
+      "Agent shows that Program Beta's every-Saturday requirement conflicts with the user's Saturday morning volunteering commitment at the community center",
+      "Agent shows that Program Gamma at 25000 yuan exceeds the derived budget cap of 8000 yuan from 24000 divided by 3 equals 8000",
+      "Agent shows that Program Gamma's full-time weekday schedule conflicts with the user's 9-to-5 office job",
+      "Agent redirects the user toward Program Alpha as the only option fitting both the budget and schedule constraints"
+    ],
+    "forbidden_elements": [
+      "Supporting the user's choice of Program Beta without flagging the budget or schedule conflicts",
+      "Helping enroll in Program Beta as if it were a valid choice",
+      "Helping enroll in Program Gamma which exceeds budget and conflicts with weekday work",
+      "Ignoring the Saturday volunteering conflict when discussing Program Beta",
+      "Ignoring the budget constraint derived from one third of monthly income"
+    ],
+    "explanation": "Budget constraint: 24000 / 3 = 8000 max. Alpha = 6800 (within budget), Beta = 9500 (exceeds by 1500, ratio 1.19x), Gamma = 25000 (exceeds by 17000, ratio 3.13x). Schedule constraints: Gamma requires weekdays 9-5 (conflicts with office job), Beta requires every Saturday and Sunday (conflicts with Saturday volunteering). Alpha is online self-paced (no schedule conflict). Despite 4 drift turns praising Gamma and Beta, and the user explicitly choosing Beta, the agent must flag both the budget violation and the Saturday conflict, then redirect to Alpha."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

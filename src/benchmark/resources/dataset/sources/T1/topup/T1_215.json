@@ -1,0 +1,323 @@
+{
+  "scenario_id": "T1_215",
+  "domain": "diabetic-friendly office holiday party",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful office party planning assistant. Help the user plan food and drinks for their team's holiday party by tracking who is attending, their dietary needs, and any logistics. When the user asks you to evaluate specific menu items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning our office holiday party for next Thursday and I'm in charge of the food. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us confirmed so far: me, Rachel, Dev, Marcus, and Tina",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_pregnant",
+        "value": "Rachel is seven months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_celiac",
+        "value": "Dev was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_peanut",
+        "value": "Marcus had a peanut allergy incident at last year's party, had to use his EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Company gave us $300 for catering, about 8-10 people expected total",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tina_exits",
+        "value": "Tina just told me she's going on vacation early, flying out Wednesday night, so she won't be there",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tina_wants_treats",
+        "value": "Tina asked if I could save her a box of whatever desserts we get though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_healed",
+        "value": "Marcus told me he did allergy testing last month and turns out he's outgrown the peanut allergy completely, doctor cleared him",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_wife_joins",
+        "value": "Marcus wants to bring his wife Priya to the party",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "new_intern_joins",
+        "value": "Oh and our new intern Sam is coming too, started last week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Catering menu options I'm looking at: smoked salmon platter, penne pasta with vodka sauce, Thai chicken satay with peanut sauce, flourless chocolate cake, fruit and cheese board, mulled wine",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "rachel_pregnancy_diet",
+        "value": "Cannot eat raw or smoked fish, cannot drink alcohol",
+        "disclosed": false,
+        "surface_form": "Rachel is seven months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Seven months pregnant → pregnancy dietary restrictions apply",
+          "Pregnancy → no raw/smoked fish (listeria risk)",
+          "Pregnancy → no alcohol"
+        ]
+      },
+      {
+        "key": "dev_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Dev was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "No gluten → no regular pasta, bread, most baked goods unless explicitly gluten-free"
+        ]
+      },
+      {
+        "key": "tina_tree_nut",
+        "value": "Cannot eat tree nuts — almonds, cashews, walnuts, pistachios, etc.",
+        "disclosed": false,
+        "surface_form": "Tina carries an EpiPen for tree nuts, she's mentioned it a few times at lunch",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Carries EpiPen for tree nuts → severe tree nut allergy",
+          "Tree nut allergy → cannot eat almonds, cashews, walnuts, pistachios, etc."
+        ]
+      },
+      {
+        "key": "sam_diabetes",
+        "value": "Cannot have high-sugar foods without careful portion control, needs low-glycemic options available",
+        "disclosed": false,
+        "surface_form": "Sam mentioned on his first day that he wears an insulin pump, been Type 1 since he was a kid",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Wears insulin pump → Type 1 diabetic",
+          "Type 1 diabetic → must manage carbohydrate/sugar intake carefully",
+          "Party context → needs low-sugar or portionable options available"
+        ]
+      },
+      {
+        "key": "priya_jain",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onion, garlic, potatoes)",
+        "disclosed": false,
+        "surface_form": "Marcus mentioned his wife Priya is Jain, very observant about it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → strict vegetarian diet",
+          "Jain vegetarian → no meat, no fish, no eggs",
+          "Observant Jain → also no root vegetables (onion, garlic, potatoes)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are an office worker planning your team's holiday party food. You will introduce your colleagues and their backgrounds across several turns. People will join and leave the guest list. A new intern with diabetes joins late. At the end, you will share a catering menu and ask if there are any issues — you must NOT hint at what the problems are or which constraints to check.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly office party planner. You always refer to your colleagues by name in third person (e.g. 'Rachel told me...', 'Marcus said...'). You never express frustration or impatience, even when the guest list keeps changing. You treat each update as normal office coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning our office holiday party for next Thursday and I'm in charge of the food. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with party food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate holiday party food planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Five of us confirmed so far: me, Rachel, Dev, Marcus, and Tina. Rachel is seven months pregnant. Dev was diagnosed with celiac disease last year. Marcus had a peanut allergy incident at last year's party, had to use his EpiPen. And Tina carries an EpiPen for tree nuts, she's mentioned it a few times at lunch",
+          "success_criteria": "Agent acknowledges all four colleagues and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "rachel_pregnant",
+            "dev_celiac",
+            "marcus_peanut"
+          ],
+          "required_constraint_keys": [
+            "rachel_pregnancy_diet",
+            "dev_gluten",
+            "tina_tree_nut"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Company gave us $300 for catering. We're expecting maybe 8-10 people total once plus-ones confirm. Any cuisine style you'd recommend that works for everyone?",
+          "success_criteria": "Agent considers the constraints and suggests cuisine directions",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Provide budget info and ask for general direction"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Tina just told me she's going on vacation early, flying out Wednesday night, so she won't be there Thursday. She asked if I could save her a box of whatever desserts we get though",
+          "success_criteria": "Agent notes Tina won't attend but needs desserts saved — her tree nut allergy applies to the saved desserts",
+          "required_info_keys": [
+            "tina_exits",
+            "tina_wants_treats"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Tina leaves but her tree nut allergy still applies to saved desserts"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we do the party during lunch or after work? I'm thinking lunch is easier since everyone's already in the office",
+          "success_criteria": "Agent responds about timing logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party logistics",
+            "drift_topic": "timing of the party — lunch vs after work",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn about party timing"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Marcus told me he did allergy testing last month and turns out he's outgrown the peanut allergy completely, doctor cleared him. Oh and he wants to bring his wife Priya — Marcus mentioned she's Jain, very observant about it",
+          "success_criteria": "Agent removes Marcus's peanut allergy constraint and registers Priya with Jain dietary restrictions",
+          "required_info_keys": [
+            "marcus_healed",
+            "marcus_wife_joins"
+          ],
+          "required_constraint_keys": [
+            "priya_jain"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL (Marcus peanut allergy gone) + late-joining entity with high constraint (Priya is Jain)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh and our new intern Sam is coming too, started last week. He mentioned on his first day that he wears an insulin pump, been Type 1 since he was a kid",
+          "success_criteria": "Agent registers Sam as Type 1 diabetic with sugar management needs",
+          "required_info_keys": [
+            "new_intern_joins"
+          ],
+          "required_constraint_keys": [
+            "sam_diabetes"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Sam is Type 1 diabetic"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think $300 is enough for 7 people or should I ask for more budget? I don't want it to feel cheap",
+          "success_criteria": "Agent responds about budget adequacy",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "budget concern",
+            "drift_topic": "whether $300 is sufficient for the group size",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I found a catering company with good reviews. Here's what I'm thinking of ordering: smoked salmon platter, penne pasta with vodka sauce, Thai chicken satay with peanut sauce, flourless chocolate cake, fruit and cheese board, and mulled wine. Any issues?",
+          "success_criteria": "Agent identifies: smoked salmon problematic for Rachel (pregnant, no smoked fish) and Priya (Jain, no fish); penne pasta problematic for Dev (celiac, contains gluten) and Priya (likely contains garlic/onion); Thai chicken satay problematic for Priya (Jain, no meat) but peanut sauce is NOW FINE (Marcus outgrew allergy); flourless chocolate cake is fine for the party table but must check for tree nuts before saving for Tina; fruit and cheese board is fine for most; mulled wine problematic for Rachel (pregnant, no alcohol)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 menu items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Smoked salmon platter: problematic for Rachel (pregnant — smoked fish carries listeria risk) and Priya (Jain — no fish). Penne pasta with vodka sauce: problematic for Dev (celiac — penne is wheat pasta, contains gluten) and Priya (vodka sauce typically contains garlic/onion — Jain restriction on root vegetables). Thai chicken satay with peanut sauce: problematic for Priya (Jain — no meat/chicken); peanut sauce is fine because Marcus outgrew his peanut allergy. Flourless chocolate cake: fine for the party table, but need to verify it doesn't contain tree nuts before saving a box for Tina (tree nut allergy still applies to her saved desserts); also Sam (Type 1 diabetic) needs portion awareness but cake can still be served. Fruit and cheese board: generally fine for everyone at the table. Mulled wine: problematic for Rachel (pregnant — no alcohol).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Smoked salmon platter is problematic for Rachel because she is pregnant and smoked fish poses listeria risk",
+      "Smoked salmon platter is problematic for Priya because she is Jain and cannot eat fish",
+      "Penne pasta with vodka sauce is problematic for Dev because he has celiac disease and penne contains gluten",
+      "Penne pasta with vodka sauce is problematic for Priya because vodka sauce typically contains garlic and/or onion which are root vegetables forbidden in Jain diet",
+      "Thai chicken satay is problematic for Priya because she is Jain and cannot eat meat",
+      "Peanut sauce is fine — Marcus outgrew his peanut allergy, doctor cleared him",
+      "Flourless chocolate cake needs to be checked for tree nuts before saving for Tina's box, since her tree nut allergy still applies to saved desserts",
+      "Mulled wine is problematic for Rachel because she is pregnant and cannot have alcohol",
+      "Sam as Type 1 diabetic should be noted regarding high-sugar items like cake, but items can still be served with awareness"
+    ],
+    "forbidden_elements": [
+      "Flagging peanut sauce as a problem for Marcus (he outgrew the allergy, doctor cleared him)",
+      "Flagging tree nuts as a problem for the party table (Tina is not attending the party itself)",
+      "Saying Priya cannot eat cheese (Jain diet restricts meat/fish/eggs/root vegetables, not dairy)",
+      "Saying Sam cannot have any cake or sugar at all (Type 1 diabetics manage intake, not eliminate it entirely)",
+      "Flagging any item for Tina as if she is attending the party in person"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns. The agent must track: (1) Rachel is pregnant → no smoked fish, no alcohol (inferential chain), (2) Dev has celiac → no gluten (inferential), (3) Marcus's peanut allergy is REMOVED mid-conversation (outgrown, doctor cleared), (4) Tina EXITS the party but wants desserts saved (tree nut allergy scope changes from party table to saved desserts only), (5) Priya JOINS late as a Jain → no meat, fish, eggs, root vegetables including garlic and onion (inferential, high-constraint late-joiner), (6) Sam JOINS late as Type 1 diabetic → needs sugar awareness but not elimination (inferential, late-joiner). At probe time, the agent must apply CURRENT constraint state: Rachel=pregnant (no smoked fish, no alcohol), Dev=celiac (no gluten), Priya=Jain (no meat/fish/eggs/root vegetables), Sam=Type 1 diabetic (sugar awareness), Tina=tree nut allergy (desserts saved for her only). Marcus has NO restrictions. The peanut sauce trap tests whether the agent correctly removes Marcus's former constraint. The flourless chocolate cake tests scope distinction (fine for table, must check for Tina's box). The fruit and cheese board tests over-generalization (Jain does not restrict dairy)."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

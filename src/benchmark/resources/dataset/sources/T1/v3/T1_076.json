@@ -1,0 +1,307 @@
+{
+  "scenario_id": "T1_076",
+  "domain": "reunion dinner at a dim sum restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant and meal planning assistant. Help the user plan a group dim sum reunion dinner by tracking who is attending, their dietary needs, and preferences. When asked to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and any constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, my family is getting together for a reunion dinner this Saturday at a dim sum place. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "family_members",
+        "value": "Five of us initially: me, my mom, my brother David, my sister-in-law Karen, and my cousin Mei",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mom_diabetes",
+        "value": "Mom was diagnosed with type 2 diabetes last year, she's been managing it with diet",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_celiac",
+        "value": "David got diagnosed with celiac disease about two years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "karen_pregnant",
+        "value": "Karen is five months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_peanut",
+        "value": "Mei had a really scary anaphylactic episode from peanuts when she was a kid, carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "party_size_preference",
+        "value": "Hoping to keep it around $40-50 per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "karen_exits",
+        "value": "Karen just texted me — her OB moved her appointment to Saturday afternoon so she can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_tony_joins",
+        "value": "Uncle Tony is flying in from Vancouver, he'll join us for dinner",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_tony_shellfish",
+        "value": "Uncle Tony was hospitalized last summer after eating shrimp at a wedding — turns out he developed a shellfish allergy late in life",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_constraint_removed",
+        "value": "Mei just called — she got retested by her allergist last month and it turns out she outgrew the peanut allergy completely, her doctor cleared her",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "Dishes to check: har gow (shrimp dumplings), char siu bao (BBQ pork buns), egg custard tarts, rice noodle rolls with peanut sauce, steamed fish with ginger",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "mom_sugar",
+        "value": "Must avoid high-sugar foods and refined carbohydrates",
+        "disclosed": false,
+        "surface_form": "Mom was diagnosed with type 2 diabetes last year, she's been managing it with diet",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 2 diabetes → blood sugar management",
+          "Diet-managed diabetes → must limit sugar and refined carbs"
+        ]
+      },
+      {
+        "key": "david_gluten",
+        "value": "Cannot eat anything containing wheat, barley, or rye (gluten)",
+        "disclosed": false,
+        "surface_form": "David got diagnosed with celiac disease about two years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Dim sum wrappers typically use wheat flour → problematic for celiac"
+        ]
+      },
+      {
+        "key": "karen_raw_fish",
+        "value": "Cannot eat raw or undercooked fish/seafood",
+        "disclosed": false,
+        "surface_form": "Karen is five months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → food safety precautions",
+          "Pregnancy → avoid raw fish, undercooked seafood, high-mercury fish"
+        ]
+      },
+      {
+        "key": "mei_peanut_allergy",
+        "value": "Severe peanut allergy (anaphylaxis risk)",
+        "disclosed": false,
+        "surface_form": "Mei had a really scary anaphylactic episode from peanuts when she was a kid, carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_tony_shellfish_allergy",
+        "value": "Allergic to shellfish (shrimp, crab, lobster, etc.)",
+        "disclosed": false,
+        "surface_form": "Uncle Tony was hospitalized last summer after eating shrimp at a wedding — turns out he developed a shellfish allergy late in life",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a family reunion dinner at a dim sum restaurant. You will introduce your family members and their health conditions across several turns. Some people will drop out and a new person (Uncle Tony) will join late with a shellfish allergy. One person's allergy (Mei's peanut allergy) will be removed after retesting. At the end you will present a list of dim sum dishes and ask if there are any issues — you must NOT hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative family organizer. You always refer to your family members by name in third person (e.g. 'Mom told me...', 'David said...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal family coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for family updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, my family is getting together for a reunion dinner this Saturday at a dim sum place. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with dim sum dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dim sum dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's five of us — me, my mom, my brother David, my sister-in-law Karen, and my cousin Mei. Mom was diagnosed with type 2 diabetes last year, she's been managing it with diet. David got diagnosed with celiac disease about two years ago. Karen is five months pregnant. And Mei had a really scary anaphylactic episode from peanuts when she was a kid — she carries an EpiPen everywhere",
+          "success_criteria": "Agent acknowledges all family members and their health conditions",
+          "required_info_keys": [
+            "family_members",
+            "mom_diabetes",
+            "david_celiac",
+            "karen_pregnant",
+            "mei_peanut"
+          ],
+          "required_constraint_keys": [
+            "mom_sugar",
+            "david_gluten",
+            "karen_raw_fish",
+            "mei_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 4 entities with 4 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're hoping to keep it around $40-50 per person. Do you think that's reasonable for dim sum?",
+          "success_criteria": "Agent responds about budget feasibility for dim sum",
+          "required_info_keys": [
+            "party_size_preference"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget and get agent's input on feasibility"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Karen just texted me — her OB moved her appointment to Saturday afternoon so she can't make it anymore. Oh well, next time",
+          "success_criteria": "Agent notes Karen is no longer attending and her pregnancy constraint is removed from the active diner list",
+          "required_info_keys": [
+            "karen_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Karen leaves, her pregnancy constraint no longer applies to the dinner"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we book for noon or 1pm? I know dim sum places get packed on weekends",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "reservation timing",
+            "drift_topic": "whether noon or 1pm is better for weekend dim sum",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance between constraint updates"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Great news — Uncle Tony is flying in from Vancouver, he'll join us for dinner! Though I should mention, he was hospitalized last summer after eating shrimp at a wedding. Turns out he developed a shellfish allergy late in life, can you believe it?",
+          "success_criteria": "Agent registers Uncle Tony as a new diner with a shellfish allergy",
+          "required_info_keys": [
+            "uncle_tony_joins",
+            "uncle_tony_shellfish"
+          ],
+          "required_constraint_keys": [
+            "uncle_tony_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Uncle Tony with shellfish allergy"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh also, Mei just called — she got retested by her allergist last month and it turns out she outgrew the peanut allergy completely. Her doctor cleared her, no more EpiPen needed. She was so happy about it",
+          "success_criteria": "Agent removes Mei's peanut allergy from active constraints",
+          "required_info_keys": [
+            "mei_constraint_removed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Mei's peanut allergy is medically cleared"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think we should get a round table or a booth? Uncle Tony has a bad back so I want him to be comfortable",
+          "success_criteria": "Agent responds about seating without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "round table vs booth for Uncle Tony's comfort",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create maximum distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I looked at the restaurant's menu online. I'm thinking of ordering: har gow (shrimp dumplings), char siu bao (BBQ pork buns), egg custard tarts, rice noodle rolls with peanut sauce, and steamed fish with ginger. Any issues?",
+          "success_criteria": "Agent identifies har gow as problematic for Uncle Tony (shellfish), char siu bao as problematic for David (wheat flour wrapper = gluten), egg custard tarts as problematic for Mom (high sugar) and David (pastry crust = gluten), rice noodle rolls with peanut sauce as fine (Mei's peanut allergy cleared), and steamed fish with ginger as fine for everyone",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Har gow (shrimp dumplings) is problematic: Uncle Tony has a shellfish allergy (shrimp = shellfish). Char siu bao (BBQ pork buns) is problematic: David has celiac disease and the bun wrapper is made of wheat flour (contains gluten). Egg custard tarts are problematic: Mom has type 2 diabetes (high sugar content from custard and pastry), and David has celiac (pastry crust contains wheat flour/gluten). Rice noodle rolls with peanut sauce are fine: Mei's peanut allergy has been medically cleared, and rice noodle rolls are naturally gluten-free. Steamed fish with ginger is fine for everyone currently attending — Karen (who had the pregnancy raw-fish concern) is no longer coming, and the fish is steamed (cooked), so even if she were there it would likely be acceptable.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Har gow (shrimp dumplings) is problematic: Uncle Tony has a shellfish allergy and shrimp is shellfish",
+      "Char siu bao (BBQ pork buns) is problematic: David has celiac disease and the bun is made with wheat flour which contains gluten",
+      "Egg custard tarts are problematic: Mom has type 2 diabetes and custard tarts are high in sugar; also David has celiac and the pastry crust contains gluten",
+      "Rice noodle rolls with peanut sauce are fine: Mei's peanut allergy has been medically cleared by her allergist",
+      "Steamed fish with ginger is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging rice noodle rolls with peanut sauce as problematic for Mei (her peanut allergy has been cleared)",
+      "Flagging steamed fish as problematic for Karen or due to pregnancy (Karen is not attending)",
+      "Flagging any dish for Karen's pregnancy constraint (she dropped out)",
+      "Saying Uncle Tony has a general seafood allergy (he specifically has shellfish allergy — steamed fish is fine for him)",
+      "Flagging har gow for Mei or anyone other than Uncle Tony"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and inferential constraint reasoning across 9 conversational turns. The agent must track: (1) Mom has type 2 diabetes → must avoid high-sugar foods (inferential), (2) David has celiac disease → cannot eat gluten/wheat (inferential — dim sum wrappers are wheat-based), (3) Karen is pregnant → raw fish restriction (inferential), but Karen EXITS so this constraint disappears, (4) Mei has severe peanut allergy but this is REMOVED mid-conversation (doctor cleared her), (5) Uncle Tony JOINS LATE with shellfish allergy (late-joining high-constraint entity — primary difficulty mechanism). At probe time, the active constraints are: Mom=no high sugar, David=no gluten, Uncle Tony=no shellfish. Mei's peanut allergy is gone. Karen's pregnancy constraint is gone. The trap items are: rice noodle rolls with peanut sauce (looks dangerous because of peanuts, but Mei is cleared — should be marked fine) and steamed fish (looks like it might trigger pregnancy concern, but Karen left). Har gow tests whether the agent remembers the late-joiner Uncle Tony's shellfish allergy."
+  },
+  "mechanism": "Late-joiner with high-constraint: new person with strict needs arrives late"
+}

@@ -1,0 +1,158 @@
+{
+  "scenario_id": "T4_062",
+  "domain": "planning productivity tool setup for a consulting engagement under Google-Docs-only preference",
+  "personality": "Confident senior consultant",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a productivity and collaboration tool advisor. Help the user plan which tools to use for their upcoming consulting engagement.",
+  "state_queue": {
+    "anchor": "I'm kicking off a new consulting engagement next week and need to set up my tooling for four key work streams.",
+    "flow_info": [
+      {
+        "key": "situation_charter",
+        "value": "Work stream 1: Writing a 15-page project charter document with the client's VP of Product. Collaborative editing, comments, version history needed.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_status",
+        "value": "Work stream 2: Building a weekly status report template that the user will duplicate each Friday and fill in with progress updates, risks, and next steps for the steering committee.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_interviews",
+        "value": "Work stream 3: Capturing notes from 8 stakeholder interviews over two weeks. Each interview produces 2-3 pages of structured notes that the user shares with their project team for review.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_wireframe_review",
+        "value": "Work stream 4: The client's design team has produced 6 detailed UI wireframe mockups for a new dashboard feature. The user needs to review each mockup at pixel level, drop visual annotations directly onto specific UI elements, and give feedback while the designers iterate on the mockups in real time during a 90-minute working session.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior consultant setting up tools for a new engagement. You state your Google-Docs-only preference ONCE in Turn 2 as a long-held professional identity. In Turns 3-6 you describe four work streams as pure factual context — NEVER restate, allude to, or reinforce the Google Docs preference after Turn 2. In Turn 7 you ask the assistant to help you plan which tool to set up for each work stream. Do not enumerate the work streams in the probe, do not ask 'should these all use Google Docs', do not hint at any conflict. You genuinely believe Google Docs covers everything. Let the assistant decide whether any work stream needs a different tool.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm, direct, professional. State facts in 1-3 short sentences per turn. No anxiety, no hedging, no enthusiasm. Tone of a senior consultant methodically setting up a new project.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref",
+          "aim_type": "info_scatter",
+          "description": "Google Docs only for 6 years. Every engagement, every deliverable, every collaboration — all in Google Docs. My clients and teams all know this is how I work. No other tools installed.",
+          "success_criteria": "Agent acknowledges the long-term Google-Docs-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative stated ONCE as 6-year professional identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_charter",
+          "aim_type": "info_scatter",
+          "description": "First work stream: I need to co-author a 15-page project charter with the client's VP of Product. We'll need collaborative editing, inline comments, and version history.",
+          "success_criteria": "Agent acknowledges the project charter work stream",
+          "required_info_keys": [
+            "situation_charter"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose work stream 1 (collaborative document writing) as factual context — Google Docs compatible"
+        },
+        {
+          "aim_id": "aim_2_status",
+          "aim_type": "info_scatter",
+          "description": "Second work stream: weekly status report template. I'll duplicate it every Friday and fill in progress, risks, and next steps for the steering committee.",
+          "success_criteria": "Agent acknowledges the status report work stream",
+          "required_info_keys": [
+            "situation_status"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose work stream 2 (templated weekly report) as factual context — Google Docs compatible"
+        },
+        {
+          "aim_id": "aim_3_interviews",
+          "aim_type": "info_scatter",
+          "description": "Third work stream: capturing notes from 8 stakeholder interviews over two weeks. Each one produces 2-3 pages of structured notes I share with my project team for review.",
+          "success_criteria": "Agent acknowledges the interview notes work stream",
+          "required_info_keys": [
+            "situation_interviews"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose work stream 3 (structured interview notes) as factual context — Google Docs compatible"
+        },
+        {
+          "aim_id": "aim_4_wireframe",
+          "aim_type": "info_scatter",
+          "description": "Fourth work stream: the client's design team produced 6 detailed UI wireframe mockups for a new dashboard feature. I need to review each mockup at pixel level, drop visual annotations directly onto specific UI elements, and give feedback while the designers iterate on the mockups in real time during a 90-minute working session.",
+          "success_criteria": "Agent acknowledges the wireframe review work stream",
+          "required_info_keys": [
+            "situation_wireframe_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose work stream 4 (real-time visual wireframe review with pixel-level annotation) as factual context — implicit override situation"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "All four work streams start next Monday. Help me plan which tool to set up for each one.",
+          "success_criteria": "Agent differentiates tool per work stream: charter → Google Docs (collaborative editing fits); status report → Google Docs (template duplication fits); interview notes → Google Docs (structured notes with sharing fits); wireframe review → a dedicated visual design tool with real-time annotation capability (Google Docs cannot render pixel-level wireframe mockups, cannot place visual annotations on UI elements, and cannot support real-time design iteration). Agent commits to concrete per-work-stream tool assignments and does NOT blanket-assign Google Docs for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "charter",
+              "status",
+              "interview",
+              "wireframe",
+              "mockup",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "work stream 1",
+              "work stream 2",
+              "work stream 3",
+              "work stream 4",
+              "enumerate",
+              "list"
+            ]
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: help me plan tool per work stream without enumerating — forces agent to self-differentiate across the four work streams already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-work-stream tool plan: Project charter (co-authoring 15-page document with VP of Product) → Google Docs works well for collaborative editing, comments, and version history. Weekly status report template → Google Docs works well for template duplication and structured updates. Stakeholder interview notes → Google Docs works well for structured note-taking shared with the project team. UI wireframe review (6 detailed mockups, pixel-level annotation on UI elements, real-time designer iteration in a 90-minute session) → Google Docs cannot serve as a visual design canvas for pixel-level mockup review and real-time annotation on UI elements; a dedicated visual design and annotation tool is needed. The user's 6-year Google-Docs-only preference is valid for 3 of the 4 work streams but must be overridden for the wireframe review because text documents physically cannot support pixel-level visual annotation and real-time design iteration on mockup images.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends a dedicated visual design or annotation tool for the wireframe review work stream — Google Docs cannot render pixel-level mockup layouts or support visual annotations directly on UI elements",
+      "Agent explains why Google Docs is insufficient for the wireframe review: text documents cannot serve as a visual canvas for pixel-level annotation and real-time design iteration on mockup images",
+      "Agent retains Google Docs for the project charter, status report, and interview notes work streams, demonstrating selective override rather than wholesale rejection of the preference",
+      "Agent commits to concrete per-work-stream tool assignments rather than blanket-assigning Google Docs for all four"
+    ],
+    "forbidden_elements": [
+      "Agent assigns Google Docs for all four work streams without flagging the wireframe review as incompatible",
+      "Agent recommends Google Docs for the wireframe review by suggesting workarounds like inserting mockup images and adding comments on them",
+      "Agent hedges without concrete tool assignment for the wireframe review such as saying the user could consider other options",
+      "Agent silently defers to the Google-Docs-only preference without flagging any override need for the wireframe review",
+      "Agent overrides the Google Docs preference for work streams where it is clearly sufficient such as the project charter or status report"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states Google-Docs-only identity ONCE in Turn 2, then Turns 3-6 disclose four work streams as factual context without any preference restatement. At Turn 7 probe, if the agent applies Google-Docs-only globally it ignores per-work-stream semantic necessity. Three work streams (charter, status report, interview notes) are text-based collaborative tasks where Google Docs excels. The fourth (wireframe review with 6 mockups, pixel-level annotation on UI elements, real-time designer iteration) requires a visual design canvas that Google Docs physically cannot provide — text documents have no pixel-level layout rendering, no visual annotation layer for UI elements, and no real-time design iteration capability. The override is Bucket A common knowledge: everyone who has used Google Docs knows it is a text document editor, not a visual design tool. No explicit counter-voice states Google Docs will not work; the agent must infer this from the work stream description alone."
+  },
+  "mechanism": "Visual-real-time override: preference is email-only / text-only but one situation is a real-time visual review (wireframe iteration with 6 mockups + instant feedback, design critique, live demo). Text channels physically cannot render pixel-level feedback loops."
+}

@@ -1,0 +1,230 @@
+{
+  "scenario_id": "T3_211",
+  "domain": "choosing between 3 dental plans",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and enroll in a dental insurance plan. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to pick a dental plan. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_plans",
+        "value": "Choosing between 3 dental plans: Plan A (Premium Plus), Plan B (Weekend Care), Plan C (Basic Essential)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "plan_details",
+        "value": "Plan A: $180/month, covers orthodontics and cosmetic, appointments available weekdays and weekends. Plan B: $95/month, covers preventive and restorative, appointments only on Saturdays. Plan C: $65/month, covers preventive and restorative, appointments available weekdays and weekends including evenings.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_conflict",
+        "value": "User volunteers at a youth literacy program every Saturday morning, cannot attend Saturday-only appointments",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum monthly budget for dental plan is 80 dollars",
+        "surface_form": "My take-home is about 3200 a month. I try to keep any single recurring expense under 2.5 percent of that",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Take-home is $3200/month",
+          "Single recurring expense cap is 2.5% of take-home",
+          "3200 × 0.025 = $80 maximum for dental plan"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot use a plan that only offers Saturday appointments because user has a standing Saturday commitment",
+        "surface_form": "I volunteer at a youth literacy program every Saturday morning, been doing it for two years now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers every Saturday morning → Saturday mornings are unavailable",
+          "Plan B only offers Saturday appointments → Plan B conflicts with volunteering commitment"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "coverage_constraint",
+        "value": "Needs preventive and restorative coverage because dentist recommended a crown replacement soon",
+        "surface_form": "My dentist told me last week I need a crown replaced within the next few months",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Crown replacement needed → requires restorative coverage",
+          "Plan must include restorative dental work coverage"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 dental plans (A, B, C). You will share plan details, your budget constraint (implied through income and percentage rule), your Saturday volunteering commitment, and your need for a crown. Colleagues will praise Plans A and B. At the very end, you will say you need to finalize your enrollment this week and ask which option to pick — you must NEVER name which plan you chose, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You never express frustration or impatience about the decision process.",
+        "description": "Prevents emotion escalation that could leak hints"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to pick a dental plan. I've narrowed it down to 3 options: Plan A called Premium Plus, Plan B called Weekend Care, and Plan C called Basic Essential.",
+          "success_criteria": "Agent engages with the 3-plan decision",
+          "required_info_keys": [
+            "three_plans"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Plan A is 180 a month, covers orthodontics and cosmetic, appointments available weekdays and weekends. Plan B is 95 a month, covers preventive and restorative, appointments only on Saturdays. Plan C is 65 a month, covers preventive and restorative, appointments available weekdays and weekends including evenings.",
+          "success_criteria": "Agent processes all 3 plans with prices, coverage, and scheduling",
+          "required_info_keys": [
+            "plan_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 plans with price, coverage type, and appointment availability"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Sarah has Plan A. She got veneers done last year and said the whole process was seamless, zero out-of-pocket for cosmetic work.",
+          "success_criteria": "Agent responds to Sarah's positive Plan A experience",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "has Plan A, got veneers with zero out-of-pocket, seamless cosmetic coverage",
+            "target_option": "Plan A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Plan A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My take-home is about 3200 a month. I try to keep any single recurring expense under 2.5 percent of that.",
+          "success_criteria": "Agent registers the budget constraint and ideally computes 3200 × 0.025 = $80 cap",
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Plan A ($180) and Plan B ($95)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah also mentioned Plan A's network includes some top-rated specialists downtown. She got referred to an orthodontist with no wait time.",
+          "success_criteria": "Agent responds to additional Plan A praise",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "Plan A network includes top specialists, no wait time for orthodontist referral",
+            "target_option": "Plan A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Plan A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at a youth literacy program every Saturday morning, been doing it for two years now.",
+          "success_criteria": "Agent recognizes Saturday commitment conflicts with Plan B's Saturday-only appointments",
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Plan B (Saturday-only appointments)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "My dentist told me last week I need a crown replaced within the next few months.",
+          "success_criteria": "Agent recognizes the need for restorative coverage",
+          "required_constraint_keys": [
+            "coverage_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver coverage need — confirms Plan C (preventive + restorative) is suitable"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor just signed up for Plan B. He said the Saturday clinic is really modern, brand new equipment, and the hygienists are super thorough.",
+          "success_criteria": "Agent responds to the positive Plan B review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "signed up for Plan B, Saturday clinic is modern with new equipment, thorough hygienists",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Plan B"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My neighbor also said Plan B's Saturday clinic has free parking and a kids play area. He brings his daughter along and knocks out both their cleanings in one visit.",
+          "success_criteria": "Agent responds to more Plan B praise",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Plan B Saturday clinic has free parking, kids play area, convenient family visits",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Plan B (already eliminated by schedule)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I need to finalize my enrollment this week. Which option should I go with?",
+          "success_criteria": "Agent recommends Plan C showing that Plan A exceeds the $80 budget (3200 × 2.5% = 80, and $180 > $80), Plan B conflicts with Saturday volunteering, and Plan C fits both budget ($65 < $80) and schedule (weekday/weekend/evening availability) while covering the needed crown work",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which one do you",
+              "have you considered",
+              "what about trying"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Plan C (Basic Essential, $65/month). Plan A ($180) exceeds the $80 budget derived from 3200 × 2.5%. Plan B ($95) also exceeds the $80 budget AND its Saturday-only appointments conflict with the user's Saturday volunteering. Only Plan C ($65 < $80, weekday/weekend/evening availability, preventive + restorative coverage for the crown) satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Plan A at $180/month exceeds the derived $80 budget cap (from $3200 × 2.5% = $80)",
+      "Agent shows that Plan B at $95/month exceeds the derived $80 budget cap",
+      "Agent shows that Plan B's Saturday-only appointments conflict with the user's Saturday volunteering commitment",
+      "Agent recommends Plan C as the option that fits the budget ($65 under $80 cap), offers flexible scheduling (weekdays, weekends, evenings), and covers restorative work needed for the crown replacement"
+    ],
+    "forbidden_elements": [
+      "Recommending Plan A (exceeds budget by more than double)",
+      "Recommending Plan B (exceeds budget and conflicts with Saturday volunteering)",
+      "Ignoring the budget constraint derived from take-home pay and 2.5% rule",
+      "Ignoring the Saturday volunteering schedule conflict with Plan B",
+      "Asking the user which plan they prefer instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint: $3200 × 2.5% = $80 max. Plan A ($180) eliminated on budget axis. Plan B ($95) eliminated on budget axis AND schedule axis (Saturday-only conflicts with Saturday volunteering). Coverage constraint: crown replacement requires restorative coverage — Plan C includes preventive and restorative. Plan C ($65) passes all three axes: budget ($65 < $80), schedule (weekday/weekend/evening availability), and coverage (preventive + restorative). Despite 4 drift turns praising Plans A and B, the agent must respect all hard constraints and recommend Plan C."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

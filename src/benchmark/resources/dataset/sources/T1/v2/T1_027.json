@@ -1,0 +1,296 @@
+{
+  "scenario_id": "T1_027",
+  "domain": "team dinner at a Japanese izakaya",
+  "personality": "Friendly and easygoing",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific menu items, check each item against every active diner's current dietary constraints. Pay close attention to changes in the guest list and any constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, our team wants to check out that new Japanese izakaya downtown this Friday night. Have you been to an izakaya before? Any tips for group dining there?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us going: me, Mei, Kevin, and Derek",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_sesame_reaction",
+        "value": "Mei had a bad allergic reaction to sesame chicken at a work lunch last month, broke out in hives and had to go to urgent care",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_shrimp_reaction",
+        "value": "Derek ate shrimp at a beach cookout last summer and his throat started swelling up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 40 to 50 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_early_meeting",
+        "value": "Derek has an early meeting Saturday morning so he was pushing for a 6pm reservation, but everyone else prefers 7:30",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_exits",
+        "value": "Derek just messaged the group chat — his deadline got moved up and he has to work late Friday, so he is out",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_joins",
+        "value": "Priya from accounting asked if she can join us",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnant",
+        "value": "Priya just told me she is four months along",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu items to check: salmon sashimi, agedashi tofu, chicken yakitori, spinach goma-ae, edamame, ebi gyoza",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "mei_sesame_allergy",
+        "value": "Cannot eat sesame or sesame-derived products",
+        "disclosed": false,
+        "surface_form": "Mei had a really bad reaction to sesame chicken at a work lunch last month, broke out in hives and had to go to urgent care",
+        "delivery_mode": "direct",
+        "inference_chain": [
+          "Allergic reaction to sesame chicken → sesame allergy",
+          "Sesame allergy → cannot eat sesame seeds, sesame oil, or sesame-based sauces and dressings"
+        ]
+      },
+      {
+        "key": "kevin_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Kevin grew up in a Jain household back in Gujarat, still follows all the traditions",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain household, follows traditions → practices Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs, no root vegetables"
+        ]
+      },
+      {
+        "key": "derek_shellfish_allergy",
+        "value": "Cannot eat shellfish — severe allergic reaction",
+        "disclosed": false,
+        "surface_form": "Derek ate shrimp at a beach cookout last summer and his throat started swelling up, had to use an EpiPen",
+        "delivery_mode": "direct",
+        "inference_chain": [
+          "Severe reaction to shrimp → shellfish allergy",
+          "EpiPen use → anaphylactic-level severity"
+        ]
+      },
+      {
+        "key": "priya_pregnancy_diet",
+        "value": "Cannot eat raw fish or consume alcohol",
+        "disclosed": false,
+        "surface_form": "Priya just told me she is four months along, super excited about it",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Four months along → pregnant",
+          "Pregnant → should avoid raw fish and alcohol"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a Friday team dinner at a Japanese izakaya for your coworkers. You will introduce four people (you, Mei, Kevin, Derek) with their backgrounds and dietary issues in a burst. Derek will later drop out. Priya will join later. At the end you will share a list of menu items and ask if they work for everyone. You must NEVER evaluate the dishes yourself or hint at which ones are problematic — just list them and ask.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing team organizer. You always refer to your coworkers by name in third person (e.g. 'Mei told me...', 'Kevin mentioned...'). You never express frustration or impatience even when plans change. You treat each update as normal group coordination. You are matter-of-fact and keep messages conversational.",
+        "description": "Prevents emotion escalation and ensures third-person relay for coworker updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, our team wants to check out that new Japanese izakaya downtown this Friday night. Have you been to an izakaya before? Any tips for group dining there?",
+          "success_criteria": "Agent engages with izakaya dining tips or asks about the group",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "There are four of us going — me, Mei, Kevin, and Derek. Mei had a really bad reaction to sesame chicken at a work lunch last month, broke out in hives and had to go to urgent care. Kevin grew up in a Jain household back in Gujarat, still follows all the traditions. And Derek ate shrimp at a beach cookout last summer and his throat started swelling up, had to use an EpiPen.",
+          "success_criteria": "Agent acknowledges all three coworkers and their dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "mei_sesame_reaction",
+            "derek_shrimp_reaction"
+          ],
+          "required_constraint_keys": [
+            "mei_sesame_allergy",
+            "kevin_jain_diet",
+            "derek_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Deliver 3 entities with 3 constraints in one burst"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget-wise we are thinking around 40 to 50 dollars per person. Oh and Derek has an early meeting Saturday morning so he was pushing for a 6pm reservation, but everyone else prefers 7:30 — any thoughts on timing?",
+          "success_criteria": "Agent registers budget and discusses timing trade-off",
+          "required_info_keys": [
+            "budget",
+            "derek_early_meeting"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Add budget and scheduling context"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Derek just messaged the group chat — his deadline got moved up and he has to work late Friday, so he is out. Bummer, but at least the timing debate is settled now, ha",
+          "success_criteria": "Agent notes Derek is no longer attending and his constraints no longer apply",
+          "required_info_keys": [
+            "derek_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Derek leaves, his shellfish allergy and early-meeting constraint removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "How many dishes should we order for a group of three at an izakaya? Is it like tapas where you share everything?",
+          "success_criteria": "Agent gives advice on izakaya ordering style",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "ordering logistics",
+            "drift_topic": "how izakaya shared plates work compared to tapas",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance between lifecycle events"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh wait, Priya from accounting just asked if she can join us! That makes four again. She just told me she is four months along, super excited about it",
+          "success_criteria": "Agent registers Priya as a new diner and recognizes pregnancy implications for dining",
+          "required_info_keys": [
+            "priya_joins",
+            "priya_pregnant"
+          ],
+          "required_constraint_keys": [
+            "priya_pregnancy_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Priya joins, pregnant → no raw fish, no alcohol"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we make a reservation or do izakayas usually take walk-ins on a Friday night?",
+          "success_criteria": "Agent gives advice on reservations",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "whether to reserve or walk in at an izakaya on Friday",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do izakayas usually have good non-alcoholic drink options? Wondering what everyone will want to drink",
+          "success_criteria": "Agent discusses drink options at izakayas",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "drinks",
+            "drift_topic": "non-alcoholic drink options at izakayas",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to maximize distance between last constraint and probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I found their menu online. How about we get: salmon sashimi, agedashi tofu, chicken yakitori, spinach goma-ae, edamame, and ebi gyoza? Does that work for everyone?",
+          "success_criteria": "Agent checks each of the 6 items against current active constraints and identifies all problems",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Four of the six items have problems. Salmon sashimi: problematic for Priya (pregnant, must avoid raw fish) and Kevin (Jain, no fish). Agedashi tofu: looks vegetarian but the broth is made with dashi, which is derived from bonito (fish) — Kevin cannot eat it (Jain, no fish). This is the hidden ingredient trap. Chicken yakitori: Kevin cannot eat it (Jain, no meat). Spinach goma-ae: goma means sesame in Japanese — the dish is dressed in sesame sauce, so Mei cannot eat it (sesame allergy). Edamame: fine for everyone currently attending. Ebi gyoza (shrimp gyoza): fine — Derek had the shellfish allergy but he is no longer coming.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Salmon sashimi is problematic for Priya because she is pregnant and should avoid raw fish",
+      "Salmon sashimi is also problematic for Kevin because he follows Jain dietary practices which prohibit fish",
+      "Agedashi tofu is problematic for Kevin because it is prepared with dashi broth made from bonito which is fish — hidden ingredient that makes a seemingly vegetarian dish unsuitable for Jain diet",
+      "Chicken yakitori is problematic for Kevin because Jain dietary practices prohibit meat",
+      "Spinach goma-ae is problematic for Mei because goma is sesame and the dish contains sesame-based dressing which triggers her sesame allergy",
+      "Edamame is fine for everyone currently attending",
+      "Ebi gyoza is fine because Derek who has the shellfish allergy is no longer coming"
+    ],
+    "forbidden_elements": [
+      "Flagging ebi gyoza as problematic for Derek or anyone else — Derek is no longer attending and no other diner has a shellfish allergy",
+      "Flagging any dish based on Derek's shellfish allergy since he dropped out of the dinner",
+      "Saying agedashi tofu is fine for Kevin — it contains dashi broth made from bonito which is fish",
+      "Flagging edamame as problematic for anyone",
+      "Saying Priya cannot eat cooked fish — the pregnancy restriction is specifically about raw fish",
+      "Flagging the 7:30pm timing as a problem — Derek who needed the early slot is no longer coming",
+      "Over-generalizing Mei's sesame allergy to all nuts or all seeds"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking, inferential constraint reasoning, and hidden ingredient knowledge across 9 conversational turns. The agent must track: (1) Kevin follows Jain dietary traditions (inferential: Jain household → Jain diet → no meat, no fish, no eggs, no root vegetables), (2) Mei has a sesame allergy (direct from her reaction), (3) Derek has a shellfish allergy (direct from his EpiPen incident) but EXITS mid-conversation so his constraint is REMOVED, (4) Priya JOINS late and is pregnant (inferential: four months along → pregnant → no raw fish, no alcohol). The primary difficulty mechanism is the hidden ingredient trap: agedashi tofu appears vegetarian but contains dashi broth made from bonito (dried fish flakes), violating Kevin's Jain dietary restriction. A secondary hidden ingredient trap is spinach goma-ae, where 'goma' is the Japanese word for sesame, triggering Mei's allergy. The ebi gyoza tests whether the agent correctly removes Derek's shellfish constraint after he drops out — flagging it would be a false positive. The edamame tests whether the agent avoids over-flagging a clearly safe item."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

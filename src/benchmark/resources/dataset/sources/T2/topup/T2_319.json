@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T2_319",
+  "domain": "planning an art exhibition",
+  "personality": "Enthusiastic but casual",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their art exhibition. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "I want to organize a small art exhibition. I've been painting as a hobby for about two years now, mostly watercolors on weekends. Never shown my work anywhere before.",
+    "flow_info": [
+      {
+        "key": "skill_constraint",
+        "value": "Weekend hobby painter for 2 years, watercolors only, no formal training, never exhibited",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Display 5-6 watercolor pieces at a local coffee shop or community center",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "framing_question",
+        "value": "Asking about standard vs custom frames for watercolors",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_themed_gallery",
+        "value": "Rent a proper gallery space, produce a cohesive themed series of 15-20 pieces",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_catalog_critics",
+        "value": "Printed exhibition catalog with artist statement, invite local art critics for reviews",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_installation",
+        "value": "Interactive installation with projections and sound design",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_sales_representation",
+        "value": "Price all works for sale, seek gallery representation for future shows",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_opening_night",
+        "value": "Curated opening night with catering, live music, and a guest speaker from the local art scene",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "hobbyist_qualification",
+        "value": "Weekend hobby painter with 2 years experience, watercolors only, no formal art training, never exhibited before — cannot produce a professional gallery-level exhibition with installations, catalogs, critical reception, and gallery representation",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I want to organize a small art exhibition. I've been painting as a hobby for about two years now, mostly watercolors on weekends. Never shown my work anywhere before.",
+          "success_criteria": "Agent acknowledges the hobby level and first-time exhibition context",
+          "required_info_keys": [
+            "skill_constraint"
+          ],
+          "required_constraint_keys": [
+            "hobbyist_qualification"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish qualification constraint: hobby painter, 2 years, watercolors, never exhibited"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start I'm thinking just 5 or 6 of my watercolor pieces, maybe at a local coffee shop or community center — nothing fancy",
+          "success_criteria": "Agent provides guidance appropriate for a small informal display",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — small casual display"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — for watercolors, should I go with standard off-the-shelf frames or get custom framing done? What looks more professional?",
+          "success_criteria": "Agent gives framing advice",
+          "required_info_keys": [
+            "framing_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate practical question"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Actually, a friend who runs a small gallery said I could rent her space for a weekend. I'm thinking maybe I should do a proper themed series — like 15 to 20 pieces with a cohesive narrative running through them. Would give it more of a professional feel.",
+          "success_criteria": "Agent helps with themed series concept",
+          "required_info_keys": [
+            "feature_themed_gallery"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: jump from 5-6 casual pieces to 15-20 themed series in a gallery"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "I'd love to have a printed catalog too — something with an artist statement and descriptions of each piece. And maybe I can reach out to a couple of local art critics or bloggers to come review it, get some press coverage",
+          "success_criteria": "Agent notes this adds significant production and PR work",
+          "required_info_keys": [
+            "feature_catalog_critics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: professional catalog + critical reception expectations"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "One thing I've been playing with — what if I add an interactive installation piece? Like a projection mapped onto one wall that responds to movement, with ambient sound design. I've seen those at museums and they're super cool",
+          "success_criteria": "Agent recognizes this requires technical skills far beyond watercolor painting",
+          "required_info_keys": [
+            "feature_installation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: interactive installation = entirely different skillset (programming, hardware, sound design)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I also want to price all the works for sale. And if it goes well, maybe this could lead to proper gallery representation — like having a gallery carry my work for future shows and handle sales on commission",
+          "success_criteria": "Agent notes that gallery representation requires an established body of work and exhibition history",
+          "required_info_keys": [
+            "feature_sales_representation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: commercial art sales + gallery representation requires professional standing"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "For the opening night I'm picturing catering, maybe a live jazz trio, and getting someone from the local art council to say a few words. Really make it an event people remember",
+          "success_criteria": "Agent recognizes this is a major event production",
+          "required_info_keys": [
+            "feature_opening_night"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5: curated opening night gala — event production scope"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Can you put together a full timeline for me? Like week by week what I should be working on to pull this all together",
+          "success_criteria": "Agent clearly flags that this has grown far beyond what a hobby watercolor painter with no exhibition experience can realistically execute — the scope now requires professional art practice, technical installation skills, event production experience, PR contacts, and a body of work sufficient for gallery representation",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize qualitative scope change from coffee shop display to professional gallery event"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what a weekend hobby watercolor painter with two years of experience and no exhibition history can realistically pull off. What started as displaying 5-6 pieces at a coffee shop has escalated into a professional gallery exhibition requiring: (1) producing 15-20 cohesive themed works on a deadline, (2) technical skills for interactive projection installations and sound design, (3) printed catalogs and critical press coverage that assume professional standing, (4) gallery representation which requires an established track record, and (5) a curated opening night gala that is event production in itself. This is no longer a first-time casual display — it is a professional solo exhibition of the kind established mid-career artists produce with gallery support and technical teams.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states this has grown far beyond what a hobby watercolor painter with no exhibition experience can realistically do alone",
+      "Agent identifies that the scope has shifted from a casual first-time display to a professional gallery exhibition",
+      "Agent flags specific elements that require skills or standing the user does not have, such as interactive installations, gallery representation, or critical press engagement"
+    ],
+    "forbidden_elements": [
+      "Providing a full week-by-week timeline without flagging the scope problem",
+      "Treating this as a straightforward planning exercise with no feasibility concerns",
+      "Not acknowledging the qualitative change from a coffee shop display to a professional gallery event with installations and gallery representation"
+    ],
+    "explanation": "The user established in Turn 0 that they are a hobby watercolor painter of two years with no formal training and no exhibition history. Over 8 turns, the scope escalated from 5-6 pieces at a coffee shop to a professional gallery exhibition with 15-20 themed works, interactive installations, a printed catalog, art critic reviews, commercial sales, gallery representation, and a catered opening night. The constraint from Turn 0 makes the final scope impossible for this person. The agent must recognize this qualitative change rather than simply producing a timeline."
+  },
+  "mechanism": "Qualification mismatch: user's skill level makes the accumulated scope infeasible"
+}

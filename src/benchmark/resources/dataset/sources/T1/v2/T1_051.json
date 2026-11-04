@@ -1,0 +1,291 @@
+{
+  "scenario_id": "T1_051",
+  "domain": "graduation celebration dinner",
+  "personality": "Friendly and enthusiastic about graduation",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a graduation celebration dinner by tracking who is attending, their dietary needs, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints, including hidden or non-obvious ingredients in each dish. Pay close attention to changes in the guest list and any updates to restrictions throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey! I'm graduating next week and want to throw a dinner for my close friends. Any ideas for a good group dinner spot?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Four of us: me, Mei, David, and Priya",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_satay_incident",
+        "value": "Mei was hospitalized as a kid after eating satay sauce at a street market",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_autoimmune",
+        "value": "David was diagnosed with an autoimmune gut condition a couple years ago and has been strictly gluten-free ever since",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_vegetarian",
+        "value": "Priya has been vegetarian for years",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 40 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_joins",
+        "value": "My friend Tom just confirmed he can make it too, so that's five now. He's deathly allergic to shellfish though, carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_update",
+        "value": "Priya actually told me she started eating fish a few months ago, so she's not fully vegetarian anymore, just no meat",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_early_leave",
+        "value": "David just told me he has to catch a 9pm flight, so he'll need to leave by 7:30. He asked if we could pack some food for him to take to the airport",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_suggestion",
+        "value": "How about that new Chinese place on Main Street? I heard they do a great hot pot and also have regular dishes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Their popular dishes are: mapo tofu, dan dan noodles, soy sauce chicken, shrimp paste hot pot base, steamed sea bass, and cucumber salad. How does that look?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "mei_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Mei was hospitalized as a kid after eating satay sauce at a street market",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Satay sauce → primary ingredient is peanuts",
+          "Hospitalized after eating it → severe allergic reaction",
+          "Severe reaction to peanut-containing food → peanut allergy"
+        ]
+      },
+      {
+        "key": "david_celiac",
+        "value": "Cannot eat gluten or wheat-containing products",
+        "disclosed": false,
+        "surface_form": "David was diagnosed with an autoimmune gut condition a couple years ago and has been strictly gluten-free ever since",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Autoimmune gut condition + strictly gluten-free → celiac disease",
+          "Celiac disease → cannot consume any gluten",
+          "Gluten is found in wheat, barley, rye, and products derived from them"
+        ]
+      },
+      {
+        "key": "priya_no_meat",
+        "value": "Does not eat meat but eats fish and vegetables",
+        "disclosed": false,
+        "surface_form": "Priya has been vegetarian for years",
+        "delivery_mode": "direct",
+        "note": "Initially vegetarian, later updated to pescatarian"
+      },
+      {
+        "key": "tom_shellfish_allergy",
+        "value": "Cannot eat shellfish or shellfish-derived products",
+        "disclosed": false,
+        "surface_form": "Tom is deathly allergic to shellfish, carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a graduation celebration dinner for your close friends. You will introduce the group and their backgrounds across several turns. Friends will join, constraints will change, and someone will need to leave early with takeaway. At the end you will share a list of dishes and ask if they look fine — you must NOT hint at any specific dietary problems or tell the assistant what to check for.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_enthusiastic_tone",
+        "category": "communication_style",
+        "value": "You are an upbeat but calm person excited about graduating. You relay information about your friends naturally in third person (e.g. 'Mei told me...', 'David mentioned...'). You never express frustration even when plans change. You treat each update as normal friend-group coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey! I'm graduating next week and want to throw a dinner for my close friends. Any ideas for a good group dinner spot?",
+          "success_criteria": "Agent engages with graduation dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Mei, David, and Priya. Mei had a scary experience as a kid, she was hospitalized after eating satay sauce at a street market. David was diagnosed with some autoimmune gut condition a couple years ago and has been strictly gluten-free ever since. And Priya has been vegetarian for years",
+          "success_criteria": "Agent acknowledges all three friends and their dietary situations",
+          "required_info_keys": [
+            "group_members",
+            "mei_satay_incident",
+            "david_autoimmune",
+            "priya_vegetarian"
+          ],
+          "required_constraint_keys": [
+            "mei_peanut_allergy",
+            "david_celiac",
+            "priya_no_meat"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 3 entities with 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're all students so budget is tight — probably around 40 bucks per person max. Somewhere not too fancy but with good food",
+          "success_criteria": "Agent registers budget constraint and adjusts suggestions accordingly",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish budget constraint"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh great news — my friend Tom just confirmed he can make it too, so that's five of us now. He's deathly allergic to shellfish though, carries an EpiPen everywhere",
+          "success_criteria": "Agent registers Tom as new diner with shellfish allergy",
+          "required_info_keys": [
+            "tom_joins"
+          ],
+          "required_constraint_keys": [
+            "tom_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Do you think a Friday or Saturday would be better for a graduation dinner? Most of us are free either day",
+          "success_criteria": "Agent responds about day selection without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "scheduling",
+            "drift_topic": "which day of the weekend works better for the dinner",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before next constraint update"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh by the way, Priya actually told me she started eating fish a few months ago, so she's not fully vegetarian anymore — just no meat. Also David just told me he has to catch a 9pm flight that night, so he'll need to leave by 7:30. He asked if we could pack some food for him to take to the airport",
+          "success_criteria": "Agent updates Priya to pescatarian and notes David needs early departure with takeaway",
+          "required_info_keys": [
+            "priya_update",
+            "david_early_leave"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPDATE (Priya vegetarian→pescatarian) + scope change (David needs takeaway)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "How about that new Chinese place on Main Street? I heard they do a great hot pot and also have regular dishes",
+          "success_criteria": "Agent engages with the venue suggestion",
+          "required_info_keys": [
+            "venue_suggestion"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Venue suggestion to set up the probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we get a private room or just a regular table? There's five of us, might be nice to have our own space for the celebration",
+          "success_criteria": "Agent responds about seating without losing constraint tracking",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "private room vs regular table for five people",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I looked at their menu online. Their popular dishes are: mapo tofu, dan dan noodles, soy sauce chicken, shrimp paste hot pot base, steamed sea bass, and cucumber salad. How does that look for our group?",
+          "success_criteria": "Agent identifies hidden ingredient problems: mapo tofu has minced pork (Priya), dan dan noodles have peanut sauce (Mei), soy sauce chicken uses soy sauce containing wheat (David), shrimp paste hot pot base contains shellfish (Tom). Steamed sea bass is fine (Priya eats fish now). Cucumber salad is fine. Also flags soy sauce chicken and shrimp paste base for David's takeaway.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state with hidden ingredient traps"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Four of the six dishes have problems. Mapo tofu contains minced pork, which Priya cannot eat (she eats fish but not meat). Dan dan noodles are made with peanut-based sauce, which is dangerous for Mei (peanut allergy inferred from her satay sauce hospitalization). Soy sauce chicken is problematic for David because soy sauce is traditionally brewed with wheat, which contains gluten (David has celiac disease inferred from his autoimmune gut condition and strict gluten-free diet). Shrimp paste hot pot base contains shrimp paste, a shellfish derivative, which is dangerous for Tom (shellfish allergy). Steamed sea bass is fine — Priya now eats fish, and it has no issues for anyone else. Cucumber salad is safe for everyone. Additionally, any dishes packed for David's takeaway must also be gluten-safe since his celiac constraint applies to his takeaway food.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Mapo tofu is problematic: contains minced pork, which Priya cannot eat since she does not eat meat",
+      "Dan dan noodles are problematic: the sauce contains peanuts, which Mei is allergic to — inferred from her childhood hospitalization after eating satay sauce",
+      "Soy sauce chicken is problematic for David: soy sauce is brewed with wheat, which contains gluten — David cannot eat gluten due to his autoimmune gut condition requiring a strict gluten-free diet",
+      "Shrimp paste hot pot base is problematic: shrimp paste is a shellfish derivative, which Tom is severely allergic to",
+      "Steamed sea bass is fine for everyone — Priya now eats fish, and no other constraints are violated",
+      "Cucumber salad is safe for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging steamed sea bass as problematic for Priya (she updated to eating fish, no longer fully vegetarian)",
+      "Saying Priya cannot eat any fish (her constraint was updated to pescatarian — no meat but fish is fine)",
+      "Claiming Mei has a general sauce allergy or a satay allergy rather than identifying peanuts as the allergen",
+      "Saying Tom has a general seafood allergy (he specifically has a shellfish allergy — fish is fine for him)",
+      "Flagging cucumber salad as problematic for anyone"
+    ],
+    "explanation": "This scenario tests hidden ingredient recognition combined with entity lifecycle tracking across 9 conversational turns. The core difficulty mechanism is hidden ingredients: (1) Dan dan noodles contain peanut sauce — the agent must connect Mei's childhood satay sauce hospitalization to a peanut allergy, then recognize peanuts in dan dan noodles (3-step inference). (2) Soy sauce chicken — the agent must know that traditional soy sauce is brewed with wheat, making it unsafe for David who has celiac disease (inferred from autoimmune gut condition + strict gluten-free diet). (3) Shrimp paste hot pot base — the agent must recognize shrimp paste as a shellfish derivative, dangerous for Tom. (4) Mapo tofu — the agent must know this classic dish contains minced pork, making it unsuitable for Priya who does not eat meat. The scenario also tests: constraint UPDATE (Priya goes from vegetarian to pescatarian, so steamed sea bass becomes fine), late-joining entity (Tom with shellfish allergy), scope change (David leaves early but needs takeaway — his gluten constraint applies to packed food), and over-generalization traps (shellfish allergy does not mean all seafood, peanut allergy does not mean all nuts)."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

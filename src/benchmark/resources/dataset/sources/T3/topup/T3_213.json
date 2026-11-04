@@ -1,0 +1,232 @@
+{
+  "scenario_id": "T3_213",
+  "domain": "choosing between 3 credit cards",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and apply for a credit card. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking at credit cards and narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 credit cards: the Sapphire Reserve, the Gold Rewards, and the Everyday Cash card",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "card_details",
+        "value": "Sapphire Reserve: $550 annual fee, 3x points on travel and dining, airport lounge access. Gold Rewards: $250 annual fee, 4x points on dining and groceries, $120 dining credit. Everyday Cash: $0 annual fee, 2% cash back on everything, no perks.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reimbursement_info",
+        "value": "User's employer reimburses up to $150 per year toward credit card annual fees as part of their benefits package",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "personal_contribution_limit",
+        "value": "User is only willing to pay up to $50 out of pocket per year for a credit card fee beyond what the employer covers",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "spending_pattern",
+        "value": "User mostly spends on groceries and gas, rarely dines out or travels",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "total_fee_cap",
+        "value": "Maximum annual fee the user can afford is $200 (employer reimburses $150 + user pays up to $50 out of pocket)",
+        "surface_form": "My company reimburses up to $150 a year for card fees as a perk, and personally I'd chip in maybe $50 tops on top of that — don't want to spend more than that out of my own pocket for a credit card",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer reimburses up to $150/year toward annual fee",
+          "User willing to pay max $50 out of pocket beyond reimbursement",
+          "$150 + $50 = $200 maximum total annual fee"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "spending_fit_constraint",
+        "value": "User needs a card that rewards groceries and gas, not travel and dining",
+        "surface_form": "Most of my spending is groceries and gas — I barely eat out and haven't traveled in two years",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Spends mostly on groceries and gas",
+          "Rarely dines out or travels",
+          "Sapphire Reserve's 3x travel/dining is poor fit",
+          "Gold Rewards' 4x dining is partial fit (groceries yes, but dining emphasis wasted)",
+          "Everyday Cash 2% on everything covers groceries and gas effectively"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 credit cards (Sapphire Reserve, Gold Rewards, Everyday Cash). You will share card details, your employer reimbursement, your personal spending limit for fees, and your spending habits across several turns. Your colleague and friend will praise the Sapphire Reserve and Gold Rewards. At the very end, you will say you have decided and ask what you need to do to apply — you must NEVER name which card you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact person. You state facts plainly without strong emotion. You never express frustration or impatience. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking at credit cards and narrowed it down to 3: the Sapphire Reserve, the Gold Rewards, and the Everyday Cash card",
+          "success_criteria": "Agent engages with the 3-card decision",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So the Sapphire Reserve is $550 a year, gives 3x points on travel and dining, and you get airport lounge access. The Gold Rewards is $250 a year, 4x on dining and groceries, comes with a $120 dining credit. And the Everyday Cash is $0 annual fee, flat 2% cash back on everything, no special perks",
+          "success_criteria": "Agent processes all 3 cards with their fees and reward structures",
+          "required_info_keys": [
+            "card_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with fees and rewards in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work got the Sapphire Reserve last year — he travels a lot for client meetings and said the lounge access alone makes it worth it, plus the points stack up fast when you're expensing dinners",
+          "success_criteria": "Agent responds to the positive Sapphire Reserve experience",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "got Sapphire Reserve, lounge access worth it, points stack fast on expensed dinners",
+            "target_option": "Sapphire Reserve"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Sapphire Reserve"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company reimburses up to $150 a year for card fees as a perk, and personally I'd chip in maybe $50 tops on top of that — don't want to spend more than that out of my own pocket for a credit card",
+          "success_criteria": "Agent registers the combined fee cap of $200 ($150 employer + $50 personal) and ideally eliminates Sapphire Reserve ($550) and Gold Rewards ($250)",
+          "required_info_keys": [
+            "reimbursement_info",
+            "personal_contribution_limit"
+          ],
+          "required_constraint_keys": [
+            "total_fee_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via reimbursement model — eliminates Sapphire Reserve and Gold Rewards on fee"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague was telling me the Sapphire Reserve concierge service is surprisingly good too — he booked a last-minute hotel through it and saved a bunch compared to booking direct",
+          "success_criteria": "Agent responds to the Sapphire Reserve concierge benefit",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Sapphire Reserve concierge service saved money on last-minute hotel booking",
+            "target_option": "Sapphire Reserve"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Sapphire Reserve (already eliminated by fee cap)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Most of my spending is groceries and gas — I barely eat out and haven't traveled in two years",
+          "success_criteria": "Agent recognizes this makes Sapphire Reserve's travel/dining rewards a poor fit and reduces Gold Rewards' value (dining emphasis wasted)",
+          "required_info_keys": [
+            "spending_pattern"
+          ],
+          "required_constraint_keys": [
+            "spending_fit_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver spending pattern constraint — further eliminates Sapphire Reserve (travel/dining useless) and weakens Gold Rewards (dining credit wasted)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend just got the Gold Rewards card and she's obsessed with it — she eats out like four times a week so the 4x dining points are insane for her, plus the $120 dining credit basically pays for itself she says",
+          "success_criteria": "Agent responds to the positive Gold Rewards experience",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "got Gold Rewards, eats out 4x/week, 4x dining points are amazing, $120 credit pays for itself",
+            "target_option": "Gold Rewards"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Gold Rewards"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also mentioned the Gold Rewards card has this new partnership with a bunch of restaurants where you get extra bonus points — she racked up enough for a free flight in like six months",
+          "success_criteria": "Agent responds to Gold Rewards restaurant partnership benefit",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Gold Rewards restaurant partnership, extra bonus points, earned free flight in 6 months",
+            "target_option": "Gold Rewards"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Gold Rewards (already eliminated by fee cap and spending mismatch)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to commit and apply this week. Which option should I pick?",
+          "success_criteria": "Agent recommends the Everyday Cash card ($0 annual fee, within the $200 cap, and 2% flat cash back matches groceries/gas spending pattern) as the only option that satisfies both the fee cap and spending fit constraints",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "budget",
+              "afford",
+              "reimburse"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to recommending Everyday Cash based on constraints"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should apply for the Everyday Cash card ($0 annual fee, 2% cash back on everything). The Sapphire Reserve ($550 annual fee) exceeds the $200 combined cap ($150 employer reimbursement + $50 personal max) by $350, and its travel/dining rewards don't match the user's groceries/gas spending. The Gold Rewards ($250 annual fee) exceeds the $200 cap by $50, and its dining emphasis is wasted since the user barely eats out. Only the Everyday Cash card ($0 fee, well within cap, flat 2% on groceries and gas) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Sapphire Reserve's $550 annual fee exceeds the derived $200 cap ($150 employer reimbursement + $50 personal willingness = $200 max) by $350",
+      "Agent shows that Gold Rewards' $250 annual fee exceeds the derived $200 cap ($150 + $50 = $200) by $50",
+      "Agent recommends the Everyday Cash card as the option that fits within the fee cap",
+      "Agent identifies that the user's groceries/gas spending pattern aligns with Everyday Cash's flat 2% cash back rather than travel or dining rewards"
+    ],
+    "forbidden_elements": [
+      "Recommending the Sapphire Reserve ($550 far exceeds $200 combined fee cap, and travel/dining rewards don't match user's spending)",
+      "Recommending the Gold Rewards ($250 exceeds $200 combined fee cap, and dining emphasis is wasted on user who barely eats out)",
+      "Ignoring the employer reimbursement + personal contribution cap when making a recommendation",
+      "Asking the user which card they decided on (should be determinable from constraints)",
+      "Suggesting the user negotiate a higher employer reimbursement or increase personal spending to afford a premium card"
+    ],
+    "explanation": "Fee constraint: employer reimburses $150 + user pays max $50 = $200 total cap. Sapphire Reserve $550 > $200 (eliminated). Gold Rewards $250 > $200 (eliminated). Everyday Cash $0 < $200 (passes). Spending fit constraint: user spends on groceries/gas, not travel/dining. Sapphire Reserve 3x travel/dining = poor fit. Gold Rewards 4x dining = partial fit but dining credit wasted. Everyday Cash 2% everything = covers groceries and gas. Despite 4 drift turns praising Sapphire Reserve and Gold Rewards through colleague and friend experiences, the agent must respect both the hard fee cap and the spending pattern mismatch."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

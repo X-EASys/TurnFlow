@@ -1,0 +1,308 @@
+{
+  "scenario_id": "T1_043",
+  "domain": "Lunar New Year dinner for family",
+  "personality": "Warm and organized family coordinator",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user plan their family's Lunar New Year dinner by tracking who is attending, their dietary needs, and any logistics. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're hosting Lunar New Year dinner at our place this year. It's going to be a big one — can you help me plan the menu?",
+    "flow_info": [
+      {
+        "key": "family_members",
+        "value": "Coming so far: me and my husband, my parents (Mom and Dad), my sister Mei, and my brother-in-law Kevin",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dad_gout",
+        "value": "Dad's gout has been flaring up again, the doctor put him on medication and told him to watch what he eats",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kevin_celiac",
+        "value": "Kevin was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_pregnant",
+        "value": "Mei just told us she's 4 months pregnant, everyone's so excited",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_chen_joins",
+        "value": "Uncle Chen just confirmed he's coming too, flying in from Chengdu",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "uncle_chen_peanut",
+        "value": "Uncle Chen ate something with peanuts at a wedding two years ago and his throat swelled up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dad_recovered",
+        "value": "Dad just came back from his checkup — doctor said his uric acid levels are back to normal, he's off the medication and cleared to eat whatever he wants",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mei_exits_wants_takeaway",
+        "value": "Mei just called — Kevin got food poisoning and is really sick, so they're not coming anymore. But Mei asked if I could save her a few containers of food, she'll pick them up the next day",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "grandma_joins",
+        "value": "Grandma decided she's coming after all! She's 87 and just got new dentures last month, still getting used to them — she told Mom she can only manage really soft foods right now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu to check: whole steamed fish, kung pao chicken, braised pork belly, salmon sashimi platter, longevity noodles, eight-treasure rice pudding",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "dad_gout_diet",
+        "value": "Must avoid high-purine foods: organ meats, shellfish, red meat in excess, alcohol, rich broths",
+        "disclosed": false,
+        "surface_form": "Dad's gout has been flaring up again, the doctor put him on medication and told him to watch what he eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Gout flare-up → elevated uric acid",
+          "Elevated uric acid → must avoid high-purine foods",
+          "High-purine foods → organ meats, shellfish, excessive red meat, alcohol, rich broths"
+        ]
+      },
+      {
+        "key": "kevin_gluten_free",
+        "value": "Cannot eat anything containing gluten: wheat, barley, rye, soy sauce (unless gluten-free), regular noodles, most dumpling wrappers",
+        "disclosed": false,
+        "surface_form": "Kevin was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Many Chinese dishes use wheat noodles, soy sauce (contains wheat), dumpling wrappers"
+        ]
+      },
+      {
+        "key": "mei_pregnancy_diet",
+        "value": "Should avoid raw fish/seafood, high-mercury fish, unpasteurized foods, excess caffeine, alcohol",
+        "disclosed": false,
+        "surface_form": "Mei just told us she's 4 months pregnant, everyone's so excited",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "4 months pregnant → pregnancy dietary restrictions apply",
+          "Pregnancy → avoid raw fish/seafood (listeria/parasite risk), high-mercury fish, alcohol"
+        ]
+      },
+      {
+        "key": "uncle_chen_peanut_allergy",
+        "value": "Severe peanut allergy, anaphylaxis risk",
+        "disclosed": false,
+        "surface_form": "Uncle Chen ate something with peanuts at a wedding two years ago and his throat swelled up, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Throat swelled up after eating peanuts → allergic reaction",
+          "Required EpiPen → anaphylaxis-level severity",
+          "Severe peanut allergy → must avoid all peanut and peanut-derived ingredients"
+        ]
+      },
+      {
+        "key": "grandma_soft_food",
+        "value": "Can only eat soft foods due to new dentures",
+        "disclosed": false,
+        "surface_form": "Grandma just got new dentures last month, still getting used to them — she told Mom she can only manage really soft foods right now",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting Lunar New Year dinner at your home. You will introduce family members and their situations across several turns. Plans will change — some people drop out, some join late, one person's health restriction gets lifted. At the end you will present a specific menu and ask if there are any issues. You must NEVER hint at which dishes are problematic or tell the assistant what to check for.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a warm, easygoing family organizer. You always refer to family members by name or relation in third person (e.g. 'Dad told me...', 'Mei just called...'). You never express frustration or impatience when plans change — it's just how family gatherings go. You treat each update as normal family coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for family updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're hosting Lunar New Year dinner at our place this year. It's going to be a big one — can you help me plan the menu?",
+          "success_criteria": "Agent engages with Lunar New Year dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So far it's me and my husband, my parents Mom and Dad, my sister Mei, and her husband Kevin. Dad's gout has been flaring up again, the doctor put him on medication and told him to watch what he eats. Kevin was diagnosed with celiac disease last year. Oh and Mei just told us she's 4 months pregnant, everyone's so excited!",
+          "success_criteria": "Agent acknowledges all attendees and registers Dad's gout, Kevin's celiac, and Mei's pregnancy",
+          "required_info_keys": [
+            "family_members",
+            "dad_gout",
+            "kevin_celiac",
+            "mei_pregnant"
+          ],
+          "required_constraint_keys": [
+            "dad_gout_diet",
+            "kevin_gluten_free",
+            "mei_pregnancy_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities with 3 inferential constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "How many dishes do you think we should prepare for 6 people? I want it to feel abundant but I don't want a ton of leftovers",
+          "success_criteria": "Agent gives reasonable dish count advice for 6 people",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "meal planning logistics",
+            "drift_topic": "number of dishes for the table",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise turn about meal quantity"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Uncle Chen just confirmed he's coming too, flying in from Chengdu! He ate something with peanuts at a wedding two years ago and his throat swelled up, had to use an EpiPen. So that's 7 now",
+          "success_criteria": "Agent registers Uncle Chen as new attendee with severe peanut allergy",
+          "required_info_keys": [
+            "uncle_chen_joins",
+            "uncle_chen_peanut"
+          ],
+          "required_constraint_keys": [
+            "uncle_chen_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity (Uncle Chen with peanut allergy)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Dad just came back from his checkup — doctor said his uric acid levels are back to normal, he's off the medication and cleared to eat whatever he wants. He's thrilled, keeps saying he wants braised pork belly",
+          "success_criteria": "Agent removes Dad's gout dietary restriction",
+          "required_info_keys": [
+            "dad_recovered"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Dad's gout restriction lifted"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Mei just called — Kevin got food poisoning and is really sick, so they're not coming anymore. But Mei asked if I could save her a few containers of food, she'll pick them up the next day",
+          "success_criteria": "Agent notes both Mei and Kevin are no longer attending dinner, but Mei wants food saved for her — her pregnancy dietary restrictions still apply to the saved food",
+          "required_info_keys": [
+            "mei_exits_wants_takeaway"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Mei and Kevin leave, but Mei's pregnancy constraint persists for saved food. Kevin's celiac constraint fully removed."
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Grandma decided she's coming after all! She's 87 and just got new dentures last month, still getting used to them — she told Mom she can only manage really soft foods right now",
+          "success_criteria": "Agent registers Grandma as new late-joining attendee with soft food requirement",
+          "required_info_keys": [
+            "grandma_joins"
+          ],
+          "required_constraint_keys": [
+            "grandma_soft_food"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with constraint (Grandma, soft food only)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should we set up a round table or a long table? We have both. Round feels more festive but the long one fits more dishes",
+          "success_criteria": "Agent gives table setup advice",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "table setup",
+            "drift_topic": "round vs long table for Lunar New Year dinner",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK here's what I'm thinking for the menu: whole steamed fish, kung pao chicken, braised pork belly, salmon sashimi platter, longevity noodles, eight-treasure rice pudding. Any issues?",
+          "success_criteria": "Agent checks each dish against current constraint state: kung pao chicken contains peanuts (Uncle Chen anaphylaxis), salmon sashimi is raw fish (cannot save for Mei who is pregnant), longevity noodles contain wheat (Kevin had celiac but Kevin is no longer coming so this is fine), whole steamed fish may be hard for Grandma's dentures, braised pork belly is fine (Dad's gout is cleared), eight-treasure rice pudding is soft and generally safe",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Kung pao chicken is problematic: it contains peanuts, and Uncle Chen has a severe peanut allergy (anaphylaxis, required EpiPen). Salmon sashimi platter is problematic for the table if Grandma eats it raw (texture may be OK but raw fish is unusual for elderly), and critically it must NOT be saved for Mei because she is 4 months pregnant and should avoid raw fish. Whole steamed fish may be difficult for Grandma who can only eat soft foods right now due to new dentures — steamed fish can be soft but may have bones that are hard to manage with new dentures, worth flagging. Braised pork belly is fine — Dad's gout restriction has been lifted, he is cleared to eat anything. Longevity noodles are fine — Kevin had celiac disease but Kevin is no longer coming, so gluten is not a concern for anyone at the table. Eight-treasure rice pudding is fine — soft, no peanuts, no raw ingredients, suitable for everyone including Grandma.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Kung pao chicken is problematic because it contains peanuts and Uncle Chen has a severe peanut allergy (throat swelled up, needed EpiPen)",
+      "Salmon sashimi platter must not be saved/packed for Mei because she is 4 months pregnant and should avoid raw fish",
+      "Whole steamed fish may pose difficulty for Grandma due to her new dentures and need for soft foods",
+      "Braised pork belly is fine — Dad's gout restriction has been lifted after his checkup showed normal uric acid levels",
+      "Longevity noodles are fine for everyone at the table — Kevin had celiac but he is no longer attending",
+      "Eight-treasure rice pudding is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging longevity noodles as problematic for gluten (Kevin is no longer coming, his celiac constraint is removed from the table)",
+      "Flagging braised pork belly as problematic for Dad's gout (his restriction has been lifted by his doctor)",
+      "Completely rejecting salmon sashimi (it is only problematic for Mei's saved food due to pregnancy, fine for the table)",
+      "Saying Uncle Chen has a general nut allergy or tree nut allergy (he specifically has a peanut allergy)",
+      "Flagging any dish for Kevin's celiac disease (Kevin is not attending and does not need food saved)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking with scope changes across a Lunar New Year family dinner. The agent must track: (1) Uncle Chen joins late with a severe peanut allergy inferred from the EpiPen anecdote — kung pao chicken contains peanuts and is dangerous for him. (2) Dad's gout restriction is REMOVED mid-conversation after his doctor clears him — braised pork belly is now fine. (3) Mei and Kevin EXIT the dinner, but Mei wants food saved for the next day — her pregnancy constraint (no raw fish) still applies to saved food, while Kevin's celiac constraint is fully removed since he gets no food. (4) Grandma joins late with a soft food constraint from new dentures — whole steamed fish with bones may be problematic. (5) Longevity noodles are a trap: they contain wheat gluten which would be bad for Kevin's celiac, but Kevin is no longer coming and no food is being saved for him, so noodles are fine. (6) Salmon sashimi requires scope distinction: fine for the table, but must not be packed for Mei due to pregnancy. The over-generalization trap is treating Uncle Chen's peanut allergy as a general nut allergy, or treating Mei's exit as removing her constraint entirely when she still needs food saved."
+  },
+  "mechanism": "Entity EXIT with scope change: person leaves but wants something packed/saved"
+}

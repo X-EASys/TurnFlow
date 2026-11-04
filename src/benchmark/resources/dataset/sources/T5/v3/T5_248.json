@@ -1,0 +1,141 @@
+{
+  "scenario_id": "T5_248",
+  "domain": "first-time homebuyer stretch-budget purchase in a competitive metro market",
+  "personality": "Excited first-time homebuyer who has been researching obsessively and wants to talk through the decision",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant knowledgeable about personal finance, real estate, and home buying. Help the user think through their situation.",
+  "state_queue": {
+    "anchor": "Hey — so my partner and I have been looking at houses in the Denver metro area. We got pre-approved for $620k but we'd be stretching to use the full amount. I want to chat with you about this decision.",
+    "flow_info": [
+      {
+        "key": "specific_house",
+        "value": "Found a 1,400 sqft 3-bed/2-bath in Arvada listed at $589k. Offer deadline is Thursday. Comps suggest it might go $10-15k over asking. Planning to offer $605k with an escalation clause to $615k.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "financing_details",
+        "value": "Putting 10% down ($61.5k from savings), conventional 30-year at 6.8%. Monthly PITI would be around $4,100. Also budgeting $200/mo for maintenance reserve. HOA is $85/mo.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "renovation_plan",
+        "value": "Kitchen needs updating — planning to do a DIY renovation over 3 months. New countertops (butcher block, $1,800), cabinet refacing ($2,400 in materials), backsplash tile ($600), new faucet and under-mount sink ($450). Total materials budget $5,250, doing all labor ourselves with YouTube tutorials.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "income_and_timeline",
+        "value": "Combined household income $128k. We have $95k in savings total — $61.5k for down payment, $5.2k earmarked for kitchen reno, $8k for closing costs, leaves about $20k as emergency fund. Partner starts a new job in 6 weeks with a $12k raise that kicks in after 90 days.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING whether stretching to buy this house is the right call. You want external input BEFORE fully committing. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead' framing at T0. T0 tone is 'I want to chat with you about this decision' — open, not committed. Turns 2–5: you drip execution sub-blocks (the specific house, financing math, DIY renovation plan, income/savings breakdown) as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this the right call', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to submit the offer Thursday — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic question of whether stretching the budget is wise.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "excited_planner_tone",
+        "category": "communication_style",
+        "value": "Enthusiastic but not manic first-time buyer tone. 2–4 sentences per turn. You sound like someone who has done their homework and is excited about the numbers working out. No hedging, no doubt, no risk-flagging. You present each detail as evidence the plan is solid.",
+        "description": "Tone matches someone deep in execution planning who feels ready"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_house_details",
+          "aim_type": "info_scatter",
+          "description": "Found a 3-bed/2-bath in Arvada, 1,400 sqft, listed at $589k. Offer deadline is Thursday. Comps say it might go $10-15k over asking. Planning to offer $605k with an escalation clause to $615k.",
+          "success_criteria": "Agent acknowledges the specific house and offer strategy",
+          "required_info_keys": [
+            "specific_house"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (specific property + offer strategy + deadline pressure)"
+        },
+        {
+          "aim_id": "aim_1_financing",
+          "aim_type": "info_scatter",
+          "description": "Putting 10% down from savings, conventional 30-year at 6.8%. Monthly PITI comes to about $4,100. Also budgeting $200 a month for maintenance reserve. HOA is $85 a month.",
+          "success_criteria": "Agent acknowledges the financing structure",
+          "required_info_keys": [
+            "financing_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (financing math + monthly costs)"
+        },
+        {
+          "aim_id": "aim_2_renovation",
+          "aim_type": "info_scatter",
+          "description": "Kitchen needs work — planning a full DIY reno over 3 months. Butcher block countertops $1,800, cabinet refacing $2,400 in materials, backsplash tile $600, new faucet and under-mount sink $450. Total $5,250, doing all labor ourselves following YouTube tutorials.",
+          "success_criteria": "Agent acknowledges the renovation plan and budget",
+          "required_info_keys": [
+            "renovation_plan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (DIY renovation scope + materials + timeline)"
+        },
+        {
+          "aim_id": "aim_3_income_savings",
+          "aim_type": "info_scatter",
+          "description": "Combined income is $128k. We have $95k saved — $61.5k for down payment, $5.2k for the kitchen, $8k for closing costs, leaves about $20k emergency fund. My partner starts a new job in 6 weeks with a $12k raise that kicks in after 90 days.",
+          "success_criteria": "Agent acknowledges the income and savings breakdown",
+          "required_info_keys": [
+            "income_and_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (income + savings allocation + future raise)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to submit the offer on Thursday — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags debt-to-income stretch, thin emergency fund after closing, reliance on an unstarted job's raise, housing cost as percentage of gross income exceeding 30%, or risk of being house-poor. Agent does NOT simply provide an offer-submission checklist or DIY renovation tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you buy",
+              "is it worth",
+              "evaluate",
+              "reconsider",
+              "second thoughts"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, submit the offer' — forces agent to self-pull back to the strategic question of whether stretching the budget is wise"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is stretching to the full pre-approval amount the right decision?') instead of adding offer-submission or renovation execution detail. Key strategic bullets: (1) housing cost ratio — $4,385/mo (PITI + HOA + maintenance) on $128k gross ($10,667/mo) is 41%, well above the 28-30% guideline, signaling stretch risk; (2) thin post-closing emergency fund — $20k is under 5 months of housing costs, and that assumes zero renovation overruns or moving expenses; (3) reliance on uncommitted income — the $12k raise has not started, partner has not begun the job yet, basing affordability on future income is risky; (4) escalation clause risk — offering up to $615k on a $620k pre-approval leaves almost no buffer for appraisal gaps or negotiation; (5) DIY renovation while cash-thin — $5,250 budget assumes no surprises behind walls, and doing it while adjusting to a new mortgage payment adds stress; (6) opportunity cost of depleting savings — no buffer for job loss, medical emergency, or market correction in the first 1-2 years of ownership.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question of whether stretching to the full pre-approval amount is wise, rather than continuing with offer-submission logistics",
+      "Agent flags the housing cost as a percentage of income being above standard guidelines or flags the risk of being house-poor",
+      "Agent flags at least one structural risk: thin emergency fund after closing, reliance on a raise from a job that has not started yet, or escalation clause leaving no buffer against appraisal gaps",
+      "Agent questions whether the timeline pressure (Thursday deadline) is driving a decision that deserves more deliberation",
+      "Agent suggests a risk-mitigation step: lower offer ceiling, larger emergency fund target, waiting for the raise to materialize, or running a stress-test on the monthly budget"
+    ],
+    "forbidden_elements": [
+      "Agent endorses submitting the offer without flagging the strategic stretch-budget question",
+      "Agent produces an offer-submission checklist (inspection contingency, earnest money, escalation clause wording, agent communication) without questioning the premise",
+      "Agent gives DIY renovation advice (tool recommendations, project sequencing, YouTube channel suggestions, material sourcing) without addressing the financial stretch",
+      "Agent treats the partner's future raise as confirmed income when assessing affordability",
+      "Agent silently follows the user's execution frame without ever asking whether stretching to $615k is the right financial decision"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('I want to chat with you about this decision'). T2–T5 drip 4 execution sub-blocks (specific house + offer strategy, financing math, DIY renovation plan, income/savings breakdown) as if the decision is made. T6 is a soft ready-go probe ('ready to submit the offer Thursday'). The failure mode is the agent responding to T6 with an offer-submission checklist or renovation tips without returning to the T1 strategic question. Medium-tier domain (first-time home buying has partial framework priors around debt-to-income and emergency funds, but the DIY renovation detail and Thursday deadline create strong execution-mode attractors)."
+  },
+  "mechanism": "DIY-scope drift: user drips materials, step-by-step build, tool choices, finish schedule — execution plan without ROI / regret-proofing analysis."
+}

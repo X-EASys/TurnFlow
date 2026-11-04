@@ -1,0 +1,304 @@
+{
+  "scenario_id": "T1_225",
+  "domain": "company holiday party buffet",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan a company holiday party buffet by tracking attendees, their dietary restrictions, and preferences. When the user asks you to evaluate specific menu items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're planning our company holiday party buffet for next Friday. Can you help me figure out the menu?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Five of us confirmed so far: me, Rachel, Dev, Marcus, and Tina",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_pregnancy",
+        "value": "Rachel is seven months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_celiac",
+        "value": "Dev was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_peanut",
+        "value": "Marcus had a peanut allergy incident at last year's party, had to use his EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Budget is about 40 dollars per head",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tina_husband_joins",
+        "value": "Tina wants to bring her husband Kevin",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tina_husband_diabetes",
+        "value": "Kevin has type 2 diabetes so he watches his sugar intake",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_healed",
+        "value": "Dev told me his doctor ran new tests and it turns out he was misdiagnosed — he doesn't actually have celiac, it was just IBS that's now under control. He can eat gluten again no problem",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_exits",
+        "value": "Marcus just told me he's got a family emergency and won't make it to the party. He asked if I could set aside a plate for him to pick up Saturday morning though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_question",
+        "value": "Do you think we should do it in the big conference room or the rooftop terrace?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu items to check: beef satay skewers with peanut sauce, smoked salmon sushi rolls, tiramisu, gluten-free veggie quiche, honey-glazed ham",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "rachel_no_raw_fish",
+        "value": "Cannot eat raw fish or undercooked seafood",
+        "disclosed": false,
+        "surface_form": "Rachel is seven months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Seven months pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw fish and undercooked seafood due to listeria/mercury risk"
+        ]
+      },
+      {
+        "key": "dev_celiac_constraint",
+        "value": "Cannot eat gluten-containing foods (wheat, barley, rye)",
+        "disclosed": false,
+        "surface_form": "Dev was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye → must avoid bread, pasta, most baked goods"
+        ]
+      },
+      {
+        "key": "marcus_peanut_allergy",
+        "value": "Severe peanut allergy, cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Marcus had a peanut allergy incident at last year's party, had to use his EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kevin_low_sugar",
+        "value": "Needs to limit sugar intake due to type 2 diabetes",
+        "disclosed": false,
+        "surface_form": "Kevin has type 2 diabetes so he watches his sugar intake",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 2 diabetes → must manage blood sugar levels",
+          "Managing blood sugar → avoid high-sugar foods and desserts"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are an office manager planning a company holiday party buffet. You will introduce 5 colleagues with various dietary issues, then updates will come in: Dev's celiac diagnosis gets reversed (misdiagnosis), Marcus drops out but wants a plate saved, Tina's husband Kevin joins with diabetes. At the end you will present a specific menu and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly office manager. You always refer to colleagues by name in third person (e.g. 'Dev told me...', 'Marcus said...'). You never express frustration or impatience even when plans keep changing. You treat each update as normal party planning coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning our company holiday party buffet for next Friday. Can you help me figure out the menu?",
+          "success_criteria": "Agent engages with buffet planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate holiday party buffet planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Five of us confirmed so far: me, Rachel, Dev, Marcus, and Tina. Rachel is seven months pregnant. Dev was diagnosed with celiac disease last year. And Marcus had a peanut allergy incident at last year's party — had to use his EpiPen, it was scary",
+          "success_criteria": "Agent acknowledges all attendees and their dietary constraints",
+          "required_info_keys": [
+            "team_members",
+            "rachel_pregnancy",
+            "dev_celiac",
+            "marcus_peanut"
+          ],
+          "required_constraint_keys": [
+            "rachel_no_raw_fish",
+            "dev_celiac_constraint",
+            "marcus_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities + 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is about 40 dollars per head. Oh and Tina wants to bring her husband Kevin — he has type 2 diabetes so he watches his sugar intake",
+          "success_criteria": "Agent registers budget, new attendee Kevin, and his diabetes constraint",
+          "required_info_keys": [
+            "budget_info",
+            "tina_husband_joins",
+            "tina_husband_diabetes"
+          ],
+          "required_constraint_keys": [
+            "kevin_low_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget info + late-joining entity (Kevin) with diabetes constraint"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Dev told me his doctor ran new tests and it turns out he was misdiagnosed — he doesn't actually have celiac, it was just IBS that's now under control. He can eat gluten again no problem",
+          "success_criteria": "Agent removes Dev's celiac/gluten restriction",
+          "required_info_keys": [
+            "dev_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Dev's celiac misdiagnosis reversed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Do you think we should do it in the big conference room or the rooftop terrace? The terrace has a nicer vibe but it might be cold",
+          "success_criteria": "Agent responds about venue choice",
+          "required_info_keys": [
+            "venue_question"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "venue",
+            "drift_topic": "conference room vs rooftop terrace for the party",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — venue discussion to create distance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Marcus just told me he's got a family emergency and won't make it to the party. He asked if I could set aside a plate for him to pick up Saturday morning though",
+          "success_criteria": "Agent notes Marcus exits but needs a saved plate — his peanut allergy still applies to that plate",
+          "required_info_keys": [
+            "marcus_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Marcus leaves but peanut allergy applies to his saved plate"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Should we do a Secret Santa alongside the buffet? People seemed to enjoy it last year",
+          "success_criteria": "Agent responds about Secret Santa idea",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party activities",
+            "drift_topic": "whether to include Secret Santa gift exchange",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "What time should we start? I'm thinking 6pm so people can wrap up work first",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "scheduling",
+            "drift_topic": "start time for the party",
+            "target_option": ""
+          },
+          "conversation_goal": "Additional noise turn for distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so the caterer sent over their holiday menu options. Here's what I'm thinking: beef satay skewers with peanut sauce, smoked salmon sushi rolls, tiramisu, gluten-free veggie quiche, honey-glazed ham. Any issues with this lineup?",
+          "success_criteria": "Agent identifies: beef satay with peanut sauce problematic for Marcus's saved plate; smoked salmon sushi rolls problematic for Rachel (raw fish, pregnancy); tiramisu problematic for Kevin (high sugar, diabetes); gluten-free veggie quiche is fine for everyone; honey-glazed ham is fine for everyone at the party",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 menu items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three items have issues: (1) Beef satay skewers with peanut sauce — contains peanuts, cannot go on Marcus's saved plate (severe peanut allergy, EpiPen-level). (2) Smoked salmon sushi rolls — contains raw fish, problematic for Rachel who is seven months pregnant (pregnancy → avoid raw fish). (3) Tiramisu — high sugar content, problematic for Kevin who has type 2 diabetes and watches his sugar. Two items are fine: (4) Gluten-free veggie quiche — fine for everyone (Dev's celiac was a misdiagnosis, he can eat gluten now, but this is gluten-free anyway so no issue regardless). (5) Honey-glazed ham — fine for everyone currently attending and for Marcus's plate.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Beef satay skewers with peanut sauce is problematic: contains peanuts, cannot be included on Marcus's saved plate due to his severe peanut allergy",
+      "Smoked salmon sushi rolls is problematic for Rachel: she is seven months pregnant and should avoid raw fish",
+      "Tiramisu is problematic for Kevin: he has type 2 diabetes and needs to limit sugar intake",
+      "Gluten-free veggie quiche is fine for everyone — no active constraints violated",
+      "Honey-glazed ham is fine for everyone currently attending and for Marcus's saved plate",
+      "Dev has no dietary restrictions anymore — agent does not flag gluten as an issue for him"
+    ],
+    "forbidden_elements": [
+      "Flagging gluten as a problem for Dev (his celiac was a misdiagnosis, restriction removed)",
+      "Saying the gluten-free veggie quiche is specifically needed for Dev (his restriction no longer exists)",
+      "Ignoring Marcus's peanut allergy because he is not attending in person (his saved plate still needs to be peanut-safe)",
+      "Flagging peanut sauce as a problem for the buffet table generally (Marcus won't be there in person, only his saved plate matters)",
+      "Saying Rachel cannot eat salmon at all (the issue is raw/undercooked fish specifically, not all salmon)"
+    ],
+    "explanation": "This scenario tests constraint removal as the primary difficulty mechanism. Dev's celiac disease is introduced in the burst turn but then explicitly removed (misdiagnosis revealed). The agent must NOT continue applying gluten restrictions to Dev. Additionally: (1) Marcus exits but wants a saved plate — his peanut allergy still applies to that plate but NOT to the buffet table itself (scope distinction). (2) Kevin joins late with diabetes — tiramisu is high-sugar. (3) Rachel's pregnancy requires inferring raw fish avoidance. The gluten-free veggie quiche is a trap: it looks like it was chosen FOR Dev, but since Dev's restriction is gone, the agent should simply note it's fine for everyone without crediting it to Dev's needs. The beef satay tests scope: peanut sauce is fine on the buffet table (Marcus won't be there) but must NOT go on his saved plate."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

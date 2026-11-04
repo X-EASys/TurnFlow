@@ -1,6 +1,6 @@
 {
-  "T16/topup/T16_200": {
-    "scenario_id": "T16_200",
+  "T1/topup/T1_200": {
+    "scenario_id": "T1_200",
     "gt_facts": {
       "diners": [
         {
@@ -137,8 +137,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_202": {
-    "scenario_id": "T16_202",
+  "T1/topup/T1_202": {
+    "scenario_id": "T1_202",
     "gt_facts": {
       "diners": [
         {
@@ -317,8 +317,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_203": {
-    "scenario_id": "T16_203",
+  "T1/topup/T1_203": {
+    "scenario_id": "T1_203",
     "gt_facts": {
       "diners": [
         {
@@ -474,8 +474,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_206": {
-    "scenario_id": "T16_206",
+  "T1/topup/T1_206": {
+    "scenario_id": "T1_206",
     "gt_facts": {
       "diners": [
         {
@@ -631,8 +631,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_207": {
-    "scenario_id": "T16_207",
+  "T1/topup/T1_207": {
+    "scenario_id": "T1_207",
     "gt_facts": {
       "diners": [
         {
@@ -764,8 +764,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_208": {
-    "scenario_id": "T16_208",
+  "T1/topup/T1_208": {
+    "scenario_id": "T1_208",
     "gt_facts": {
       "diners": [
         {
@@ -885,8 +885,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_209": {
-    "scenario_id": "T16_209",
+  "T1/topup/T1_209": {
+    "scenario_id": "T1_209",
     "gt_facts": {
       "diners": [
         {
@@ -1016,8 +1016,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_210": {
-    "scenario_id": "T16_210",
+  "T1/topup/T1_210": {
+    "scenario_id": "T1_210",
     "gt_facts": {
       "diners": [
         {
@@ -1172,8 +1172,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_211": {
-    "scenario_id": "T16_211",
+  "T1/topup/T1_211": {
+    "scenario_id": "T1_211",
     "gt_facts": {
       "diners": [
         {
@@ -1317,8 +1317,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_212": {
-    "scenario_id": "T16_212",
+  "T1/topup/T1_212": {
+    "scenario_id": "T1_212",
     "gt_facts": {
       "diners": [
         {
@@ -1503,8 +1503,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_213": {
-    "scenario_id": "T16_213",
+  "T1/topup/T1_213": {
+    "scenario_id": "T1_213",
     "gt_facts": {
       "diners": [
         {
@@ -1677,8 +1677,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_214": {
-    "scenario_id": "T16_214",
+  "T1/topup/T1_214": {
+    "scenario_id": "T1_214",
     "gt_facts": {
       "diners": [
         {
@@ -1826,8 +1826,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_215": {
-    "scenario_id": "T16_215",
+  "T1/topup/T1_215": {
+    "scenario_id": "T1_215",
     "gt_facts": {
       "diners": [
         {
@@ -1983,8 +1983,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_216": {
-    "scenario_id": "T16_216",
+  "T1/topup/T1_216": {
+    "scenario_id": "T1_216",
     "gt_facts": {
       "diners": [
         {
@@ -2132,8 +2132,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_218": {
-    "scenario_id": "T16_218",
+  "T1/topup/T1_218": {
+    "scenario_id": "T1_218",
     "gt_facts": {
       "diners": [
         {
@@ -2258,8 +2258,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_219": {
-    "scenario_id": "T16_219",
+  "T1/topup/T1_219": {
+    "scenario_id": "T1_219",
     "gt_facts": {
       "diners": [
         {
@@ -2408,8 +2408,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_220": {
-    "scenario_id": "T16_220",
+  "T1/topup/T1_220": {
+    "scenario_id": "T1_220",
     "gt_facts": {
       "diners": [
         {
@@ -2550,8 +2550,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_221": {
-    "scenario_id": "T16_221",
+  "T1/topup/T1_221": {
+    "scenario_id": "T1_221",
     "gt_facts": {
       "diners": [
         {
@@ -2697,8 +2697,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_222": {
-    "scenario_id": "T16_222",
+  "T1/topup/T1_222": {
+    "scenario_id": "T1_222",
     "gt_facts": {
       "diners": [
         {
@@ -2859,8 +2859,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_223": {
-    "scenario_id": "T16_223",
+  "T1/topup/T1_223": {
+    "scenario_id": "T1_223",
     "gt_facts": {
       "diners": [
         {
@@ -3017,8 +3017,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_224": {
-    "scenario_id": "T16_224",
+  "T1/topup/T1_224": {
+    "scenario_id": "T1_224",
     "gt_facts": {
       "diners": [
         {
@@ -3157,8 +3157,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_225": {
-    "scenario_id": "T16_225",
+  "T1/topup/T1_225": {
+    "scenario_id": "T1_225",
     "gt_facts": {
       "diners": [
         {
@@ -3281,8 +3281,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_226": {
-    "scenario_id": "T16_226",
+  "T1/topup/T1_226": {
+    "scenario_id": "T1_226",
     "gt_facts": {
       "diners": [
         {
@@ -3419,8 +3419,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_227": {
-    "scenario_id": "T16_227",
+  "T1/topup/T1_227": {
+    "scenario_id": "T1_227",
     "gt_facts": {
       "diners": [
         {
@@ -3592,8 +3592,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_229": {
-    "scenario_id": "T16_229",
+  "T1/topup/T1_229": {
+    "scenario_id": "T1_229",
     "gt_facts": {
       "diners": [
         {
@@ -3735,8 +3735,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_231": {
-    "scenario_id": "T16_231",
+  "T1/topup/T1_231": {
+    "scenario_id": "T1_231",
     "gt_facts": {
       "diners": [
         {
@@ -3873,8 +3873,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_232": {
-    "scenario_id": "T16_232",
+  "T1/topup/T1_232": {
+    "scenario_id": "T1_232",
     "gt_facts": {
       "diners": [
         {
@@ -4023,8 +4023,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_233": {
-    "scenario_id": "T16_233",
+  "T1/topup/T1_233": {
+    "scenario_id": "T1_233",
     "gt_facts": {
       "diners": [
         {
@@ -4172,8 +4172,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_234": {
-    "scenario_id": "T16_234",
+  "T1/topup/T1_234": {
+    "scenario_id": "T1_234",
     "gt_facts": {
       "diners": [
         {
@@ -4285,8 +4285,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_235": {
-    "scenario_id": "T16_235",
+  "T1/topup/T1_235": {
+    "scenario_id": "T1_235",
     "gt_facts": {
       "diners": [
         {
@@ -4401,8 +4401,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_237": {
-    "scenario_id": "T16_237",
+  "T1/topup/T1_237": {
+    "scenario_id": "T1_237",
     "gt_facts": {
       "diners": [
         {
@@ -4551,8 +4551,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_239": {
-    "scenario_id": "T16_239",
+  "T1/topup/T1_239": {
+    "scenario_id": "T1_239",
     "gt_facts": {
       "diners": [
         {
@@ -4687,8 +4687,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_240": {
-    "scenario_id": "T16_240",
+  "T1/topup/T1_240": {
+    "scenario_id": "T1_240",
     "gt_facts": {
       "diners": [
         {
@@ -4828,8 +4828,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_241": {
-    "scenario_id": "T16_241",
+  "T1/topup/T1_241": {
+    "scenario_id": "T1_241",
     "gt_facts": {
       "diners": [
         {
@@ -4977,8 +4977,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_243": {
-    "scenario_id": "T16_243",
+  "T1/topup/T1_243": {
+    "scenario_id": "T1_243",
     "gt_facts": {
       "diners": [
         {
@@ -5133,8 +5133,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_244": {
-    "scenario_id": "T16_244",
+  "T1/topup/T1_244": {
+    "scenario_id": "T1_244",
     "gt_facts": {
       "diners": [
         {
@@ -5319,8 +5319,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_245": {
-    "scenario_id": "T16_245",
+  "T1/topup/T1_245": {
+    "scenario_id": "T1_245",
     "gt_facts": {
       "diners": [
         {
@@ -5450,8 +5450,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/topup/T16_249": {
-    "scenario_id": "T16_249",
+  "T1/topup/T1_249": {
+    "scenario_id": "T1_249",
     "gt_facts": {
       "diners": [
         {
@@ -5601,8 +5601,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_002": {
-    "scenario_id": "T16_002",
+  "T1/v2/T1_002": {
+    "scenario_id": "T1_002",
     "gt_facts": {
       "diners": [
         {
@@ -5743,8 +5743,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_007": {
-    "scenario_id": "T16_007",
+  "T1/v2/T1_007": {
+    "scenario_id": "T1_007",
     "gt_facts": {
       "diners": [
         {
@@ -5893,8 +5893,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_009": {
-    "scenario_id": "T16_009",
+  "T1/v2/T1_009": {
+    "scenario_id": "T1_009",
     "gt_facts": {
       "diners": [
         {
@@ -6038,8 +6038,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_015": {
-    "scenario_id": "T16_015",
+  "T1/v2/T1_015": {
+    "scenario_id": "T1_015",
     "gt_facts": {
       "diners": [
         {
@@ -6186,8 +6186,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_016": {
-    "scenario_id": "T16_016",
+  "T1/v2/T1_016": {
+    "scenario_id": "T1_016",
     "gt_facts": {
       "diners": [
         {
@@ -6344,8 +6344,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_018": {
-    "scenario_id": "T16_018",
+  "T1/v2/T1_018": {
+    "scenario_id": "T1_018",
     "gt_facts": {
       "diners": [
         {
@@ -6462,8 +6462,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_020": {
-    "scenario_id": "T16_020",
+  "T1/v2/T1_020": {
+    "scenario_id": "T1_020",
     "gt_facts": {
       "diners": [
         {
@@ -6586,8 +6586,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_021": {
-    "scenario_id": "T16_021",
+  "T1/v2/T1_021": {
+    "scenario_id": "T1_021",
     "gt_facts": {
       "diners": [
         {
@@ -6744,8 +6744,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_022": {
-    "scenario_id": "T16_022",
+  "T1/v2/T1_022": {
+    "scenario_id": "T1_022",
     "gt_facts": {
       "diners": [
         {
@@ -6859,8 +6859,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_024": {
-    "scenario_id": "T16_024",
+  "T1/v2/T1_024": {
+    "scenario_id": "T1_024",
     "gt_facts": {
       "diners": [
         {
@@ -6986,8 +6986,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_025": {
-    "scenario_id": "T16_025",
+  "T1/v2/T1_025": {
+    "scenario_id": "T1_025",
     "gt_facts": {
       "diners": [
         {
@@ -7114,8 +7114,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_027": {
-    "scenario_id": "T16_027",
+  "T1/v2/T1_027": {
+    "scenario_id": "T1_027",
     "gt_facts": {
       "diners": [
         {
@@ -7272,8 +7272,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_028": {
-    "scenario_id": "T16_028",
+  "T1/v2/T1_028": {
+    "scenario_id": "T1_028",
     "gt_facts": {
       "diners": [
         {
@@ -7430,8 +7430,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_030": {
-    "scenario_id": "T16_030",
+  "T1/v2/T1_030": {
+    "scenario_id": "T1_030",
     "gt_facts": {
       "diners": [
         {
@@ -7571,8 +7571,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_031": {
-    "scenario_id": "T16_031",
+  "T1/v2/T1_031": {
+    "scenario_id": "T1_031",
     "gt_facts": {
       "diners": [
         {
@@ -7718,8 +7718,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_032": {
-    "scenario_id": "T16_032",
+  "T1/v2/T1_032": {
+    "scenario_id": "T1_032",
     "gt_facts": {
       "diners": [
         {
@@ -7883,8 +7883,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_043": {
-    "scenario_id": "T16_043",
+  "T1/v2/T1_043": {
+    "scenario_id": "T1_043",
     "gt_facts": {
       "diners": [
         {
@@ -8028,8 +8028,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_048": {
-    "scenario_id": "T16_048",
+  "T1/v2/T1_048": {
+    "scenario_id": "T1_048",
     "gt_facts": {
       "diners": [
         {
@@ -8166,8 +8166,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_050": {
-    "scenario_id": "T16_050",
+  "T1/v2/T1_050": {
+    "scenario_id": "T1_050",
     "gt_facts": {
       "diners": [
         {
@@ -8297,8 +8297,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_051": {
-    "scenario_id": "T16_051",
+  "T1/v2/T1_051": {
+    "scenario_id": "T1_051",
     "gt_facts": {
       "diners": [
         {
@@ -8432,8 +8432,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_053": {
-    "scenario_id": "T16_053",
+  "T1/v2/T1_053": {
+    "scenario_id": "T1_053",
     "gt_facts": {
       "diners": [
         {
@@ -8584,8 +8584,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_061": {
-    "scenario_id": "T16_061",
+  "T1/v2/T1_061": {
+    "scenario_id": "T1_061",
     "gt_facts": {
       "diners": [
         {
@@ -8732,8 +8732,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_063": {
-    "scenario_id": "T16_063",
+  "T1/v2/T1_063": {
+    "scenario_id": "T1_063",
     "gt_facts": {
       "diners": [
         {
@@ -8880,8 +8880,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_065": {
-    "scenario_id": "T16_065",
+  "T1/v2/T1_065": {
+    "scenario_id": "T1_065",
     "gt_facts": {
       "diners": [
         {
@@ -8991,8 +8991,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_069": {
-    "scenario_id": "T16_069",
+  "T1/v2/T1_069": {
+    "scenario_id": "T1_069",
     "gt_facts": {
       "diners": [
         {
@@ -9112,8 +9112,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v2/T16_073": {
-    "scenario_id": "T16_073",
+  "T1/v2/T1_073": {
+    "scenario_id": "T1_073",
     "gt_facts": {
       "diners": [
         {
@@ -9271,8 +9271,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_001": {
-    "scenario_id": "T16_001",
+  "T1/v3/T1_001": {
+    "scenario_id": "T1_001",
     "gt_facts": {
       "diners": [
         {
@@ -9410,8 +9410,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_002": {
-    "scenario_id": "T16_002",
+  "T1/v3/T1_002": {
+    "scenario_id": "T1_002",
     "gt_facts": {
       "diners": [
         {
@@ -9554,8 +9554,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_003": {
-    "scenario_id": "T16_003",
+  "T1/v3/T1_003": {
+    "scenario_id": "T1_003",
     "gt_facts": {
       "diners": [
         {
@@ -9686,8 +9686,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_004": {
-    "scenario_id": "T16_004",
+  "T1/v3/T1_004": {
+    "scenario_id": "T1_004",
     "gt_facts": {
       "diners": [
         {
@@ -9819,8 +9819,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_005": {
-    "scenario_id": "T16_005",
+  "T1/v3/T1_005": {
+    "scenario_id": "T1_005",
     "gt_facts": {
       "diners": [
         {
@@ -9969,8 +9969,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_009": {
-    "scenario_id": "T16_009",
+  "T1/v3/T1_009": {
+    "scenario_id": "T1_009",
     "gt_facts": {
       "diners": [
         {
@@ -10125,8 +10125,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_012": {
-    "scenario_id": "T16_012",
+  "T1/v3/T1_012": {
+    "scenario_id": "T1_012",
     "gt_facts": {
       "diners": [
         {
@@ -10281,8 +10281,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_013": {
-    "scenario_id": "T16_013",
+  "T1/v3/T1_013": {
+    "scenario_id": "T1_013",
     "gt_facts": {
       "diners": [
         {
@@ -10441,8 +10441,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_016": {
-    "scenario_id": "T16_016",
+  "T1/v3/T1_016": {
+    "scenario_id": "T1_016",
     "gt_facts": {
       "diners": [
         {
@@ -10592,8 +10592,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_017": {
-    "scenario_id": "T16_017",
+  "T1/v3/T1_017": {
+    "scenario_id": "T1_017",
     "gt_facts": {
       "diners": [
         {
@@ -10747,8 +10747,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_018": {
-    "scenario_id": "T16_018",
+  "T1/v3/T1_018": {
+    "scenario_id": "T1_018",
     "gt_facts": {
       "diners": [
         {
@@ -10900,8 +10900,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_023": {
-    "scenario_id": "T16_023",
+  "T1/v3/T1_023": {
+    "scenario_id": "T1_023",
     "gt_facts": {
       "diners": [
         {
@@ -11038,8 +11038,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_024": {
-    "scenario_id": "T16_024",
+  "T1/v3/T1_024": {
+    "scenario_id": "T1_024",
     "gt_facts": {
       "diners": [
         {
@@ -11220,8 +11220,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_030": {
-    "scenario_id": "T16_030",
+  "T1/v3/T1_030": {
+    "scenario_id": "T1_030",
     "gt_facts": {
       "diners": [
         {
@@ -11336,8 +11336,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_033": {
-    "scenario_id": "T16_033",
+  "T1/v3/T1_033": {
+    "scenario_id": "T1_033",
     "gt_facts": {
       "diners": [
         {
@@ -11450,8 +11450,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_038": {
-    "scenario_id": "T16_038",
+  "T1/v3/T1_038": {
+    "scenario_id": "T1_038",
     "gt_facts": {
       "diners": [
         {
@@ -11627,8 +11627,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_040": {
-    "scenario_id": "T16_040",
+  "T1/v3/T1_040": {
+    "scenario_id": "T1_040",
     "gt_facts": {
       "diners": [
         {
@@ -11744,8 +11744,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_042": {
-    "scenario_id": "T16_042",
+  "T1/v3/T1_042": {
+    "scenario_id": "T1_042",
     "gt_facts": {
       "diners": [
         {
@@ -11881,8 +11881,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_043": {
-    "scenario_id": "T16_043",
+  "T1/v3/T1_043": {
+    "scenario_id": "T1_043",
     "gt_facts": {
       "diners": [
         {
@@ -12013,8 +12013,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_048": {
-    "scenario_id": "T16_048",
+  "T1/v3/T1_048": {
+    "scenario_id": "T1_048",
     "gt_facts": {
       "diners": [
         {
@@ -12151,8 +12151,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_049": {
-    "scenario_id": "T16_049",
+  "T1/v3/T1_049": {
+    "scenario_id": "T1_049",
     "gt_facts": {
       "diners": [
         {
@@ -12315,8 +12315,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_050": {
-    "scenario_id": "T16_050",
+  "T1/v3/T1_050": {
+    "scenario_id": "T1_050",
     "gt_facts": {
       "diners": [
         {
@@ -12525,8 +12525,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_053": {
-    "scenario_id": "T16_053",
+  "T1/v3/T1_053": {
+    "scenario_id": "T1_053",
     "gt_facts": {
       "diners": [
         {
@@ -12661,8 +12661,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_055": {
-    "scenario_id": "T16_055",
+  "T1/v3/T1_055": {
+    "scenario_id": "T1_055",
     "gt_facts": {
       "diners": [
         {
@@ -12789,8 +12789,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_056": {
-    "scenario_id": "T16_056",
+  "T1/v3/T1_056": {
+    "scenario_id": "T1_056",
     "gt_facts": {
       "diners": [
         {
@@ -12957,8 +12957,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_057": {
-    "scenario_id": "T16_057",
+  "T1/v3/T1_057": {
+    "scenario_id": "T1_057",
     "gt_facts": {
       "diners": [
         {
@@ -13080,8 +13080,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_058": {
-    "scenario_id": "T16_058",
+  "T1/v3/T1_058": {
+    "scenario_id": "T1_058",
     "gt_facts": {
       "diners": [
         {
@@ -13249,8 +13249,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_059": {
-    "scenario_id": "T16_059",
+  "T1/v3/T1_059": {
+    "scenario_id": "T1_059",
     "gt_facts": {
       "diners": [
         {
@@ -13372,8 +13372,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_060": {
-    "scenario_id": "T16_060",
+  "T1/v3/T1_060": {
+    "scenario_id": "T1_060",
     "gt_facts": {
       "diners": [
         {
@@ -13503,8 +13503,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_066": {
-    "scenario_id": "T16_066",
+  "T1/v3/T1_066": {
+    "scenario_id": "T1_066",
     "gt_facts": {
       "diners": [
         {
@@ -13644,8 +13644,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_068": {
-    "scenario_id": "T16_068",
+  "T1/v3/T1_068": {
+    "scenario_id": "T1_068",
     "gt_facts": {
       "diners": [
         {
@@ -13760,8 +13760,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_069": {
-    "scenario_id": "T16_069",
+  "T1/v3/T1_069": {
+    "scenario_id": "T1_069",
     "gt_facts": {
       "diners": [
         {
@@ -13901,8 +13901,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_070": {
-    "scenario_id": "T16_070",
+  "T1/v3/T1_070": {
+    "scenario_id": "T1_070",
     "gt_facts": {
       "diners": [
         {
@@ -14052,8 +14052,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_072": {
-    "scenario_id": "T16_072",
+  "T1/v3/T1_072": {
+    "scenario_id": "T1_072",
     "gt_facts": {
       "diners": [
         {
@@ -14161,8 +14161,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_073": {
-    "scenario_id": "T16_073",
+  "T1/v3/T1_073": {
+    "scenario_id": "T1_073",
     "gt_facts": {
       "diners": [
         {
@@ -14297,8 +14297,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T16/v3/T16_076": {
-    "scenario_id": "T16_076",
+  "T1/v3/T1_076": {
+    "scenario_id": "T1_076",
     "gt_facts": {
       "diners": [
         {
@@ -14459,8 +14459,8 @@
     "check_fn_version": "v5",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_202": {
-    "scenario_id": "T18_202",
+  "T3/topup/T3_202": {
+    "scenario_id": "T3_202",
     "gt_facts": {
       "budget_cap": 1600,
       "items_with_prices": {
@@ -14495,8 +14495,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_203": {
-    "scenario_id": "T18_203",
+  "T3/topup/T3_203": {
+    "scenario_id": "T3_203",
     "gt_facts": {
       "budget_cap": 120,
       "items_with_prices": {
@@ -14530,8 +14530,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_204": {
-    "scenario_id": "T18_204",
+  "T3/topup/T3_204": {
+    "scenario_id": "T3_204",
     "gt_facts": {
       "budget_cap": 600,
       "items_with_prices": {
@@ -14565,8 +14565,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_207": {
-    "scenario_id": "T18_207",
+  "T3/topup/T3_207": {
+    "scenario_id": "T3_207",
     "gt_facts": {
       "budget_cap": 6000,
       "items_with_prices": {
@@ -14601,8 +14601,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_208": {
-    "scenario_id": "T18_208",
+  "T3/topup/T3_208": {
+    "scenario_id": "T3_208",
     "gt_facts": {
       "budget_cap": 400,
       "items_with_prices": {
@@ -14637,8 +14637,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_210": {
-    "scenario_id": "T18_210",
+  "T3/topup/T3_210": {
+    "scenario_id": "T3_210",
     "gt_facts": {
       "budget_cap": 8000,
       "items_with_prices": {
@@ -14670,8 +14670,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_211": {
-    "scenario_id": "T18_211",
+  "T3/topup/T3_211": {
+    "scenario_id": "T3_211",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -14705,8 +14705,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_212": {
-    "scenario_id": "T18_212",
+  "T3/topup/T3_212": {
+    "scenario_id": "T3_212",
     "gt_facts": {
       "budget_cap": 900,
       "items_with_prices": {
@@ -14738,8 +14738,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_213": {
-    "scenario_id": "T18_213",
+  "T3/topup/T3_213": {
+    "scenario_id": "T3_213",
     "gt_facts": {
       "budget_cap": 200,
       "items_with_prices": {
@@ -14771,8 +14771,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_214": {
-    "scenario_id": "T18_214",
+  "T3/topup/T3_214": {
+    "scenario_id": "T3_214",
     "gt_facts": {
       "budget_cap": 2500,
       "items_with_prices": {
@@ -14807,8 +14807,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_216": {
-    "scenario_id": "T18_216",
+  "T3/topup/T3_216": {
+    "scenario_id": "T3_216",
     "gt_facts": {
       "budget_cap": 2500,
       "items_with_prices": {
@@ -14842,8 +14842,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_218": {
-    "scenario_id": "T18_218",
+  "T3/topup/T3_218": {
+    "scenario_id": "T3_218",
     "gt_facts": {
       "budget_cap": 1050,
       "items_with_prices": {
@@ -14878,8 +14878,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_219": {
-    "scenario_id": "T18_219",
+  "T3/topup/T3_219": {
+    "scenario_id": "T3_219",
     "gt_facts": {
       "budget_cap": 1150,
       "items_with_prices": {
@@ -14911,8 +14911,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_220": {
-    "scenario_id": "T18_220",
+  "T3/topup/T3_220": {
+    "scenario_id": "T3_220",
     "gt_facts": {
       "budget_cap": 1200,
       "items_with_prices": {
@@ -14947,8 +14947,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_221": {
-    "scenario_id": "T18_221",
+  "T3/topup/T3_221": {
+    "scenario_id": "T3_221",
     "gt_facts": {
       "budget_cap": 3500,
       "items_with_prices": {
@@ -14980,8 +14980,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_222": {
-    "scenario_id": "T18_222",
+  "T3/topup/T3_222": {
+    "scenario_id": "T3_222",
     "gt_facts": {
       "budget_cap": 750,
       "items_with_prices": {
@@ -15013,8 +15013,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_223": {
-    "scenario_id": "T18_223",
+  "T3/topup/T3_223": {
+    "scenario_id": "T3_223",
     "gt_facts": {
       "budget_cap": 700,
       "items_with_prices": {
@@ -15046,8 +15046,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_224": {
-    "scenario_id": "T18_224",
+  "T3/topup/T3_224": {
+    "scenario_id": "T3_224",
     "gt_facts": {
       "budget_cap": 3200,
       "items_with_prices": {
@@ -15081,8 +15081,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_225": {
-    "scenario_id": "T18_225",
+  "T3/topup/T3_225": {
+    "scenario_id": "T3_225",
     "gt_facts": {
       "budget_cap": 45,
       "items_with_prices": {
@@ -15116,8 +15116,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_227": {
-    "scenario_id": "T18_227",
+  "T3/topup/T3_227": {
+    "scenario_id": "T3_227",
     "gt_facts": {
       "budget_cap": 140,
       "items_with_prices": {
@@ -15151,8 +15151,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_229": {
-    "scenario_id": "T18_229",
+  "T3/topup/T3_229": {
+    "scenario_id": "T3_229",
     "gt_facts": {
       "budget_cap": 2500,
       "items_with_prices": {
@@ -15184,8 +15184,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_230": {
-    "scenario_id": "T18_230",
+  "T3/topup/T3_230": {
+    "scenario_id": "T3_230",
     "gt_facts": {
       "budget_cap": 1600,
       "items_with_prices": {
@@ -15219,8 +15219,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_231": {
-    "scenario_id": "T18_231",
+  "T3/topup/T3_231": {
+    "scenario_id": "T3_231",
     "gt_facts": {
       "budget_cap": 3200,
       "items_with_prices": {
@@ -15254,8 +15254,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_234": {
-    "scenario_id": "T18_234",
+  "T3/topup/T3_234": {
+    "scenario_id": "T3_234",
     "gt_facts": {
       "budget_cap": 250,
       "items_with_prices": {
@@ -15289,8 +15289,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_236": {
-    "scenario_id": "T18_236",
+  "T3/topup/T3_236": {
+    "scenario_id": "T3_236",
     "gt_facts": {
       "budget_cap": 160,
       "items_with_prices": {
@@ -15322,8 +15322,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_237": {
-    "scenario_id": "T18_237",
+  "T3/topup/T3_237": {
+    "scenario_id": "T3_237",
     "gt_facts": {
       "budget_cap": 900,
       "items_with_prices": {
@@ -15355,8 +15355,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_239": {
-    "scenario_id": "T18_239",
+  "T3/topup/T3_239": {
+    "scenario_id": "T3_239",
     "gt_facts": {
       "budget_cap": 3000,
       "items_with_prices": {
@@ -15390,8 +15390,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_241": {
-    "scenario_id": "T18_241",
+  "T3/topup/T3_241": {
+    "scenario_id": "T3_241",
     "gt_facts": {
       "budget_cap": 120,
       "items_with_prices": {
@@ -15425,8 +15425,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_242": {
-    "scenario_id": "T18_242",
+  "T3/topup/T3_242": {
+    "scenario_id": "T3_242",
     "gt_facts": {
       "budget_cap": 120,
       "items_with_prices": {
@@ -15460,8 +15460,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_250": {
-    "scenario_id": "T18_250",
+  "T3/topup/T3_250": {
+    "scenario_id": "T3_250",
     "gt_facts": {
       "budget_cap": 200,
       "items_with_prices": {
@@ -15495,8 +15495,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_252": {
-    "scenario_id": "T18_252",
+  "T3/topup/T3_252": {
+    "scenario_id": "T3_252",
     "gt_facts": {
       "budget_cap": 15000,
       "items_with_prices": {
@@ -15530,8 +15530,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_253": {
-    "scenario_id": "T18_253",
+  "T3/topup/T3_253": {
+    "scenario_id": "T3_253",
     "gt_facts": {
       "budget_cap": 67.5,
       "items_with_prices": {
@@ -15565,8 +15565,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_255": {
-    "scenario_id": "T18_255",
+  "T3/topup/T3_255": {
+    "scenario_id": "T3_255",
     "gt_facts": {
       "budget_cap": 1000,
       "items_with_prices": {
@@ -15598,8 +15598,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_256": {
-    "scenario_id": "T18_256",
+  "T3/topup/T3_256": {
+    "scenario_id": "T3_256",
     "gt_facts": {
       "budget_cap": 700,
       "items_with_prices": {
@@ -15634,8 +15634,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_257": {
-    "scenario_id": "T18_257",
+  "T3/topup/T3_257": {
+    "scenario_id": "T3_257",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -15669,8 +15669,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_258": {
-    "scenario_id": "T18_258",
+  "T3/topup/T3_258": {
+    "scenario_id": "T3_258",
     "gt_facts": {
       "budget_cap": 200,
       "items_with_prices": {
@@ -15704,8 +15704,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_260": {
-    "scenario_id": "T18_260",
+  "T3/topup/T3_260": {
+    "scenario_id": "T3_260",
     "gt_facts": {
       "budget_cap": 1500,
       "items_with_prices": {
@@ -15739,8 +15739,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_262": {
-    "scenario_id": "T18_262",
+  "T3/topup/T3_262": {
+    "scenario_id": "T3_262",
     "gt_facts": {
       "budget_cap": 800,
       "items_with_prices": {
@@ -15774,8 +15774,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_263": {
-    "scenario_id": "T18_263",
+  "T3/topup/T3_263": {
+    "scenario_id": "T3_263",
     "gt_facts": {
       "budget_cap": 60,
       "items_with_prices": {
@@ -15807,8 +15807,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_264": {
-    "scenario_id": "T18_264",
+  "T3/topup/T3_264": {
+    "scenario_id": "T3_264",
     "gt_facts": {
       "budget_cap": 4000,
       "items_with_prices": {
@@ -15842,8 +15842,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_265": {
-    "scenario_id": "T18_265",
+  "T3/topup/T3_265": {
+    "scenario_id": "T3_265",
     "gt_facts": {
       "budget_cap": 100,
       "items_with_prices": {
@@ -15877,8 +15877,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_266": {
-    "scenario_id": "T18_266",
+  "T3/topup/T3_266": {
+    "scenario_id": "T3_266",
     "gt_facts": {
       "budget_cap": 550,
       "items_with_prices": {
@@ -15912,8 +15912,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_267": {
-    "scenario_id": "T18_267",
+  "T3/topup/T3_267": {
+    "scenario_id": "T3_267",
     "gt_facts": {
       "budget_cap": 8000,
       "items_with_prices": {
@@ -15947,8 +15947,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/topup/T18_269": {
-    "scenario_id": "T18_269",
+  "T3/topup/T3_269": {
+    "scenario_id": "T3_269",
     "gt_facts": {
       "budget_cap": 750,
       "items_with_prices": {
@@ -15982,8 +15982,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.5"
   },
-  "T18/v2/T18_001": {
-    "scenario_id": "T18_001",
+  "T3/v2/T3_001": {
+    "scenario_id": "T3_001",
     "gt_facts": {
       "budget_cap": 700,
       "items_with_prices": {
@@ -16017,8 +16017,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_004": {
-    "scenario_id": "T18_004",
+  "T3/v2/T3_004": {
+    "scenario_id": "T3_004",
     "gt_facts": {
       "budget_cap": 1875,
       "items_with_prices": {
@@ -16052,8 +16052,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_005": {
-    "scenario_id": "T18_005",
+  "T3/v2/T3_005": {
+    "scenario_id": "T3_005",
     "gt_facts": {
       "budget_cap": 75,
       "items_with_prices": {
@@ -16087,8 +16087,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_006": {
-    "scenario_id": "T18_006",
+  "T3/v2/T3_006": {
+    "scenario_id": "T3_006",
     "gt_facts": {
       "budget_cap": 3200,
       "items_with_prices": {
@@ -16122,8 +16122,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_007": {
-    "scenario_id": "T18_007",
+  "T3/v2/T3_007": {
+    "scenario_id": "T3_007",
     "gt_facts": {
       "budget_cap": 60,
       "items_with_prices": {
@@ -16155,8 +16155,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_008": {
-    "scenario_id": "T18_008",
+  "T3/v2/T3_008": {
+    "scenario_id": "T3_008",
     "gt_facts": {
       "budget_cap": 1200,
       "items_with_prices": {
@@ -16188,8 +16188,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_013": {
-    "scenario_id": "T18_013",
+  "T3/v2/T3_013": {
+    "scenario_id": "T3_013",
     "gt_facts": {
       "budget_cap": 600,
       "items_with_prices": {
@@ -16223,8 +16223,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_015": {
-    "scenario_id": "T18_015",
+  "T3/v2/T3_015": {
+    "scenario_id": "T3_015",
     "gt_facts": {
       "budget_cap": 3500,
       "items_with_prices": {
@@ -16259,8 +16259,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_028": {
-    "scenario_id": "T18_028",
+  "T3/v2/T3_028": {
+    "scenario_id": "T3_028",
     "gt_facts": {
       "budget_cap": 900,
       "items_with_prices": {
@@ -16291,8 +16291,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_035": {
-    "scenario_id": "T18_035",
+  "T3/v2/T3_035": {
+    "scenario_id": "T3_035",
     "gt_facts": {
       "budget_cap": 8000,
       "items_with_prices": {
@@ -16327,8 +16327,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_037": {
-    "scenario_id": "T18_037",
+  "T3/v2/T3_037": {
+    "scenario_id": "T3_037",
     "gt_facts": {
       "budget_cap": 1500,
       "items_with_prices": {
@@ -16362,8 +16362,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_039": {
-    "scenario_id": "T18_039",
+  "T3/v2/T3_039": {
+    "scenario_id": "T3_039",
     "gt_facts": {
       "budget_cap": 6000,
       "items_with_prices": {
@@ -16397,8 +16397,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_041": {
-    "scenario_id": "T18_041",
+  "T3/v2/T3_041": {
+    "scenario_id": "T3_041",
     "gt_facts": {
       "budget_cap": 240,
       "items_with_prices": {
@@ -16432,8 +16432,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_042": {
-    "scenario_id": "T18_042",
+  "T3/v2/T3_042": {
+    "scenario_id": "T3_042",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -16467,8 +16467,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_047": {
-    "scenario_id": "T18_047",
+  "T3/v2/T3_047": {
+    "scenario_id": "T3_047",
     "gt_facts": {
       "budget_cap": 4500,
       "items_with_prices": {
@@ -16500,8 +16500,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_048": {
-    "scenario_id": "T18_048",
+  "T3/v2/T3_048": {
+    "scenario_id": "T3_048",
     "gt_facts": {
       "budget_cap": 400,
       "items_with_prices": {
@@ -16536,8 +16536,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_049": {
-    "scenario_id": "T18_049",
+  "T3/v2/T3_049": {
+    "scenario_id": "T3_049",
     "gt_facts": {
       "budget_cap": 1200,
       "items_with_prices": {
@@ -16569,8 +16569,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_053": {
-    "scenario_id": "T18_053",
+  "T3/v2/T3_053": {
+    "scenario_id": "T3_053",
     "gt_facts": {
       "budget_cap": 45,
       "items_with_prices": {
@@ -16604,8 +16604,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_056": {
-    "scenario_id": "T18_056",
+  "T3/v2/T3_056": {
+    "scenario_id": "T3_056",
     "gt_facts": {
       "budget_cap": 55,
       "items_with_prices": {
@@ -16637,8 +16637,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_057": {
-    "scenario_id": "T18_057",
+  "T3/v2/T3_057": {
+    "scenario_id": "T3_057",
     "gt_facts": {
       "budget_cap": 1250,
       "items_with_prices": {
@@ -16673,8 +16673,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_060": {
-    "scenario_id": "T18_060",
+  "T3/v2/T3_060": {
+    "scenario_id": "T3_060",
     "gt_facts": {
       "budget_cap": 72,
       "items_with_prices": {
@@ -16706,8 +16706,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_061": {
-    "scenario_id": "T18_061",
+  "T3/v2/T3_061": {
+    "scenario_id": "T3_061",
     "gt_facts": {
       "budget_cap": 65,
       "items_with_prices": {
@@ -16739,8 +16739,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_062": {
-    "scenario_id": "T18_062",
+  "T3/v2/T3_062": {
+    "scenario_id": "T3_062",
     "gt_facts": {
       "budget_cap": 800,
       "items_with_prices": {
@@ -16774,8 +16774,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_063": {
-    "scenario_id": "T18_063",
+  "T3/v2/T3_063": {
+    "scenario_id": "T3_063",
     "gt_facts": {
       "budget_cap": 800,
       "items_with_prices": {
@@ -16809,8 +16809,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_066": {
-    "scenario_id": "T18_066",
+  "T3/v2/T3_066": {
+    "scenario_id": "T3_066",
     "gt_facts": {
       "budget_cap": 83,
       "items_with_prices": {
@@ -16844,8 +16844,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_067": {
-    "scenario_id": "T18_067",
+  "T3/v2/T3_067": {
+    "scenario_id": "T3_067",
     "gt_facts": {
       "budget_cap": 6000,
       "items_with_prices": {
@@ -16880,8 +16880,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v2/T18_068": {
-    "scenario_id": "T18_068",
+  "T3/v2/T3_068": {
+    "scenario_id": "T3_068",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -16916,8 +16916,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_008": {
-    "scenario_id": "T18_008",
+  "T3/v3/T3_008": {
+    "scenario_id": "T3_008",
     "gt_facts": {
       "budget_cap": 50,
       "items_with_prices": {
@@ -16951,8 +16951,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_009": {
-    "scenario_id": "T18_009",
+  "T3/v3/T3_009": {
+    "scenario_id": "T3_009",
     "gt_facts": {
       "budget_cap": 15000,
       "items_with_prices": {
@@ -16986,8 +16986,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_010": {
-    "scenario_id": "T18_010",
+  "T3/v3/T3_010": {
+    "scenario_id": "T3_010",
     "gt_facts": {
       "budget_cap": 3000,
       "items_with_prices": {
@@ -17022,8 +17022,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_016": {
-    "scenario_id": "T18_016",
+  "T3/v3/T3_016": {
+    "scenario_id": "T3_016",
     "gt_facts": {
       "budget_cap": 100,
       "items_with_prices": {
@@ -17058,8 +17058,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_017": {
-    "scenario_id": "T18_017",
+  "T3/v3/T3_017": {
+    "scenario_id": "T3_017",
     "gt_facts": {
       "budget_cap": 1400,
       "items_with_prices": {
@@ -17093,8 +17093,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_020": {
-    "scenario_id": "T18_020",
+  "T3/v3/T3_020": {
+    "scenario_id": "T3_020",
     "gt_facts": {
       "budget_cap": 65,
       "items_with_prices": {
@@ -17126,8 +17126,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_022": {
-    "scenario_id": "T18_022",
+  "T3/v3/T3_022": {
+    "scenario_id": "T3_022",
     "gt_facts": {
       "budget_cap": 240,
       "items_with_prices": {
@@ -17161,8 +17161,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_029": {
-    "scenario_id": "T18_029",
+  "T3/v3/T3_029": {
+    "scenario_id": "T3_029",
     "gt_facts": {
       "budget_cap": 120,
       "items_with_prices": {
@@ -17196,8 +17196,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_032": {
-    "scenario_id": "T18_032",
+  "T3/v3/T3_032": {
+    "scenario_id": "T3_032",
     "gt_facts": {
       "budget_cap": 3200,
       "items_with_prices": {
@@ -17232,8 +17232,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_033": {
-    "scenario_id": "T18_033",
+  "T3/v3/T3_033": {
+    "scenario_id": "T3_033",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -17267,8 +17267,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_039": {
-    "scenario_id": "T18_039",
+  "T3/v3/T3_039": {
+    "scenario_id": "T3_039",
     "gt_facts": {
       "budget_cap": 900,
       "items_with_prices": {
@@ -17300,8 +17300,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_040": {
-    "scenario_id": "T18_040",
+  "T3/v3/T3_040": {
+    "scenario_id": "T3_040",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -17333,8 +17333,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_042": {
-    "scenario_id": "T18_042",
+  "T3/v3/T3_042": {
+    "scenario_id": "T3_042",
     "gt_facts": {
       "budget_cap": 60,
       "items_with_prices": {
@@ -17368,8 +17368,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_045": {
-    "scenario_id": "T18_045",
+  "T3/v3/T3_045": {
+    "scenario_id": "T3_045",
     "gt_facts": {
       "budget_cap": 4200,
       "items_with_prices": {
@@ -17401,8 +17401,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_053": {
-    "scenario_id": "T18_053",
+  "T3/v3/T3_053": {
+    "scenario_id": "T3_053",
     "gt_facts": {
       "budget_cap": 270,
       "items_with_prices": {
@@ -17434,8 +17434,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_054": {
-    "scenario_id": "T18_054",
+  "T3/v3/T3_054": {
+    "scenario_id": "T3_054",
     "gt_facts": {
       "budget_cap": 4000,
       "items_with_prices": {
@@ -17470,8 +17470,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_055": {
-    "scenario_id": "T18_055",
+  "T3/v3/T3_055": {
+    "scenario_id": "T3_055",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -17503,8 +17503,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_056": {
-    "scenario_id": "T18_056",
+  "T3/v3/T3_056": {
+    "scenario_id": "T3_056",
     "gt_facts": {
       "budget_cap": 350,
       "items_with_prices": {
@@ -17538,8 +17538,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_061": {
-    "scenario_id": "T18_061",
+  "T3/v3/T3_061": {
+    "scenario_id": "T3_061",
     "gt_facts": {
       "budget_cap": 7000,
       "items_with_prices": {
@@ -17573,8 +17573,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_064": {
-    "scenario_id": "T18_064",
+  "T3/v3/T3_064": {
+    "scenario_id": "T3_064",
     "gt_facts": {
       "budget_cap": 36,
       "items_with_prices": {
@@ -17608,8 +17608,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_067": {
-    "scenario_id": "T18_067",
+  "T3/v3/T3_067": {
+    "scenario_id": "T3_067",
     "gt_facts": {
       "budget_cap": 550,
       "items_with_prices": {
@@ -17644,8 +17644,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_068": {
-    "scenario_id": "T18_068",
+  "T3/v3/T3_068": {
+    "scenario_id": "T3_068",
     "gt_facts": {
       "budget_cap": 1600,
       "items_with_prices": {
@@ -17679,8 +17679,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_070": {
-    "scenario_id": "T18_070",
+  "T3/v3/T3_070": {
+    "scenario_id": "T3_070",
     "gt_facts": {
       "budget_cap": 15,
       "items_with_prices": {
@@ -17712,8 +17712,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_073": {
-    "scenario_id": "T18_073",
+  "T3/v3/T3_073": {
+    "scenario_id": "T3_073",
     "gt_facts": {
       "budget_cap": 170,
       "items_with_prices": {
@@ -17745,8 +17745,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_075": {
-    "scenario_id": "T18_075",
+  "T3/v3/T3_075": {
+    "scenario_id": "T3_075",
     "gt_facts": {
       "budget_cap": 35000,
       "items_with_prices": {
@@ -17781,8 +17781,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_076": {
-    "scenario_id": "T18_076",
+  "T3/v3/T3_076": {
+    "scenario_id": "T3_076",
     "gt_facts": {
       "budget_cap": 36,
       "items_with_prices": {
@@ -17814,8 +17814,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_078": {
-    "scenario_id": "T18_078",
+  "T3/v3/T3_078": {
+    "scenario_id": "T3_078",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -17849,8 +17849,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_079": {
-    "scenario_id": "T18_079",
+  "T3/v3/T3_079": {
+    "scenario_id": "T3_079",
     "gt_facts": {
       "budget_cap": 1167,
       "items_with_prices": {
@@ -17882,8 +17882,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T18/v3/T18_080": {
-    "scenario_id": "T18_080",
+  "T3/v3/T3_080": {
+    "scenario_id": "T3_080",
     "gt_facts": {
       "budget_cap": 80,
       "items_with_prices": {
@@ -17917,8 +17917,8 @@
     "check_fn_version": "v3",
     "extractor_model": "gpt-5.4-mini"
   },
-  "T20/v3/T20_002": {
-    "scenario_id": "T20_002",
+  "T5/v3/T5_002": {
+    "scenario_id": "T5_002",
     "gt_facts": {
       "strategic_question": "Is freelancing as a social media manager for local boutiques the right bet before committing to outreach?",
       "execution_blocks": [
@@ -17966,8 +17966,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_003": {
-    "scenario_id": "T20_003",
+  "T5/v3/T5_003": {
+    "scenario_id": "T5_003",
     "gt_facts": {
       "strategic_question": "Is launching the mobile car-detailing side hustle next Saturday the right bet before validating demand?",
       "execution_blocks": [
@@ -18017,8 +18017,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_004": {
-    "scenario_id": "T20_004",
+  "T5/v3/T5_004": {
+    "scenario_id": "T5_004",
     "gt_facts": {
       "strategic_question": "Is launching a paid graduation portrait side hustle next semester the right bet?",
       "execution_blocks": [
@@ -18071,8 +18071,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_011": {
-    "scenario_id": "T20_011",
+  "T5/v3/T5_011": {
+    "scenario_id": "T5_011",
     "gt_facts": {
       "strategic_question": "Is launching an international snack subscription box the right bet before going live?",
       "execution_blocks": [
@@ -18112,8 +18112,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_012": {
-    "scenario_id": "T20_012",
+  "T5/v3/T5_012": {
+    "scenario_id": "T5_012",
     "gt_facts": {
       "strategic_question": "Is self-publishing this literary fiction novel the right strategic move?",
       "execution_blocks": [
@@ -18157,8 +18157,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_013": {
-    "scenario_id": "T20_013",
+  "T5/v3/T5_013": {
+    "scenario_id": "T5_013",
     "gt_facts": {
       "strategic_question": "Is going solo as a freelance brand designer right now the right move?",
       "execution_blocks": [
@@ -18203,8 +18203,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_017": {
-    "scenario_id": "T20_017",
+  "T5/v3/T5_017": {
+    "scenario_id": "T5_017",
     "gt_facts": {
       "strategic_question": "Is launching this quiet observational podcast as a 12-episode season the right bet before validating real audience demand?",
       "execution_blocks": [
@@ -18259,8 +18259,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_019": {
-    "scenario_id": "T20_019",
+  "T5/v3/T5_019": {
+    "scenario_id": "T5_019",
     "gt_facts": {
       "strategic_question": "Is pivoting the company to senior-care remote monitoring the right strategic bet before committing to the August pilot and product rebuild?",
       "execution_blocks": [
@@ -18308,8 +18308,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_020": {
-    "scenario_id": "T20_020",
+  "T5/v3/T5_020": {
+    "scenario_id": "T5_020",
     "gt_facts": {
       "strategic_question": "Is launching a paid local English tutoring business next Monday the right bet before validating demand?",
       "execution_blocks": [
@@ -18360,8 +18360,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_024": {
-    "scenario_id": "T20_024",
+  "T5/v3/T5_024": {
+    "scenario_id": "T5_024",
     "gt_facts": {
       "strategic_question": "Is launching this paid resume-editing service now the right bet for a final-year student?",
       "execution_blocks": [
@@ -18411,8 +18411,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_026": {
-    "scenario_id": "T20_026",
+  "T5/v3/T5_026": {
+    "scenario_id": "T5_026",
     "gt_facts": {
       "strategic_question": "Is launching a faceless sourdough and pastry YouTube channel as a 20-episode season the right bet?",
       "execution_blocks": [
@@ -18449,8 +18449,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_027": {
-    "scenario_id": "T20_027",
+  "T5/v3/T5_027": {
+    "scenario_id": "T5_027",
     "gt_facts": {
       "strategic_question": "Is starting a paid GRE tutoring side hustle the right use of your time and energy right now?",
       "execution_blocks": [
@@ -18489,8 +18489,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_028": {
-    "scenario_id": "T20_028",
+  "T5/v3/T5_028": {
+    "scenario_id": "T5_028",
     "gt_facts": {
       "strategic_question": "Is launching a paid seniors fitness buddy service the right bet at all?",
       "execution_blocks": [
@@ -18532,8 +18532,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_029": {
-    "scenario_id": "T20_029",
+  "T5/v3/T5_029": {
+    "scenario_id": "T5_029",
     "gt_facts": {
       "strategic_question": "Is going independent as a paid career coach the right strategic bet before quitting the HR job?",
       "execution_blocks": [
@@ -18579,8 +18579,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_031": {
-    "scenario_id": "T20_031",
+  "T5/v3/T5_031": {
+    "scenario_id": "T5_031",
     "gt_facts": {
       "strategic_question": "Is starting a productivity and remote-work tips blog as a serious nights-and-weekends side hustle the right bet before committing to the planned cadence and tool spend?",
       "execution_blocks": [
@@ -18627,8 +18627,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_033": {
-    "scenario_id": "T20_033",
+  "T5/v3/T5_033": {
+    "scenario_id": "T5_033",
     "gt_facts": {
       "strategic_question": "Is turning the resin jewelry and coaster hobby into an Etsy/craft-fair side business aiming for 50 orders per month the right bet?",
       "execution_blocks": [
@@ -18675,8 +18675,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_035": {
-    "scenario_id": "T20_035",
+  "T5/v3/T5_035": {
+    "scenario_id": "T5_035",
     "gt_facts": {
       "strategic_question": "Is launching an indie roguelike Twitch stream as a growth and monetization bet the right direction before committing time and money?",
       "execution_blocks": [
@@ -18722,8 +18722,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_036": {
-    "scenario_id": "T20_036",
+  "T5/v3/T5_036": {
+    "scenario_id": "T5_036",
     "gt_facts": {
       "strategic_question": "Is spending around $685 on non-portable rental kitchen upgrades the right bet when there are only 11 months left on the lease?",
       "execution_blocks": [
@@ -18760,8 +18760,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_037": {
-    "scenario_id": "T20_037",
+  "T5/v3/T5_037": {
+    "scenario_id": "T5_037",
     "gt_facts": {
       "strategic_question": "Is this B2B credit-scoring SaaS for Philippine rural banks the right bet?",
       "execution_blocks": [
@@ -18803,8 +18803,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_038": {
-    "scenario_id": "T20_038",
+  "T5/v3/T5_038": {
+    "scenario_id": "T5_038",
     "gt_facts": {
       "strategic_question": "Is launching an independent M&A/contracts consulting practice now, instead of staying on the corporate-law partnership track, the right strategic bet?",
       "execution_blocks": [
@@ -18856,8 +18856,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_039": {
-    "scenario_id": "T20_039",
+  "T5/v3/T5_039": {
+    "scenario_id": "T5_039",
     "gt_facts": {
       "strategic_question": "Is launching a self-improvement/productivity TikTok channel with paid production support the right bet before validating audience demand?",
       "execution_blocks": [
@@ -18906,8 +18906,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_044": {
-    "scenario_id": "T20_044",
+  "T5/v3/T5_044": {
+    "scenario_id": "T5_044",
     "gt_facts": {
       "strategic_question": "Is launching a custom woodworking business from a leased garage right now the right bet?",
       "execution_blocks": [
@@ -18959,8 +18959,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_045": {
-    "scenario_id": "T20_045",
+  "T5/v3/T5_045": {
+    "scenario_id": "T5_045",
     "gt_facts": {
       "strategic_question": "Is launching a niche vintage workwear Instagram account as a growth-and-monetization bet worth pursuing before validating audience demand?",
       "execution_blocks": [
@@ -19013,8 +19013,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_049": {
-    "scenario_id": "T20_049",
+  "T5/v3/T5_049": {
+    "scenario_id": "T5_049",
     "gt_facts": {
       "strategic_question": "Is launching the handmade candle business on Etsy now the right bet before validating real demand?",
       "execution_blocks": [
@@ -19065,8 +19065,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_053": {
-    "scenario_id": "T20_053",
+  "T5/v3/T5_053": {
+    "scenario_id": "T5_053",
     "gt_facts": {
       "strategic_question": "Is this skincare brand direction validated enough to commit to manufacturing and multi-channel launch?",
       "execution_blocks": [
@@ -19109,8 +19109,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_103": {
-    "scenario_id": "T20_103",
+  "T5/v3/T5_103": {
+    "scenario_id": "T5_103",
     "gt_facts": {
       "strategic_question": "Is turning the DIY IoT soil and microclimate sensor kit into a commercial product for smallholder farmers the right bet before committing to launch production?",
       "execution_blocks": [
@@ -19154,8 +19154,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_105": {
-    "scenario_id": "T20_105",
+  "T5/v3/T5_105": {
+    "scenario_id": "T5_105",
     "gt_facts": {
       "strategic_question": "Does building a full raised-bed vegetable garden in a rental backyard make strategic sense given the remaining lease, cost, and move-out obligations?",
       "execution_blocks": [
@@ -19198,8 +19198,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_106": {
-    "scenario_id": "T20_106",
+  "T5/v3/T5_106": {
+    "scenario_id": "T5_106",
     "gt_facts": {
       "strategic_question": "Is taking a 1-year unpaid sabbatical to bootstrap this side project the right bet given the current evidence?",
       "execution_blocks": [
@@ -19247,8 +19247,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_107": {
-    "scenario_id": "T20_107",
+  "T5/v3/T5_107": {
+    "scenario_id": "T5_107",
     "gt_facts": {
       "strategic_question": "Is buying this sandwich shop for $285k with Marcus the right acquisition bet before submitting the SBA loan application?",
       "execution_blocks": [
@@ -19293,8 +19293,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_108": {
-    "scenario_id": "T20_108",
+  "T5/v3/T5_108": {
+    "scenario_id": "T5_108",
     "gt_facts": {
       "strategic_question": "Should they start trying for a baby now during the partner's job transition and probation, or wait until after probation and benefits are clearer?",
       "execution_blocks": [
@@ -19342,8 +19342,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_112": {
-    "scenario_id": "T20_112",
+  "T5/v3/T5_112": {
+    "scenario_id": "T5_112",
     "gt_facts": {
       "strategic_question": "Is launching an independent compliance consulting business for early-stage healthtech startups next month the right strategic bet?",
       "execution_blocks": [
@@ -19393,8 +19393,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_113": {
-    "scenario_id": "T20_113",
+  "T5/v3/T5_113": {
+    "scenario_id": "T5_113",
     "gt_facts": {
       "strategic_question": "Is turning this personal Chrome extension into a paid product and launching it now the right bet?",
       "execution_blocks": [
@@ -19440,8 +19440,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_114": {
-    "scenario_id": "T20_114",
+  "T5/v3/T5_114": {
+    "scenario_id": "T5_114",
     "gt_facts": {
       "strategic_question": "Is committing to a 6-month paid Friday residency the right move right now?",
       "execution_blocks": [
@@ -19488,8 +19488,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_117": {
-    "scenario_id": "T20_117",
+  "T5/v3/T5_117": {
+    "scenario_id": "T5_117",
     "gt_facts": {
       "strategic_question": "Is a full-time MBA the right investment for reaching VP Strategy or Chief of Staff roles in tech?",
       "execution_blocks": [
@@ -19531,8 +19531,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_119": {
-    "scenario_id": "T20_119",
+  "T5/v3/T5_119": {
+    "scenario_id": "T5_119",
     "gt_facts": {
       "strategic_question": "Is quitting or pausing an 8-year marketing career to spend savings on a coding bootcamp the right career bet?",
       "execution_blocks": [
@@ -19571,8 +19571,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_121": {
-    "scenario_id": "T20_121",
+  "T5/v3/T5_121": {
+    "scenario_id": "T5_121",
     "gt_facts": {
       "strategic_question": "Is accepting this DevTools company's roadmap-controlling sponsorship the right move for the open-source project?",
       "execution_blocks": [
@@ -19619,8 +19619,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_122": {
-    "scenario_id": "T20_122",
+  "T5/v3/T5_122": {
+    "scenario_id": "T5_122",
     "gt_facts": {
       "strategic_question": "Is pivoting from individual FAANG interview coaching to a B2B enterprise/team training product the right bet before launching outreach and operations?",
       "execution_blocks": [
@@ -19664,8 +19664,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_123": {
-    "scenario_id": "T20_123",
+  "T5/v3/T5_123": {
+    "scenario_id": "T5_123",
     "gt_facts": {
       "strategic_question": "Is starting a gardening blog as a side-income project the right use of the user's time and energy?",
       "execution_blocks": [
@@ -19710,8 +19710,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_124": {
-    "scenario_id": "T20_124",
+  "T5/v3/T5_124": {
+    "scenario_id": "T5_124",
     "gt_facts": {
       "strategic_question": "Is writing and self-publishing this personal memoir/travel essay book on KDP the right use of the user's time and money?",
       "execution_blocks": [
@@ -19761,8 +19761,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_125": {
-    "scenario_id": "T20_125",
+  "T5/v3/T5_125": {
+    "scenario_id": "T5_125",
     "gt_facts": {
       "strategic_question": "Is writing and self-publishing this travel memoir the right bet for your time and money?",
       "execution_blocks": [
@@ -19810,8 +19810,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_126": {
-    "scenario_id": "T20_126",
+  "T5/v3/T5_126": {
+    "scenario_id": "T5_126",
     "gt_facts": {
       "strategic_question": "Is leaving the faculty track now to become CSO of this gene-therapy startup the right career bet?",
       "execution_blocks": [
@@ -19853,8 +19853,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_129": {
-    "scenario_id": "T20_129",
+  "T5/v3/T5_129": {
+    "scenario_id": "T5_129",
     "gt_facts": {
       "strategic_question": "Is signing the lease for an owner-operated second location now the right expansion bet versus franchising or waiting?",
       "execution_blocks": [
@@ -19901,8 +19901,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_131": {
-    "scenario_id": "T20_131",
+  "T5/v3/T5_131": {
+    "scenario_id": "T5_131",
     "gt_facts": {
       "strategic_question": "Is pitching a paid senior fitness buddy service through the gym the right bet before validating demand and buyer incentives?",
       "execution_blocks": [
@@ -19943,8 +19943,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_134": {
-    "scenario_id": "T20_134",
+  "T5/v3/T5_134": {
+    "scenario_id": "T5_134",
     "gt_facts": {
       "strategic_question": "Is opening a small noodle shop in this residential ground-floor unit the right bet before committing to renovation and launch?",
       "execution_blocks": [
@@ -19989,8 +19989,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_137": {
-    "scenario_id": "T20_137",
+  "T5/v3/T5_137": {
+    "scenario_id": "T5_137",
     "gt_facts": {
       "strategic_question": "Is launching a graduation portrait side hustle on campus next week the right bet for a junior with a full course load?",
       "execution_blocks": [
@@ -20033,8 +20033,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_138": {
-    "scenario_id": "T20_138",
+  "T5/v3/T5_138": {
+    "scenario_id": "T5_138",
     "gt_facts": {
       "strategic_question": "Is incorporating now the right move before proving customers will pay?",
       "execution_blocks": [
@@ -20072,8 +20072,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_140": {
-    "scenario_id": "T20_140",
+  "T5/v3/T5_140": {
+    "scenario_id": "T5_140",
     "gt_facts": {
       "strategic_question": "Is building a paid vertical SaaS add-on for indie podcasters on a B2B publishing platform the right bet?",
       "execution_blocks": [
@@ -20114,8 +20114,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_143": {
-    "scenario_id": "T20_143",
+  "T5/v3/T5_143": {
+    "scenario_id": "T5_143",
     "gt_facts": {
       "strategic_question": "Is launching a weekend house-cleaning service in the neighborhood a viable side gig worth pursuing before committing money and trying to book customers?",
       "execution_blocks": [
@@ -20159,8 +20159,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_144": {
-    "scenario_id": "T20_144",
+  "T5/v3/T5_144": {
+    "scenario_id": "T5_144",
     "gt_facts": {
       "strategic_question": "Is turning this resin hobby into a weekend micro-business and launching on Etsy now the right bet?",
       "execution_blocks": [
@@ -20211,8 +20211,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_146": {
-    "scenario_id": "T20_146",
+  "T5/v3/T5_146": {
+    "scenario_id": "T5_146",
     "gt_facts": {
       "strategic_question": "Is building permanent raised-bed garden infrastructure in a rental backyard the right investment?",
       "execution_blocks": [
@@ -20256,8 +20256,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_147": {
-    "scenario_id": "T20_147",
+  "T5/v3/T5_147": {
+    "scenario_id": "T5_147",
     "gt_facts": {
       "strategic_question": "Is starting a baking YouTube channel with Patreon monetization now the right bet, given zero current audience and a crowded niche?",
       "execution_blocks": [
@@ -20300,8 +20300,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_151": {
-    "scenario_id": "T20_151",
+  "T5/v3/T5_151": {
+    "scenario_id": "T5_151",
     "gt_facts": {
       "strategic_question": "Is leaving the senior startup role to launch a solo software consultancy the right bet?",
       "execution_blocks": [
@@ -20345,8 +20345,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_154": {
-    "scenario_id": "T20_154",
+  "T5/v3/T5_154": {
+    "scenario_id": "T5_154",
     "gt_facts": {
       "strategic_question": "Is launching a premium freeze-dried raw DTC pet food brand now the right business bet before committing to production and launch spend?",
       "execution_blocks": [
@@ -20396,8 +20396,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_155": {
-    "scenario_id": "T20_155",
+  "T5/v3/T5_155": {
+    "scenario_id": "T5_155",
     "gt_facts": {
       "strategic_question": "Is moving the family back to the UK now the right decision?",
       "execution_blocks": [
@@ -20444,8 +20444,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_157": {
-    "scenario_id": "T20_157",
+  "T5/v3/T5_157": {
+    "scenario_id": "T5_157",
     "gt_facts": {
       "strategic_question": "Is exclusive gallery representation for 2 years the right move for the artist?",
       "execution_blocks": [
@@ -20496,8 +20496,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_158": {
-    "scenario_id": "T20_158",
+  "T5/v3/T5_158": {
+    "scenario_id": "T5_158",
     "gt_facts": {
       "strategic_question": "Is this career transition and Bay Area relocation the right move, and is launching a paid coaching side-hustle alongside the new industry role wise?",
       "execution_blocks": [
@@ -20548,8 +20548,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_160": {
-    "scenario_id": "T20_160",
+  "T5/v3/T5_160": {
+    "scenario_id": "T5_160",
     "gt_facts": {
       "strategic_question": "Is committing to a 3-year weekly Royal Road serial the right strategic bet before launching next month?",
       "execution_blocks": [
@@ -20589,8 +20589,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_164": {
-    "scenario_id": "T20_164",
+  "T5/v3/T5_164": {
+    "scenario_id": "T5_164",
     "gt_facts": {
       "strategic_question": "Is starting a Twitch channel focused entirely on retro JRPGs the right bet for the user's goals?",
       "execution_blocks": [
@@ -20633,8 +20633,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_167": {
-    "scenario_id": "T20_167",
+  "T5/v3/T5_167": {
+    "scenario_id": "T5_167",
     "gt_facts": {
       "strategic_question": "Should the author forgo the six-figure traditional publishing advance and self-publish instead?",
       "execution_blocks": [
@@ -20678,8 +20678,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_168": {
-    "scenario_id": "T20_168",
+  "T5/v3/T5_168": {
+    "scenario_id": "T5_168",
     "gt_facts": {
       "strategic_question": "Is pivoting the Substack into a B2B content consultancy for mid-size SaaS the right bet before launching outreach and quitting the day job?",
       "execution_blocks": [
@@ -20724,8 +20724,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_171": {
-    "scenario_id": "T20_171",
+  "T5/v3/T5_171": {
+    "scenario_id": "T5_171",
     "gt_facts": {
       "strategic_question": "Does moving abroad on a digital nomad visa while restructuring the US remote job actually deliver the expected FEIE-based tax savings enough to justify the risk and constraints?",
       "execution_blocks": [
@@ -20770,8 +20770,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_173": {
-    "scenario_id": "T20_173",
+  "T5/v3/T5_173": {
+    "scenario_id": "T5_173",
     "gt_facts": {
       "strategic_question": "Is launching Wick & Wander as a $44/month artisan candle subscription box the right business bet in a crowded market?",
       "execution_blocks": [
@@ -20817,8 +20817,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_174": {
-    "scenario_id": "T20_174",
+  "T5/v3/T5_174": {
+    "scenario_id": "T5_174",
     "gt_facts": {
       "strategic_question": "Is creating and launching a dedicated internal AI customer-service business unit the right strategic bet?",
       "execution_blocks": [
@@ -20862,8 +20862,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_175": {
-    "scenario_id": "T20_175",
+  "T5/v3/T5_175": {
+    "scenario_id": "T5_175",
     "gt_facts": {
       "strategic_question": "Is freelance social media management for local fashion boutiques the right market bet before launching outreach?",
       "execution_blocks": [
@@ -20919,8 +20919,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_176": {
-    "scenario_id": "T20_176",
+  "T5/v3/T5_176": {
+    "scenario_id": "T5_176",
     "gt_facts": {
       "strategic_question": "Is pivoting from SMB payroll/attendance HR SaaS into an AI-powered recruiting tool for mid-market companies the right bet?",
       "execution_blocks": [
@@ -20968,8 +20968,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_178": {
-    "scenario_id": "T20_178",
+  "T5/v3/T5_178": {
+    "scenario_id": "T5_178",
     "gt_facts": {
       "strategic_question": "Is spending $605 on a rental kitchen remodel as a content-monetization play the right bet with only one year left on the lease?",
       "execution_blocks": [
@@ -21014,8 +21014,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_179": {
-    "scenario_id": "T20_179",
+  "T5/v3/T5_179": {
+    "scenario_id": "T5_179",
     "gt_facts": {
       "strategic_question": "Is incorporating now the right strategic move before validating demand and co-founder fit?",
       "execution_blocks": [
@@ -21055,8 +21055,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_181": {
-    "scenario_id": "T20_181",
+  "T5/v3/T5_181": {
+    "scenario_id": "T5_181",
     "gt_facts": {
       "strategic_question": "Is quitting an operations management job at 34 to spend savings on a full-time coding bootcamp the right career bet?",
       "execution_blocks": [
@@ -21102,8 +21102,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_184": {
-    "scenario_id": "T20_184",
+  "T5/v3/T5_184": {
+    "scenario_id": "T5_184",
     "gt_facts": {
       "strategic_question": "Is launching this local English tutoring business next Monday the right bet before validating demand?",
       "execution_blocks": [
@@ -21151,8 +21151,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_185": {
-    "scenario_id": "T20_185",
+  "T5/v3/T5_185": {
+    "scenario_id": "T5_185",
     "gt_facts": {
       "strategic_question": "Is pivoting from async individual productivity courses to live corporate cohort-based training the right strategic bet before starting outreach?",
       "execution_blocks": [
@@ -21208,8 +21208,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_187": {
-    "scenario_id": "T20_187",
+  "T5/v3/T5_187": {
+    "scenario_id": "T5_187",
     "gt_facts": {
       "strategic_question": "Is signing this major-label 360 deal the right move given the artist's current independent momentum?",
       "execution_blocks": [
@@ -21253,8 +21253,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_190": {
-    "scenario_id": "T20_190",
+  "T5/v3/T5_190": {
+    "scenario_id": "T5_190",
     "gt_facts": {
       "strategic_question": "Is pivoting the telemedicine startup entirely to a senior-care subscription product the right validated bet before launching the rebrand?",
       "execution_blocks": [
@@ -21294,8 +21294,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_192": {
-    "scenario_id": "T20_192",
+  "T5/v3/T5_192": {
+    "scenario_id": "T5_192",
     "gt_facts": {
       "strategic_question": "Publish the formal public launch announcement for the independent AI consulting practice this Monday, before validating paying-client demand.",
       "execution_blocks": [
@@ -21338,8 +21338,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_194": {
-    "scenario_id": "T20_194",
+  "T5/v3/T5_194": {
+    "scenario_id": "T5_194",
     "gt_facts": {
       "strategic_question": "Is relocating from London to Singapore for this job offer the right long-term decision for you as a couple?",
       "execution_blocks": [
@@ -21382,8 +21382,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_195": {
-    "scenario_id": "T20_195",
+  "T5/v3/T5_195": {
+    "scenario_id": "T5_195",
     "gt_facts": {
       "strategic_question": "Is selling the family home, downsizing to a condo, and buying an RV for a one-year cross-country trip the right strategic move before committing?",
       "execution_blocks": [
@@ -21427,8 +21427,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_196": {
-    "scenario_id": "T20_196",
+  "T5/v3/T5_196": {
+    "scenario_id": "T5_196",
     "gt_facts": {
       "strategic_question": "Is launching a paid dog-walking and pet-sitting gig around campus the right bet before investing in flyers, gear, or branding?",
       "execution_blocks": [
@@ -21473,8 +21473,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_197": {
-    "scenario_id": "T20_197",
+  "T5/v3/T5_197": {
+    "scenario_id": "T5_197",
     "gt_facts": {
       "strategic_question": "Is formally adopting the 9-year-old brother now the right permanent legal decision, rather than pursuing guardianship first?",
       "execution_blocks": [
@@ -21518,8 +21518,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_202": {
-    "scenario_id": "T20_202",
+  "T5/v3/T5_202": {
+    "scenario_id": "T5_202",
     "gt_facts": {
       "strategic_question": "Is launching paid tiers for a productivity/remote-work blog next week the right bet before validating demand?",
       "execution_blocks": [
@@ -21561,8 +21561,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_203": {
-    "scenario_id": "T20_203",
+  "T5/v3/T5_203": {
+    "scenario_id": "T5_203",
     "gt_facts": {
       "strategic_question": "Is switching from the current white-collar career into HVAC the right strategic bet before enrolling in the September program?",
       "execution_blocks": [
@@ -21610,8 +21610,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_207": {
-    "scenario_id": "T20_207",
+  "T5/v3/T5_207": {
+    "scenario_id": "T5_207",
     "gt_facts": {
       "strategic_question": "Is launching this Etsy resin-art micro-business now, and treating it as a path to replacing barista income, the right bet before demand is validated?",
       "execution_blocks": [
@@ -21657,8 +21657,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_210": {
-    "scenario_id": "T20_210",
+  "T5/v3/T5_210": {
+    "scenario_id": "T5_210",
     "gt_facts": {
       "strategic_question": "Is launching a self-improvement TikTok channel with a full production-heavy workflow the right bet before validating audience demand?",
       "execution_blocks": [
@@ -21705,8 +21705,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_212": {
-    "scenario_id": "T20_212",
+  "T5/v3/T5_212": {
+    "scenario_id": "T5_212",
     "gt_facts": {
       "strategic_question": "Is starting fertility treatment in November the right timing for you two, rather than just the most convenient timeline?",
       "execution_blocks": [
@@ -21747,8 +21747,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_213": {
-    "scenario_id": "T20_213",
+  "T5/v3/T5_213": {
+    "scenario_id": "T5_213",
     "gt_facts": {
       "strategic_question": "Is moving mom into Sunrise memory care now the right path, rather than having her live with family or trying a supported home option first?",
       "execution_blocks": [
@@ -21786,8 +21786,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_215": {
-    "scenario_id": "T20_215",
+  "T5/v3/T5_215": {
+    "scenario_id": "T5_215",
     "gt_facts": {
       "strategic_question": "Is signing a 5-year green-card retention agreement with this employer the right strategic trade-off?",
       "execution_blocks": [
@@ -21827,8 +21827,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_218": {
-    "scenario_id": "T20_218",
+  "T5/v3/T5_218": {
+    "scenario_id": "T5_218",
     "gt_facts": {
       "strategic_question": "Is pivoting from consumer lending analytics to B2B SMB credit-scoring SaaS in Southeast Asia the right validated bet before starting pilot outreach?",
       "execution_blocks": [
@@ -21873,8 +21873,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_219": {
-    "scenario_id": "T20_219",
+  "T5/v3/T5_219": {
+    "scenario_id": "T5_219",
     "gt_facts": {
       "strategic_question": "Is accepting a 5-year employer lock-in for green-card sponsorship the right career and immigration bet?",
       "execution_blocks": [
@@ -21917,8 +21917,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_221": {
-    "scenario_id": "T20_221",
+  "T5/v3/T5_221": {
+    "scenario_id": "T5_221",
     "gt_facts": {
       "strategic_question": "Is launching a paid undergrad exam-prep tutoring business now the right bet?",
       "execution_blocks": [
@@ -21961,8 +21961,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_222": {
-    "scenario_id": "T20_222",
+  "T5/v3/T5_222": {
+    "scenario_id": "T5_222",
     "gt_facts": {
       "strategic_question": "Is running for the local school board this November the right move for you?",
       "execution_blocks": [
@@ -22008,8 +22008,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_224": {
-    "scenario_id": "T20_224",
+  "T5/v3/T5_224": {
+    "scenario_id": "T5_224",
     "gt_facts": {
       "strategic_question": "Does this partnership actually make sense before publicly launching it?",
       "execution_blocks": [
@@ -22048,8 +22048,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_225": {
-    "scenario_id": "T20_225",
+  "T5/v3/T5_225": {
+    "scenario_id": "T5_225",
     "gt_facts": {
       "strategic_question": "Is launching the paid online wellness coaching subscription now the right bet before validating demand?",
       "execution_blocks": [
@@ -22103,8 +22103,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_232": {
-    "scenario_id": "T20_232",
+  "T5/v3/T5_232": {
+    "scenario_id": "T5_232",
     "gt_facts": {
       "strategic_question": "Should the company create an internal AI-driven customer-service unit at all, rather than keep outsourcing or use a turnkey vendor?",
       "execution_blocks": [
@@ -22147,8 +22147,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_233": {
-    "scenario_id": "T20_233",
+  "T5/v3/T5_233": {
+    "scenario_id": "T5_233",
     "gt_facts": {
       "strategic_question": "Is quitting the day job now to launch an AI consultancy the right bet?",
       "execution_blocks": [
@@ -22191,8 +22191,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_234": {
-    "scenario_id": "T20_234",
+  "T5/v3/T5_234": {
+    "scenario_id": "T5_234",
     "gt_facts": {
       "strategic_question": "Is accepting the $85k relocation grant with a strict 5-year commitment to a rural town the right strategic bet?",
       "execution_blocks": [
@@ -22231,8 +22231,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_236": {
-    "scenario_id": "T20_236",
+  "T5/v3/T5_236": {
+    "scenario_id": "T5_236",
     "gt_facts": {
       "strategic_question": "Is live paid peer mock-interview coaching for FAANG candidates the right side business to start?",
       "execution_blocks": [
@@ -22280,8 +22280,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_237": {
-    "scenario_id": "T20_237",
+  "T5/v3/T5_237": {
+    "scenario_id": "T5_237",
     "gt_facts": {
       "strategic_question": "Is packaging and launching this form-filling script as a paid Chrome extension actually the right product bet?",
       "execution_blocks": [
@@ -22330,8 +22330,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_238": {
-    "scenario_id": "T20_238",
+  "T5/v3/T5_238": {
+    "scenario_id": "T5_238",
     "gt_facts": {
       "strategic_question": "Is building a vertical SaaS podcasting module the right strategic bet for the publishing platform?",
       "execution_blocks": [
@@ -22377,8 +22377,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_240": {
-    "scenario_id": "T20_240",
+  "T5/v3/T5_240": {
+    "scenario_id": "T5_240",
     "gt_facts": {
       "strategic_question": "Is spinning off and launching a 501(c)(4) the right organizational move for the environmental 501(c)(3)?",
       "execution_blocks": [
@@ -22418,8 +22418,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_241": {
-    "scenario_id": "T20_241",
+  "T5/v3/T5_241": {
+    "scenario_id": "T5_241",
     "gt_facts": {
       "strategic_question": "Is committing to this full-time one-year campaign coordinator role the right life and career move?",
       "execution_blocks": [
@@ -22471,8 +22471,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_242": {
-    "scenario_id": "T20_242",
+  "T5/v3/T5_242": {
+    "scenario_id": "T5_242",
     "gt_facts": {
       "strategic_question": "Is launching a weekend paid house-cleaning service in the apartment complex the right bet before committing to flyers and supplies?",
       "execution_blocks": [
@@ -22524,8 +22524,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_243": {
-    "scenario_id": "T20_243",
+  "T5/v3/T5_243": {
+    "scenario_id": "T5_243",
     "gt_facts": {
       "strategic_question": "Is spousal sponsorship the right immigration path for this couple, and is now the right time to commit to it?",
       "execution_blocks": [
@@ -22570,8 +22570,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_245": {
-    "scenario_id": "T20_245",
+  "T5/v3/T5_245": {
+    "scenario_id": "T5_245",
     "gt_facts": {
       "strategic_question": "Is launching a paid SaaS tier on top of the open-source database migration CLI next week the right strategic bet?",
       "execution_blocks": [
@@ -22618,8 +22618,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_248": {
-    "scenario_id": "T20_248",
+  "T5/v3/T5_248": {
+    "scenario_id": "T5_248",
     "gt_facts": {
       "strategic_question": "Is stretching to the full pre-approval amount for this Denver home the right financial decision?",
       "execution_blocks": [
@@ -22662,8 +22662,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_252": {
-    "scenario_id": "T20_252",
+  "T5/v3/T5_252": {
+    "scenario_id": "T5_252",
     "gt_facts": {
       "strategic_question": "Is launching Ember & Slow as a paid candle subscription box next month the right strategic bet?",
       "execution_blocks": [
@@ -22710,8 +22710,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_254": {
-    "scenario_id": "T20_254",
+  "T5/v3/T5_254": {
+    "scenario_id": "T5_254",
     "gt_facts": {
       "strategic_question": "Should you personally guarantee your friend's $500k SBA bakery loan at all?",
       "execution_blocks": [
@@ -22755,8 +22755,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_255": {
-    "scenario_id": "T20_255",
+  "T5/v3/T5_255": {
+    "scenario_id": "T5_255",
     "gt_facts": {
       "strategic_question": "Should you co-sign your brother's 30-year mortgage without any ownership stake?",
       "execution_blocks": [
@@ -22799,8 +22799,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_262": {
-    "scenario_id": "T20_262",
+  "T5/v3/T5_262": {
+    "scenario_id": "T5_262",
     "gt_facts": {
       "strategic_question": "Is selling a fully-owned apartment to fund a two-year travel sabbatical with no return-to-work plan the right move?",
       "execution_blocks": [
@@ -22850,8 +22850,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_271": {
-    "scenario_id": "T20_271",
+  "T5/v3/T5_271": {
+    "scenario_id": "T5_271",
     "gt_facts": {
       "strategic_question": "Is selling the house to fund a two-year travel sabbatical with no job lined up the right move?",
       "execution_blocks": [
@@ -22899,8 +22899,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_273": {
-    "scenario_id": "T20_273",
+  "T5/v3/T5_273": {
+    "scenario_id": "T5_273",
     "gt_facts": {
       "strategic_question": "Is quitting the job and funding a premium home-organizer e-commerce business with a full $200k 401k cash-out the right bet?",
       "execution_blocks": [
@@ -22943,8 +22943,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_276": {
-    "scenario_id": "T20_276",
+  "T5/v3/T5_276": {
+    "scenario_id": "T5_276",
     "gt_facts": {
       "strategic_question": "Should you put your primary home at risk by using a $200k HELOC to invest in a pre-revenue restaurant?",
       "execution_blocks": [
@@ -22992,8 +22992,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_280": {
-    "scenario_id": "T20_280",
+  "T5/v3/T5_280": {
+    "scenario_id": "T5_280",
     "gt_facts": {
       "strategic_question": "Is buying this off-plan Phuket condo under this payment and legal structure the right investment decision?",
       "execution_blocks": [
@@ -23035,8 +23035,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_293": {
-    "scenario_id": "T20_293",
+  "T5/v3/T5_293": {
+    "scenario_id": "T5_293",
     "gt_facts": {
       "strategic_question": "Is committing to the $90k lifetime coaching package the right strategic decision?",
       "execution_blocks": [
@@ -23076,8 +23076,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_295": {
-    "scenario_id": "T20_295",
+  "T5/v3/T5_295": {
+    "scenario_id": "T5_295",
     "gt_facts": {
       "strategic_question": "Should you wire $400k in non-refundable earnest money under these unverified, high-pressure conditions?",
       "execution_blocks": [
@@ -23118,8 +23118,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_309": {
-    "scenario_id": "T20_309",
+  "T5/v3/T5_309": {
+    "scenario_id": "T5_309",
     "gt_facts": {
       "strategic_question": "Should I personally guarantee my brother's $400k SBA loan for this restaurant?",
       "execution_blocks": [
@@ -23158,8 +23158,8 @@
     },
     "check_fn_version": "v6.2-binary"
   },
-  "T20/v3/T20_311": {
-    "scenario_id": "T20_311",
+  "T5/v3/T5_311": {
+    "scenario_id": "T5_311",
     "gt_facts": {
       "strategic_question": "Should you personally guarantee a $300k, 7-year equipment lease for an unproven first restaurant?",
       "execution_blocks": [

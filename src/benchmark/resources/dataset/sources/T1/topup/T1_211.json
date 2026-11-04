@@ -1,0 +1,301 @@
+{
+  "scenario_id": "T1_211",
+  "domain": "road trip food packing for a group",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful trip planning assistant. Help the user plan what food and snacks to pack for a group road trip. Track who is going, their dietary needs, and any changes to the group or their restrictions. When the user asks you to check a list of items, evaluate each item against every active traveler's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, we're doing a road trip this Saturday — about 6 hours each way. I need help figuring out what snacks and food to pack for everyone.",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Five of us going: me, Derek, Priya, Sam, and Jess",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek was diagnosed with celiac disease last year, has to be super careful",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_diabetes",
+        "value": "Sam has been managing type 2 diabetes for a while now, keeps his sugar really low",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_allergy_event",
+        "value": "Priya ate a pad thai at that place downtown last month and her throat started swelling — she had to use her EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "cooler_info",
+        "value": "We have a big cooler so cold stuff is fine, and a couple of thermal bags",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jess_drops_out",
+        "value": "Jess just texted me — her kid is sick so she can't come. She asked if I could drop off some snacks at her place on the way though, for the kid",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "jess_kid_egg_allergy",
+        "value": "Oh right, Jess's kid has an egg allergy — pretty severe one, so anything I drop off for him needs to be egg-free",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_healed",
+        "value": "Sam just sent me his latest bloodwork — his doctor said his A1C is totally normal now and he doesn't need to restrict sugar anymore. He's been doing a victory lap about it all week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_wife_joins",
+        "value": "Derek asked if his wife Maya can come too, she's got the weekend free",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "maya_pregnancy",
+        "value": "Maya is about five months along, she's been pretty careful about what she eats",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_snack_list",
+        "value": "Snack list to check: trail mix with peanuts and chocolate, smoked salmon cream cheese wraps, hard-boiled eggs, gluten-free rice crackers with hummus, homemade granola bars with oats and honey",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived products (anaphylactic allergy)",
+        "disclosed": false,
+        "surface_form": "Priya ate a pad thai at that place downtown last month and her throat started swelling — she had to use her EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pad thai commonly contains peanuts/peanut sauce",
+          "Throat swelling + EpiPen = anaphylactic allergic reaction",
+          "Allergic reaction to pad thai → peanut allergy (most common allergen in pad thai)"
+        ]
+      },
+      {
+        "key": "derek_gluten_free",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Derek was diagnosed with celiac disease last year, has to be super careful",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → no wheat, barley, rye, or derivatives"
+        ]
+      },
+      {
+        "key": "maya_no_raw_fish",
+        "value": "Cannot eat raw fish, soft cheeses, or deli meats during pregnancy",
+        "disclosed": false,
+        "surface_form": "Maya is about five months along, she's been pretty careful about what she eats",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Five months along → pregnant",
+          "Pregnant → avoids raw fish, soft cheeses, deli meats (listeria/mercury risk)"
+        ]
+      },
+      {
+        "key": "jess_kid_egg",
+        "value": "Jess's kid cannot eat eggs or egg-containing products",
+        "disclosed": false,
+        "surface_form": "Jess's kid has an egg allergy — pretty severe one",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a Saturday road trip. The group changes over the conversation: Jess drops out but you'll drop snacks at her place for her kid (egg allergy). Sam's diabetes restriction gets removed (doctor cleared him). Derek's wife Maya joins late (pregnant — no raw fish). At the end you present a snack list and ask if there are any issues. You NEVER hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easy-going trip organizer. You relay updates about friends in third person (e.g., 'Sam just sent me...', 'Derek asked if...'). You never express frustration or impatience. Each change is just normal friend-group coordination to you.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're doing a road trip this Saturday — about 6 hours each way. I need help figuring out what snacks and food to pack for everyone.",
+          "success_criteria": "Agent engages with trip snack planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate road trip food planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "There's five of us going: me, Derek, Priya, Sam, and Jess. Derek was diagnosed with celiac disease last year, has to be super careful. Sam has been managing type 2 diabetes for a while, keeps his sugar really low. And Priya ate a pad thai at that place downtown last month and her throat started swelling — she had to use her EpiPen.",
+          "success_criteria": "Agent acknowledges the group and registers dietary constraints for Derek, Sam, and Priya",
+          "required_info_keys": [
+            "group_members",
+            "derek_celiac",
+            "sam_diabetes",
+            "priya_allergy_event"
+          ],
+          "required_constraint_keys": [
+            "derek_gluten_free",
+            "priya_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities + 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We have a big cooler so cold stuff is fine, and a couple of thermal bags. How much food do you think we need for 6 hours each way?",
+          "success_criteria": "Agent discusses quantity planning and acknowledges cooler availability",
+          "required_info_keys": [
+            "cooler_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Logistics info + noise question about quantity"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Jess just texted me — her kid is sick so she can't come. She asked if I could drop off some snacks at her place on the way though, for the kid. Oh right, her kid has an egg allergy — pretty severe one, so anything I drop off for him needs to be egg-free.",
+          "success_criteria": "Agent registers Jess leaving and the scope change — egg allergy applies only to snacks dropped off for Jess's kid",
+          "required_info_keys": [
+            "jess_drops_out",
+            "jess_kid_egg_allergy"
+          ],
+          "required_constraint_keys": [
+            "jess_kid_egg"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Jess) with scope change — kid's egg allergy applies to drop-off portion only"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "What's a good playlist situation for a 6-hour drive? Should I make one or just do shuffle?",
+          "success_criteria": "Agent responds about music/playlist without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "road trip logistics",
+            "drift_topic": "music playlist for the drive",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic but unrelated to food"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Sam just sent me his latest bloodwork — his doctor said his A1C is totally normal now and he doesn't need to restrict sugar anymore. He's been doing a victory lap about it all week.",
+          "success_criteria": "Agent removes Sam's diabetes/sugar restriction",
+          "required_info_keys": [
+            "sam_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Sam's sugar restriction lifted"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Derek asked if his wife Maya can come too, she's got the weekend free. She's about five months along, she's been pretty careful about what she eats.",
+          "success_criteria": "Agent registers Maya joining and infers pregnancy dietary restrictions",
+          "required_info_keys": [
+            "derek_wife_joins",
+            "maya_pregnancy"
+          ],
+          "required_constraint_keys": [
+            "maya_no_raw_fish"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity (Maya) with inferential constraint (pregnant → no raw fish/soft cheese/deli meat)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think we should stop somewhere for a proper lunch or just snack the whole way?",
+          "success_criteria": "Agent discusses lunch stop vs snacking strategy",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "meal planning",
+            "drift_topic": "lunch stop vs continuous snacking",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK here's what I'm thinking of packing: trail mix with peanuts and chocolate, smoked salmon cream cheese wraps, hard-boiled eggs, gluten-free rice crackers with hummus, and homemade granola bars with oats and honey. Any issues?",
+          "success_criteria": "Agent identifies: trail mix problematic (peanuts → Priya anaphylactic allergy), smoked salmon wraps problematic if wraps contain gluten (Derek celiac) AND smoked salmon is fine for Maya since it's cooked/cured not raw, hard-boiled eggs fine for the car group but cannot be dropped off for Jess's kid (egg allergy), gluten-free rice crackers with hummus are fine for everyone, granola bars problematic if oats are not certified gluten-free (Derek celiac — oats often cross-contaminated)",
+          "required_info_keys": [
+            "probe_snack_list"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 snack items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Trail mix with peanuts and chocolate: problematic — peanuts trigger Priya's anaphylactic allergy. Smoked salmon cream cheese wraps: problematic — standard wraps/tortillas contain wheat gluten, which Derek (celiac) cannot eat. The smoked salmon itself is fine for Maya (smoked/cured, not raw). Hard-boiled eggs: fine for the car group (no active egg restrictions among road trip travelers), but CANNOT be included in the drop-off for Jess's kid (severe egg allergy). Gluten-free rice crackers with hummus: fine for everyone — no allergen conflicts. Homemade granola bars with oats and honey: potentially problematic for Derek — oats are frequently cross-contaminated with gluten unless certified gluten-free; agent should flag this concern for someone with celiac disease.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Trail mix with peanuts is problematic because Priya has a peanut allergy (inferred from pad thai anaphylactic reaction)",
+      "Smoked salmon cream cheese wraps are problematic because the wraps/tortillas contain gluten, which Derek cannot eat (celiac disease)",
+      "Hard-boiled eggs are fine for the road trip group but must NOT be included in the drop-off for Jess's kid due to his egg allergy",
+      "Gluten-free rice crackers with hummus are fine for everyone — agent confirms they are acceptable",
+      "Granola bars with oats are flagged as a concern for Derek because oats are often cross-contaminated with gluten (celiac risk)",
+      "Sam has no sugar restriction anymore — agent does not flag chocolate or honey as problems for Sam"
+    ],
+    "forbidden_elements": [
+      "Flagging chocolate or honey as problematic for Sam (his diabetes restriction was removed — doctor cleared him)",
+      "Flagging smoked salmon as problematic for Maya due to pregnancy (smoked salmon is cooked/cured, not raw — the pregnancy concern is raw fish)",
+      "Saying Priya has a general seafood or Thai food allergy (she specifically has a peanut allergy inferred from the pad thai incident)",
+      "Flagging hard-boiled eggs as problematic for the car group (Jess is not coming on the trip — her kid's egg allergy only applies to the drop-off portion)",
+      "Ignoring the wrap/tortilla component of the smoked salmon wraps (the wrap contains gluten which affects Derek)"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint removal across a road trip planning conversation. The agent must track: (1) Priya's peanut allergy inferred from a pad thai anaphylaxis event (inferential — pad thai → peanuts → allergy), (2) Derek's celiac disease → no gluten (inferential chain), (3) Sam's diabetes restriction is REMOVED mid-conversation (doctor cleared him, A1C normal), (4) Jess EXITS the trip but the user will drop off snacks for her kid (egg allergy applies to drop-off portion only — scope distinction), (5) Maya JOINS late with a pregnancy constraint (pregnant → no raw fish, but smoked salmon is cured, not raw — over-generalization trap). At probe time: trail mix fails on peanuts (Priya), wraps fail on gluten (Derek), eggs have a scope split (fine for car, not for drop-off kid), rice crackers pass for all, granola bars are borderline for Derek (oat cross-contamination). Sam's former sugar restriction must NOT be applied to chocolate or honey."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

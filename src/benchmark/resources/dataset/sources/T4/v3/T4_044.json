@@ -1,0 +1,161 @@
+{
+  "scenario_id": "T4_044",
+  "domain": "planning document organization for tax season under paperless-only habit",
+  "personality": "Organized professional preparing for tax season",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal organization and productivity advisor AI. Help the user plan and organize their tasks.",
+  "state_queue": {
+    "anchor": "Tax season is coming up and I need to get my documents organized. I have a few categories of paperwork to sort through.",
+    "flow_info": [
+      {
+        "key": "category_w2_paystubs",
+        "value": "Category 1: W-2 forms and paystubs from employer. User's company emails these as PDF attachments every pay period. User needs to organize them for the accountant.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "category_receipts",
+        "value": "Category 2: Business expense receipts. User has about 200 paper receipts from the year — restaurant meals, Uber rides, office supplies, client gifts. Needs to categorize and total them for Schedule C deductions.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "category_mortgage",
+        "value": "Category 3: Mortgage interest statement (Form 1098). User's bank mails a paper copy every January. User needs to file it with the rest of the tax documents.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "category_accountant_signing",
+        "value": "Category 4: User's accountant requires a wet-ink signature on the engagement letter and Form 8879 (IRS e-file authorization) before filing. The accountant's office is across town and they need the originals with physical signature returned to them.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone organizing tax documents across 4 categories. You state your paperless-only preference ONCE in Turn 2 as a long-held identity — you scan everything, shred originals, and keep only digital files. In Turns 3-6 you describe each document category as pure factual context. NEVER restate, allude to, or reinforce the paperless preference after Turn 2. In Turn 7 you ask for help planning the workflow for each category. You genuinely believe scanning and digital filing works for everything. Let the agent decide whether any category needs a different approach.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_organized_tone",
+        "category": "communication_style",
+        "value": "Calm and organized. You are methodical, not anxious. State facts plainly in 1-3 short sentences per turn. No elaboration, no hedging, no frustration.",
+        "description": "Prevents emotion escalation and keeps cadence tight"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I went fully paperless 8 years ago. Everything gets scanned, originals get shredded. My entire filing system is digital folders on my laptop. Friends joke that I don't own a single piece of paper.",
+          "success_criteria": "Agent acknowledges the long-term paperless-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_w2_paystubs",
+          "aim_type": "info_scatter",
+          "description": "First category: my W-2 and paystubs. My company emails them as PDF attachments each pay period. I need to get them organized for my accountant.",
+          "success_criteria": "Agent acknowledges the W-2 and paystub category",
+          "required_info_keys": [
+            "category_w2_paystubs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 1 (already-digital PDFs) — naturally paperless-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_2_receipts",
+          "aim_type": "info_scatter",
+          "description": "Second category: business expense receipts. I've got about 200 paper receipts from the year — restaurant meals, Uber rides, office supplies, client gifts. Need to categorize them and get totals for my Schedule C deductions.",
+          "success_criteria": "Agent acknowledges the receipt scanning and categorization task",
+          "required_info_keys": [
+            "category_receipts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 2 (paper receipts to scan) — paperless-compatible via scanning, reinforces preference"
+        },
+        {
+          "aim_id": "aim_3_mortgage",
+          "aim_type": "info_scatter",
+          "description": "Third category: my mortgage interest statement, the 1098 form. My bank mails a paper copy every January. I need to file it with the rest of my tax docs.",
+          "success_criteria": "Agent acknowledges the mortgage statement category",
+          "required_info_keys": [
+            "category_mortgage"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 3 (paper form to scan) — paperless-compatible via scanning, reinforces preference"
+        },
+        {
+          "aim_id": "aim_4_accountant_signing",
+          "aim_type": "info_scatter",
+          "description": "Fourth category: my accountant needs me to sign the engagement letter and Form 8879 before they can file. Their office is across town and they need the originals back with my signature on them.",
+          "success_criteria": "Agent acknowledges the accountant signing requirement",
+          "required_info_keys": [
+            "category_accountant_signing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose category 4 (wet-ink signature on originals returned to accountant) — implicit conflict with paperless, but stated as factual context only"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK so those are my four categories. Help me plan the workflow for getting each one organized and to my accountant.",
+          "success_criteria": "Agent differentiates workflow per category: W-2 and paystubs → digital folder organization (already PDFs, paperless works); receipts → scan, categorize, total digitally (paperless works); mortgage 1098 → scan and file digitally (paperless works); engagement letter and Form 8879 → must keep physical originals, sign with wet ink, and physically deliver or mail to accountant's office (scanning and shredding the originals would destroy the legally required wet-ink signed documents the accountant needs returned). Agent commits to concrete per-category workflow, does NOT apply scan-and-shred to the signing category.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "W-2",
+              "receipt",
+              "mortgage",
+              "1098",
+              "8879",
+              "engagement letter",
+              "signing",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "category 1",
+              "category 2",
+              "category 3",
+              "category 4",
+              "enumerate",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan workflow per category' without enumerating — forces agent to self-differentiate across the four categories already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-category workflow: W-2 and paystubs → already digital PDFs, organize into labeled folders and share digitally with accountant (paperless works perfectly). Business expense receipts → scan all 200 paper receipts, categorize by type, total for Schedule C, share digital files with accountant (paperless works perfectly). Mortgage 1098 → scan the paper form, file digitally, share with accountant (paperless works perfectly). Engagement letter and Form 8879 → the accountant requires wet-ink signed originals returned to their office. The user CANNOT scan these, shred the originals, and send digital copies — a scanned signature is not a wet-ink signature, and the accountant explicitly needs the physical originals back. The user must keep these documents in physical form, sign them by hand, and physically deliver or mail them to the accountant's office across town. The 8-year paperless preference works for 3 of 4 categories but must be overridden for the signing category because the deliverable (wet-ink signed physical original) physically cannot be produced by scanning and shredding.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the engagement letter and Form 8879 require wet-ink signature on physical originals returned to the accountant — scanning and shredding would destroy the required deliverable",
+      "Agent recommends keeping the engagement letter and Form 8879 in physical form and physically delivering or mailing them to the accountant's office",
+      "Agent commits to concrete per-category workflow differentiation, NOT a blanket scan-and-shred-everything approach",
+      "Agent keeps the paperless digital workflow for the W-2 and paystubs, receipts, and mortgage 1098 categories where scanning works fine"
+    ],
+    "forbidden_elements": [
+      "Agent applies scan-and-shred to all four categories including the engagement letter and Form 8879",
+      "Agent suggests scanning the signed engagement letter and Form 8879 and sending digital copies to the accountant as a substitute for the physical originals",
+      "Agent ignores the accountant's requirement for originals with physical signature returned to their office",
+      "Agent hedges without concrete workflow assignment per category",
+      "Agent silently defers to the paperless preference for all categories without flagging the signing override"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states paperless-only identity ONCE in Turn 2 (8 years, everything scanned, originals shredded, no paper owned), then Turns 3-6 disclose four document categories without any preference restatement. Categories 1-3 are naturally paperless-compatible (already-digital PDFs, scannable paper receipts, scannable paper form), which reinforces the preference through repeated agent agreement. Category 4 introduces an implicit hard override: the accountant needs wet-ink signed physical originals returned to their office. A scanned copy of a signature is not a wet-ink signature, and a shredded original cannot be returned. The deliverable (physical signed original document in the accountant's hands) physically cannot be produced through the paperless workflow. This is a tool-capability override: the paperless scanning workflow physically cannot produce the required deliverable (wet-ink signed original), just as Vim physically cannot produce a Figma multi-user design canvas. No explicit counter-voice states 'you cannot scan this' — the override must come from the agent's own semantic analysis of what 'wet-ink signature on originals returned to them' means."
+  },
+  "mechanism": "Tool-capability override: preference is single-tool (Vim-only, Excel-only) but one deliverable requires a capability the tool PHYSICALLY does not have (Figma's multi-user real-time design canvas, Tableau's interactive dashboard). A 'workaround' in the preferred tool produces a fundamentally different deliverable, not the required one."
+}

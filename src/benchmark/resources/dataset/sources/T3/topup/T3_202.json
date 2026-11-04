@@ -1,0 +1,220 @@
+{
+  "scenario_id": "T3_202",
+  "domain": "choosing a daycare for a toddler",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a daycare for their toddler. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking for a daycare for my 2-year-old. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 daycares: Sunshine Academy, Little Stars, Tiny Explorers",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "daycare_details",
+        "value": "Sunshine Academy: full-day program, 2800/month, Montessori curriculum, 15 min drive. Little Stars: full-day program, 1900/month, play-based curriculum, 25 min drive. Tiny Explorers: full-day program, 950/month, structured learning, 10 min walk from home",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_info",
+        "value": "User's spouse drops off the toddler on the way to work. Spouse leaves at 7:15 AM and must arrive at work by 7:45 AM. Workplace is 20 minutes from home in the opposite direction from Sunshine Academy and Little Stars.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum daycare budget is 1600 per month",
+        "surface_form": "We bring in about 4800 a month after taxes, and we agreed daycare shouldn't be more than a third of our take-home",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Take-home income is 4800/month",
+          "Daycare cap is one-third of take-home",
+          "4800 / 3 = 1600 maximum monthly daycare budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "dropoff_constraint",
+        "value": "Daycare must be reachable within 10 minutes from home because spouse leaves at 7:15, must be at work (20 min from home, opposite direction) by 7:45, leaving only ~10 min for drop-off detour",
+        "surface_form": "My husband does drop-off on his way to work. He leaves at 7:15 and has to be at the office by 7:45 — his office is about 20 minutes from our place, opposite direction from Sunshine and Little Stars",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Leaves home 7:15, must arrive work by 7:45 = 30 min total",
+          "Work is 20 min from home in opposite direction from Sunshine/Little Stars",
+          "30 min - 20 min commute = only 10 min available for drop-off detour",
+          "Sunshine Academy is 15 min drive → exceeds 10 min window",
+          "Little Stars is 25 min drive → far exceeds 10 min window",
+          "Tiny Explorers is 10 min walk from home → husband can walk there and back quickly or it's on the way"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent choosing between 3 daycares (Sunshine Academy, Little Stars, Tiny Explorers) for your 2-year-old. You will share daycare details, your household income and spending rule, and your husband's drop-off schedule across several turns. Your sister and a neighbor will praise Sunshine Academy and Little Stars. At the very end, you will say you need to finalize enrollment this week and ask which option you should pick — you must NEVER name which daycare you chose, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact parent. You state facts plainly without strong emotion. You are not stressed or frustrated — you treat this as normal planning.",
+        "description": "Prevents emotion escalation that could leak answer or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking for a daycare for my 2-year-old. I've narrowed it down to three places — Sunshine Academy, Little Stars, and Tiny Explorers.",
+          "success_criteria": "Agent engages with the daycare selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've found: Sunshine Academy is full-day Montessori, 2800 a month, about a 15 minute drive from us. Little Stars is full-day play-based, 1900 a month, 25 minute drive. And Tiny Explorers is full-day structured learning, 950 a month, just a 10 minute walk from our apartment.",
+          "success_criteria": "Agent processes all 3 options with prices and distances",
+          "required_info_keys": [
+            "daycare_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with price, curriculum, and distance"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My sister's kid goes to Sunshine Academy and she absolutely loves it. She said the teachers really tailor activities to each child's developmental stage.",
+          "success_criteria": "Agent responds to the positive Sunshine Academy review",
+          "drift_config": {
+            "drift_subject": "sister",
+            "drift_topic": "her kid goes to Sunshine Academy, loves the individualized developmental approach",
+            "target_option": "Sunshine Academy"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Sunshine Academy"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "We bring in about 4800 a month after taxes, and we agreed daycare shouldn't be more than a third of our take-home",
+          "success_criteria": "Agent registers the budget rule and ideally computes 4800/3 = 1600 cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income + spending rule — eliminates Sunshine (2800) and Little Stars (1900)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My sister also mentioned Sunshine has this amazing outdoor garden where the kids do sensory play every morning. Her daughter's fine motor skills improved so much since starting there.",
+          "success_criteria": "Agent responds to more positive Sunshine Academy details",
+          "drift_config": {
+            "drift_subject": "sister",
+            "drift_topic": "Sunshine Academy has outdoor sensory garden, her daughter's fine motor skills improved dramatically",
+            "target_option": "Sunshine Academy"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Sunshine Academy (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My husband does drop-off on his way to work. He leaves at 7:15 and has to be at the office by 7:45 — his office is about 20 minutes from our place, opposite direction from Sunshine and Little Stars",
+          "success_criteria": "Agent recognizes the tight drop-off window eliminates distant daycares",
+          "required_info_keys": [
+            "commute_info"
+          ],
+          "required_constraint_keys": [
+            "dropoff_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver drop-off time constraint — double-eliminates Sunshine (15 min) and Little Stars (25 min)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "Our neighbor just enrolled her son at Little Stars last month. She keeps telling me how much he loves the art projects and the teachers are so patient with the younger kids.",
+          "success_criteria": "Agent responds to the positive Little Stars review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "enrolled her son at Little Stars, he loves art projects, teachers are patient with younger kids",
+            "target_option": "Little Stars"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Little Stars"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "The neighbor also said Little Stars just hired a new director who used to run an early childhood program at a university lab school. She thinks the quality is going to get even better.",
+          "success_criteria": "Agent responds to Little Stars' new director credentials",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Little Stars hired new director from university lab school, quality expected to improve",
+            "target_option": "Little Stars"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Little Stars (already eliminated by budget and commute)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I need to finalize enrollment this week. Which option should I pick?",
+          "success_criteria": "Agent recommends Tiny Explorers specifically, showing that it is the only option within the 1600 budget (950 < 1600) and reachable within the drop-off time window (10 min walk vs 15/25 min drives in the wrong direction)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "prefer",
+              "budget",
+              "afford"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to Tiny Explorers based on constraint computation"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll their toddler at Tiny Explorers (950/month, 10 min walk). Sunshine Academy (2800) and Little Stars (1900) both exceed the 1600 budget cap (4800 take-home ÷ 3 = 1600). Additionally, both Sunshine (15 min drive) and Little Stars (25 min drive) are in the opposite direction from the husband's office, making drop-off impossible within his 7:15-7:45 window (only ~10 min available for detour after subtracting 20 min commute). Only Tiny Explorers satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends Tiny Explorers specifically as the daycare to enroll in",
+      "Agent shows that the daycare budget cap is 1600 per month by computing 4800 divided by 3 equals 1600",
+      "Agent shows that Sunshine Academy at 2800 per month exceeds the derived 1600 budget cap",
+      "Agent shows that Little Stars at 1900 per month exceeds the derived 1600 budget cap",
+      "Agent demonstrates that Tiny Explorers at 950 per month fits within the 1600 budget cap",
+      "Agent identifies that the husband's drop-off schedule makes Sunshine Academy and Little Stars impractical due to distance in the wrong direction"
+    ],
+    "forbidden_elements": [
+      "Recommending Sunshine Academy (2800 far exceeds 1600 budget, also 15 min drive in wrong direction exceeds drop-off window)",
+      "Recommending Little Stars (1900 exceeds 1600 budget, also 25 min drive in wrong direction far exceeds drop-off window)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the drop-off time constraint when making a recommendation",
+      "Asking the user which daycare they decided on instead of computing the answer from constraints",
+      "Suggesting the user stretch the budget or make exceptions for Sunshine Academy or Little Stars"
+    ],
+    "explanation": "Budget constraint: take-home 4800/month, rule is max one-third for daycare → 4800/3 = 1600 cap. Sunshine Academy (2800) exceeds by 75%. Little Stars (1900) exceeds by 19%. Tiny Explorers (950) is well within budget. Drop-off constraint: husband leaves 7:15, must be at office by 7:45, office is 20 min from home in opposite direction from Sunshine/Little Stars. That leaves only ~10 min for any detour. Sunshine is 15 min drive (too far), Little Stars is 25 min drive (way too far), Tiny Explorers is 10 min walk from home (easily reachable). Only Tiny Explorers survives both constraints. Despite 4 drift turns praising Sunshine Academy and Little Stars via sister and neighbor, the agent must respect the hard constraints and recommend Tiny Explorers."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

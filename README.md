@@ -10,17 +10,17 @@ the final user message, the assistant gives its final answer; a task-specific
 LLM judge extracts facts and a fixed Python rule computes the verdict. The
 assistant receives conversation messages, without the simulator's private scenario.
 
-Version **0.3.0** contains one 490-scenario snapshot and one default evaluation
+Version **0.4.0** uses the contiguous task IDs **T1–T5**, with one 490-scenario snapshot and one default evaluation
 protocol. The dataset is bundled with the Python package, so installation and
 offline verification require neither Hugging Face credentials nor a GPU.
 
 | Task ID | Task | Scenarios |
 |---|---|---:|
-| T16 | Entity constraint tracking | 100 |
-| T17 | Scope creep / semantic drift | 79 |
-| T18 | Recency interference | 100 |
-| T19 | Preference bleed | 97 |
-| T20 | Goal substitution | 114 |
+| T1 | Entity constraint tracking | 100 |
+| T2 | Scope creep / semantic drift | 79 |
+| T3 | Recency interference | 100 |
+| T4 | Preference bleed | 97 |
+| T5 | Goal substitution | 114 |
 
 ## Install
 
@@ -87,12 +87,12 @@ performance estimate. `FAIL` is a valid benchmark outcome.
 List sources, run a task, or run the complete pool:
 
 ```bash
-turnflow list --tasks T19
-turnflow run --config configs/local.json --output runs/t19 --tasks T19
+turnflow list --tasks T4
+turnflow run --config configs/local.json --output runs/t4 --tasks T4
 turnflow run --config configs/local.json --output runs/full --concurrency 2
 ```
 
-Use `--source-keys T19/v3/T19_400` for an explicit subset. Add `--prepare-only`
+Use `--source-keys T4/v3/T4_400` for an explicit subset. Add `--prepare-only`
 to write the selection and run manifest without API calls.
 
 The same command with `--resume` continues unattempted positions. Completed,
@@ -139,14 +139,16 @@ runtime contract and must be interpreted by this version's compiler and parser.
 ```python
 from datasets import load_dataset
 
-scenarios = load_dataset("Buka7yo/TurnFlow", "scenarios", revision="v0.3.0", split="test")
-judges = load_dataset("Buka7yo/TurnFlow", "judges", revision="v0.3.0", split="test")
+scenarios = load_dataset("Buka7yo/TurnFlow", "scenarios", revision="v0.4.0", split="test")
+judges = load_dataset("Buka7yo/TurnFlow", "judges", revision="v0.4.0", split="test")
 ```
 
 Install `datasets` separately for this optional example. Pin the GitHub tag and
-the HF revision from [release.json](release.json) together. This is the rc5 source
-snapshot packaged as the first public 0.3.0 release; scores from other source or
-judge revisions are not interchangeable.
+the HF revision from [release.json](release.json) together. This release renumbers
+the rc5-based snapshot without changing scenario content or scoring rules. Source
+IDs and their derived hashes change with the numbering. Earlier release tags
+retain their original identifiers; finish existing runs with their original
+code/data revision and use a new output directory for this version.
 
 ## Limits
 

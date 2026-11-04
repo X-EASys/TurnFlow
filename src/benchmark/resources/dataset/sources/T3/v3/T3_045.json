@@ -1,0 +1,214 @@
+{
+  "scenario_id": "T3_045",
+  "domain": "choosing a phone for elderly parents",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a suitable phone for their elderly parent. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm picking out a new phone for my mom. I've narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 phones for elderly mother: Phone A (Huawei Mate 70), Phone B (iPhone 16), Phone C (Xiaomi Redmi K80)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "phone_details",
+        "value": "Phone A: Huawei Mate 70, 5499 yuan, 6.7-inch screen, has built-in elder mode with large icons and simplified interface. Phone B: iPhone 16, 3999 yuan, 6.1-inch screen, smooth iOS system. Phone C: Xiaomi Redmi K80, 2499 yuan, 6.67-inch screen, has built-in elder mode with large fonts and simplified launcher",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mom_tech_level",
+        "value": "Mom is 68, not tech-savvy at all, currently uses an old feature phone, gets confused by complicated interfaces",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is 4200 yuan",
+        "surface_form": "My mom's monthly pension is 4200 yuan. My dad insists the phone shouldn't cost more than one month of her pension",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Mom's monthly pension is 4200 yuan",
+          "Dad's rule: phone price must not exceed one month of pension",
+          "4200 × 1 = 4200 yuan maximum budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "elder_mode_requirement",
+        "value": "Phone must have a built-in elder mode or simplified interface with large icons, because mom is not tech-savvy and gets confused by standard smartphone interfaces",
+        "surface_form": "My mom still uses an old feature phone. She tried my cousin's iPhone once and couldn't figure out how to make a call. She needs something with big icons and a really simple layout",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Mom currently uses a feature phone and couldn't navigate an iPhone",
+          "She needs big icons and simple layout → requires dedicated elder/simplified mode",
+          "iPhone 16 does not have a native elder mode with simplified launcher → iPhone 16 is eliminated"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 phones (Huawei Mate 70, iPhone 16, Xiaomi Redmi K80) for your elderly mother. You will share phone details, your budget rule, and your mom's tech needs across several turns. Your colleague and neighbor will praise the Huawei and iPhone options. At the very end, you will simply say you have made your decision and ask what to check before buying — you must NEVER name which phone you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, cooperative person. You state facts plainly without strong emotion. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm picking out a new phone for my mom. I've narrowed it down to three: the Huawei Mate 70, the iPhone 16, and the Xiaomi Redmi K80",
+          "success_criteria": "Agent engages with the 3-option phone selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Here are the details: the Huawei Mate 70 is 5499 yuan, 6.7-inch screen, and it has a built-in elder mode with large icons and simplified interface. The iPhone 16 is 3999 yuan, 6.1-inch screen, smooth iOS. The Xiaomi Redmi K80 is 2499 yuan, 6.67-inch screen, and also has a built-in elder mode with large fonts and a simplified launcher",
+          "success_criteria": "Agent processes all 3 phones with prices and features",
+          "required_info_keys": [
+            "phone_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 phones with prices and key features in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just bought the Huawei Mate 70 for his parents. He told me the camera is incredible and his dad loves taking photos of the grandkids with it",
+          "success_criteria": "Agent responds to the positive Huawei review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "bought Huawei Mate 70 for his parents, camera is incredible, dad loves taking photos of grandkids",
+            "target_option": "Huawei Mate 70"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Huawei Mate 70"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My mom's monthly pension is 4200 yuan. My dad insists the phone shouldn't cost more than one month of her pension",
+          "success_criteria": "Agent registers the budget rule and ideally computes 4200 yuan cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via pension rule — eliminates Huawei Mate 70 (5499 > 4200)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned the Huawei Mate 70 battery lasts two full days. His mom barely needs to charge it",
+          "success_criteria": "Agent responds to the battery life praise",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Huawei Mate 70 battery lasts two full days, his mom barely charges it",
+            "target_option": "Huawei Mate 70"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Huawei Mate 70 (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My mom is 68 and still uses an old feature phone. She tried my cousin's iPhone once and couldn't figure out how to make a call. She needs something with big icons and a really simple layout",
+          "success_criteria": "Agent recognizes mom needs elder mode, which eliminates iPhone 16",
+          "required_info_keys": [
+            "mom_tech_level"
+          ],
+          "required_constraint_keys": [
+            "elder_mode_requirement"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver elder mode constraint — eliminates iPhone 16 (no native elder mode)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My neighbor gave her mom an iPhone 16 last month. She said FaceTime video calls with the grandkids are so clear and easy",
+          "success_criteria": "Agent responds to the positive iPhone review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "gave her mom an iPhone 16, FaceTime video calls with grandkids are clear and easy",
+            "target_option": "iPhone 16"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward iPhone 16"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor also said the iPhone 16 feels really premium in the hand, and her mom gets compliments from friends at the park about it",
+          "success_criteria": "Agent responds to iPhone premium feel discussion",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "iPhone 16 feels premium, neighbor's mom gets compliments from friends at the park",
+            "target_option": "iPhone 16"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about iPhone 16 (eliminated by elder mode requirement)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to finalize and place the order this weekend. Which one should I go with?",
+          "success_criteria": "Agent commits to recommending the Xiaomi Redmi K80 as the only option within the 4200 yuan budget that also has built-in elder mode",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "prepare",
+              "ready",
+              "plan",
+              "organize",
+              "think through"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option (Xiaomi Redmi K80)"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should buy the Xiaomi Redmi K80 (2499 yuan). The Huawei Mate 70 (5499 yuan) exceeds the 4200 yuan budget derived from one month of mom's pension. The iPhone 16 (3999 yuan) is within budget but lacks a native elder mode with simplified launcher, and mom could not navigate an iPhone interface. Only the Xiaomi Redmi K80 (2499 yuan, within 4200 budget, built-in elder mode) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends the Xiaomi Redmi K80 as the phone to buy",
+      "Agent shows that the Huawei Mate 70 at 5499 yuan exceeds the derived budget cap of 4200 yuan from one month of mom's pension",
+      "Agent shows that the iPhone 16 lacks a built-in elder mode or simplified interface that mom needs given she could not navigate an iPhone before",
+      "Agent shows that the Xiaomi Redmi K80 at 2499 yuan fits within the 4200 yuan pension-derived budget and has built-in elder mode"
+    ],
+    "forbidden_elements": [
+      "Recommending the Huawei Mate 70 (5499 yuan exceeds the 4200 yuan budget cap)",
+      "Recommending the iPhone 16 (no native elder mode, mom could not use an iPhone interface)",
+      "Ignoring the pension-based budget rule when making a recommendation",
+      "Ignoring mom's need for elder mode with large icons and simplified interface",
+      "Asking the user which phone they decided on instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint: mom's pension is 4200 per month, dad's rule is phone must not exceed one month pension, so cap = 4200 yuan. Huawei Mate 70 = 5499 > 4200, eliminated. Elder mode constraint: mom is 68, uses feature phone, could not navigate iPhone, needs big icons and simple layout. iPhone 16 has no native elder mode with simplified launcher, eliminated. Xiaomi Redmi K80 = 2499 < 4200 (within budget) and has built-in elder mode (meets usability need). Despite 4 drift turns praising Huawei Mate 70 and iPhone 16, the agent must respect both hard constraints and recommend the Xiaomi Redmi K80."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

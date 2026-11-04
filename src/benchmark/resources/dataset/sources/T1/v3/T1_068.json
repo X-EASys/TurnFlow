@@ -1,0 +1,318 @@
+{
+  "scenario_id": "T1_068",
+  "domain": "neighborhood block party food",
+  "personality": "Friendly neighborhood organizer",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan food for a neighborhood block party by tracking who is attending, their dietary needs, and any logistics. When the user asks you to evaluate specific food items, check each item against every active attendee's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, we're organizing a block party for our cul-de-sac this Saturday and I'm in charge of the food. Can you help me figure out what to get?",
+    "flow_info": [
+      {
+        "key": "initial_attendees",
+        "value": "Confirmed so far: me, the Hendersons (Tom and Karen), Priya from next door, and old Mr. Kowalski",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_henderson_celiac",
+        "value": "Tom Henderson was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_allergy_initial",
+        "value": "Priya mentioned she gets a rash from shrimp, found out the hard way at a potluck last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kowalski_diabetes",
+        "value": "Mr. Kowalski is diabetic, his wife used to manage all his meals before she passed",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "We collected about 40 dollars per household, so around 200 total for food",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "chen_family_joins",
+        "value": "The Chen family just moved in at the end of the street, they're coming too. It's David and his 7-year-old daughter Lily",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_egg_allergy",
+        "value": "David mentioned Lily broke out in hives after eating scrambled eggs at school last month",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_correction",
+        "value": "Priya just texted me actually — she said it wasn't just shrimp, her allergist told her it's all shellfish. She got tested after that potluck incident and apparently crab and lobster set her off too",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kowalski_exits",
+        "value": "Mr. Kowalski called to say his son is visiting from out of town so he won't make it to the party after all",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "karen_brings_dessert",
+        "value": "Karen Henderson said she'll bring a homemade dessert so we don't need to worry about sweets",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Food list to check: pulled pork sliders on brioche buns, crab cakes, Caesar salad, grilled chicken skewers, brownies with walnuts, fruit salad",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "tom_celiac",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Tom Henderson was diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods including bread, buns, most baked goods"
+        ]
+      },
+      {
+        "key": "priya_shellfish_initial",
+        "value": "Cannot eat shrimp (initial understanding)",
+        "disclosed": false,
+        "surface_form": "Priya mentioned she gets a rash from shrimp, found out the hard way at a potluck last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Rash from shrimp → allergic reaction",
+          "Shrimp allergy → avoid shrimp"
+        ]
+      },
+      {
+        "key": "priya_shellfish_upgraded",
+        "value": "Cannot eat any shellfish — shrimp, crab, lobster, and all crustaceans",
+        "disclosed": false,
+        "surface_form": "Priya just texted me — she said it wasn't just shrimp, her allergist told her it's all shellfish. She got tested after that potluck incident and apparently crab and lobster set her off too",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Allergist confirmed all shellfish → broader than just shrimp",
+          "All shellfish → no shrimp, crab, lobster, or other crustaceans"
+        ]
+      },
+      {
+        "key": "kowalski_low_sugar",
+        "value": "Needs low-sugar food options, diabetic",
+        "disclosed": false,
+        "surface_form": "Mr. Kowalski is diabetic, his wife used to manage all his meals before she passed",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Diabetic → must manage blood sugar",
+          "Must manage blood sugar → needs low-sugar food, avoid sugary desserts and drinks"
+        ]
+      },
+      {
+        "key": "lily_egg_allergy",
+        "value": "Cannot eat eggs or egg-containing products",
+        "disclosed": false,
+        "surface_form": "David mentioned Lily broke out in hives after eating scrambled eggs at school last month",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hives after eating scrambled eggs → allergic reaction to eggs",
+          "Egg allergy → must avoid eggs and products containing eggs"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing food for a neighborhood block party. You will introduce attendees and their health details across several turns. Priya's allergy will be UPGRADED from shrimp-only to all shellfish. Mr. Kowalski will drop out. The Chen family will join late. At the end you will share a specific food list and ask if there are any issues. You must NEVER hint at which items are problematic — just list them and ask.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly neighborhood organizer. You always refer to your neighbors by name in third person (e.g. 'Tom told me...', 'Priya just texted me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as normal party planning coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for neighbor updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're organizing a block party for our cul-de-sac this Saturday and I'm in charge of the food. Can you help me figure out what to get?",
+          "success_criteria": "Agent engages with block party food planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate block party food planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So confirmed so far it's me, the Hendersons — that's Tom and Karen — Priya from next door, and old Mr. Kowalski down the street. Tom Henderson was diagnosed with celiac disease a couple years ago. Priya mentioned she gets a rash from shrimp, found out the hard way at a potluck last year. And Mr. Kowalski is diabetic, his wife used to manage all his meals before she passed",
+          "success_criteria": "Agent acknowledges all attendees and their dietary constraints",
+          "required_info_keys": [
+            "initial_attendees",
+            "tom_henderson_celiac",
+            "priya_allergy_initial",
+            "kowalski_diabetes"
+          ],
+          "required_constraint_keys": [
+            "tom_celiac",
+            "priya_shellfish_initial",
+            "kowalski_low_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST — 4 entities with 3 constraints in one dense turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We collected about 40 dollars per household, so around 200 total for food. We're thinking a casual cookout vibe — nothing fancy",
+          "success_criteria": "Agent registers budget and casual cookout style",
+          "required_info_keys": [
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget and style info"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh good news — the Chen family just moved in at the end of the street, they're coming too. It's David and his 7-year-old daughter Lily. David mentioned Lily broke out in hives after eating scrambled eggs at school last month",
+          "success_criteria": "Agent registers new attendees and Lily's egg allergy",
+          "required_info_keys": [
+            "chen_family_joins",
+            "lily_egg_allergy"
+          ],
+          "required_constraint_keys": [
+            "lily_egg_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity (Chen family) with constraint (Lily egg allergy)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we set up around noon or more like 2pm? I'm thinking people might want to eat lunch there",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party timing",
+            "drift_topic": "whether to start at noon or 2pm for lunch",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic timing question"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Priya just texted me actually — she said it wasn't just shrimp, her allergist told her it's all shellfish. She got tested after that potluck incident and apparently crab and lobster set her off too",
+          "success_criteria": "Agent updates Priya's constraint from shrimp-only to all shellfish",
+          "required_info_keys": [
+            "priya_correction"
+          ],
+          "required_constraint_keys": [
+            "priya_shellfish_upgraded"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE — shrimp allergy broadened to all shellfish"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Mr. Kowalski called to say his son is visiting from out of town so he won't make it to the party after all. Also Karen Henderson said she'll bring a homemade dessert so we don't need to worry about sweets",
+          "success_criteria": "Agent removes Mr. Kowalski from attendee list and notes Karen is handling dessert",
+          "required_info_keys": [
+            "kowalski_exits",
+            "karen_brings_dessert"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Kowalski leaves, diabetes constraint removed) + logistics update (Karen brings dessert)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think we need plates and napkins too or should I ask everyone to bring their own? Trying to keep costs down",
+          "success_criteria": "Agent responds about supplies logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "party supplies",
+            "drift_topic": "whether to buy plates and napkins or ask people to bring their own",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic supplies question to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I found a catering place that does party platters. Here's what I'm thinking of ordering: pulled pork sliders on brioche buns, crab cakes, Caesar salad, grilled chicken skewers, brownies with walnuts, and a fruit salad. Any issues?",
+          "success_criteria": "Agent identifies: pulled pork sliders problematic for Tom (brioche buns contain gluten — celiac); crab cakes problematic for Priya (shellfish allergy — upgraded from shrimp to all shellfish); brownies problematic for Lily (typically contain eggs — egg allergy); Caesar salad fine; grilled chicken skewers fine; fruit salad fine. Agent does NOT flag sugar content for Mr. Kowalski (he left). Agent does NOT limit Priya's issue to only shrimp (upgraded to all shellfish).",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 food items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three items have clear problems. Pulled pork sliders on brioche buns: brioche buns are made with wheat flour, which contains gluten — Tom Henderson has celiac disease and cannot eat gluten. Crab cakes: crab is shellfish — Priya's allergy was upgraded from shrimp-only to all shellfish after her allergist confirmed it, so crab cakes are dangerous for her. Brownies with walnuts: standard brownies contain eggs — Lily (David Chen's 7-year-old daughter) broke out in hives from eggs, so brownies are problematic for her. Caesar salad, grilled chicken skewers, and fruit salad are all fine for the current attendees. Mr. Kowalski is no longer attending so his diabetes constraint does not apply — sugary items do not need to be flagged on his account.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Pulled pork sliders on brioche buns are problematic for Tom Henderson: brioche buns contain gluten and Tom has celiac disease",
+      "Crab cakes are problematic for Priya: her allergy was upgraded to all shellfish (not just shrimp), and crab is shellfish",
+      "Brownies with walnuts are problematic for Lily: brownies typically contain eggs and Lily has an egg allergy",
+      "Caesar salad is fine for all current attendees",
+      "Grilled chicken skewers are fine for all current attendees",
+      "Fruit salad is fine for all current attendees"
+    ],
+    "forbidden_elements": [
+      "Flagging any item for sugar content or diabetes concerns (Mr. Kowalski is no longer attending)",
+      "Saying Priya can only not eat shrimp (her constraint was upgraded to all shellfish)",
+      "Failing to identify crab cakes as a problem for Priya (crab is shellfish, her upgraded constraint)",
+      "Flagging grilled chicken skewers as problematic for any attendee",
+      "Flagging Caesar salad as problematic for any attendee",
+      "Flagging fruit salad as problematic for any attendee"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint upgrade reasoning across 9 conversational turns. The agent must track: (1) Tom Henderson has celiac disease → no gluten → brioche buns are wheat-based → problematic (inferential chain), (2) Priya's allergy is UPGRADED mid-conversation from shrimp-only to all shellfish after her allergist confirmed it — crab cakes now violate her constraint (constraint upgrade is the primary difficulty mechanism), (3) Lily Chen joins late (turn 3) with an egg allergy inferred from hives after eating scrambled eggs — brownies typically contain eggs (late-joining high-constraint entity), (4) Mr. Kowalski EXITS the party so his diabetes constraint is REMOVED — the agent must NOT flag sugary items on his behalf (removed entity trap), (5) Caesar salad, grilled chicken skewers, and fruit salad are all safe for the current attendee list. The key test is whether the agent applies Priya's UPGRADED shellfish constraint (catching crab cakes) rather than her original shrimp-only constraint, and whether it remembers Lily's egg allergy despite her late introduction and the noise turns creating distance before the probe."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

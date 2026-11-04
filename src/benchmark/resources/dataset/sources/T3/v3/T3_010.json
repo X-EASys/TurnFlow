@@ -1,0 +1,244 @@
+{
+  "scenario_id": "T3_010",
+  "domain": "selecting a gym membership",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a gym membership and get started. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I've been wanting to get back into working out regularly. I'm looking at three gyms near me and trying to pick one.",
+    "flow_info": [
+      {
+        "key": "three_gyms",
+        "value": "Choosing between 3 gym memberships: Gym A (FitElite Premium), Gym B (CityFit), Gym C (ActiveHub Community Center)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "gym_details",
+        "value": "Gym A (FitElite Premium): 12-month membership 8800 yuan, has a pool, sauna, and included personal trainer sessions. Gym B (CityFit): 12-month membership 4200 yuan, modern equipment and group fitness classes, open 6am to 10pm. Gym C (ActiveHub Community Center): 12-month membership 1500 yuan, solid basic equipment, 24/7 keycard access.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "employer_reimbursement",
+        "value": "User's company has a wellness benefit that reimburses up to 2000 yuan per year for fitness expenses",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "personal_budget",
+        "value": "User can only put in about 1000 yuan of personal money on top of the reimbursement, since the rest goes to rent and car payments",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User works rotating shifts at a logistics company, including evening and overnight shifts, so schedule is unpredictable",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "gym_a_hours",
+        "value": "Gym A runs all its classes and trainer sessions on a fixed schedule between 9am and 8pm, and the pool and sauna close at 9pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "gym_b_hours",
+        "value": "Gym B is open 6am to 10pm daily",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "total_budget_cap",
+        "value": "Maximum total spending on gym membership is 3000 yuan (2000 employer reimbursement + 1000 personal)",
+        "surface_form": "My company has this wellness benefit — they reimburse up to 2000 a year for fitness stuff. And personally I can chip in maybe another 1000 tops, between rent and car payments there's not much wiggle room",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer reimburses up to 2000 yuan for fitness",
+          "User can add at most 1000 yuan personal money",
+          "2000 + 1000 = 3000 yuan maximum total budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_flexibility",
+        "value": "Needs a gym accessible outside standard daytime and evening hours due to rotating shift work including overnights",
+        "surface_form": "I work rotating shifts at a logistics warehouse — some weeks I'm on days, some weeks I'm on evenings or overnights, it changes every two weeks",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Rotating shifts including evenings and overnights → schedule is unpredictable",
+          "Unpredictable schedule → cannot rely on fixed class times or standard operating hours",
+          "Needs a gym with 24/7 or very flexible access hours"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 gym memberships (Gym A FitElite Premium, Gym B CityFit, Gym C ActiveHub Community Center). You will share gym details, your employer reimbursement and personal budget, and your rotating shift work schedule across several turns. Your colleague and a friend will praise Gym A and Gym B. At the very end, you will simply say you have made your decision and ask what you need to do to sign up — you must NEVER name which gym you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are easygoing and matter-of-fact. You share information casually without strong emotion. Even when discussing budget limits or schedule hassles, you treat it as normal life stuff, not something frustrating. You never express impatience.",
+        "description": "Prevents emotion escalation that could leak intent or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I've been wanting to get back into working out. I'm looking at three gyms near my place — FitElite Premium, CityFit, and ActiveHub Community Center",
+          "success_criteria": "Agent engages with the gym selection topic and asks for details or offers to help compare",
+          "required_info_keys": [
+            "three_gyms"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So FitElite Premium is 8800 for the year — they've got a pool, sauna, and personal trainer sessions included. CityFit is 4200 for the year, modern equipment and group classes, open 6am to 10pm. ActiveHub is 1500 for the year, solid basic equipment and they give you a keycard for 24/7 access",
+          "success_criteria": "Agent processes all 3 options with prices and key attributes",
+          "required_info_keys": [
+            "gym_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just signed up at FitElite last month — he's been raving about it. Says the pool is Olympic-sized and the trainers really customize your program based on your goals",
+          "success_criteria": "Agent responds to the positive FitElite review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "signed up at FitElite Premium, loves the Olympic pool and personalized trainer programs",
+            "target_option": "Gym A (FitElite Premium)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Gym A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company has this wellness benefit — they reimburse up to 2000 a year for fitness stuff. And personally I can chip in maybe another 1000 tops, between rent and car payments there's not much wiggle room",
+          "success_criteria": "Agent registers the combined budget cap of 3000 yuan and ideally recognizes Gym A (8800) and Gym B (4200) exceed it",
+          "required_info_keys": [
+            "employer_reimbursement",
+            "personal_budget"
+          ],
+          "required_constraint_keys": [
+            "total_budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via reimbursement + personal contribution — requires computation: 2000 + 1000 = 3000 max"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague was telling me FitElite also does these monthly member socials by the pool — barbecues, yoga brunches, that kind of thing. He said it's a whole community vibe there",
+          "success_criteria": "Agent responds to the social/community aspect of FitElite",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "FitElite has monthly member socials, pool barbecues, yoga brunches, great community",
+            "target_option": "Gym A (FitElite Premium)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Gym A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work rotating shifts at a logistics warehouse — some weeks I'm on days, some weeks I'm on evenings or overnights, it changes every two weeks. Oh and FitElite runs all their classes and trainer sessions between 9am and 8pm, pool and sauna close at 9",
+          "success_criteria": "Agent recognizes that rotating shifts including overnights means the user needs flexible gym hours, and that FitElite's fixed 9am-8pm schedule is problematic",
+          "required_info_keys": [
+            "work_schedule",
+            "gym_a_hours"
+          ],
+          "required_constraint_keys": [
+            "schedule_flexibility"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates Gym A (fixed daytime hours + over budget) and raises concern about Gym B (closes 10pm)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend of mine goes to CityFit actually — she loves the spin classes and said the new weight room they just renovated is really impressive",
+          "success_criteria": "Agent responds to the positive CityFit review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "goes to CityFit, loves spin classes, newly renovated weight room is impressive",
+            "target_option": "Gym B (CityFit)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Gym B"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also mentioned CityFit just brought in this new instructor from a national athletics program — apparently his HIIT sessions are packed every week",
+          "success_criteria": "Agent responds to CityFit instructor credentials",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "CityFit hired a new instructor from a national athletics program, HIIT sessions always packed",
+            "target_option": "Gym B (CityFit)"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Gym B (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to sign up this week before the rates go up — what do I need to get ready for registration?",
+          "success_criteria": "Agent focuses on Gym C (ActiveHub Community Center) registration preparation, since it is the only gym within the 3000 yuan combined budget (1500 < 3000) and offers 24/7 keycard access compatible with rotating shift work",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "compare"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they decided — agent must independently determine Gym C is the only viable option and help with its registration"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up at Gym C (ActiveHub Community Center, 1500 yuan/year). Gym A (FitElite Premium, 8800) and Gym B (CityFit, 4200) both exceed the combined budget of 3000 yuan (2000 employer reimbursement + 1000 personal). Gym A is also incompatible with rotating shift work because its classes and facilities operate on a fixed 9am-9pm schedule. Gym B closes at 10pm which is also problematic for overnight shift weeks. Only Gym C (1500 < 3000, 24/7 keycard access) satisfies both the budget and schedule constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the combined budget is 2000 employer reimbursement + 1000 personal = 3000 yuan maximum before identifying which gym fits",
+      "Agent shows that Gym A at 8800 yuan exceeds the derived 3000 yuan budget cap",
+      "Agent shows that Gym B at 4200 yuan exceeds the derived 3000 yuan budget cap",
+      "Agent identifies Gym C (ActiveHub Community Center) as the gym the user is signing up for",
+      "Agent addresses Gym C registration steps or preparation specifically, not generically"
+    ],
+    "forbidden_elements": [
+      "Helping register for Gym A (FitElite Premium) which at 8800 yuan is nearly 3x the 3000 budget and has fixed daytime hours incompatible with rotating shifts",
+      "Helping register for Gym B (CityFit) which at 4200 yuan exceeds the 3000 budget",
+      "Ignoring the budget constraint when identifying which gym the user chose",
+      "Asking the user which gym they decided on instead of computing it from the stated constraints"
+    ],
+    "explanation": "Budget constraint: employer reimburses up to 2000, user can add 1000 personal max, so total budget = 3000. Gym A = 8800 (nearly 3x over budget, also fixed 9am-8pm schedule incompatible with rotating shifts). Gym B = 4200 (40% over budget, closes 10pm which is tight for overnight shift weeks). Gym C = 1500 (well within 3000 budget, 24/7 keycard access fits any shift pattern). Despite 4 drift turns praising Gym A and Gym B through colleague and friend experiences, the agent must respect the hard constraints and identify Gym C as the only viable choice."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

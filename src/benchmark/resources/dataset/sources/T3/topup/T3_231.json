@@ -1,0 +1,212 @@
+{
+  "scenario_id": "T3_231",
+  "domain": "choosing between 3 certification programs",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose and enroll in a professional certification program. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to get a professional certification in cloud computing. I've narrowed it down to 3 programs.",
+    "flow_info": [
+      {
+        "key": "three_programs",
+        "value": "Choosing between 3 cloud computing certification programs: Program Alpha, Program Beta, Program Gamma",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "program_details",
+        "value": "Program Alpha: intensive bootcamp format, 8 weeks full-time, 9500 dollars, includes exam voucher and lab access. Program Beta: weekend cohort, 16 weeks of Saturday sessions, 4800 dollars, includes study materials. Program Gamma: online self-paced with mentor office hours, 2200 dollars, includes practice exams.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User works full-time weekdays, cannot take leave for extended periods",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is 3200 dollars",
+        "surface_form": "I make 9600 a month after taxes. My rule is never spend more than a third of monthly income on professional development",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly income after taxes is 9600 dollars",
+          "Rule: never more than one-third of monthly income on professional development",
+          "9600 / 3 = 3200 dollar cap"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend full-time weekday programs, must work during the day",
+        "surface_form": "I work full-time during the week, no way I can take two months off",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works full-time during the week → cannot attend weekday programs",
+          "Cannot take two months off → Program Alpha (8-week full-time bootcamp) is impossible"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 cloud certification programs (Alpha, Beta, Gamma). You will share program details, your income and spending rule, and your schedule constraints across several turns. Your colleague and friend will praise Programs Alpha and Beta. At the very end, you will simply say you need to commit and register this week and ask which option you should pick — you must NEVER name which program you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact professional. You state facts plainly without strong emotion. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to get a cloud computing certification. I've narrowed it down to 3 programs — Program Alpha, Program Beta, and Program Gamma.",
+          "success_criteria": "Agent engages with the certification selection",
+          "required_info_keys": [
+            "three_programs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've found: Program Alpha is an intensive bootcamp, 8 weeks full-time, costs 9500 dollars, comes with an exam voucher and lab access. Program Beta is a weekend cohort, 16 weeks of Saturday sessions, 4800 dollars, includes study materials. Program Gamma is online self-paced with mentor office hours, 2200 dollars, includes practice exams.",
+          "success_criteria": "Agent processes all 3 programs with their prices and formats",
+          "required_info_keys": [
+            "program_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 programs with prices and attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just finished Program Alpha last month. He said the instructors were all ex-AWS architects and the hands-on labs were incredible — they simulate real production environments.",
+          "success_criteria": "Agent responds to the positive Program Alpha review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "finished Program Alpha, instructors were ex-AWS architects, hands-on labs simulate real production environments",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Program Alpha"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I make 9600 a month after taxes. My rule is never spend more than a third of monthly income on professional development.",
+          "success_criteria": "Agent registers the spending rule and ideally computes 9600/3 = 3200 cap, eliminating Alpha (9500) and Beta (4800)",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income + spending rule — eliminates Alpha and Beta on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned that three people from his Program Alpha cohort got hired at FAANG companies within a month of finishing. The career services team apparently has direct connections with hiring managers.",
+          "success_criteria": "Agent responds to Program Alpha's placement success",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "three people from his Alpha cohort got FAANG jobs within a month, career services has direct hiring manager connections",
+            "target_option": "Program Alpha"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Program Alpha (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work full-time during the week, no way I can take two months off.",
+          "success_criteria": "Agent recognizes this eliminates Program Alpha (8-week full-time bootcamp)",
+          "required_info_keys": [
+            "work_schedule"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates Alpha (full-time + over budget)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend of mine is doing Program Beta right now. She says the Saturday study group is really motivating — everyone brings real work problems to discuss and the instructor breaks them down live.",
+          "success_criteria": "Agent responds to the positive Program Beta review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "doing Program Beta, Saturday study group is motivating, real work problems discussed live with instructor",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Program Beta"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also told me the Program Beta instructor wrote one of the official AWS certification prep books. Apparently he has a knack for explaining complex networking concepts in simple terms.",
+          "success_criteria": "Agent responds to Program Beta instructor's credentials",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Program Beta instructor wrote official AWS cert prep book, great at explaining complex networking simply",
+            "target_option": "Program Beta"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Program Beta (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I need to decide and register this week. Which option should I pick?",
+          "success_criteria": "Agent commits to recommending Program Gamma (only option within 3200 budget at 2200 and compatible with full-time work schedule as online self-paced)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "prefer",
+              "lean",
+              "thinking"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Program Gamma (online self-paced, 2200 dollars). Program Alpha (9500) and Program Beta (4800) both exceed the 3200 budget derived from the user's one-third-of-income rule. Program Alpha is also impossible because it requires 8 weeks full-time and the user works full-time weekdays. Only Program Gamma (2200 < 3200, online self-paced = no schedule conflict) survives both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Program Alpha at 9500 dollars exceeds the derived cap of 3200 dollars from 9600 divided by 3 equals 3200",
+      "Agent shows that Program Beta at 4800 dollars exceeds the derived cap of 3200 dollars from 9600 divided by 3 equals 3200",
+      "Agent commits to recommending Program Gamma as the option that fits both the budget and the work schedule",
+      "Agent identifies that Program Gamma at 2200 dollars is within the 3200 dollar budget cap"
+    ],
+    "forbidden_elements": [
+      "Recommending Program Alpha (9500 far exceeds 3200 budget, also full-time conflicts with work)",
+      "Recommending Program Beta (4800 exceeds 3200 budget)",
+      "Ignoring the one-third-of-income spending rule when making a recommendation",
+      "Asking the user which program they want without computing which one fits their constraints",
+      "Suggesting the user could stretch the budget or make an exception for Program Beta"
+    ],
+    "explanation": "Budget constraint: monthly income 9600, rule is max one-third on professional development, so 9600/3 = 3200 cap. Alpha=9500 exceeds budget (nearly 3x over). Beta=4800 exceeds budget (50% over). Gamma=2200 within budget. Schedule constraint: works full-time weekdays, cannot take 2 months off. Alpha=8-week full-time bootcamp is impossible. Only Gamma survives both constraints. Despite 4 drift turns praising Alpha and Beta, the agent must respect the hard constraints and recommend Gamma."
+  },
+  "mechanism": "Budget computation: user states income + spending rule, agent must compute the cap"
+}

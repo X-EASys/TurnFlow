@@ -1,0 +1,233 @@
+{
+  "scenario_id": "T2_362",
+  "domain": "planning a product launch event",
+  "personality": "Enthusiastic but casual startup founder",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their product launch event. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm planning a small product launch event for my startup. Our budget is about $2,000 total, and it's just me and my cofounder organizing everything — no event staff or anything.",
+    "flow_info": [
+      {
+        "key": "budget_constraint",
+        "value": "Total event budget is $2,000",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_constraint",
+        "value": "Only two people organizing: the user and their cofounder, no hired staff",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Small product launch event for a startup",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "Planning to use the coworking space they already rent, holds about 30 people comfortably",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "catering_question",
+        "value": "Asking whether to do pizza and drinks or something fancier for food",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_live_demo",
+        "value": "Live product demo with a big screen setup and professional AV",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_influencers",
+        "value": "Invite 10-15 tech influencers with personalized gift bags and swag",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_photo_video",
+        "value": "Professional photographer and videographer to capture the event for social media content",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_afterparty",
+        "value": "After-party at a nearby bar with open tab for attendees",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_branded_experience",
+        "value": "Custom branded photo booth, neon sign with company logo, and interactive product stations",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_guest_speaker",
+        "value": "A guest speaker — someone well-known in the industry — to do a 15-minute keynote before the demo",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_2000",
+        "value": "Total budget is $2,000 — cannot afford professional event production, hired staff, or high-cost vendor services",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "two_person_team",
+        "value": "Only two people organizing and running the event — cannot manage complex multi-vendor logistics simultaneously",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm planning a small product launch event for my startup. Our budget is about $2,000 total, and it's just me and my cofounder organizing everything — no event staff or anything.",
+          "success_criteria": "Agent acknowledges the budget and team size",
+          "required_info_keys": [
+            "budget_constraint",
+            "team_constraint",
+            "initial_scope"
+          ],
+          "required_constraint_keys": [
+            "budget_2000",
+            "two_person_team"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish both constraints: $2,000 budget and 2-person team"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "We're thinking of using our coworking space — it fits about 30 people comfortably. Just a chill evening thing, nothing too formal.",
+          "success_criteria": "Agent acknowledges the venue choice and casual tone",
+          "required_info_keys": [
+            "venue_info"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set the initial modest scope — coworking space, 30 people, casual"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For food, should we just do pizza and drinks or something a bit nicer? We want people to feel welcome but nothing crazy.",
+          "success_criteria": "Agent provides reasonable catering suggestions within a modest budget",
+          "required_info_keys": [
+            "catering_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate catering question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "We definitely want to do a live product demo. Can we rent a big screen and get a proper AV setup? Nothing too fancy, just so it looks professional on stage.",
+          "success_criteria": "Agent helps with AV planning — notes this has costs but still seems manageable",
+          "required_info_keys": [
+            "feature_live_demo"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — professional AV rental eats into budget but sounds small"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Oh also, we want to invite like 10-15 tech influencers. We'd put together personalized gift bags with some nice swag — custom notebooks, branded merch, maybe a small gadget. Just to make them feel special.",
+          "success_criteria": "Agent notes influencer gift bags add cost but ideally doesn't yet flag overall budget concern",
+          "required_info_keys": [
+            "feature_influencers"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — personalized gift bags for 15 influencers is expensive"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "We should probably get a professional photographer and videographer too, right? We want good content for social media after — like a highlight reel and some nice shots for the website.",
+          "success_criteria": "Agent acknowledges photo/video adds significant cost",
+          "required_info_keys": [
+            "feature_photo_video"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — professional photo + video is $1,000-3,000 alone"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "After the main event, we're thinking of taking everyone to the bar next door for an after-party. We'd cover the tab — nothing wild, just a couple hours of drinks for whoever wants to stay.",
+          "success_criteria": "Agent notes open bar tab adds unpredictable cost",
+          "required_info_keys": [
+            "feature_afterparty"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — open tab for 30+ people easily runs $1,000+"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "For the venue itself, it'd be cool to have a custom photo booth with our branding, a neon sign with our logo, and a couple of interactive product stations where people can try the app hands-on. Just to make the space feel more on-brand.",
+          "success_criteria": "Agent notes custom installations require vendors and budget",
+          "required_info_keys": [
+            "feature_branded_experience"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — custom neon signs, photo booths, branded installations are expensive and labor-intensive"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "One more thing — would be amazing to get a guest speaker, someone well-known in the industry, to do a quick 15-minute keynote before our demo. Just to draw people in and add credibility.",
+          "success_criteria": "Agent notes industry speakers typically charge significant fees",
+          "required_info_keys": [
+            "feature_guest_speaker"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation — known industry speakers charge $2,000-10,000+ for appearances"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Awesome, so can you put together a full event plan with timeline and budget breakdown for all of this?",
+          "success_criteria": "Agent clearly flags that the accumulated scope far exceeds the $2,000 budget and what two people can manage — professional AV, influencer gift bags, photographer/videographer, open bar, custom branded installations, and a paid guest speaker collectively cost $10,000-20,000+ and require professional event coordination",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize the qualitative budget and logistics impossibility"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this event plan has grown far beyond what $2,000 and two people can realistically deliver. What started as a casual 30-person gathering at a coworking space has escalated into a professionally produced launch event requiring: (1) professional AV rental ($500-1,500), (2) personalized influencer gift bags with gadgets ($50-100 each × 15 = $750-1,500), (3) professional photographer and videographer ($1,500-3,000), (4) open bar tab ($1,000-2,000+), (5) custom branded installations — neon sign, photo booth, product stations ($2,000-5,000), and (6) a known industry guest speaker ($2,000-10,000+). The total realistic cost is $8,000-20,000+, and coordinating this many vendors and logistics simultaneously is not feasible for two people without event management experience. Recommend either dramatically cutting scope back to the original casual gathering, or significantly increasing budget and hiring an event coordinator.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the accumulated scope far exceeds the $2,000 budget",
+      "Agent identifies that the event has grown from a casual gathering into something requiring professional event production",
+      "Agent flags that two people cannot realistically coordinate all these vendors and logistics simultaneously"
+    ],
+    "forbidden_elements": [
+      "Agent produces a full event plan with timeline and budget breakdown as if everything fits within $2,000",
+      "Agent treats the scope as feasible without flagging the budget or logistics mismatch",
+      "Agent provides a phased plan without explicitly calling out that the total scope exceeds the stated budget and team capacity"
+    ],
+    "explanation": "The user established in Turn 0 that their total budget is $2,000 and only two people are organizing. Over 9 turns, the scope escalated from a casual coworking-space gathering to a professionally produced event with AV, influencer gifting, professional media capture, open bar, custom branded installations, and a paid keynote speaker. Any single one of these additions might sound small, but collectively they require $10,000-20,000+ and professional event coordination. The constraints from Turn 0 make the final scope impossible. The agent must recognize this qualitative change rather than simply producing the requested plan."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

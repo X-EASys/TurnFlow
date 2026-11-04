@@ -1,0 +1,310 @@
+{
+  "scenario_id": "T1_072",
+  "domain": "date night dinner at a tapas bar",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful dining and meal planning assistant. Help the user plan their date night at a tapas bar by tracking who is attending, their dietary needs, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, my boyfriend and I are planning a date night this Friday at a tapas bar. We've never been to one before — any tips on how to order?",
+    "flow_info": [
+      {
+        "key": "couple_intro",
+        "value": "It's me and my boyfriend Marcus for date night",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "user_sesame_allergy",
+        "value": "I had a bad reaction to sesame seeds at a bagel shop once, throat started swelling up",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "friends_joining",
+        "value": "Actually my friend Priya and her husband Dev want to join us, so it'll be four",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnant",
+        "value": "Priya is five months pregnant right now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_no_issues",
+        "value": "Dev eats everything, no restrictions at all",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "We're thinking around 40-50 per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_correction",
+        "value": "Priya just texted me — she said it's actually not a sesame allergy I have, she was there that day. It was the poppy seeds on the everything bagel. She reminded me the allergist confirmed poppy seed allergy specifically",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_sister_joins",
+        "value": "Marcus's sister Tanya is in town and wants to swing by for a bit, so five of us now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tanya_shellfish",
+        "value": "Tanya ended up in the hospital after eating shrimp at a wedding last summer",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tanya_early_leave",
+        "value": "Tanya said she can only stay for the first hour, she has a red-eye flight to catch. She'll be gone before the main round of food comes out",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "We're looking at their sharing menu: patatas bravas, gambas al ajillo, beef croquetas, tuna tartare, pan con tomate with romesco sauce. Any issues with those for our group?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "marcus_gluten_free",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or derivatives",
+        "disclosed": false,
+        "surface_form": "Marcus was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods including breaded/battered items"
+        ]
+      },
+      {
+        "key": "user_poppy_allergy",
+        "value": "Allergic to poppy seeds specifically, NOT sesame",
+        "disclosed": false,
+        "surface_form": "I had a bad reaction to sesame seeds at a bagel shop once, throat started swelling up — LATER CORRECTED: Priya reminded me it was actually the poppy seeds on the everything bagel, allergist confirmed poppy seed allergy",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnancy_diet",
+        "value": "Cannot eat raw or undercooked fish/meat, unpasteurized cheese",
+        "disclosed": false,
+        "surface_form": "Priya is five months pregnant right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → pregnancy dietary restrictions",
+          "Pregnancy → avoid raw/undercooked fish and meat",
+          "Pregnancy → avoid unpasteurized soft cheeses"
+        ]
+      },
+      {
+        "key": "tanya_shellfish_allergy",
+        "value": "Allergic to shellfish (shrimp confirmed), does NOT necessarily extend to all seafood",
+        "disclosed": false,
+        "surface_form": "Tanya ended up in the hospital after eating shrimp at a wedding last summer",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Hospitalized after shrimp → shellfish allergy",
+          "Shellfish allergy → shrimp, crab, lobster etc.",
+          "Shellfish ≠ all seafood (fish like tuna is typically safe)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning a date night at a tapas bar. It starts as just you and Marcus, then Priya and Dev join, then Tanya joins late. You initially misremember your allergy as sesame but Priya corrects you — it's actually poppy seeds. Tanya leaves early (before main food arrives). At the end you ask about a specific set of dishes. You never tell the assistant what to check for — just ask if there are any issues.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly person excited about date night. You relay information about others naturally in third person ('Marcus was diagnosed...', 'Priya just texted me...'). You never express frustration even when plans change. Each update is delivered casually as normal social coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, my boyfriend and I are planning a date night this Friday at a tapas bar. We've never been to one before — any tips on how to order?",
+          "success_criteria": "Agent engages with tapas ordering tips",
+          "required_info_keys": [
+            "couple_intro"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate tapas planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Good to know! So it's me and my boyfriend Marcus. He was diagnosed with celiac disease last year so we have to be careful about that. And I had a bad reaction to sesame seeds at a bagel shop once — my throat started swelling up, it was scary. Oh and Priya and Dev want to join us too, so four of us now. Priya is five months pregnant, and Dev eats everything, zero issues with him.",
+          "success_criteria": "Agent acknowledges Marcus's celiac, user's sesame allergy, Priya's pregnancy, and Dev having no restrictions",
+          "required_info_keys": [
+            "marcus_celiac",
+            "user_sesame_allergy",
+            "friends_joining",
+            "priya_pregnant",
+            "dev_no_issues"
+          ],
+          "required_constraint_keys": [
+            "marcus_gluten_free",
+            "priya_pregnancy_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST — 4 entities with constraints in one dense turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're thinking around 40-50 per person, is that reasonable for tapas? How many dishes should we order for four people?",
+          "success_criteria": "Agent provides budget and ordering quantity guidance",
+          "required_info_keys": [
+            "budget"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget and logistics noise turn"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh wait — Priya just texted me. She said it's actually not a sesame allergy I have. She was there that day at the bagel shop. She reminded me it was the poppy seeds on the everything bagel that did it. My allergist confirmed it was a poppy seed allergy specifically, not sesame. I've been avoiding sesame for nothing this whole time!",
+          "success_criteria": "Agent updates the user's allergy from sesame to poppy seeds",
+          "required_info_keys": [
+            "priya_correction"
+          ],
+          "required_constraint_keys": [
+            "user_poppy_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint CORRECTION — sesame allergy upgraded/corrected to poppy seed allergy"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we make a reservation or can we just walk in on a Friday night? What time is best for tapas — like 7 or 8?",
+          "success_criteria": "Agent responds about reservation and timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "reservation timing for Friday tapas",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh one more thing — Marcus's sister Tanya is in town visiting and wants to swing by! So five of us now. She ended up in the hospital after eating shrimp at a wedding last summer, so we need to watch out for her too.",
+          "success_criteria": "Agent registers Tanya as new diner with shellfish allergy",
+          "required_info_keys": [
+            "marcus_sister_joins",
+            "tanya_shellfish"
+          ],
+          "required_constraint_keys": [
+            "tanya_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity (Tanya with shellfish allergy)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Actually Tanya said she can only stay for the first hour — she has a red-eye flight to catch. She'll be gone before the main round of food comes out, she just wants to say hi and have a drink with us.",
+          "success_criteria": "Agent notes Tanya will leave before main food arrives, so her shellfish allergy only applies to any early appetizers",
+          "required_info_keys": [
+            "tanya_early_leave"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Scope change — Tanya exits before main food, her constraint only applies to early items"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do tapas bars usually have a good wine list? Marcus and I have been getting into Spanish wines lately. Any pairing suggestions for tapas?",
+          "success_criteria": "Agent responds about wine options",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "wine",
+            "drift_topic": "Spanish wine pairings for tapas",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "We're looking at their sharing menu for the main round: patatas bravas, gambas al ajillo, beef croquetas, tuna tartare, pan con tomate with romesco sauce. Any issues with those for our group?",
+          "success_criteria": "Agent identifies: beef croquetas problematic (breaded = gluten = Marcus celiac); gambas al ajillo is fine for main round (Tanya already left); tuna tartare problematic (raw fish = Priya pregnant); patatas bravas fine; pan con tomate with romesco sauce problematic (romesco contains bread = gluten = Marcus celiac). Agent does NOT flag sesame (user's allergy was corrected to poppy seeds).",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Two dishes have clear problems: beef croquetas (breaded/fried — contains gluten, problematic for Marcus who has celiac disease) and tuna tartare (raw fish — problematic for Priya who is pregnant). Pan con tomate with romesco sauce is also problematic because traditional romesco sauce contains bread as a thickener, which means gluten — bad for Marcus. Additionally, pan con tomate itself is served on bread. Gambas al ajillo (garlic shrimp) is fine for the main round because Tanya (shellfish allergy) will have already left before the main food arrives. Patatas bravas are fine for everyone. The user's allergy is poppy seeds, NOT sesame — romesco often contains sesame/almonds but that is NOT a problem since the sesame allergy was corrected.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Beef croquetas are problematic: they are breaded (contain gluten), which Marcus cannot eat due to celiac disease",
+      "Tuna tartare is problematic: it is raw fish, which Priya should avoid because she is pregnant",
+      "Pan con tomate with romesco sauce is problematic for Marcus: romesco sauce traditionally contains bread as a thickener (gluten), and pan con tomate is served on bread — both contain gluten",
+      "Gambas al ajillo is acceptable for the main round: Tanya (shellfish allergy) will have already left before the main food arrives",
+      "Patatas bravas are fine for everyone currently dining"
+    ],
+    "forbidden_elements": [
+      "Flagging gambas al ajillo as problematic for the main round (Tanya will have left before main food arrives)",
+      "Flagging any dish for containing sesame (user's allergy was corrected to poppy seeds, not sesame)",
+      "Saying Tanya has a general seafood allergy (she is specifically allergic to shellfish/shrimp, not all seafood)",
+      "Flagging tuna tartare as problematic for Tanya (she has shellfish allergy not fish allergy, and she will have left anyway)",
+      "Treating Marcus's celiac as a mild preference rather than a strict medical requirement"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking, constraint correction, scope distinction, and hidden ingredient detection across 9 conversational turns. Key challenges: (1) Hidden ingredient trap — romesco sauce traditionally contains bread (soaked stale bread is a key thickener), making it unsafe for Marcus's celiac disease. This requires the agent to know romesco's ingredients beyond the obvious tomato/pepper. Pan con tomate is also served ON bread. (2) Constraint CORRECTION — the user initially reports a sesame allergy but this is corrected to poppy seeds mid-conversation. The agent must update and NOT flag sesame-containing items. (3) Scope distinction — Tanya has a shellfish allergy but leaves before the main food round, so gambas al ajillo ordered for the main round is fine. (4) Over-generalization trap — Tanya's shrimp allergy should not be extended to all seafood (tuna tartare is fish, not shellfish). (5) Late-joining entity — Tanya joins in turn 5 with a significant constraint. (6) Pregnancy inference — Priya being pregnant means raw fish (tuna tartare) is off limits."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

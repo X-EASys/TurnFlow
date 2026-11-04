@@ -1,0 +1,323 @@
+{
+  "scenario_id": "T1_061",
+  "domain": "team dinner at a Korean BBQ restaurant",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful restaurant recommendation and meal planning assistant. Help the user plan a group dinner by tracking who is attending, their dietary restrictions, and preferences. When the user asks you to evaluate specific dishes, check each dish against every active diner's current dietary constraints. Pay close attention to changes in the guest list and constraint updates throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, a few of us from the office are planning to hit up a Korean BBQ place this Saturday. Got any tips on what to order?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us: me, Derek, Priya, and Sam",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac",
+        "value": "Derek was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_shellfish_initial",
+        "value": "Sam broke out in hives after eating shrimp at a company event, had to go to urgent care",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget",
+        "value": "Budget is around 40 dollars per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "reservation_time",
+        "value": "Thinking of booking for 7pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_joins",
+        "value": "Priya wants to bring her roommate Nina, so that makes five",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_pregnant",
+        "value": "Nina is about five months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sam_correction",
+        "value": "Sam told me he went back to the allergist and it turns out it's not just shellfish — he's actually allergic to all seafood. The doctor said even oyster-based sauces could set him off",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_exits",
+        "value": "Priya just texted me she has to fly to Chicago for a family emergency, so she can't make it. But Nina still wants to come, she said she'll just meet us there",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_gluten_update",
+        "value": "Derek mentioned he's been doing really well managing his celiac — he found out the Korean BBQ place has a dedicated gluten-free soy sauce they use for marinating if you ask",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Okay so I'm looking at their menu. How about we get: bulgogi (marinated beef), haemul pajeon (seafood pancake), galbi (short ribs in soy marinade), japchae (glass noodles with vegetables), salmon sashimi, and tteokbokki (spicy rice cakes). Any issues with those?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a strict Jain household in Gujarat and still follows all the traditions",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Strict Jain household → practices Jain dietary laws",
+          "Jain diet → no meat, no fish, no eggs, no root vegetables"
+        ]
+      },
+      {
+        "key": "sam_shellfish_allergy",
+        "value": "Sam is allergic to shrimp/shellfish",
+        "disclosed": false,
+        "surface_form": "Sam broke out in hives after eating shrimp at a company event, had to go to urgent care",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_celiac_constraint",
+        "value": "Derek cannot eat gluten (wheat, barley, rye)",
+        "disclosed": false,
+        "surface_form": "Derek was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods and sauces"
+        ]
+      },
+      {
+        "key": "sam_upgraded_allergy",
+        "value": "Sam is allergic to ALL seafood, including oyster-derived sauces",
+        "disclosed": false,
+        "surface_form": "Sam told me he went back to the allergist and it turns out it's not just shellfish — he's actually allergic to all seafood. The doctor said even oyster-based sauces could set him off",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_pregnancy_constraint",
+        "value": "Should avoid raw fish, undercooked meat, and high-mercury fish",
+        "disclosed": false,
+        "surface_form": "Nina is about five months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → should avoid raw/undercooked fish and meat",
+          "Pregnancy dietary precautions → no raw sashimi, no undercooked items"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are organizing a Korean BBQ dinner for your office group. You will introduce 4 people initially (you, Derek, Priya, Sam) with their constraints. Priya's roommate Nina will join later. Sam's allergy will be UPGRADED from shellfish-only to all seafood including oyster-based sauces. Priya will drop out but Nina stays. At the end you will list 6 menu items and ask if there are any issues. You must deliver the menu items exactly as written and never hint at which items are problematic.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing office organizer. You always refer to your colleagues by name in third person (e.g. 'Derek mentioned...', 'Sam told me...'). You never express frustration or impatience, even when plans keep changing. You treat each update as totally normal group coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay for colleague updates"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, a few of us from the office are planning to hit up a Korean BBQ place this Saturday. Got any tips on what to order?",
+          "success_criteria": "Agent engages with Korean BBQ planning and offers general tips or asks about the group",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate Korean BBQ dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us — me, Derek, Priya, and Sam. Derek was diagnosed with celiac disease last year. Priya grew up in a strict Jain household in Gujarat and still follows all the traditions. And Sam broke out in hives after eating shrimp at a company event, had to go to urgent care",
+          "success_criteria": "Agent acknowledges all three people's dietary situations",
+          "required_info_keys": [
+            "team_members",
+            "derek_celiac",
+            "sam_shellfish_initial"
+          ],
+          "required_constraint_keys": [
+            "derek_celiac_constraint",
+            "priya_jain_diet",
+            "sam_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 3 entities with 3 constraints (1 inferential Jain, 1 inferential celiac, 1 direct allergy)"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 40 dollars per person. We're thinking of booking for 7pm — does that sound reasonable for a Saturday?",
+          "success_criteria": "Agent acknowledges budget and comments on reservation timing",
+          "required_info_keys": [
+            "budget",
+            "reservation_time"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget and logistics info"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, Priya wants to bring her roommate Nina, so that makes five. Nina is about five months pregnant by the way",
+          "success_criteria": "Agent registers Nina as a new diner and notes pregnancy",
+          "required_info_keys": [
+            "nina_joins",
+            "nina_pregnant"
+          ],
+          "required_constraint_keys": [
+            "nina_pregnancy_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity (Nina) with inferential constraint (pregnant → no raw fish)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "How much meat do you think we should order per person? I've never been great at estimating portions for Korean BBQ",
+          "success_criteria": "Agent gives portion guidance without losing track of constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "portion planning",
+            "drift_topic": "how much meat to order per person at Korean BBQ",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise turn to create distance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Sam told me he went back to the allergist and it turns out it's not just shellfish — he's actually allergic to all seafood. The doctor said even oyster-based sauces could set him off",
+          "success_criteria": "Agent updates Sam's constraint from shellfish-only to all seafood including oyster-derived sauces",
+          "required_info_keys": [
+            "sam_correction"
+          ],
+          "required_constraint_keys": [
+            "sam_upgraded_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE: shellfish allergy → all seafood allergy (including oyster sauce derivatives)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Priya just texted me she has to fly to Chicago for a family emergency, so she can't make it. But Nina still wants to come, she said she'll just meet us there",
+          "success_criteria": "Agent removes Priya from the dinner roster but keeps Nina",
+          "required_info_keys": [
+            "priya_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Priya leaves → Jain constraint removed) but Nina STAYS (pregnancy constraint persists)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Derek mentioned he's been doing really well managing his celiac — he found out the Korean BBQ place has a dedicated gluten-free soy sauce they use for marinating if you ask",
+          "success_criteria": "Agent notes the gluten-free soy sauce option for Derek",
+          "required_info_keys": [
+            "derek_gluten_update"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Additional info about Derek's celiac management — does NOT remove his constraint, just notes accommodation exists"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "Should we get one of those private rooms or just sit at a regular table? There's a small upcharge for the private room",
+          "success_criteria": "Agent responds about seating options without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "seating",
+            "drift_topic": "private room vs regular table at Korean BBQ",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Okay so I'm looking at their menu. How about we get: bulgogi (marinated beef), haemul pajeon (seafood pancake), galbi (short ribs in soy marinade), japchae (glass noodles with vegetables), salmon sashimi, and tteokbokki (spicy rice cakes). Any issues with those?",
+          "success_criteria": "Agent identifies: haemul pajeon is problematic for Sam (seafood allergy — upgraded from shellfish to all seafood); salmon sashimi is problematic for both Sam (seafood allergy) and Nina (pregnant — raw fish); bulgogi needs gluten-free soy sauce marinade for Derek (celiac); galbi needs gluten-free soy sauce for Derek; japchae is fine for everyone; tteokbokki is fine for everyone (Priya left so Jain constraint is gone, rice cakes are gluten-free)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "Haemul pajeon (seafood pancake) is problematic for Sam — his allergy was upgraded from shellfish to all seafood, and a seafood pancake directly contains seafood. Salmon sashimi has two problems: Sam cannot eat it (seafood allergy) and Nina should avoid it (pregnant, raw fish). Bulgogi (marinated beef) needs to be confirmed as using gluten-free soy sauce for Derek (celiac disease) — if the restaurant uses their dedicated gluten-free soy sauce for the marinade, it's fine; otherwise it's a problem. Galbi (short ribs in soy marinade) has the same gluten concern for Derek — needs gluten-free soy sauce. Japchae (glass noodles with vegetables) is fine for everyone — glass noodles are made from sweet potato starch, not wheat. Tteokbokki (spicy rice cakes) is fine for everyone currently attending — rice cakes are gluten-free, and Priya (the Jain diner) is no longer coming.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Haemul pajeon (seafood pancake) is problematic for Sam because his allergy was upgraded to all seafood, not just shellfish",
+      "Salmon sashimi is problematic for Sam because of his all-seafood allergy",
+      "Salmon sashimi is problematic for Nina because she is pregnant and should avoid raw fish",
+      "Bulgogi needs to use gluten-free soy sauce in the marinade for Derek due to his celiac disease",
+      "Galbi needs to use gluten-free soy sauce in the marinade for Derek due to his celiac disease",
+      "Japchae is fine for everyone currently attending",
+      "Tteokbokki is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging any dish as problematic for Priya or citing Jain dietary restrictions (Priya is no longer attending)",
+      "Saying Sam only has a shellfish allergy (it was upgraded to all seafood including oyster-based sauces)",
+      "Flagging tteokbokki as containing gluten (rice cakes are gluten-free)",
+      "Saying salmon sashimi is fine for Sam (he has an all-seafood allergy, not just shellfish)",
+      "Saying salmon sashimi is fine for Nina without noting the raw fish concern for pregnancy",
+      "Flagging bulgogi or galbi as completely off-limits for Derek without mentioning the gluten-free soy sauce option the restaurant offers"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint upgrade reasoning across 10 conversational turns. The primary difficulty mechanism is the constraint UPGRADE: Sam's allergy starts as shellfish-only (shrimp hives incident) and is later corrected to all seafood including oyster-based sauces. The agent must apply the UPGRADED constraint at probe time, not the original. Additional tracking challenges: (1) Derek has celiac disease (inferential: celiac → no gluten), but the restaurant offers gluten-free soy sauce — so soy-marinated dishes are conditionally OK, not automatically rejected. (2) Nina joins late (Turn 3) with an inferential constraint (pregnant → no raw fish), which makes salmon sashimi problematic for her. (3) Priya EXITS (Turn 6) — her Jain dietary constraint should be completely removed. Nina, who Priya brought, STAYS — so Nina's pregnancy constraint persists even though her connection to the group (Priya) left. (4) The over-generalization trap: Sam's original shellfish allergy might cause the agent to only flag shellfish items, missing that salmon sashimi is also seafood and now problematic after the upgrade. (5) Tteokbokki tests false-positive suppression — rice cakes are gluten-free, so Derek is fine with them, and Priya's Jain restriction no longer applies."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

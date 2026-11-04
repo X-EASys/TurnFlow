@@ -1,18 +1,18 @@
 {
   "schema": "turnflow-release-v1",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "github_repository": "https://github.com/X-EASys/TurnFlow",
-  "github_tag": "v0.3.0",
+  "github_tag": "v0.4.0",
   "dataset": {
     "repo_id": "Buka7yo/TurnFlow",
-    "revision": "de3bb8d80fa5cb6e0e8cc043adc87a869059d76d",
-    "tag": "v0.3.0",
+    "revision": "51a303638c0516c38acfd0c1a98805daf53edda0",
+    "tag": "v0.4.0",
     "configs": [
       "scenarios",
       "judges"
     ]
   },
-  "dataset_manifest_sha256": "2802f17c290db26f7971e13c81d0d6f2f2673658e009e431f8576342230dd88a",
+  "dataset_manifest_sha256": "28c948165ac40d887e7ae2e9d5682501568a3776bdba895927e7de990a6c4229",
   "licenses": {
     "code": "MIT",
     "data": "CC-BY-4.0"

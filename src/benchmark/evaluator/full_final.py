@@ -10,7 +10,7 @@ from .runtime_profile import apply_runtime_profile, digest
 
 
 WINDOW_POLICY = 'full-final-v1'
-WINDOW_TASKS = ('T16', 'T18', 'T19', 'T20')
+WINDOW_TASKS = ('T1', 'T3', 'T4', 'T5')
 
 
 def _validate_messages(messages):
@@ -24,7 +24,7 @@ def _validate_messages(messages):
         raise ValueError('final_assistant_message_required')
 
 
-def _t19_prompt(scenario_key, history, reply):
+def _t4_prompt(scenario_key, history, reply):
     # Render a local skeleton using the inherited wrapper. Split only this
     # controlled text, never conversation text that may contain its delimiters.
     history_slot, reply_slot = '__full_final_history__', '__full_final_reply__'
@@ -42,27 +42,27 @@ def _t19_prompt(scenario_key, history, reply):
 def compile_spec(task, scenario_key, full_messages, model, api_base='', **kwargs):
     """Compile a complete final reply while retaining each task's history view.
 
-    T17 is delegated unchanged. Other tasks retain ordinary short requests and
+    T2 is delegated unchanged. Other tasks retain ordinary short requests and
     carry an explicit window revision plus their inherited contract revision.
-    T19 also repairs the inherited delimiter split for short text containing
+    T4 also repairs the inherited delimiter split for short text containing
     prompt markers, which could otherwise hide part or all of the final reply.
     """
     runtime_profile = kwargs.pop('runtime_profile', None)
-    if task == 'T17':
+    if task == 'T2':
         return apply_runtime_profile(frozen_judge.compile_spec(
             task, scenario_key, full_messages, model, api_base, **kwargs),
             full_messages, runtime_profile)
     _validate_messages(full_messages)
     reply = full_messages[-1]['content']
-    limit = 6000 if task == 'T20' else 5000
-    compiler = frozen_judge.compile_spec if task == 'T19' else verifiable_entry.compile_legacy_spec
-    # The frozen T19 guard remains intact. Its short empty render supplies only
+    limit = 6000 if task == 'T5' else 5000
+    compiler = frozen_judge.compile_spec if task == 'T4' else verifiable_entry.compile_legacy_spec
+    # The frozen T4 guard remains intact. Its short empty render supplies only
     # source-bound contract metadata; all returned conversation identity is real.
     render_messages = deepcopy(full_messages)
-    if task == 'T19' and len(reply) > limit:
+    if task == 'T4' and len(reply) > limit:
         render_messages[-1]['content'] = ''
     spec = compiler(task, scenario_key, render_messages, model, api_base, **kwargs)
-    if task == 'T19':
+    if task == 'T4':
         history = '\n'.join(m['role'] + ': ' + m['content'] for m in full_messages[:-1])
         spec['full_messages'] = deepcopy(full_messages)
         spec['fixture'] = {'full_messages': deepcopy(full_messages),
@@ -74,8 +74,8 @@ def compile_spec(task, scenario_key, full_messages, model, api_base='', **kwargs
         }
     else:
         history = spec['conv_text']
-    if task == 'T19':
-        spec['request']['messages'][-1]['content'] = _t19_prompt(scenario_key, history, reply)
+    if task == 'T4':
+        spec['request']['messages'][-1]['content'] = _t4_prompt(scenario_key, history, reply)
     elif len(reply) > limit:
         # Choose a slot absent from the existing request, including source
         # questions/history. Substitute by position once, before user text
@@ -110,5 +110,5 @@ def compile_spec(task, scenario_key, full_messages, model, api_base='', **kwargs
 
 def parse_response(raw, spec):
     """Use the original task parser and reducer, including their abstentions."""
-    parser = frozen_judge if spec['task'] in ('T17', 'T19') else verifiable_entry
+    parser = frozen_judge if spec['task'] in ('T2', 'T4') else verifiable_entry
     return parser.parse_response(raw, spec)

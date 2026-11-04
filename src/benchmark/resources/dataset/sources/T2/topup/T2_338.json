@@ -1,0 +1,211 @@
+{
+  "scenario_id": "T2_338",
+  "domain": "building a restaurant ordering system",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm building a restaurant ordering system for a small local chain — three locations. My buddy who runs a software consultancy said his team would build the payment integration for us, no charge, as a favor. So I just need to handle the rest.",
+    "flow_info": [
+      {
+        "key": "payment_dependency",
+        "value": "Payment integration is being built by a friend's consultancy as a favor — no contract, no timeline, no deliverable commitment",
+        "surface_form": "My buddy who runs a software consultancy said his team would build the payment integration for us, no charge, as a favor",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Favor from a friend → no contractual obligation",
+          "No contract → no guaranteed delivery date",
+          "No guaranteed delivery → critical dependency with zero control"
+        ]
+      },
+      {
+        "key": "launch_timeline",
+        "value": "Targeting launch in 8 weeks for the summer rush",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "three_locations",
+        "value": "Three restaurant locations need the system",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "menu_management",
+        "value": "Menu management with categories, modifiers, and daily specials",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "order_flow",
+        "value": "Customer-facing ordering flow: browse menu, customize items, add to cart, place order",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "kitchen_display",
+        "value": "Kitchen display system showing incoming orders in real time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "multi_location_sync",
+        "value": "All three locations share a menu but can toggle items on/off per location",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "loyalty_program",
+        "value": "Points-based loyalty program — earn points per dollar, redeem for discounts",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "payment_no_update",
+        "value": "Friend's team hasn't started on the payment piece yet but says they'll get to it soon",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "online_ordering",
+        "value": "Online ordering with delivery zone management and estimated delivery times",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "payment_uncontrolled_dependency",
+        "value": "The payment integration — the most critical component for a restaurant ordering system — depends entirely on an external party with no contract, no timeline, and no accountability. The system cannot launch without payment processing.",
+        "disclosed": false,
+        "delivery_mode": "inferential"
+      },
+      {
+        "key": "eight_week_deadline",
+        "value": "8-week launch target for summer rush — a hard business deadline that cannot slip without losing the seasonal revenue opportunity",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm building a restaurant ordering system for a small local chain — three locations. My buddy who runs a software consultancy said his team would build the payment integration for us, no charge, as a favor. So I just need to handle the rest. We're targeting launch in 8 weeks to catch the summer rush.",
+          "success_criteria": "Agent acknowledges the project and timeline",
+          "required_info_keys": [
+            "payment_dependency",
+            "launch_timeline",
+            "three_locations"
+          ],
+          "required_constraint_keys": [
+            "payment_uncontrolled_dependency",
+            "eight_week_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the external dependency (payment as a favor) and the hard deadline. Constraint is stated once and never repeated."
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "For the core, I'm thinking menu management — categories, modifiers like extra cheese or no onions, and daily specials the managers can update. Then the customer-facing ordering flow: browse, customize, add to cart, place order. Pretty standard stuff.",
+          "success_criteria": "Agent provides guidance on menu management and ordering flow",
+          "required_info_keys": [
+            "menu_management",
+            "order_flow"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Define initial scope — reasonable for 8 weeks"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "What database would you recommend for something like this? I'm thinking PostgreSQL but not sure if that's overkill for a restaurant system.",
+          "success_criteria": "Agent provides a reasonable database recommendation",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate technical question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, we also need a kitchen display system — orders come in and show up on a screen in the kitchen in real time, with timestamps and priority. Nothing crazy, just a live feed basically.",
+          "success_criteria": "Agent helps with kitchen display design",
+          "required_info_keys": [
+            "kitchen_display"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: real-time kitchen display adds WebSocket/push complexity"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Since it's three locations, all of them share the same base menu but each location should be able to toggle items on or off — like if one location runs out of something. The managers need a simple dashboard for that.",
+          "success_criteria": "Agent helps with multi-location menu sync",
+          "required_info_keys": [
+            "multi_location_sync"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: multi-tenant architecture with per-location overrides"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "The owner also wants a loyalty program — super lightweight, just points per dollar spent, and customers can redeem points for discounts on future orders. If it could tie into their phone number that would be ideal.",
+          "success_criteria": "Agent helps design loyalty program",
+          "required_info_keys": [
+            "loyalty_program"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: loyalty system = user accounts, point tracking, redemption logic"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "I checked in with my buddy about the payment piece — his team hasn't started on it yet but he said they'll get to it soon, probably in a few weeks. They're swamped with client work right now. Anyway, no worries there. Can we also add online ordering with delivery? We'd need delivery zone management and estimated delivery times based on distance.",
+          "success_criteria": "Agent ideally flags the payment dependency risk here",
+          "required_info_keys": [
+            "payment_no_update",
+            "online_ordering"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4 + dependency risk signal: payment team hasn't started, buried in casual update alongside new feature request"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Alright, I think that covers everything. Can you help me put together a launch plan and timeline for the 8-week target?",
+          "success_criteria": "Agent explicitly flags that the payment integration is an uncontrolled external dependency with no contract or timeline, and that the entire system cannot launch without it — making the 8-week target unreliable regardless of how well the rest is built",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe: agent must recognize that building a launch plan around an uncontrolled external dependency (payment as a favor, no contract, no start date, team swamped) makes the 8-week target fundamentally unreliable"
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "ground_truth": {
+    "answer": "The 8-week launch plan is fundamentally unreliable because the most critical component — payment integration — depends entirely on an external party with no contract, no timeline, and no accountability. The friend's consultancy hasn't even started, they're swamped with paying clients, and there's no firm delivery date. A restaurant ordering system literally cannot function without payment processing. No matter how well the rest of the system is built, the launch date is not in your control. You need either: (1) a contractual commitment with a delivery date from your friend's team, (2) a backup plan to build or buy payment integration yourself (Stripe, Square), or (3) acceptance that the 8-week target may slip indefinitely.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent explicitly flags that the payment integration is an uncontrolled external dependency — no contract, no timeline, no guarantee",
+      "Agent states that the system cannot launch without payment processing, making the entire 8-week plan dependent on something outside the user's control",
+      "Agent recommends a mitigation: either get a firm commitment, build a backup payment solution, or adjust the launch expectation"
+    ],
+    "forbidden_elements": [
+      "Providing a complete 8-week launch plan that assumes payment will arrive on time without flagging the dependency risk",
+      "Treating the friend's promise as a reliable deliverable with no caveats",
+      "Not mentioning the payment dependency at all when creating the timeline"
+    ],
+    "explanation": "In Turn 0, the user established that payment integration depends on a friend's consultancy doing it as a favor — no contract, no timeline. In Turn 6, the user casually mentions the friend's team hasn't started and is swamped with client work, but dismisses it ('no worries there'). The system cannot function without payment processing. When asked for a launch plan in the probe, the agent must recognize that the most critical dependency is completely uncontrolled and flag this as a fundamental risk to the 8-week target, rather than just building a plan that assumes everything will work out."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

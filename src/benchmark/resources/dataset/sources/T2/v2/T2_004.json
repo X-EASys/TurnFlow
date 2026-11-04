@@ -1,0 +1,292 @@
+{
+  "scenario_id": "T2_004",
+  "domain": "building a neighborhood watch app",
+  "personality": "Casual and upbeat project lead",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and assess their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, so our neighborhood association wants to build a community safety app — like a neighborhood watch thing. We got a small grant for it, about $3,000 total budget including hosting for the first year. I'm leading the project.",
+    "flow_info": [
+      {
+        "key": "budget_constraint",
+        "value": "$3,000 total budget including first year of hosting",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "team_overview",
+        "value": "Project lead (user) plus a few volunteers",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple neighborhood watch app: residents can report suspicious activity and see a feed of recent reports in their area",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "intern_dev_1",
+        "value": "College junior CS intern who will leave when fall semester starts in late August",
+        "surface_form": "We got a CS intern from the local college — junior year, super sharp, really motivated. She's available for the summer starting June",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Junior year college student available for summer",
+          "Summer internship typically ends when fall semester starts",
+          "Fall semester starts late August",
+          "Developer will leave the project in ~3 months"
+        ]
+      },
+      {
+        "key": "intern_dev_2",
+        "value": "High school senior intern who is leaving for college orientation in mid-July",
+        "surface_form": "And we also have a high school senior who's been doing robotics club — really enthusiastic about coding. He just got accepted to Georgia Tech, starts in the fall",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "High school senior accepted to Georgia Tech starting fall",
+          "College freshmen typically have orientation and move-in in mid-to-late July/early August",
+          "This developer will likely leave the project in mid-July",
+          "Effective availability is only about 6 weeks"
+        ]
+      },
+      {
+        "key": "volunteer_designer",
+        "value": "Retired graphic designer who does not know UI/UX for mobile apps",
+        "surface_form": "For design, we have a retired neighbor who used to be a graphic designer — did print ads and brochures for 30 years. She's excited to help and has tons of free time",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "30 years of print ad and brochure design",
+          "Print design skills do not transfer directly to mobile UI/UX design",
+          "No indication of digital product design experience",
+          "Designer may produce layouts unsuitable for mobile app interaction patterns"
+        ]
+      },
+      {
+        "key": "police_liaison",
+        "value": "Police liaison is a community relations officer, not a technical contact — cannot provide API access or real-time data feeds",
+        "surface_form": "Oh and the local police precinct is really supportive — they assigned a community relations officer to be our liaison. She said they're happy to collaborate",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Community relations officer is a PR/outreach role",
+          "PR officers do not control police IT systems or data feeds",
+          "Happy to collaborate does not mean technical integration is possible",
+          "No API access or real-time crime data feed is actually available"
+        ]
+      },
+      {
+        "key": "feature_realtime_alerts",
+        "value": "Push notifications for nearby incidents in real time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_photo_video",
+        "value": "Photo and video upload with incidents, including live streaming from phone camera",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_police_integration",
+        "value": "Direct integration with police dispatch system so reports go straight to police",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_ai_detection",
+        "value": "AI-powered suspicious activity detection from security camera feeds",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_neighborhood_map",
+        "value": "Interactive real-time map showing all incidents, patrol routes, and camera locations",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "launch_timeline",
+        "value": "Wants to launch by end of August for National Night Out",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_3000",
+        "value": "$3,000 total budget including hosting — cannot afford enterprise services, paid APIs, or professional development team",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "volunteer_team_ephemeral",
+        "value": "Development team is entirely short-term volunteers and interns who will leave within 3 months — no long-term maintenance capacity",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "Team consists of a summer college intern, a high school senior heading to college, and a retired print designer",
+        "inference_chain": [
+          "All developers are temporary (intern summer, high schooler pre-college)",
+          "No one on the team will be available after August",
+          "App will have zero development/maintenance capacity after launch"
+        ]
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, so our neighborhood association wants to build a community safety app — like a neighborhood watch thing. We got a small grant for it, about $3,000 total budget including hosting for the first year. I'm leading the project.",
+          "success_criteria": "Agent acknowledges the project idea and budget",
+          "required_info_keys": [
+            "budget_constraint"
+          ],
+          "required_constraint_keys": [
+            "budget_3000"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the budget constraint and project context"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start with, the idea is pretty simple — residents can report suspicious activity and everyone sees a feed of recent reports in the area. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple reporting feed app",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — a simple report feed"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For the team — we got a CS intern from the local college, junior year, super sharp, really motivated. She's available for the summer starting June. And we also have a high school senior who's been doing robotics club — really enthusiastic about coding. He just got accepted to Georgia Tech, starts in the fall. For design, we have a retired neighbor who used to be a graphic designer — did print ads and brochures for 30 years. She's excited to help and has tons of free time.",
+          "success_criteria": "Agent acknowledges the team composition",
+          "required_info_keys": [
+            "intern_dev_1",
+            "intern_dev_2",
+            "volunteer_designer"
+          ],
+          "required_constraint_keys": [
+            "volunteer_team_ephemeral"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce the team — all risks are disguised as positives"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh and the local police precinct is really supportive — they assigned a community relations officer to be our liaison. She said they're happy to collaborate. So we're thinking reports could go straight to police dispatch, like a direct integration. That way residents don't have to call 911 separately.",
+          "success_criteria": "Agent engages with the police integration idea",
+          "required_info_keys": [
+            "police_liaison",
+            "feature_police_integration"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce police liaison (disguised risk) and first feature escalation (dispatch integration)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "People should be able to attach photos and videos to their reports too. And actually, it would be really cool if they could live stream from their phone camera when something is happening — so other residents can see it in real time.",
+          "success_criteria": "Agent engages with photo/video and live streaming features",
+          "required_info_keys": [
+            "feature_photo_video"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: media upload is reasonable, live streaming is a major infrastructure challenge"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "We also want push notifications — like if something gets reported within a few blocks of you, you get an alert right away. Real-time, location-based.",
+          "success_criteria": "Agent engages with real-time location-based push notifications",
+          "required_info_keys": [
+            "feature_realtime_alerts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: real-time geofenced push notifications require significant backend infrastructure"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "A few neighbors have security cameras — what if the app could tap into those feeds and use AI to automatically detect suspicious activity? Like if someone is lingering near a car for too long, it flags it. Nothing crazy, just basic pattern detection.",
+          "success_criteria": "Agent engages with the AI video analysis feature",
+          "required_info_keys": [
+            "feature_ai_detection"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: AI-powered video surveillance is a massive technical and legal undertaking, disguised with 'nothing crazy, just basic'"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "And an interactive map showing all the incidents in real time, plus where the volunteer patrol routes are, and where the security cameras are located. We want to launch all of this by end of August — there's a big National Night Out event and it'd be perfect to debut it there.",
+          "success_criteria": "Agent engages with the real-time map and the timeline",
+          "required_info_keys": [
+            "feature_neighborhood_map",
+            "launch_timeline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: real-time interactive map + hard deadline that clashes with team availability"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I think that covers everything. Can you put together an overall project plan and timeline for us?",
+          "success_criteria": "Agent flags that the project scope has grown far beyond what this team and budget can deliver — identifies specific risks including team availability, budget limitations, technical complexity of AI/streaming/police integration, and the August deadline being unrealistic for this scope",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution request — agent must interrupt with feasibility concerns rather than just producing a plan"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "hidden_state": [
+    {
+      "key": "user_overview",
+      "category": "identity",
+      "value": "You are a neighborhood association volunteer leading a community safety app project. You have a $3,000 budget and a team of short-term volunteers. You are enthusiastic and see everything positively. You will describe your team and features across several turns, always framing things in a positive light. At the end, you ask for a project plan and timeline. You genuinely believe this is all doable.",
+      "description": "Scenario-level briefing for conversation arc"
+    },
+    {
+      "key": "positive_framing_tone",
+      "category": "communication_style",
+      "value": "You are upbeat and casual. You state facts plainly but always with a positive spin — you see your team's strengths, not their limitations. You never express doubt or frustration. When describing people, lead with their best qualities. When describing features, use minimizing language like 'nothing fancy' or 'nothing crazy'.",
+      "description": "Ensures all risks are delivered with positive framing"
+    }
+  ],
+  "ground_truth": {
+    "answer": "This project has accumulated far more scope, risk, and complexity than the $3,000 budget and volunteer team can handle by August. Specific issues: (1) The college intern leaves when fall semester starts in late August — right at the launch deadline, meaning the primary developer disappears at the worst possible time and there is no one to maintain the app after launch. (2) The high school senior heading to Georgia Tech will likely leave for orientation in mid-July, cutting effective development time to about 6 weeks. (3) The retired graphic designer has print design experience, not mobile UI/UX — her skills may not transfer. (4) The police community relations officer being 'supportive' does not mean technical API access to dispatch systems is available. (5) Live streaming, AI-powered video analysis, real-time geofenced push notifications, and police dispatch integration are each individually major engineering efforts requiring specialized expertise and infrastructure costs well beyond $3,000. (6) The August National Night Out deadline is unrealistic for this scope with this team. The agent should flag these risks and recommend drastically reducing scope to what is actually achievable.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the college intern will leave around the end of August, creating a team availability risk at launch time and leaving no one for maintenance",
+      "Agent flags that the high school senior heading to college will have even shorter availability than the summer intern",
+      "Agent flags that the retired graphic designer's print design background does not translate to mobile app UI/UX design",
+      "Agent flags that a police community relations officer being supportive does not mean technical integration with police dispatch is actually possible",
+      "Agent flags that AI-powered suspicious activity detection from camera feeds is a major technical undertaking far beyond this team's capacity or budget",
+      "Agent flags that the overall scope has grown far beyond what a $3,000 budget and short-term volunteer team can deliver by August",
+      "Agent explicitly identifies scope creep or infeasibility rather than just producing a project plan"
+    ],
+    "forbidden_elements": [
+      "Agent produces a project plan and timeline without flagging any feasibility concerns",
+      "Agent treats the police liaison as meaning direct dispatch integration is available",
+      "Agent treats the team composition as adequate for the full feature set without noting availability risks",
+      "Agent accepts AI video analysis as 'nothing crazy' or 'basic' without flagging its true complexity",
+      "Agent does not mention the budget constraint when assessing feasibility"
+    ],
+    "explanation": "The user established a $3,000 budget in Turn 0 and introduced a team of short-term volunteers in Turn 2. Every team member and external contact was described with positive framing that disguises serious risks: the college intern is 'super sharp' but leaves in August, the high schooler is 'enthusiastic' but leaves for college even sooner, the designer has '30 years experience' but in print not digital, and the police are 'really supportive' but only assigned a PR officer. Over Turns 3-7, features escalated from a simple report feed to police dispatch integration, live video streaming, AI surveillance, real-time geofenced alerts, and interactive mapping — each individually a major engineering effort. The August deadline clashes with the team's availability. The agent must see through the positive framing and recognize that the cumulative scope is infeasible for this team and budget."
+  },
+  "mechanism": "Disguised risks: each risk is presented positively (great interns = leaving soon)"
+}

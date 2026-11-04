@@ -13,11 +13,11 @@ This enables complex scenarios like document editing where users
 progressively modify content through multiple related requests.
 
 Task-Specific Behavior Support (v2.0):
-- T1 (Self-Reference): Vanilla behavior with history validation
-- T3 (Proactivity): INFORMATION_HIDING - only reveal info when asked
-- T5 (Negative Constraint): Vanilla with constraint violation detection
-- T6 (Ambiguity Resolution): HIDDEN_INTENT_LOCK - reveal intent only when clarified
-- T8 (Reference Resolution): ENTITY_MASKING - use references instead of entity names
+- legacy self_reference (Self-Reference): Vanilla behavior with history validation
+- legacy proactivity (Proactivity): INFORMATION_HIDING - only reveal info when asked
+- legacy negative_constraint (Negative Constraint): Vanilla with constraint violation detection
+- legacy ambiguity_resolution (Ambiguity Resolution): HIDDEN_INTENT_LOCK - reveal intent only when clarified
+- legacy reference_resolution (Reference Resolution): ENTITY_MASKING - use references instead of entity names
 """
 
 import re
@@ -155,7 +155,7 @@ class AimDrivenUserSimulator(UserSimulator):
     scenarios where the user has multiple sequential goals to accomplish.
     
     Task-Specific Behavior (v2.0):
-    - Integrates TaskSpecificController for T1, T3, T5, T6, T8 support
+    - Integrates TaskSpecificController for legacy self_reference, legacy proactivity, legacy negative_constraint, legacy ambiguity_resolution, legacy reference_resolution support
     - Modifies prompt generation based on task type
     - Enforces task-specific constraints on user behavior
     
@@ -772,7 +772,7 @@ class AimDrivenUserSimulator(UserSimulator):
         Get information items to disclose for an aim.
         
         v2.1 Enhancement: Filters out already-disclosed constraints for memory-testing
-        task types (T1, T5) to prevent the simulator from repeating them.
+        task types (legacy self_reference, legacy negative_constraint) to prevent the simulator from repeating them.
         
         Args:
             aim: The aim to get info for

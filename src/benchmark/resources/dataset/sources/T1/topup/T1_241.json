@@ -1,0 +1,284 @@
+{
+  "scenario_id": "T1_241",
+  "domain": "wedding reception dinner catering",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event catering assistant. Help the user plan the menu for a wedding reception dinner by tracking guests, their dietary needs, and any changes to the guest list or constraints. When asked to evaluate specific dishes, check each one against every active guest's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, we're planning the menu for our wedding reception dinner next month. Can you help us figure out what to serve?",
+    "flow_info": [
+      {
+        "key": "guest_group",
+        "value": "Main table guests: me and my fiancé Tom, my sister Rachel, Tom's best man Derek, and my college friend Priya",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_intolerance",
+        "value": "Rachel has been having stomach issues with milk lately, gets bloated and crampy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_shellfish",
+        "value": "Derek ate shrimp at a party last year and his throat started swelling up, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "The venue is a garden estate, they have an in-house kitchen that can handle most cuisines",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "We're thinking around $85 per head for the main table menu",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_mom_joins",
+        "value": "Tom's mom Margaret is going to sit at the main table too, so that's six now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_upgrade",
+        "value": "Rachel went to the allergist last week and it turns out it's not lactose intolerance — it's actually a milk protein allergy. The doctor said she needs to avoid all dairy completely, even things like butter and casein in baked goods",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_exits",
+        "value": "Derek just told Tom he got called away for a work emergency overseas, he can't make it to the wedding anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_gift_box",
+        "value": "Tom wants to send Derek a gift box of food from the reception as a thank-you since he can't be there. Can we keep that in mind?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "noise_flowers",
+        "value": "Also, do you think we should do round tables or long banquet style for the main table?",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "The caterer sent over their tasting menu options for the main table: pan-seared scallops with brown butter, beef Wellington with puff pastry, mushroom risotto with parmesan cream, grilled salmon with herb crust, and chocolate lava cake with whipped cream. Any issues with these for our group?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_diet",
+        "value": "Cannot eat beef or pork",
+        "disclosed": false,
+        "surface_form": "Priya grew up in a traditional Hindu family in Gujarat, very devout",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Traditional Hindu family from Gujarat → practicing Hindu",
+          "Practicing Hindu → vegetarian or at minimum no beef (cow is sacred)",
+          "Gujarat + very devout → likely fully vegetarian (Gujarat has highest vegetarian rate in India)"
+        ]
+      },
+      {
+        "key": "rachel_dairy_allergy",
+        "value": "Cannot consume any dairy products including butter, cream, casein, whey — all milk-derived proteins",
+        "disclosed": false,
+        "surface_form": "Rachel's allergist confirmed it's a milk protein allergy, not just lactose intolerance — she has to avoid all dairy completely, even butter and casein in baked goods",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_shellfish_allergy",
+        "value": "Allergic to shellfish (shrimp confirmed, likely all shellfish including scallops)",
+        "disclosed": false,
+        "surface_form": "Derek ate shrimp at a party last year and his throat started swelling up, had to use an EpiPen",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "margaret_diet",
+        "value": "Cannot eat gluten — has celiac disease",
+        "disclosed": false,
+        "surface_form": "Tom's mom Margaret was diagnosed with celiac a few years back",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning your wedding reception dinner menu for the main table. You will introduce the guest list and their dietary issues across several turns. Rachel's constraint will be UPGRADED from lactose intolerance to milk protein allergy (broader scope). Derek will exit but needs a gift box (his shellfish allergy still applies to the gift box). Tom's mom Margaret joins late with celiac. At the end you will share a tasting menu and ask if there are any issues — you do NOT hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, happy bride-to-be planning your wedding. You always refer to guests by name in third person (e.g. 'Rachel told me...', 'Tom said...'). You never express frustration even when plans change — you treat each update as normal wedding planning chaos. You are warm and conversational.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're planning the menu for our wedding reception dinner next month. Can you help us figure out what to serve?",
+          "success_criteria": "Agent engages with wedding menu planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate wedding catering discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So for the main table it's me and my fiancé Tom, my sister Rachel, Tom's best man Derek, and my college friend Priya. Rachel's been having stomach issues with milk lately — gets bloated and crampy after anything dairy. Derek ate shrimp at a party last year and his throat started swelling up, had to use an EpiPen. And Priya grew up in a traditional Hindu family in Gujarat, very devout",
+          "success_criteria": "Agent acknowledges all guests and their dietary constraints",
+          "required_info_keys": [
+            "guest_group",
+            "rachel_intolerance",
+            "derek_shellfish"
+          ],
+          "required_constraint_keys": [
+            "priya_diet",
+            "derek_shellfish_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 5 entities + 3 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "The venue is a garden estate with an in-house kitchen that can handle most cuisines. We're thinking around $85 per head for the main table menu. Oh and Tom's mom Margaret is going to sit at the main table too, so that's six now. She was diagnosed with celiac a few years back",
+          "success_criteria": "Agent registers venue, budget, Margaret joining, and her celiac constraint",
+          "required_info_keys": [
+            "venue_info",
+            "budget_info",
+            "tom_mom_joins"
+          ],
+          "required_constraint_keys": [
+            "margaret_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity (Margaret) with celiac + venue/budget info"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh update — Rachel went to the allergist last week and it turns out it's not lactose intolerance after all. It's actually a milk protein allergy. The doctor said she needs to avoid all dairy completely, even things like butter and casein in baked goods",
+          "success_criteria": "Agent upgrades Rachel's constraint from lactose intolerance to full dairy/milk protein allergy",
+          "required_info_keys": [
+            "rachel_upgrade"
+          ],
+          "required_constraint_keys": [
+            "rachel_dairy_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE: lactose intolerance → milk protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Bad news — Derek just told Tom he got called away for a work emergency overseas, he can't make it to the wedding anymore. Tom wants to send him a gift box of food from the reception as a thank-you though. Can we keep that in mind?",
+          "success_criteria": "Agent notes Derek exits the table but his shellfish allergy still applies to the gift box",
+          "required_info_keys": [
+            "derek_exits",
+            "derek_gift_box"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT with scope change — Derek leaves table but shellfish allergy applies to gift box"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "drift",
+          "description": "Also, do you think we should do round tables or long banquet style for the main table? We have about 6 people now",
+          "success_criteria": "Agent responds about table arrangement without losing track of dietary constraints",
+          "required_info_keys": [
+            "noise_flowers"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "table arrangement",
+            "drift_topic": "round vs long banquet table for 6 guests",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "What time should we plan for dinner to start? The ceremony is at 4pm and cocktail hour would be 5-6",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "timing",
+            "drift_topic": "dinner start time after ceremony and cocktail hour",
+            "target_option": ""
+          },
+          "conversation_goal": "Second noise turn to maximize distance before probe"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "The caterer sent over their tasting menu options for the main table: pan-seared scallops with brown butter, beef Wellington with puff pastry, mushroom risotto with parmesan cream, grilled salmon with herb crust, and chocolate lava cake with whipped cream. Any issues with these for our group?",
+          "success_criteria": "Agent checks each dish against current constraints: scallops+brown butter (Rachel dairy allergy + scallops are shellfish for Derek's gift box), beef Wellington (Priya Hindu no beef + puff pastry has butter = Rachel dairy + gluten in pastry = Margaret celiac), mushroom risotto with parmesan cream (Rachel dairy allergy + Margaret celiac if risotto base has gluten issues — though rice is GF, parmesan cream is dairy), grilled salmon (fine for table), chocolate lava cake with whipped cream (Rachel dairy allergy from cream and likely butter/milk in cake)",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "ground_truth": {
+    "answer": "Pan-seared scallops with brown butter: problematic for Rachel (brown butter = dairy, milk protein allergy) and must be excluded from Derek's gift box (scallops are shellfish). Beef Wellington with puff pastry: problematic for Priya (beef — devout Hindu), Rachel (puff pastry contains butter = dairy), and Margaret (puff pastry = gluten, celiac). Mushroom risotto with parmesan cream: problematic for Rachel (parmesan and cream = dairy). Grilled salmon with herb crust: fine for everyone at the table — no active constraints violated (check herb crust for hidden dairy/gluten for Rachel/Margaret, but plain herb crust is typically safe). Chocolate lava cake with whipped cream: problematic for Rachel (whipped cream = dairy, cake likely contains butter/milk). Scallops must not go in Derek's gift box (shellfish allergy) but are otherwise fine for the table once the butter issue is resolved for Rachel.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Pan-seared scallops with brown butter flagged for Rachel because brown butter is dairy and she has a milk protein allergy",
+      "Pan-seared scallops must be excluded from Derek's gift box because scallops are shellfish and he has a shellfish allergy",
+      "Beef Wellington flagged for Priya because it contains beef and she is from a devout Hindu family",
+      "Beef Wellington flagged for Rachel because puff pastry contains butter which is dairy",
+      "Beef Wellington flagged for Margaret because puff pastry contains gluten and she has celiac",
+      "Mushroom risotto with parmesan cream flagged for Rachel because parmesan and cream are dairy",
+      "Chocolate lava cake with whipped cream flagged for Rachel because whipped cream is dairy",
+      "Grilled salmon with herb crust identified as generally safe for the current table guests"
+    ],
+    "forbidden_elements": [
+      "Flagging scallops as problematic for Derek at the table (he is no longer attending the dinner)",
+      "Treating Rachel's constraint as mere lactose intolerance (it was upgraded to milk protein allergy — broader scope including butter, casein, all dairy)",
+      "Flagging any dish for Derek as a table guest (he has exited the dinner)",
+      "Saying Priya cannot eat any meat at all without specifically identifying beef as the primary issue (the inference chain from devout Hindu Gujarat family leads to at minimum no beef)",
+      "Ignoring the gift box scope for Derek entirely"
+    ],
+    "explanation": "This scenario tests constraint UPGRADE tracking and entity lifecycle management. Key mechanisms: (1) Rachel's constraint is UPGRADED from lactose intolerance to milk protein allergy — the agent must apply the BROADER scope (all dairy including butter, casein, cream, not just lactose-containing items). This is the primary difficulty mechanism. (2) Derek EXITS the dinner but a gift box is requested — his shellfish allergy still applies to the gift box contents (scallops = shellfish). (3) Margaret JOINS late with celiac (no gluten) — tests late-joining entity tracking. (4) Priya's constraint is inferential: devout Hindu family from Gujarat → no beef at minimum. The probe items have mixed verdicts: grilled salmon is clearly fine, beef Wellington fails on 3 axes (Priya/Rachel/Margaret), scallops require scope distinction (fine for table minus butter issue, not for gift box), and the risotto/cake test whether the agent applies the UPGRADED dairy constraint (milk protein allergy = all dairy) rather than the original narrower one (lactose intolerance = could potentially tolerate butter/hard cheese)."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

@@ -18,7 +18,7 @@ class MinimalSourceCandidate:
         self.bindings = deepcopy(list(bindings))
         from benchmark.user.release_profile import _task
         task = (source_key or "").split("/")[0] or _task(scenario)
-        applicable = task in {"T17", "T20"} and not scenario.composite_type
+        applicable = task in {"T2", "T5"} and not scenario.composite_type
         self.strict = bool(strict and applicable)
         rows = [r for r in self.bindings if r["source_key"] == source_key]
         valid = [r for r in rows if r["source_sha256"] == source_hash

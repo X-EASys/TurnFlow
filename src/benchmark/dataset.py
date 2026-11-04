@@ -7,7 +7,7 @@ from pathlib import Path
 
 from benchmark.io import read
 
-TASKS = ("T16", "T17", "T18", "T19", "T20")
+TASKS = ("T1", "T2", "T3", "T4", "T5")
 ROOT = Path(str(files("benchmark").joinpath("resources/dataset")))
 
 

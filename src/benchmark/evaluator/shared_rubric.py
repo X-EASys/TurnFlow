@@ -150,7 +150,7 @@ def b0_messages(reply, conv, atomic_qs):
 
 
 def logical_request(task, reply, conv, definition, model, messages=None):
-    visible = sc1_messages(reply, conv, definition, messages) if task == 'T17' else b0_messages(reply, conv, definition['atomic_qs'])
+    visible = sc1_messages(reply, conv, definition, messages) if task == 'T2' else b0_messages(reply, conv, definition['atomic_qs'])
     return dict(model=model, messages=visible, temperature=0.0, thinking={'type': 'disabled'}, num_retries=0, max_retries=0, timeout=330, api_base=API_BASE)
 
 
@@ -207,9 +207,9 @@ def once(task, reply, conv, definition, model, messages=None):
     if response.get('finish_reason') == 'length':
         return dict(scoreable=False, valid=False, status='response_invalid', verdict=None,
                     facts={}, scoring_errors=['truncated_response'], transport=response)
-    if task=='T17':return dict(parse_sc1(raw,definition),transport=response)
-    # Use the original audited T19 parser and v8b scorer, never its retry helper.
+    if task=='T2':return dict(parse_sc1(raw,definition),transport=response)
+    # Use the original audited T4 parser and v8b scorer, never its retry helper.
     from judge_discovery_baselines import parse_observed,score_valid
     keys=list(definition['atomic_qs']);spec=dict(requested_keys=keys,used_by_rule_keys=keys,field_domains={k:'string' if k=='q_over_flagged_aligned' else ['yes','no'] for k in keys},coverage_errors=[])
-    parsed=parse_observed('T19',raw,spec)
-    return dict(parsed,transport=response,**(score_valid('T19',parsed['facts'],definition,reply) if parsed['scoreable'] else dict(verdict=None)))
+    parsed=parse_observed('T4',raw,spec)
+    return dict(parsed,transport=response,**(score_valid('T4',parsed['facts'],definition,reply) if parsed['scoreable'] else dict(verdict=None)))

@@ -1,0 +1,321 @@
+{
+  "scenario_id": "T1_009",
+  "domain": "summer camp snack planning",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant for planning group activities and food. Help the user coordinate snack planning for a children's summer camp session. When the user asks you to evaluate specific snack items, check each item against every child's current dietary constraints. Pay close attention to changes in the group roster and any updates or corrections to dietary information throughout the conversation.",
+  "state_queue": {
+    "anchor": "Hey, I'm helping organize snacks for our neighborhood summer camp session next week. There are a bunch of kids and I want to make sure the snacks work for everyone. Can you help me figure this out?",
+    "flow_info": [
+      {
+        "key": "initial_kids",
+        "value": "Five kids in the group: my daughter Emma, plus Tyler, Sophia, Mason, and Lily",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tyler_celiac",
+        "value": "Tyler was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophia_background",
+        "value": "Sophia's family is Jain, they're very devout",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "Sophia's family is Jain, they're very devout",
+        "inference_chain": [
+          "Jain → strict vegetarian practice",
+          "Jain vegetarian → no meat, no fish, no eggs",
+          "Devout Jain → also no root vegetables (onion, garlic, potatoes)"
+        ]
+      },
+      {
+        "key": "mason_initial_constraint",
+        "value": "Mason's mom initially said he's lactose intolerant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_diabetes",
+        "value": "Lily has type 1 diabetes so her parents are careful about sugar",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "camp_days",
+        "value": "Camp runs Monday through Friday, morning and afternoon snack each day",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Each family chipped in $20, so we have $120 total for the week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "new_kid_joins",
+        "value": "Another kid named Aiden is joining — his mom just confirmed. She mentioned he had a really scary reaction to cashews at a birthday party last month, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "mason_constraint_upgrade",
+        "value": "Mason's mom texted me a correction — she talked to his allergist and it turns out it's actually a milk protein allergy, not just lactose intolerance. The doctor was very clear about that",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tyler_leaves",
+        "value": "Tyler's family is going on vacation starting Wednesday, so he won't be at camp the last three days. His mom asked if I could send him home with some snacks for the road on Tuesday though",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_snack_list",
+        "value": "Snack list to check: rice cakes with almond butter, string cheese sticks, oatmeal raisin cookies, trail mix with cashews and dried mango, carrot and celery sticks with hummus, fruit popsicles (made with juice and sugar)",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "tyler_gluten_free",
+        "value": "Cannot eat gluten or wheat-containing products",
+        "disclosed": false,
+        "surface_form": "Tyler was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Must avoid all gluten-containing foods"
+        ]
+      },
+      {
+        "key": "sophia_jain_diet",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables (onion, garlic, potatoes)",
+        "disclosed": false,
+        "surface_form": "Sophia's family is Jain, they're very devout",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain → strict vegetarian practice",
+          "Jain vegetarian → no meat, no fish, no eggs",
+          "Devout Jain → also no root vegetables (onion, garlic, potatoes)"
+        ]
+      },
+      {
+        "key": "mason_milk_protein_allergy",
+        "value": "Cannot consume any dairy or milk-derived products (milk protein allergy is broader than lactose intolerance — includes all dairy, not just high-lactose items)",
+        "disclosed": false,
+        "surface_form": "Mason's mom corrected: it's actually a milk protein allergy, not lactose intolerance, confirmed by his allergist",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "lily_low_sugar",
+        "value": "Needs low-sugar snack options due to type 1 diabetes",
+        "disclosed": false,
+        "surface_form": "Lily has type 1 diabetes so her parents are careful about sugar",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 1 diabetes → blood sugar management critical",
+          "Careful about sugar → needs low-sugar options"
+        ]
+      },
+      {
+        "key": "aiden_tree_nut_allergy",
+        "value": "Allergic to cashews specifically (tree nut allergy — had anaphylactic reaction requiring EpiPen)",
+        "disclosed": false,
+        "surface_form": "Aiden had a really scary reaction to cashews at a birthday party, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Scary reaction to cashews + EpiPen → anaphylaxis",
+          "Anaphylaxis to cashews → severe tree nut allergy",
+          "Tree nut allergy → must avoid cashews and likely other tree nuts (cross-reactivity risk)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent organizing snacks for a neighborhood summer camp with several kids. You will introduce the kids and their dietary needs in a burst, then updates will come in: a new kid joins, one kid's constraint gets corrected/upgraded (lactose intolerance → milk protein allergy), and one kid leaves partway through the week but needs snacks packed. At the end you will share a specific snack list and ask if there are any issues. You must NEVER hint that you already know which snacks are problematic.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly parent coordinator. You relay information from other parents in third person (e.g., 'Tyler's mom told me...', 'Mason's mom texted me...'). You never express frustration even when details keep changing. You treat corrections and roster changes as totally normal summer camp coordination.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm helping organize snacks for our neighborhood summer camp session next week. There are a bunch of kids and I want to make sure the snacks work for everyone. Can you help me figure this out?",
+          "success_criteria": "Agent engages with snack planning and asks for details about the kids",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate snack planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So there are five kids: my daughter Emma, plus Tyler, Sophia, Mason, and Lily. Tyler was diagnosed with celiac disease last year. Sophia's family is Jain, they're very devout. Mason's mom told me he's lactose intolerant. And Lily has type 1 diabetes so her parents are really careful about sugar",
+          "success_criteria": "Agent acknowledges all five kids and their dietary constraints",
+          "required_info_keys": [
+            "initial_kids",
+            "tyler_celiac",
+            "mason_initial_constraint",
+            "lily_diabetes"
+          ],
+          "required_constraint_keys": [
+            "tyler_gluten_free",
+            "sophia_jain_diet",
+            "lily_low_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 5 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Camp runs Monday through Friday, with a morning and afternoon snack each day. Each family chipped in $20, so we have $120 total for the whole week",
+          "success_criteria": "Agent registers the schedule and budget information",
+          "required_info_keys": [
+            "camp_days",
+            "budget_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Provide logistical details — schedule and budget"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, another kid named Aiden is joining — his mom just confirmed today. She mentioned he had a really scary reaction to cashews at a birthday party last month, they had to use an EpiPen and everything",
+          "success_criteria": "Agent registers Aiden as a new participant and notes his severe cashew/tree nut allergy",
+          "required_info_keys": [
+            "new_kid_joins"
+          ],
+          "required_constraint_keys": [
+            "aiden_tree_nut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with high-severity constraint (Aiden, tree nut allergy)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "By the way, do you think I should do the same snack for morning and afternoon, or mix it up? The kids are ages 6 to 9",
+          "success_criteria": "Agent responds with snack variety advice without losing track of constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "snack variety",
+            "drift_topic": "whether to vary morning vs afternoon snacks for 6-9 year olds",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic question to create distance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Mason's mom just texted me a correction — she talked to his allergist and it turns out it's actually a milk protein allergy, not just lactose intolerance. The doctor was very clear about that",
+          "success_criteria": "Agent updates Mason's constraint from lactose intolerance to the broader milk protein allergy",
+          "required_info_keys": [
+            "mason_constraint_upgrade"
+          ],
+          "required_constraint_keys": [
+            "mason_milk_protein_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE: lactose intolerance → milk protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Tyler's family is going on vacation starting Wednesday, so he won't be at camp the last three days. His mom asked if I could send him home with some snacks for the road on Tuesday though",
+          "success_criteria": "Agent notes Tyler leaves Wednesday but needs Tuesday take-home snacks (his celiac constraint still applies to those)",
+          "required_info_keys": [
+            "tyler_leaves"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity partial EXIT with scope change — Tyler's gluten constraint applies to take-home snacks but not Wed-Fri camp snacks"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Should I get paper plates and napkins too, or do they have those at the community center?",
+          "success_criteria": "Agent responds about supplies without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "supplies",
+            "drift_topic": "whether to bring paper plates and napkins or if the venue has them",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I found a bulk snack deal at Costco. Here's what's in it: rice cakes with almond butter, string cheese sticks, oatmeal raisin cookies, trail mix with cashews and dried mango, carrot and celery sticks with hummus, and fruit popsicles made with juice and sugar. Any issues with this list?",
+          "success_criteria": "Agent checks each snack against all active constraints and identifies: string cheese (Mason milk protein allergy), oatmeal raisin cookies (Tyler celiac — gluten; also relevant for take-home), trail mix with cashews (Aiden tree nut allergy), fruit popsicles (Lily diabetes — high sugar). Rice cakes with almond butter are fine for everyone. Carrot and celery sticks with hummus — hummus typically contains garlic, problematic for Sophia (Jain, no root vegetables including garlic).",
+          "required_info_keys": [
+            "probe_snack_list"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 snacks against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Six snacks evaluated against current constraints: (1) Rice cakes with almond butter — fine for everyone (rice is gluten-free, almond butter is dairy-free, no root vegetables, low sugar relative to other snacks). (2) String cheese sticks — problematic for Mason, who has a milk protein allergy (not just lactose intolerance — his mom corrected this with his allergist, so all dairy is off limits). (3) Oatmeal raisin cookies — problematic for Tyler because oats are often cross-contaminated with gluten and cookies contain wheat flour (celiac disease). This also matters for his take-home snacks on Tuesday. (4) Trail mix with cashews and dried mango — problematic for Aiden, who had an anaphylactic reaction to cashews requiring an EpiPen. (5) Carrot and celery sticks with hummus — hummus typically contains garlic, which is a root vegetable forbidden in devout Jain practice, making this problematic for Sophia. (6) Fruit popsicles made with juice and sugar — problematic for Lily, who has type 1 diabetes and whose parents are careful about sugar; juice-and-sugar popsicles are high in sugar.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "String cheese sticks are problematic for Mason because he has a milk protein allergy (not just lactose intolerance — the constraint was upgraded by his mom after consulting his allergist)",
+      "Oatmeal raisin cookies are problematic for Tyler because of his celiac disease (cookies contain gluten), and this applies to his take-home snacks for Tuesday as well",
+      "Trail mix with cashews is problematic for Aiden because he has a severe cashew/tree nut allergy (anaphylactic reaction, EpiPen used)",
+      "Carrot and celery sticks with hummus are problematic for Sophia because hummus typically contains garlic, and as a devout Jain she cannot eat root vegetables including garlic",
+      "Fruit popsicles made with juice and sugar are problematic for Lily because she has type 1 diabetes and her parents are careful about sugar",
+      "Rice cakes with almond butter are fine for everyone currently in the group"
+    ],
+    "forbidden_elements": [
+      "Treating Mason's constraint as just lactose intolerance (it was upgraded to milk protein allergy — broader scope, all dairy is off limits)",
+      "Flagging oatmeal raisin cookies as problematic for Tyler only on Wed-Fri camp days (Tyler leaves Wednesday but needs take-home snacks Tuesday, so gluten still matters for his portion)",
+      "Flagging almond butter as a tree nut problem for Aiden without distinguishing that his confirmed allergy is to cashews specifically (almonds are tree nuts but the scenario only confirms cashew reaction — however, cross-reactivity concern is reasonable to mention)",
+      "Saying Tyler has no constraints for the last three days of camp without noting his take-home snack needs on Tuesday",
+      "Ignoring Aiden entirely (late-joining entity, must be checked against all snack items)",
+      "Saying hummus is fine for everyone without checking for garlic content against Sophia's Jain dietary restrictions"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and constraint upgrade reasoning across 9 conversational turns. Key tracking challenges: (1) BURST delivery in turn 1 — five kids with four different constraints introduced at once. (2) LATE JOIN — Aiden joins in turn 3 with a severe tree nut allergy (cashew anaphylaxis). (3) CONSTRAINT UPGRADE — Mason's constraint changes from lactose intolerance to milk protein allergy, which is broader in scope (all dairy products are now off limits, not just high-lactose ones). (4) PARTIAL EXIT with scope change — Tyler leaves camp Wednesday but needs take-home snacks Tuesday, so his celiac/gluten constraint still applies to his portion. (5) INFERENTIAL CONSTRAINTS — Tyler's celiac → no gluten (agent must know celiac = gluten autoimmune disorder), Sophia's Jain family → no meat/fish/eggs/root vegetables (agent must know devout Jain dietary rules and that garlic is a root vegetable), Aiden's cashew EpiPen reaction → severe tree nut allergy. (6) HIDDEN INGREDIENT — hummus typically contains garlic, which is a root vegetable forbidden in Jain practice (multi-step: hummus → contains garlic → garlic is root vegetable → Jain restriction). The probe includes 6 items with mixed verdicts: 1 clearly fine (rice cakes with almond butter), 4 clearly problematic for different reasons (string cheese, cookies, trail mix, popsicles), and 1 requiring hidden ingredient inference (hummus contains garlic → Sophia's Jain constraint)."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

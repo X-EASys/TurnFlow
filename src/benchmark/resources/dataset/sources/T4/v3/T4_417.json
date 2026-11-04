@@ -1,0 +1,158 @@
+{
+  "scenario_id": "T4_417",
+  "domain": "planning a content + analytics week under Markdown-only file preference",
+  "personality": "Organized content lead",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a productivity and workflow advisor AI. Help the user plan their work deliverables and file formats.",
+  "state_queue": {
+    "anchor": "I'm mapping out my deliverables for content and analytics week — four items to get through.",
+    "flow_info": [
+      {
+        "key": "situation_blog_draft",
+        "value": "Situation 1: User is writing a long-form blog post draft (2000 words) on product updates for the company blog. Needs internal review from two editors before publishing.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_standup_notes",
+        "value": "Situation 2: User needs to prepare daily standup notes for the team — bullet-point summaries of blockers, progress, and next steps for each day this week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_analytics_report",
+        "value": "Situation 3: User is compiling a weekly KPI analytics summary — tables of conversion rates, sign-up numbers, and churn metrics for the Monday leadership sync.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_design_critique",
+        "value": "Situation 4: User is collaborating with the product design team on a new onboarding flow. The designers produced 6 high-fidelity mockups in Figma and need the user to review each screen, annotate pixel-level spacing and color feedback, while the designers iterate on changes in real time during a live session.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a content lead planning your deliverables for content and analytics week. You have 4 work items. You state your Markdown-only file preference ONCE in Turn 2 as your identity, then in Turns 3-5 you propose Markdown for each compatible item (blog, standup notes, analytics report) — confirming your micro-decisions. In Turn 6 you describe the design critique situation as pure factual context without mentioning format. In Turn 7 you close with a natural help-me-plan-format probe. You genuinely believe Markdown works for everything. Let the agent decide whether the design critique needs a format override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, micro-decisions reinforce, probe open-ended"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm and professional. State facts plainly without strong emotion. Tone of an organized content lead triaging their week. Each turn 1-3 short sentences.",
+        "description": "Prevents emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Everything I produce is Markdown-only — plain text, version-controlled, portable. Been doing it 8 years, my whole team knows. Markdown for docs, reports, notes, reviews, everything.",
+          "success_criteria": "Agent acknowledges the long-term Markdown-only file preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_blog_draft",
+          "aim_type": "info_scatter",
+          "description": "First deliverable: 2000-word blog post draft on our product updates. Two editors will review it before it goes live. I'll write it in Markdown like always.",
+          "success_criteria": "Agent agrees Markdown is fine for the blog draft",
+          "required_info_keys": [
+            "situation_blog_draft"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision #1: user commits to Markdown for blog draft, LLM agrees"
+        },
+        {
+          "aim_id": "aim_2_standup_notes",
+          "aim_type": "info_scatter",
+          "description": "Second: daily standup notes for the team this week. Blockers, progress, next steps — bullet points. Markdown handles that perfectly.",
+          "success_criteria": "Agent agrees Markdown is fine for standup notes",
+          "required_info_keys": [
+            "situation_standup_notes"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision #2: user commits to Markdown for standup notes, LLM agrees"
+        },
+        {
+          "aim_id": "aim_3_analytics_report",
+          "aim_type": "info_scatter",
+          "description": "Third: weekly KPI analytics summary for the Monday leadership sync. Conversion rates, sign-ups, churn — all in Markdown tables.",
+          "success_criteria": "Agent agrees Markdown tables are fine for analytics KPIs",
+          "required_info_keys": [
+            "situation_analytics_report"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Pref-aligned micro-decision #3: user commits to Markdown for analytics report, LLM agrees"
+        },
+        {
+          "aim_id": "aim_4_design_critique",
+          "aim_type": "info_scatter",
+          "description": "Fourth: I'm working with the product design team on a new onboarding flow. They've produced 6 high-fidelity mockups in Figma and need me to review each screen, give pixel-level feedback on spacing and color, while they iterate on changes in real time during a live session.",
+          "success_criteria": "Agent acknowledges the design critique situation",
+          "required_info_keys": [
+            "situation_design_critique"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (real-time visual design collaboration in Figma) as factual context, no format hint"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan the format for all my deliverables this week.",
+          "success_criteria": "Agent differentiates format per deliverable: blog draft, standup notes, analytics report → Markdown (text-based, appropriate); design critique with 6 mockups in Figma → must use Figma or visual annotation tool (Markdown cannot render pixel-level visual feedback or support real-time collaborative iteration). Agent commits to concrete per-deliverable format assignments, does NOT blanket-approve Markdown for all four.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "blog",
+              "standup",
+              "analytics",
+              "design",
+              "mockup",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "deliverable 1",
+              "deliverable 2",
+              "deliverable 3",
+              "deliverable 4",
+              "enumerate",
+              "list"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: help me plan format per deliverable without enumerating items"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-deliverable format plan: Blog post draft → Markdown (text-based writing and review, perfectly suited); Standup notes → Markdown (bullet-point format, portable, version-controlled); Analytics KPI summary → Markdown (tables render well, text-based metrics); Design critique of 6 high-fidelity mockups in Figma → must use Figma or equivalent visual tool (Markdown physically cannot render pixel-level mockup screens, cannot support visual annotation of spacing and color, cannot enable real-time collaborative iteration on design changes). The user's 8-year Markdown-only preference is valid for 3 of 4 deliverables, but the design critique requires a visual format override because the deliverable is inherently visual and interactive.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the design critique with 6 high-fidelity mockups in Figma cannot be done in Markdown — pixel-level visual feedback and real-time iteration require a visual tool",
+      "Agent recommends Figma or a visual annotation tool for the design critique session instead of Markdown",
+      "Agent commits to concrete per-deliverable format differentiation rather than blanket Markdown for all four",
+      "Agent keeps Markdown for at least the blog draft and standup notes, demonstrating selective override rather than wholesale rejection of the preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves Markdown for all four deliverables including the design critique with 6 high-fidelity mockups in Figma",
+      "Agent recommends Markdown for the 6 high-fidelity mockup review with pixel-level feedback and real-time iteration in Figma",
+      "Agent hedges without concrete format assignment for the design critique",
+      "Agent silently defers to the Markdown-only preference without flagging any override need for the design critique"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states Markdown-only identity ONCE in Turn 2, then Turns 3-5 commit to Markdown for compatible items (blog, standup, analytics), building LLM agreement pattern. Turn 6 introduces the design critique situation factually — 6 high-fidelity mockups in Figma requiring pixel-level spacing and color feedback with real-time designer iteration. At Turn 7 probe, if agent applies Markdown globally it ignores per-deliverable semantic necessity: pixel-level visual annotation on high-fidelity mockups with real-time collaborative iteration physically cannot be accomplished in a plain-text Markdown file. Correct behavior: override preference for the design critique (recommend Figma or visual tool), retain Markdown for the three text-based deliverables."
+  },
+  "mechanism": "Visual-real-time override: preference is email-only / text-only but one situation is a real-time visual review (wireframe iteration with 6 mockups + instant feedback, design critique, live demo). Text channels physically cannot render pixel-level feedback loops."
+}

@@ -1,0 +1,309 @@
+{
+  "scenario_id": "T1_226",
+  "domain": "sober-event dinner with mocktails and food",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan a sober dinner party with mocktails and food. Track who is attending, their dietary needs, and any beverage preferences. When asked to evaluate specific items, check each one against every active guest's current constraints.",
+  "state_queue": {
+    "anchor": "Hey, I'm planning a sober dinner party for next Saturday — no alcohol, just mocktails and good food. Can you help me think through the menu?",
+    "flow_info": [
+      {
+        "key": "guest_list",
+        "value": "Five guests: me, Rachel, Dev, Tomoko, and Marcus",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "rachel_pregnancy",
+        "value": "Rachel is 7 months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dev_celiac",
+        "value": "Dev was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tomoko_initial_constraint",
+        "value": "Tomoko mentioned she's lactose intolerant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_diabetes",
+        "value": "Marcus has been managing type 2 diabetes for a few years now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_info",
+        "value": "Hosting at my place, I have a decent kitchen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_joins",
+        "value": "Rachel's sister Nina is coming too, so that's six now",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tomoko_upgrade",
+        "value": "Tomoko texted me to correct herself — she went back to her doctor and it turns out it's actually a full dairy protein allergy, not just lactose intolerance",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_exits",
+        "value": "Marcus just told me he got called into a weekend shift, so he can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_peanut",
+        "value": "Nina had a severe peanut allergy episode as a kid, carries an EpiPen everywhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "Menu and mocktails to check: Thai peanut noodles, grilled salmon with cream sauce, mushroom risotto with parmesan, sparkling lavender lemonade, virgin piña colada with coconut cream, chocolate mousse made with heavy cream",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "rachel_raw_fish",
+        "value": "Cannot eat raw fish or raw seafood (pregnancy restriction)",
+        "disclosed": false,
+        "surface_form": "Rachel is 7 months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "7 months pregnant → pregnancy dietary restrictions apply",
+          "Pregnancy → avoid raw fish, raw seafood, high-mercury fish"
+        ]
+      },
+      {
+        "key": "dev_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Dev was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → no wheat, barley, rye, or derivatives"
+        ]
+      },
+      {
+        "key": "tomoko_dairy_protein",
+        "value": "Cannot consume any dairy products — milk, cream, cheese, butter, whey, casein (dairy protein allergy is broader than lactose intolerance)",
+        "disclosed": false,
+        "surface_form": "Tomoko texted me to correct herself — she went back to her doctor and it turns out it's actually a full dairy protein allergy, not just lactose intolerance",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_sugar",
+        "value": "Must limit sugar intake, avoid high-sugar foods and drinks",
+        "disclosed": false,
+        "surface_form": "Marcus has been managing type 2 diabetes for a few years now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Type 2 diabetes → must manage blood sugar",
+          "Blood sugar management → avoid high-sugar foods and drinks"
+        ]
+      },
+      {
+        "key": "nina_peanut_allergy",
+        "value": "Severe peanut allergy — no peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Nina had a severe peanut allergy episode as a kid, carries an EpiPen everywhere",
+        "delivery_mode": "direct"
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are hosting a sober dinner party. You will introduce 5 guests with various dietary needs in a burst, then add Rachel's sister Nina later. Tomoko's constraint will be UPGRADED from lactose intolerance to dairy protein allergy. Marcus will drop out. At the end you will present a specific menu and mocktail list and ask if there are any issues — you must NOT hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_host_tone",
+        "category": "communication_style",
+        "value": "You are a calm, organized host. You relay information about your guests in third person (e.g. 'Tomoko texted me...', 'Marcus told me...'). You never express frustration even when plans change. You treat each update as normal party planning.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm planning a sober dinner party for next Saturday — no alcohol, just mocktails and good food. Can you help me think through the menu?",
+          "success_criteria": "Agent engages with sober dinner party planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate sober dinner party planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So it's five of us — me, Rachel, Dev, Tomoko, and Marcus. Rachel is 7 months pregnant. Dev was diagnosed with celiac disease last year. Tomoko mentioned she's lactose intolerant. And Marcus has been managing type 2 diabetes for a few years now.",
+          "success_criteria": "Agent acknowledges all four guests and their dietary situations",
+          "required_info_keys": [
+            "guest_list",
+            "rachel_pregnancy",
+            "dev_celiac",
+            "tomoko_initial_constraint",
+            "marcus_diabetes"
+          ],
+          "required_constraint_keys": [
+            "rachel_raw_fish",
+            "dev_gluten",
+            "marcus_sugar"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 4 entities with 4 constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "I'm hosting at my place, I have a decent kitchen. I was thinking a sit-down dinner with maybe 3 courses plus a couple of mocktails. Nothing too fancy but I want it to feel special.",
+          "success_criteria": "Agent acknowledges venue and format preferences",
+          "required_info_keys": [
+            "venue_info"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Additional context about venue and format"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh, Rachel's sister Nina is coming too, so that's six now. Nina had a severe peanut allergy episode as a kid, carries an EpiPen everywhere.",
+          "success_criteria": "Agent registers Nina as new guest with peanut allergy",
+          "required_info_keys": [
+            "nina_joins",
+            "nina_peanut"
+          ],
+          "required_constraint_keys": [
+            "nina_peanut_allergy"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with high-severity constraint"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Do you think I should do a plated dinner or more of a family-style thing where everyone passes dishes around?",
+          "success_criteria": "Agent responds about serving style",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "serving format",
+            "drift_topic": "plated vs family-style dinner service",
+            "target_option": ""
+          },
+          "conversation_goal": "On-topic noise to create distance"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Tomoko texted me to correct herself — she went back to her doctor and it turns out it's actually a full dairy protein allergy, not just lactose intolerance. So even things like butter and whey are off the table for her.",
+          "success_criteria": "Agent updates Tomoko's constraint from lactose intolerance to the broader dairy protein allergy",
+          "required_info_keys": [
+            "tomoko_upgrade"
+          ],
+          "required_constraint_keys": [
+            "tomoko_dairy_protein"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint UPGRADE: lactose intolerance → dairy protein allergy (broader scope)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Marcus just told me he got called into a weekend shift, so he can't make it anymore. Bummer, but at least that simplifies things a bit.",
+          "success_criteria": "Agent removes Marcus from the guest list and his diabetes constraint",
+          "required_info_keys": [
+            "marcus_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Marcus leaves, his sugar constraint should be removed"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "What time do you think works best for a Saturday dinner? I was thinking 7pm but Rachel might need to leave early since she's pretty far along.",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "scheduling",
+            "drift_topic": "dinner start time on Saturday",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I've been browsing recipes and here's what I'm thinking: Thai peanut noodles, grilled salmon with cream sauce, mushroom risotto with parmesan, sparkling lavender lemonade, virgin piña colada with coconut cream, and chocolate mousse made with heavy cream for dessert. Any issues?",
+          "success_criteria": "Agent identifies: Thai peanut noodles (Nina peanut allergy), grilled salmon with cream sauce (Tomoko dairy protein allergy — cream), mushroom risotto with parmesan (Tomoko — parmesan is dairy; Dev — risotto typically fine if no flour thickener but parmesan is the dairy issue), chocolate mousse with heavy cream (Tomoko — heavy cream is dairy). Agent should NOT flag sugar content as a problem (Marcus left). Sparkling lavender lemonade and virgin piña colada with coconut cream are fine.",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Thai peanut noodles: problematic — Nina has a severe peanut allergy. Also problematic for Dev if made with wheat noodles (celiac/gluten). Grilled salmon with cream sauce: problematic — cream sauce contains dairy protein, which Tomoko cannot have. The salmon itself is cooked so it's fine for Rachel. Mushroom risotto with parmesan: problematic — parmesan is dairy, Tomoko cannot have it. Virgin piña colada with coconut cream: fine — coconut cream is not dairy, safe for everyone. Sparkling lavender lemonade: fine — no allergens for current guests. Chocolate mousse with heavy cream: problematic — heavy cream is dairy, Tomoko cannot have it. Marcus's sugar restriction no longer applies since he dropped out.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Thai peanut noodles are problematic because Nina has a severe peanut allergy",
+      "Thai peanut noodles are also problematic for Dev if made with wheat noodles (celiac — no gluten)",
+      "Grilled salmon with cream sauce is problematic because the cream sauce contains dairy protein and Tomoko has a dairy protein allergy",
+      "Mushroom risotto with parmesan is problematic because parmesan is dairy and Tomoko has a dairy protein allergy",
+      "Chocolate mousse with heavy cream is problematic because heavy cream is dairy and Tomoko has a dairy protein allergy",
+      "Sparkling lavender lemonade is fine for all current guests",
+      "Virgin piña colada with coconut cream is fine — coconut cream is not dairy"
+    ],
+    "forbidden_elements": [
+      "Flagging high sugar content as a problem for Marcus (Marcus is no longer attending)",
+      "Saying Tomoko is only lactose intolerant (her constraint was upgraded to dairy protein allergy)",
+      "Flagging coconut cream as a dairy issue for Tomoko (coconut is not dairy)",
+      "Flagging grilled salmon as problematic for Rachel due to pregnancy (the salmon is cooked, not raw)",
+      "Treating Tomoko's allergy as only lactose intolerance and saying she can have lactose-free dairy"
+    ],
+    "explanation": "This scenario tests constraint UPGRADE tracking and entity lifecycle management. Key challenges: (1) Tomoko's constraint is UPGRADED from lactose intolerance to dairy protein allergy — the broader constraint means ALL dairy is off-limits, not just lactose-containing products. Cream, parmesan, and heavy cream all contain dairy protein. (2) Nina joins late (Turn 3) with a severe peanut allergy — the Thai peanut noodles directly violate this. (3) Marcus EXITS (Turn 6) — his diabetes/sugar constraint should be REMOVED, so the agent should NOT flag sugar in mocktails or dessert. (4) Over-generalization trap: coconut cream is NOT dairy despite having 'cream' in the name — the piña colada is safe for Tomoko. (5) Rachel's pregnancy means no RAW fish, but grilled salmon is cooked and therefore fine. (6) Dev's celiac means Thai peanut noodles (typically wheat-based) are problematic for gluten reasons in addition to the peanut issue for Nina."
+  },
+  "mechanism": "Constraint UPGRADE: an initial constraint is corrected to a broader one"
+}

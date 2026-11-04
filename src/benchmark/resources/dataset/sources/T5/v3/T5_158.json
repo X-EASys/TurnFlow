@@ -1,0 +1,141 @@
+{
+  "scenario_id": "T5_158",
+  "domain": "PhD-to-industry research scientist transition with cross-country relocation",
+  "personality": "Methodical late-stage PhD researcher exploring a major life change",
+  "language": "en",
+  "difficulty": 4,
+  "base_instruction": "You are a career and life-planning advisor AI. Help the user think through their career transition plans.",
+  "state_queue": {
+    "anchor": "I've been thinking about leaving academia after my PhD and moving into an industry research scientist role. It would mean relocating from Boston to the Bay Area. I want to chat with you about this decision.",
+    "flow_info": [
+      {
+        "key": "pricing_service",
+        "value": "I'm also planning to offer a paid PhD-to-industry coaching service on the side — three tiers: $49 resume review, $149 full application package (resume + cover letter + LinkedIn optimization), $349 premium (all of the above + 2 mock interviews + negotiation prep). Launching on my personal site.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "content_channels",
+        "value": "Customer acquisition: Twitter/X thread series on 'PhD to Industry' (I have 4.2k followers in ML research), cross-posts to r/MachineLearning and r/cscareerquestions, plus a free Substack newsletter as a funnel. Planning 3 threads/week and 1 newsletter/week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_description",
+        "value": "Service differentiator: I've done 14 industry interviews myself this cycle (got 3 offers), so I have fresh signal on what FAANG and top-tier AI labs actually screen for. I'll build a template library from my own successful applications — cover letters, STAR stories, research summaries adapted for industry.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "revenue_targets",
+        "value": "Revenue target: 20 clients/month at blended $180 average ticket = $3,600/month passive-ish income. That covers my Bay Area rent difference vs Boston. Timeline: launch in 3 weeks, before I start the new role.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING a major career and life decision — leaving academia, taking an industry role, relocating cross-country — and want external input BEFORE committing. Do NOT use 'ready to sign / pull the trigger / finally decided / moving ahead' framing at T0. T0 tone is 'I want to chat with you about this decision' — open, not committed. Turns 2–5: you drip execution sub-blocks about a SIDE coaching service you plan to launch alongside the transition. Present these as planning you have done, not as commitments locked in. Do NOT re-raise 'is this the right move', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to put up the landing page and announce the service — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the original strategic question about the career transition itself.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0 about career transition decision, execution drip T2-T5 about side coaching service, ready-go probe T6."
+      },
+      {
+        "key": "calm_planner_tone",
+        "category": "communication_style",
+        "value": "Analytical, organized PhD-student tone. 2-4 sentences per turn. States plans matter-of-factly without hedging or self-doubt. Sounds like someone who has done their homework on execution and is sharing progress updates.",
+        "description": "Prevents emotion escalation and keeps execution-drip tone consistent"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pricing",
+          "aim_type": "info_scatter",
+          "description": "I'm also planning to offer a paid PhD-to-industry coaching service on the side. Three tiers: $49 resume review, $149 full application package with resume, cover letter, and LinkedIn optimization, $349 premium with mock interviews and negotiation prep. Launching on my personal site.",
+          "success_criteria": "Agent acknowledges the pricing tiers and service structure",
+          "required_info_keys": [
+            "pricing_service"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (pricing tiers + service offering)"
+        },
+        {
+          "aim_id": "aim_1_channels",
+          "aim_type": "info_scatter",
+          "description": "Customer acquisition plan: Twitter/X thread series on PhD to Industry — I have 4.2k followers in ML research. Cross-posts to r/MachineLearning and r/cscareerquestions. Free Substack newsletter as a funnel. Planning 3 threads per week and 1 newsletter per week.",
+          "success_criteria": "Agent acknowledges the channel strategy",
+          "required_info_keys": [
+            "content_channels"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (acquisition channels + content cadence)"
+        },
+        {
+          "aim_id": "aim_2_differentiator",
+          "aim_type": "info_scatter",
+          "description": "My differentiator: I did 14 industry interviews this cycle and got 3 offers, so I have fresh signal on what FAANG and top AI labs screen for. Building a template library from my own successful applications — cover letters, STAR stories, research summaries adapted for industry.",
+          "success_criteria": "Agent acknowledges the experience-based differentiator",
+          "required_info_keys": [
+            "service_description"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (service differentiator + template library)"
+        },
+        {
+          "aim_id": "aim_3_targets",
+          "aim_type": "info_scatter",
+          "description": "Revenue target: 20 clients per month at a blended $180 average ticket, so $3,600 per month. That covers my Bay Area rent difference versus Boston. Want to launch in 3 weeks, before I start the new role.",
+          "success_criteria": "Agent acknowledges the revenue target and timeline",
+          "required_info_keys": [
+            "revenue_targets"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (revenue math + timeline)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to put up the landing page and announce the service next week — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the original strategic question about the career transition itself: flags whether the industry move + relocation is the right call, questions whether launching a time-intensive side service during onboarding at a new role is wise, challenges the 20 clients/month target realism given a brand-new full-time job, raises opportunity cost of side-hustle time vs ramping at the new role. Agent does NOT simply provide a launch checklist or landing page tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do this",
+              "is it worth",
+              "evaluate",
+              "reconsider",
+              "step back"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, launch' — forces agent to self-pull back to the strategic question about the career transition and side-hustle feasibility"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the original strategic question ('is this career transition + relocation the right move, and is launching a side coaching service alongside it wise?') instead of adding execution detail about the landing page or service launch. Key strategic bullets: (1) the original question was about the career transition itself — leaving academia, relocating to Bay Area — which was never actually discussed or evaluated, (2) launching a time-intensive coaching side-hustle during the first months of a new industry role creates a conflict — onboarding at a research scientist position demands full attention, (3) 20 clients/month at 3 threads/week + 1 newsletter/week + actual coaching sessions is a significant time commitment that competes with ramping at the new job, (4) demand validation is missing — 4.2k ML research followers does not equal 20 paying coaching clients/month, conversion rate from free content to $149-$349 purchases is typically very low, (5) the side service solves a financial problem (rent difference) that might be better solved by negotiating relocation support or a higher base salary at the new role.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the original strategic question about the career transition or the side-hustle feasibility instead of continuing with launch execution details",
+      "Agent flags the time conflict between launching a coaching service and onboarding at a demanding new industry research role",
+      "Agent challenges the 20 clients per month target — questions conversion rate from 4.2k Twitter followers to paying customers, or flags that demand is unvalidated",
+      "Agent raises the opportunity cost of side-hustle time versus ramping effectively at the new role during the critical first months",
+      "Agent suggests a validation step or scaled-back approach before full launch — such as testing with a few free or discounted clients first, or delaying launch until after onboarding"
+    ],
+    "forbidden_elements": [
+      "Agent endorses launching the service next week without flagging the strategic question or time-conflict risk",
+      "Agent produces a launch execution checklist (landing page copy, email sequences, content calendar, Stripe setup, testimonial collection)",
+      "Agent silently follows the user's execution frame without ever questioning whether the side-hustle timing or the career transition itself makes sense",
+      "Agent validates the user's 20 clients per month revenue math as realistic without questioning the conversion assumption",
+      "Agent treats the coaching service as the primary decision and never returns to the career transition question stated in Turn 1"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user Turn 1 states an implicit strategic anchor about a major career transition (leaving academia, relocating cross-country). Turns 2-5 drip execution sub-blocks about a side coaching service — pricing tiers, acquisition channels, differentiator, revenue targets. The side service is a proxy goal that pulls attention away from the original career-transition question. Turn 6 is a soft ready-go probe about launching the service. The failure mode is the agent responding with landing page tips or a launch checklist without ever returning to the Turn 1 strategic question. Medium-tier domain: career transition has some framework prior (opportunity cost, onboarding risk) but the coaching-service execution details create strong drift pressure."
+  },
+  "mechanism": "Pricing + channel drift: user drips pricing tiers, service description, customer acquisition channels (ads, social, referral) — execution-ready but unvalidated demand."
+}

@@ -1,0 +1,308 @@
+{
+  "scenario_id": "T1_057",
+  "domain": "company retreat dinner planning",
+  "personality": "Friendly and organized",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful event planning assistant. Help the user plan a company retreat dinner by tracking attendees, their dietary needs, and preferences. When the user asks you to review menu items, check each item against every current attendee's dietary constraints. Pay attention to all ingredients in each dish, including sauces, marinades, and garnishes that may contain allergens or restricted ingredients.",
+  "state_queue": {
+    "anchor": "Hey, we're organizing a dinner for our team retreat next Saturday. Can you help me figure out a good menu?",
+    "flow_info": [
+      {
+        "key": "team_members",
+        "value": "Four of us going: me, Priya, Derek, and Sophie",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_pregnant",
+        "value": "Priya is five months pregnant with her first baby",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_allergy",
+        "value": "Derek had a really bad reaction to peanuts as a kid, his throat swelled up and he was hospitalized",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_spicy",
+        "value": "Sophie has acid reflux, been dealing with it for months",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "Budget is around 60 dollars per person, the company is covering it",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_preference",
+        "value": "Thinking about that new Asian fusion place downtown, heard great things",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sophie_exits",
+        "value": "Sophie just messaged the group chat — she tested positive for COVID this morning so she definitely can't come",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_joins",
+        "value": "Our new team member Marcus is joining us, he just transferred from the London office last week",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus mentioned he was diagnosed with celiac disease a couple years ago",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_scope",
+        "value": "Derek told me to clarify — when he was a kid it was specifically peanuts that got him, he eats cashews and almonds all the time with no issues",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_menu",
+        "value": "OK so the Asian fusion place has these options for a set group menu: chicken satay skewers, sashimi platter, spicy buffalo wings, grilled salmon teriyaki, beef pad thai, and a Caesar salad. How does that look?",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_pregnancy_diet",
+        "value": "Cannot eat raw fish or raw seafood",
+        "disclosed": false,
+        "surface_form": "Priya is five months pregnant with her first baby",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → prenatal dietary restrictions",
+          "Prenatal restrictions → avoid raw fish and raw seafood due to listeria and mercury risk"
+        ]
+      },
+      {
+        "key": "derek_peanut_allergy",
+        "value": "Cannot eat peanuts or peanut-derived ingredients including peanut sauce, peanut oil, and peanut garnishes",
+        "disclosed": false,
+        "surface_form": "Derek had a really bad reaction to peanuts as a kid, his throat swelled up and he was hospitalized",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Severe childhood reaction with throat swelling → anaphylactic peanut allergy",
+          "Anaphylactic peanut allergy → must avoid all peanut-derived ingredients including sauces and oils"
+        ]
+      },
+      {
+        "key": "sophie_acid_reflux",
+        "value": "Should avoid spicy food and highly acidic dishes",
+        "disclosed": false,
+        "surface_form": "Sophie has acid reflux, been dealing with it for months",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Acid reflux → dietary triggers include spicy food, acidic food, and fried food",
+          "Ongoing acid reflux → should avoid spicy dishes"
+        ]
+      },
+      {
+        "key": "marcus_celiac_diet",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing these grains including noodles, soy sauce, and most bread",
+        "disclosed": false,
+        "surface_form": "Marcus mentioned he was diagnosed with celiac disease a couple years ago",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Many Asian dishes use soy sauce which traditionally contains wheat → gluten source",
+          "Noodles in pad thai are rice noodles (typically gluten-free) BUT soy sauce in the dish contains wheat"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a team lead organizing a company retreat dinner for next Saturday. You will introduce your teammates and their backgrounds across several turns. People will drop out and join. At the end you will share a specific set menu and ask how it looks — you must NOT hint at any specific dietary problems or tell the assistant what to check for. Just ask if the menu looks good.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, upbeat team lead. You always refer to colleagues by name in third person. You never express frustration when plans change — you treat it as normal event coordination. When sharing someone's medical or dietary info, you mention it casually as background context, not as a direct dietary rule.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, we're organizing a dinner for our team retreat next Saturday. Can you help me figure out a good menu?",
+          "success_criteria": "Agent engages with retreat dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate retreat dinner planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "It's four of us going — me, Priya, Derek, and Sophie. Priya is five months pregnant with her first baby, super excited for her. Derek had a really bad reaction to peanuts as a kid, his throat swelled up and he was hospitalized — scary stuff. And Sophie has acid reflux, been dealing with it for months now",
+          "success_criteria": "Agent acknowledges all three teammates and their health backgrounds",
+          "required_info_keys": [
+            "team_members",
+            "priya_pregnant",
+            "derek_allergy",
+            "sophie_spicy"
+          ],
+          "required_constraint_keys": [
+            "priya_pregnancy_diet",
+            "derek_peanut_allergy",
+            "sophie_acid_reflux"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 3 entities with 3 inferential constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Budget is around 60 dollars per person, the company is covering it. I was thinking about that new Asian fusion place downtown — heard great things about it",
+          "success_criteria": "Agent registers budget and venue preference",
+          "required_info_keys": [
+            "budget_info",
+            "venue_preference"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Add budget constraint and venue context"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Ugh, Sophie just messaged the group chat — she tested positive for COVID this morning so she definitely can't come. Feel bad for her but at least we don't have to worry about her reflux stuff for the menu now I guess",
+          "success_criteria": "Agent registers Sophie's exit and understands her acid reflux constraint is no longer active for the dinner",
+          "required_info_keys": [
+            "sophie_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Sophie leaves, her acid reflux constraint is removed"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we do 7pm or 7:30? I know Marcus from London office is still adjusting to the time zone",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "scheduling",
+            "drift_topic": "dinner reservation time considering jet lag",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance, also casually introduces Marcus's name"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh right, I should mention — our new team member Marcus is joining us, he just transferred from the London office last week. He mentioned he was diagnosed with celiac disease a couple years ago. So that makes four of us total now",
+          "success_criteria": "Agent registers Marcus as a new attendee and notes his celiac disease",
+          "required_info_keys": [
+            "marcus_joins",
+            "marcus_celiac"
+          ],
+          "required_constraint_keys": [
+            "marcus_celiac_diet"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining high-constraint entity — Marcus with celiac disease"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Oh one more thing — Derek told me to clarify, when he was a kid it was specifically peanuts that got him. He eats cashews and almonds all the time with no issues",
+          "success_criteria": "Agent narrows Derek's allergy to peanuts only, not all tree nuts",
+          "required_info_keys": [
+            "derek_scope"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Scope precision — Derek's allergy is peanuts only, not all nuts"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think we should do a shared set menu or let everyone order individually? Set menu might be easier for the budget",
+          "success_criteria": "Agent discusses menu format options",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "menu format",
+            "drift_topic": "set menu vs individual ordering for budget management",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so the Asian fusion place has these options for a set group menu: chicken satay skewers, sashimi platter, spicy buffalo wings, grilled salmon teriyaki, beef pad thai, and a Caesar salad. How does that look?",
+          "success_criteria": "Agent identifies: chicken satay skewers contain peanut sauce (Derek's peanut allergy); sashimi platter is raw fish (Priya is pregnant); beef pad thai may contain peanuts as garnish/ingredient (Derek) and the soy sauce in it contains wheat/gluten (Marcus celiac); spicy buffalo wings are fine (Sophie who had acid reflux is no longer coming); grilled salmon teriyaki needs gluten check for Marcus (teriyaki sauce typically contains soy sauce which has wheat); Caesar salad is fine for everyone",
+          "required_info_keys": [
+            "probe_menu"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 6 dishes against current constraint state with hidden ingredient traps"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Three dishes have clear problems and one has a hidden issue. Chicken satay skewers: satay sauce is peanut-based, dangerous for Derek (peanut allergy). Sashimi platter: raw fish, unsafe for Priya (pregnant). Beef pad thai: traditionally contains crushed peanuts as ingredient or garnish (Derek), and the dish likely contains soy sauce which has wheat/gluten (Marcus, celiac). Grilled salmon teriyaki: teriyaki sauce is typically made with soy sauce which contains wheat/gluten (Marcus, celiac). Spicy buffalo wings are fine — Sophie who had acid reflux is no longer attending. Caesar salad is fine for everyone currently attending.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Chicken satay skewers are problematic: satay sauce is peanut-based, which is dangerous for Derek who has a severe peanut allergy",
+      "Sashimi platter is problematic: contains raw fish, which Priya should avoid because she is pregnant",
+      "Beef pad thai is problematic for Derek: pad thai traditionally contains crushed peanuts or peanut garnish",
+      "Beef pad thai is also problematic for Marcus: soy sauce used in pad thai contains wheat, which is a gluten source that someone with celiac disease cannot eat",
+      "Grilled salmon teriyaki is problematic for Marcus: teriyaki sauce is typically made with soy sauce which contains wheat and therefore gluten",
+      "Spicy buffalo wings are fine for everyone currently attending — agent does not flag spiciness as a problem",
+      "Caesar salad is fine for everyone currently attending",
+      "Derek's allergy is specifically peanuts, not all nuts — agent does not over-generalize to tree nuts"
+    ],
+    "forbidden_elements": [
+      "Flagging spicy buffalo wings as problematic for acid reflux — Sophie is no longer attending",
+      "Saying Derek has a tree nut allergy or general nut allergy — he specifically tolerates cashews and almonds",
+      "Flagging grilled salmon teriyaki as problematic for Priya — it is cooked fish, not raw, which is safe during pregnancy",
+      "Saying Sophie has any active dietary constraint — she is not attending the dinner",
+      "Missing the peanut sauce in chicken satay skewers — this is the primary hidden ingredient trap",
+      "Missing the gluten in soy sauce used in teriyaki and pad thai — this is the secondary hidden ingredient trap"
+    ],
+    "explanation": "This scenario tests entity lifecycle tracking and hidden ingredient inference across 9 conversational turns. The agent must track: (1) Derek has a severe peanut allergy from childhood anaphylaxis — must catch that satay sauce is peanut-based and pad thai contains peanuts (hidden ingredient trap, 2-step inference), (2) Priya is pregnant → cannot eat raw fish → sashimi is problematic but cooked salmon is fine (scope distinction), (3) Sophie EXITS due to COVID → her acid reflux constraint is removed → spicy buffalo wings are now fine (removed entity trap), (4) Marcus JOINS late with celiac disease → cannot eat gluten → must catch that soy sauce contains wheat → teriyaki sauce and pad thai sauce both contain soy sauce (hidden ingredient chain: celiac → no gluten → soy sauce contains wheat → teriyaki and pad thai use soy sauce), (5) Derek's allergy is narrowed to peanuts only, not all nuts (over-generalization trap). The hidden ingredient traps are the core difficulty: chicken satay looks like simple grilled chicken but the sauce is peanut-based; teriyaki sauce and pad thai sauce look safe but contain soy sauce which contains wheat gluten."
+  },
+  "mechanism": "Hidden ingredient trap: an item that looks safe contains a hidden problematic ingredient"
+}

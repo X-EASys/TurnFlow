@@ -20,8 +20,8 @@ from benchmark.user.user_simulator import UserSimulator
 
 
 revision = "simulator-b1-v3-p1-20261009-v1"
-_RESOURCE_SHA256 = "200267f53c34d688f23f9734605118fa166e080261b69865992804b62c0a3492"
-_TASKS = frozenset(("T16", "T17", "T18", "T19", "T20"))
+_RESOURCE_SHA256 = '92f8b77cc314c2c3101524b8202d3bcdbf2666e4f1acaa2c0bf3bbffdaa954de'
+_TASKS = frozenset(("T1", "T2", "T3", "T4", "T5"))
 
 
 def _digest_scenario(scenario):
@@ -165,7 +165,7 @@ def create_release_simulator(scenario, model, *, source_path=None, trace=None,
                              candidate_bindings=(), candidate_strict=False, **kwargs):
     """Create the release simulator; pass a budget through ``trace.budget``.
 
-    Native, aim-driven T16--T20 uses frozen B1/V3 with optional registered P1.
+    Native, aim-driven T1--T5 uses frozen B1/V3 with optional registered P1.
     Other task types retain the legacy simulator. Model and provider options
     do not select or modify the mechanism. No completion is made here.
     """

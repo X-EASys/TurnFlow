@@ -8,46 +8,11 @@
     "src/benchmark/user/typed_generation_boundary.py": "12a5debb02bae8b1d26791beb2265aea3e9e599cd26008f4dd14b40004582ca0"
   },
   "bindings": {
-    "T19/v3/T19_005": {
-      "scenario_key": "T19/v3/T19_005",
-      "scenario_id": "T19_005",
-      "source_sha256": "5b72a9b8b45202444aeb97caad92cb8fbc385e6397cace887e5bb08ddd54c8c5",
-      "scenario_sha256": "84135bf95b79ad6019238860f344c11ecd24eadfde28beee73397cecea49cfa5",
-      "opening": {
-        "variant": "O1",
-        "opening_intent": "I have a design-and-engineering collaboration week coming up with four key work sessions I need to plan tooling for.",
-        "speaker": "Pragmatic senior engineer"
-      },
-      "evidence_scope": {
-        "binding": "exact_source_bytes",
-        "scope": "registered_opening_and_generation_stages"
-      },
-      "generation": {
-        "preference_aim_id": "aim_0_pref",
-        "material_aim_ids": [
-          "aim_1_pr_review",
-          "aim_2_api_docs",
-          "aim_3_ci_debug",
-          "aim_4_wireframe"
-        ],
-        "final_aim_id": "aim_5_probe",
-        "preference_binding": {
-          "preference_source_aim_id": "aim_0_pref",
-          "preference_text": "Everything I do lives in VS Code. Six years now — terminal, notes, code reviews, documentation, configs, all of it. My team knows I never leave the editor."
-        },
-        "variants": {
-          "anchor": "R2",
-          "material": "R2",
-          "final": "O3"
-        },
-        "baseline_runtime_p1_note": false
-      }
-    },
-    "T19/v3/T19_008": {
-      "scenario_key": "T19/v3/T19_008",
-      "scenario_id": "T19_008",
-      "source_sha256": "db3645b5b1e2e63d978432f9be5324a6a2c5b2fc50aa07a04b8755690aec4411",
-      "scenario_sha256": "8aac83e143c2e70e5dffaaa201189a874abe6e1a6a97bd0096483f9cb93a966d",
+    "T4/v3/T4_008": {
+      "scenario_key": "T4/v3/T4_008",
+      "scenario_id": "T4_008",
+      "source_sha256": "7ef95eaec210233b23f606171436e085941fae3343ee021e676dbf31b5db4878",
+      "scenario_sha256": "e53c453089f4c843b32f24edbae74ff6572cab4528bddea5448243076d950d22",
       "opening": {
         "variant": "O1",
         "opening_intent": "I've got a pile of different textiles that all need a good wash this weekend, want to work through them with you.",
@@ -78,110 +43,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_001": {
-      "scenario_key": "T19/v3/T19_001",
-      "scenario_id": "T19_001",
-      "source_sha256": "363e1fe59b18a00f468943e3498f782c134658a1e925f9050b1fdfc8ae9d5458",
-      "scenario_sha256": "6b8b579ddae0b7eccf31fc32192c9bdbabdf12837c48b3fa8990c67612fc9343",
-      "opening": {
-        "variant": "O1",
-        "opening_intent": "I have three customer-facing items to handle this week and I want to work through each one with you.",
-        "speaker": "Seasoned client success manager"
-      },
-      "evidence_scope": {
-        "binding": "exact_source_bytes",
-        "scope": "registered_opening_and_generation_stages"
-      },
-      "generation": {
-        "preference_aim_id": "aim_0_pref",
-        "material_aim_ids": [
-          "aim_1_novatech",
-          "aim_2_meridian",
-          "aim_3_pinebluff"
-        ],
-        "final_aim_id": "aim_4_probe",
-        "preference_binding": {
-          "preference_source_aim_id": "aim_0_pref",
-          "preference_text": "All my customer communication goes through text channels — email and support tickets. Been doing it this way for 6 years. Clients know me as the person who keeps everything in writing. No calls, no video, no chat apps."
-        },
-        "variants": {
-          "anchor": "R2",
-          "material": "R2",
-          "final": "O3"
-        },
-        "baseline_runtime_p1_note": false
-      }
-    },
-    "T19/v3/T19_012": {
-      "scenario_key": "T19/v3/T19_012",
-      "scenario_id": "T19_012",
-      "source_sha256": "00f8c2e3aa3212d4a9cfb97142698e19f29843da62565c7d3b82dc01ab79d5ae",
-      "scenario_sha256": "a43004735d4d9d21abfd68a449f3e26f4c75f90bbfde3599b7f1414c09700ebb",
-      "opening": {
-        "variant": "O1",
-        "opening_intent": "I'm hosting a dinner party this Saturday for six people and I want to get the shopping and prep sorted out over the next couple of days.",
-        "speaker": "Enthusiastic home cook"
-      },
-      "evidence_scope": {
-        "binding": "exact_source_bytes",
-        "scope": "registered_opening_and_generation_stages"
-      },
-      "generation": {
-        "preference_aim_id": "aim_0_pref_anchor",
-        "material_aim_ids": [
-          "aim_1_ribeye",
-          "aim_2_shrimp",
-          "aim_3_bread",
-          "aim_4_tomatoes"
-        ],
-        "final_aim_id": "aim_5_probe",
-        "preference_binding": {
-          "preference_source_aim_id": "aim_0_pref_anchor",
-          "preference_text": "Everything I buy goes straight into the fridge — I've done it that way for about 8 years. My family knows: if it's food, it lives in the fridge until it's time to cook. Cold storage is the safest way to keep things fresh."
-        },
-        "variants": {
-          "anchor": "R2",
-          "material": "R2",
-          "final": "O3"
-        },
-        "baseline_runtime_p1_note": false
-      }
-    },
-    "T19/v3/T19_222": {
-      "scenario_key": "T19/v3/T19_222",
-      "scenario_id": "T19_222",
-      "source_sha256": "7259b4fd6e3efb2ad29d525cf7514c2c8f0245fd02e76aaada921cf306230d9d",
-      "scenario_sha256": "fe19c15088a7b9e19dd68afeffa3c820e2c5892551ecde3bba55b801129ad65d",
-      "opening": {
-        "variant": "O1",
-        "opening_intent": "I'm prepping a big plant-based holiday dinner this Saturday for about 12 family members including my elderly grandparents. Lots of groceries to buy and store over the next few days.",
-        "speaker": "Enthusiastic home cook planning a big family gathering"
-      },
-      "evidence_scope": {
-        "binding": "exact_source_bytes",
-        "scope": "registered_opening_and_generation_stages"
-      }
-    },
-    "T19/v3/T19_075": {
-      "scenario_key": "T19/v3/T19_075",
-      "scenario_id": "T19_075",
-      "source_sha256": "26244959146de00d6bb8779396835bf51f4b16d4ed38ea48006620064a8f283f",
-      "scenario_sha256": "e8fc05cf453abc8e4a28b2a93fc31ec2cfb9b133d736671423831b817aae8fb3",
-      "opening": {
-        "variant": "O1",
-        "opening_intent": "I'm packing for a 10-day trip to Vienna next month — mix of sightseeing, meetings, and one formal evening event.",
-        "speaker": "Practical frequent traveler"
-      },
-      "evidence_scope": {
-        "binding": "exact_source_bytes",
-        "scope": "registered_opening_and_generation_stages"
-      }
-    },
-    "T19/v2/T19_001": {
-      "scenario_key": "T19/v2/T19_001",
-      "scenario_id": "T19_001",
-      "source_sha256": "c78155a3dd098886696d3b1139369cde2dffec5dd48396fb9cfa22371e821484",
-      "scenario_sha256": "1b1bed4db314ec39bee2c529e1c7cd2457199084074cf9a1f67af6ba4a293fb5",
+    "T4/v2/T4_001": {
+      "scenario_key": "T4/v2/T4_001",
+      "scenario_id": "T4_001",
+      "source_sha256": "6374fb0ac22d9dad0aae0baef271e66a7312eee70c0a3478840839ff7615aaf5",
+      "scenario_sha256": "5b65e181eea1214fe8a469542956b987456815843bec1d8174f3137ab3886d94",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning this Saturday around a few errands and want to think through the day with you.",
@@ -212,11 +78,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_002": {
-      "scenario_key": "T19/v2/T19_002",
-      "scenario_id": "T19_002",
-      "source_sha256": "f33881cbc3a6e44135cedb045e08b3b799b582f667dd830174f09cdb1bbf01e4",
-      "scenario_sha256": "403497289bbb59d5be05e6d0484ea37929d3c4aaf71ecf3f3e142ebf0fcc8083",
+    "T4/v2/T4_002": {
+      "scenario_key": "T4/v2/T4_002",
+      "scenario_id": "T4_002",
+      "source_sha256": "d5e8d15b04998ad6bf191729e36a628334442cb94c42020c5c458b660bbf9975",
+      "scenario_sha256": "32b8961e6012cb622f38cbe5a395b7d734bb466730737512ba71dfc7e8d0296e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a packed Saturday coming up with three things back to back and I want to get my bag sorted.",
@@ -246,11 +112,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_006": {
-      "scenario_key": "T19/v2/T19_006",
-      "scenario_id": "T19_006",
-      "source_sha256": "e32e852e899d8506f03953af88ef00f70087fbd4fed230b60e279e9603dc6f06",
-      "scenario_sha256": "bc15a69d17e1f4fae4395453f94764891765a6c1e460a9cc548e3771c2b91c26",
+    "T4/v2/T4_006": {
+      "scenario_key": "T4/v2/T4_006",
+      "scenario_id": "T4_006",
+      "source_sha256": "543c10136d6489dd36267b0c11adf99cfbf74a1f195a7803e45433eec3816825",
+      "scenario_sha256": "90add68f00c73c3b929a1ad7925284e7df13b72b070e711a4bfa5582ad5ac123",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm reviewing my monthly business service subscriptions and want to streamline how I pay for everything.",
@@ -281,11 +147,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_010": {
-      "scenario_key": "T19/v2/T19_010",
-      "scenario_id": "T19_010",
-      "source_sha256": "c0cffa1c1710670c136a4fbdc58aae80a72364d7eb5bbe5789d4fec5dc4981d7",
-      "scenario_sha256": "a3a90dcc3ecd57b48326138b06df7cd2b703cb4b4157e160bde8b2a48a8609db",
+    "T4/v2/T4_010": {
+      "scenario_key": "T4/v2/T4_010",
+      "scenario_id": "T4_010",
+      "source_sha256": "e15133d1778767d400f32c5d606f5829208a2e56350521862c18c867911a0b28",
+      "scenario_sha256": "223dd79f73c0fe4b4128660f4b0084790672be80dd92fe9856bcbbb9ca0e99b1",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four design review requests landing on my desk this week and I want to figure out how to handle each one.",
@@ -316,11 +182,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_013": {
-      "scenario_key": "T19/v2/T19_013",
-      "scenario_id": "T19_013",
-      "source_sha256": "0ccfa03777c95adc370526ddd9f1b445438abfecfd482e2b883f366ff611fed3",
-      "scenario_sha256": "f9fd96e25bdc88464bb4da7b139fd67ed21b7a53552ac62a966f424343906a8e",
+    "T4/v2/T4_013": {
+      "scenario_key": "T4/v2/T4_013",
+      "scenario_id": "T4_013",
+      "source_sha256": "2601c1a563b10594c363fc5b5f02b88209911ce0723bdbcde72a86fe725648f5",
+      "scenario_sha256": "615b1c87cbd09d3fb76e9086be602938529699c2063aa06efdab1f047220b039",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have three reporting deliverables due this week and I want to work through each one with you.",
@@ -350,11 +216,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_025": {
-      "scenario_key": "T19/v2/T19_025",
-      "scenario_id": "T19_025",
-      "source_sha256": "a11a91b17977b478c7188f95a5a8d9e3592a59e9204dd7210bb0e5adbbe63b7a",
-      "scenario_sha256": "9204fcae55a93b2816d7dbe66e60493792047e39bc49936c1181f47443463991",
+    "T4/v2/T4_025": {
+      "scenario_key": "T4/v2/T4_025",
+      "scenario_id": "T4_025",
+      "source_sha256": "3063c0417d61f15b9921cb62fc982062a8af587c0a333070c4c66858a440c663",
+      "scenario_sha256": "d47ab9bfb9e50c5e96682d8566da97a1d6548298cf0bac6945aeea2ba187e3b0",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few cross-functional announcements and updates to push out this week, want to think through them with you.",
@@ -385,11 +251,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_026": {
-      "scenario_key": "T19/v2/T19_026",
-      "scenario_id": "T19_026",
-      "source_sha256": "d0349f98828aeff811138627c2d6cccfe2c1baaab66b927a973a067d1575e36e",
-      "scenario_sha256": "b6aff0602116d8db662701c6edc4663976727afacc8638d0849f5e984adfbf6d",
+    "T4/v2/T4_026": {
+      "scenario_key": "T4/v2/T4_026",
+      "scenario_id": "T4_026",
+      "source_sha256": "57680dba72bcc58ac6b8cc05d94de2bded76a065be979ea407c5173815a45c4f",
+      "scenario_sha256": "ea38997a2a8c41eb57ffd3b11bb8361c83457c6b1d12afb29f6b4c33a9825950",
       "opening": {
         "variant": "O1",
         "opening_intent": "I just moved into a new apartment and I'm figuring out where to put everything. Got a few categories of stuff to sort out.",
@@ -420,11 +286,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_029": {
-      "scenario_key": "T19/v2/T19_029",
-      "scenario_id": "T19_029",
-      "source_sha256": "aac3197b61c156b098ccca1f1905ef4e2be5d28ec3e2e69f78bf77b45f0135da",
-      "scenario_sha256": "85473c2d199cf7e6f319cb5c7e6e8dd5fb3f4736313ad205bf079dbc51d66950",
+    "T4/v2/T4_029": {
+      "scenario_key": "T4/v2/T4_029",
+      "scenario_id": "T4_029",
+      "source_sha256": "7867fecf95d433a3f8f752c04a02704a329d49b6b7be9a77cf27e20b474774ed",
+      "scenario_sha256": "783d272a2d8e55f6f1bd439d9e1bb710af0d579cd1db4bd0410398f944f8cfb0",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a sprint kicking off next week with a few deliverables I need to set up tooling for.",
@@ -455,11 +321,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_036": {
-      "scenario_key": "T19/v2/T19_036",
-      "scenario_id": "T19_036",
-      "source_sha256": "3d8d83700c3f0148fb6058ba1a5729ac4510c143e7265962f43acf92fa36a72c",
-      "scenario_sha256": "042b941a2511deeb62ad681907459936d0b02a9f95fa1f142b9053a23269e3a0",
+    "T4/v2/T4_036": {
+      "scenario_key": "T4/v2/T4_036",
+      "scenario_id": "T4_036",
+      "source_sha256": "a7ce75c33e76e4339756700039d724998191ea35f7785278d0df90d4bfb693aa",
+      "scenario_sha256": "cb89305e305e4c6172e31e0ec945cb05c5c6c9663b981fa175dd13819b09bef5",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm hosting a dinner gathering tomorrow evening for six people and just got back from a big grocery run.",
@@ -490,11 +356,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_044": {
-      "scenario_key": "T19/v2/T19_044",
-      "scenario_id": "T19_044",
-      "source_sha256": "b6d100fd6f206b4458031d21da359bc295d9eeec56901aa51a4c80f412146fcd",
-      "scenario_sha256": "6abb73b79f9f4ddff82463d77427a22503a062c36f555b5c5fb328f348af8333",
+    "T4/v2/T4_044": {
+      "scenario_key": "T4/v2/T4_044",
+      "scenario_id": "T4_044",
+      "source_sha256": "8a110708c56aba99a47e79fad8af6402dc590a32b8fbb666e37725974b5c0cd3",
+      "scenario_sha256": "649ef0f0428913f9d735feed5eb1c73174b18af108a76f7add5506c276f0ca8b",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need to plan my outfits for this coming work week — got a few different things going on.",
@@ -525,11 +391,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_045": {
-      "scenario_key": "T19/v2/T19_045",
-      "scenario_id": "T19_045",
-      "source_sha256": "833c09012fda33bbdb1ea7bb42873136261b8e26336f2ad1b9cdef94b7ef8c24",
-      "scenario_sha256": "926045334a9ba60b550cfbd8340a435b1f640e6d72dea0bf726a690826325248",
+    "T4/v2/T4_045": {
+      "scenario_key": "T4/v2/T4_045",
+      "scenario_id": "T4_045",
+      "source_sha256": "b3fd0241f5f898056c1f41258c9680f13eccd238d27a684e50246836d55e0db5",
+      "scenario_sha256": "45df27d3a68d4abeae45f930253150c791e9bd7794e1a316baadcf93396edc99",
       "opening": {
         "variant": "O1",
         "opening_intent": "Year-end is coming up and I want to get our family's digital stuff properly backed up and archived before the new year.",
@@ -560,11 +426,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_049": {
-      "scenario_key": "T19/v2/T19_049",
-      "scenario_id": "T19_049",
-      "source_sha256": "af46da956ecbf5d6cb92b87051196b11a49efdbb30b352f9fced99f33099e8b3",
-      "scenario_sha256": "576e4bd836e9ccdeed108376ad2a4854e2ef07699376556a5f3402a3fcb23cd1",
+    "T4/v2/T4_049": {
+      "scenario_key": "T4/v2/T4_049",
+      "scenario_id": "T4_049",
+      "source_sha256": "262bccca64242f996836a73eeb3e0cddd53dce8d46f8e5fdb2733dd1fc9182d9",
+      "scenario_sha256": "a113fc961b2ffab16bed874b2f08e0d8dce5b3979bcc606ad0155e1845bf0c3f",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm sorting out my weekly laundry and textile care for the next few days, got a few different items to get through.",
@@ -595,11 +461,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_050": {
-      "scenario_key": "T19/v2/T19_050",
-      "scenario_id": "T19_050",
-      "source_sha256": "6e06e201466a921136b42d66baa7750695df8ae70153a8bbd0ea0177cb084d74",
-      "scenario_sha256": "977fedcd23210415808c897ab0d9735872e7ff81b96c8268c07f43a9bd54339c",
+    "T4/v2/T4_050": {
+      "scenario_key": "T4/v2/T4_050",
+      "scenario_id": "T4_050",
+      "source_sha256": "aad0f0939429f00d1dcfe7b0c79a5b7acac1a096d6d2c1151d840e417a38fd70",
+      "scenario_sha256": "db0c4a9a12081dd888b1ce5cf219374c471a034f1e47dc4ec4376f55c7ab4d47",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm hosting a dinner party for six friends this Saturday and want to plan the full menu with you.",
@@ -630,11 +496,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_058": {
-      "scenario_key": "T19/v2/T19_058",
-      "scenario_id": "T19_058",
-      "source_sha256": "23ee9e77f7ebb82169b5cb3aad460253ed7a5eceaee3d19c9244d8cc6a3f4857",
-      "scenario_sha256": "0ef91e227cbc01e5f2bed985db50c10ae8b6a6484ce621a828eb5bb35fa14a2c",
+    "T4/v2/T4_058": {
+      "scenario_key": "T4/v2/T4_058",
+      "scenario_id": "T4_058",
+      "source_sha256": "5565d20e945d4110ae637d403e688eb7a37679c4ccec885e2f38c544701d28ca",
+      "scenario_sha256": "5e1485a5b2c0b44cdb0e59135e9b15957ae670e10c2c1adfe3dba116b9e2b144",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm putting together the tool stack for a cross-functional design-and-engineering collaboration week we have coming up next month.",
@@ -665,11 +531,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_060": {
-      "scenario_key": "T19/v2/T19_060",
-      "scenario_id": "T19_060",
-      "source_sha256": "595857e0a05fce7ca69cc0510a1e68d3979423a14d8bfd8a661904afc0c25bce",
-      "scenario_sha256": "81f287a9424f98756ccea586488706bface20e5b52c17b409812d48eb0c7c8ee",
+    "T4/v2/T4_060": {
+      "scenario_key": "T4/v2/T4_060",
+      "scenario_id": "T4_060",
+      "source_sha256": "c968e999d149c932fc342504002341f7f242b24d4322f1b2dd8253ae01f970b4",
+      "scenario_sha256": "1a285718c3b811e2af55d4a305ddbca79cf91b6b1a8e62b09be685c54cbfc4ea",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few home projects I want to knock out over the next several weekends and I'd love help planning them out.",
@@ -700,11 +566,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_061": {
-      "scenario_key": "T19/v2/T19_061",
-      "scenario_id": "T19_061",
-      "source_sha256": "ce070686634920810ecaa565e7b2e4025a6a284d3bca295ba4943d7ad57e6a7e",
-      "scenario_sha256": "8d8c5b2bdf5b0a6c83dd72c2b1b55f10d16cc922ede8d030712d7a0a40caac2d",
+    "T4/v2/T4_061": {
+      "scenario_key": "T4/v2/T4_061",
+      "scenario_id": "T4_061",
+      "source_sha256": "e15363746666d931f3f62b227f8145a234cf5c4eebcc94aaa036957ce4cf2539",
+      "scenario_sha256": "f081551fab7d7b68ba2f168a0422bd6ef16f84f35c319373f8886291b01d01a8",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning a 10-day trip to Central Europe next month that mixes outdoor hiking and a formal diplomatic reception, and I want to sort out my packing and garment care plan.",
@@ -735,11 +601,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_062": {
-      "scenario_key": "T19/v2/T19_062",
-      "scenario_id": "T19_062",
-      "source_sha256": "8da65644037ab35c171872488d491f5c4170f8824c035e81884f0d35aa9cc164",
-      "scenario_sha256": "dce3bcceda1a2e56ea4e070a8a4370bc5fc893b00d455082d420b5216eb4bf3f",
+    "T4/v2/T4_062": {
+      "scenario_key": "T4/v2/T4_062",
+      "scenario_id": "T4_062",
+      "source_sha256": "943ce68602ceb3e4de7038605b01e5adec13bce968bd0fadc50f2da38d5a84bb",
+      "scenario_sha256": "487393fb02c601c94bf2e7f74201a92444475ee768ad91fab74e75c6058f8167",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm kicking off a new consulting engagement next week and need to set up my tooling for four key work streams.",
@@ -770,11 +636,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v2/T19_063": {
-      "scenario_key": "T19/v2/T19_063",
-      "scenario_id": "T19_063",
-      "source_sha256": "d4a90507213cd9cbebd306590971ef2b75dd9b175928167cf752eac399afc323",
-      "scenario_sha256": "7e7ea573bad00186d163515755e0a6b5fa27daa5313a395cf00ad4797cf5edba",
+    "T4/v2/T4_063": {
+      "scenario_key": "T4/v2/T4_063",
+      "scenario_id": "T4_063",
+      "source_sha256": "81596ab4d3cc8de585ca58a2eddee03e3482da98d734f172ad53fe6da0c04e2c",
+      "scenario_sha256": "50457b82620905432bc9ff4ca273b4613853a0bfd48b7cdbe7c759a79daa62fe",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need help planning my outfits for this coming Wednesday through Saturday.",
@@ -805,11 +671,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_002": {
-      "scenario_key": "T19/v3/T19_002",
-      "scenario_id": "T19_002",
-      "source_sha256": "19b372f90313b77dd220105a5c4fc7415e9ee1aa0900e3dcafa1e2b2a3932151",
-      "scenario_sha256": "cb6244e16530b1a7b409280d40bbc8ea9cb487bc585195acc8a41049ae257fa2",
+    "T4/v3/T4_002": {
+      "scenario_key": "T4/v3/T4_002",
+      "scenario_id": "T4_002",
+      "source_sha256": "55541b21548a9ebb8bf9151cb2dd83797ea5f9ff52ae6be0f5f6c6a53a43478a",
+      "scenario_sha256": "33724aabd7d79682a11c45132cb130c27ec53b4f7f737de86a8c78c4a2dd8dfa",
       "opening": {
         "variant": "O1",
         "opening_intent": "I just signed a 6-month consulting engagement and need to set up my monthly productivity tool stack.",
@@ -840,11 +706,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_007": {
-      "scenario_key": "T19/v3/T19_007",
-      "scenario_id": "T19_007",
-      "source_sha256": "73d0ba076262639c63d0d60c64715f7faa4bbd91879cbed7f21b42ef530a7a87",
-      "scenario_sha256": "9e501973b32ce4c17a8ed576a89fd0e6c1d5cfd2e28a28be20a9195d11c85fa8",
+    "T4/v3/T4_007": {
+      "scenario_key": "T4/v3/T4_007",
+      "scenario_id": "T4_007",
+      "source_sha256": "ad87f30e8a8cd15e3c8a11793ada47ee5dd6ad2de9b75cc78788a2d34754c9c1",
+      "scenario_sha256": "e017d1b16fc6e631c49d786f45d8cfe827b3cca7d0de92700c1a63b53f635719",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four design review requests that came in over the weekend and I need to figure out how to handle them this Monday.",
@@ -875,11 +741,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_010": {
-      "scenario_key": "T19/v3/T19_010",
-      "scenario_id": "T19_010",
-      "source_sha256": "fbbc45d7ad412ca6c3c14ce63571cf273d3af05c248c28923b5181cb3d2ff7ae",
-      "scenario_sha256": "9529f7adc4b9342c978d1f6d76e3783bdface14f452eb1f97c93bbad73974417",
+    "T4/v3/T4_010": {
+      "scenario_key": "T4/v3/T4_010",
+      "scenario_id": "T4_010",
+      "source_sha256": "d8417ea42c2bc08d1a95cfc08bc0f23d056043f623bb997692a2a78d49a36a02",
+      "scenario_sha256": "446dd444ae750ccfc4bf68d068585d1eeba3f5418600ae48b655a7a0639a9fda",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm pulling together my dad's medical day for next Tuesday — a few things I need to coordinate.",
@@ -910,11 +776,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_011": {
-      "scenario_key": "T19/v3/T19_011",
-      "scenario_id": "T19_011",
-      "source_sha256": "1c464c91da142e215364ab08226e317b4c40c6ced62dbaaf220fdec1db1f864c",
-      "scenario_sha256": "4e3c9f649231e2998a4e120cff6a1f40a8a18b49d5c4f34e81207df5f2633f0f",
+    "T4/v3/T4_011": {
+      "scenario_key": "T4/v3/T4_011",
+      "scenario_id": "T4_011",
+      "source_sha256": "a5450789a1128c827391882ce97a7dbd5e7ce22d04d75d23c2652bd3e30a9196",
+      "scenario_sha256": "8508c4aa43ce081b6ebd5b4d5a01a8189382da24a90945d023ffe903b42e98b4",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few things I need to get done this Saturday and I'd love some help organizing the day.",
@@ -945,11 +811,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_013": {
-      "scenario_key": "T19/v3/T19_013",
-      "scenario_id": "T19_013",
-      "source_sha256": "faa70cc9f49fc85a1c11f3fff0ac4c3606117a47020046b19cf1dc9709b51084",
-      "scenario_sha256": "0b10088f0dc672ee6a8a88201406b280364010f5fbe0159c74aef6a48eb7a59a",
+    "T4/v3/T4_013": {
+      "scenario_key": "T4/v3/T4_013",
+      "scenario_id": "T4_013",
+      "source_sha256": "22b0f67a324bcdd5c0f0e79137005b246233c426acc0cb0c7c9bf6695567d536",
+      "scenario_sha256": "4265baafe25605a30864906d87eac34fc8fe04180e49f14b7d34b011579e3d3a",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm mapping out my Saturday errands and could use a hand pulling it all together.",
@@ -980,11 +846,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_016": {
-      "scenario_key": "T19/v3/T19_016",
-      "scenario_id": "T19_016",
-      "source_sha256": "4b1b8458c7c86e959f5709b5d742213152a59b03001179cd6bec37f83815b6d0",
-      "scenario_sha256": "6446662314531a837242aa0ddfd2c64090ecd05dd148c23bb5ffa5955e13c847",
+    "T4/v3/T4_016": {
+      "scenario_key": "T4/v3/T4_016",
+      "scenario_id": "T4_016",
+      "source_sha256": "7f2a9d8463c38cb6ec737b0a47ac221d678949aeb73ab6defad0016ba20f6773",
+      "scenario_sha256": "03ea0642a80f244ccf0790bc9bee397986ba57755752033be2e1e2f2bda34019",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four stops I want to hit this Saturday and I'd like help putting together a smooth schedule.",
@@ -1015,11 +881,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_017": {
-      "scenario_key": "T19/v3/T19_017",
-      "scenario_id": "T19_017",
-      "source_sha256": "f3891f9fd64cb2fe95137c890c500c5dcda486755974b6ff5ed0da774881c530",
-      "scenario_sha256": "6e2c7ee9bcaa003fb9d8581e2d87b7c441af587f67f7ff1549136896a606ccbe",
+    "T4/v3/T4_017": {
+      "scenario_key": "T4/v3/T4_017",
+      "scenario_id": "T4_017",
+      "source_sha256": "0818d1b4be2aec99b38b1ff4f549c4a57f813ec6fd04a07af6a28bdf2b016b55",
+      "scenario_sha256": "f2c34c7e0d262818e867fe6419c74d941f11df5342ec7f55e34ab88220125a55",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have three pets at home and I want to get their weekly feeding plan sorted out with you.",
@@ -1049,11 +915,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_023": {
-      "scenario_key": "T19/v3/T19_023",
-      "scenario_id": "T19_023",
-      "source_sha256": "11657d20ba803cf604cc0a777977207c55a2e97da67ef947b618dad3cdee51c0",
-      "scenario_sha256": "ca41d89988a04ec631d49561017b436f718ebd25b0ba30b7b6ca2ce5353a43e2",
+    "T4/v3/T4_023": {
+      "scenario_key": "T4/v3/T4_023",
+      "scenario_id": "T4_023",
+      "source_sha256": "4633376f549fce29f72bd10b197ee539e96a2d7c4156703a567e436aeb72f96d",
+      "scenario_sha256": "6b270e8338234820ef93a0a142600d6e53173d3df87d064e53bd7ae6d0058f25",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning meal prep for next week — cooking for myself plus one guest staying Monday through Thursday.",
@@ -1084,11 +950,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_024": {
-      "scenario_key": "T19/v3/T19_024",
-      "scenario_id": "T19_024",
-      "source_sha256": "4a6a230fe6e58e554b27d4e48af5964b07ae187b895bb8bd4ca48f1824f927b8",
-      "scenario_sha256": "a4cc400b7fe581e61f42c392902795a6feb1d731103853d2e1f8f5a0d3c9b0aa",
+    "T4/v3/T4_024": {
+      "scenario_key": "T4/v3/T4_024",
+      "scenario_id": "T4_024",
+      "source_sha256": "b3c9101962faae5a08fce0f3d0a4ca5612cd14ec1f6e9df6f6b18dda6722b9fc",
+      "scenario_sha256": "7a8589094fe0c4b40a92178464b20055b58c0a982fc7b6c94fa3b4f0f8d6c183",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a pretty packed week coming up and want to get my outfits sorted in advance.",
@@ -1119,11 +985,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_028": {
-      "scenario_key": "T19/v3/T19_028",
-      "scenario_id": "T19_028",
-      "source_sha256": "3febb65307f57591461b67007f963b546b6a8351dadd9c6fa79dbf4e59f071e4",
-      "scenario_sha256": "3205eb615735f97e35c00dd774d3a2efb9a4e97c3981c0e9c7621c49c761dbd7",
+    "T4/v3/T4_028": {
+      "scenario_key": "T4/v3/T4_028",
+      "scenario_id": "T4_028",
+      "source_sha256": "eb8a392d758af6c00a82af68bd8a3d4292e332c02d2d422f8e6faeb8f0a299c7",
+      "scenario_sha256": "9f666806e53de2f72966716affc3cd3956a6cec442303ea4ec2ad798430c1a89",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few reporting deliverables coming up next week and I want to get my tooling sorted out.",
@@ -1154,11 +1020,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_029": {
-      "scenario_key": "T19/v3/T19_029",
-      "scenario_id": "T19_029",
-      "source_sha256": "b601d919841a495571c6ce927dcdce3a69b9263c263914f7eff54744e9891781",
-      "scenario_sha256": "7fc564b11c9181a101c80cd0b31b19abc840a5dfc229bd41661105957280538e",
+    "T4/v3/T4_029": {
+      "scenario_key": "T4/v3/T4_029",
+      "scenario_id": "T4_029",
+      "source_sha256": "3112f93f8527b115e498a8850d0129915f1198b635d20676f9719143f8fe116a",
+      "scenario_sha256": "7a6b078b0788dd0a87e150d24ddd5832dfe9e41fb47aa5166c6864afcc92a33e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a mixed work week coming up — four different deliverables due Monday through Thursday. Want to walk through each one with you.",
@@ -1189,11 +1055,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_030": {
-      "scenario_key": "T19/v3/T19_030",
-      "scenario_id": "T19_030",
-      "source_sha256": "6a001fdb7c63eae65be054a26c96b2b473ec2bfe5483d11dcf19fae68c31be72",
-      "scenario_sha256": "ead58a91774aea551b0766a69c19382d80d45927e53fa48b848d7f849e6d3837",
+    "T4/v3/T4_030": {
+      "scenario_key": "T4/v3/T4_030",
+      "scenario_id": "T4_030",
+      "source_sha256": "a855f3d449a76a3acd1f29f2fa2192cb2212e786d1146e187ec0c3f4a9c7af9e",
+      "scenario_sha256": "f2d4a3a282bd7fcd6ece691937253b304c7b534a3684e362ad573bb92b0776f3",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning a 5-day trip to Switzerland next month and want to talk through my packing and outfit plan with you.",
@@ -1224,11 +1090,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_034": {
-      "scenario_key": "T19/v3/T19_034",
-      "scenario_id": "T19_034",
-      "source_sha256": "50cb9d7812a6cea74632b422a9494e08b264b61cc8e3dc4407c184bcf92e4810",
-      "scenario_sha256": "68e53b1b6a5560b76101d08e6cd04f4d3680401dd3602c4196fb5bd22f80e0f4",
+    "T4/v3/T4_034": {
+      "scenario_key": "T4/v3/T4_034",
+      "scenario_id": "T4_034",
+      "source_sha256": "b0d429046de884f516069ce8837ec1a6f0f4e34d4d8f2b870cbdc50fa6b1ee10",
+      "scenario_sha256": "e839d2d6d4cffd5b3a13d84bde949723061de326abf2edebbc03fe7eb569f11b",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few announcements and updates to push out across teams this week, want to walk through them with you.",
@@ -1259,11 +1125,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_037": {
-      "scenario_key": "T19/v3/T19_037",
-      "scenario_id": "T19_037",
-      "source_sha256": "40ddd465b257e69da2e71625e67adb6fe5e45faf322485de68f254c71c091fd4",
-      "scenario_sha256": "7b838b7410b54bfa16174789d65e92c83aa252577ef20c6d23c1df8224ed3fbb",
+    "T4/v3/T4_037": {
+      "scenario_key": "T4/v3/T4_037",
+      "scenario_id": "T4_037",
+      "source_sha256": "5b2d1d7c5051e01f4c58a14c64d2678c207ab908a27da8df94c72c7336aa666f",
+      "scenario_sha256": "c7f7fda89f3d1dd5a2d97363dd7629fb9ca4d74d25a7248b0201c5c8e76fdcf4",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a batch of incident and escalation tickets that came in over the weekend. Need to triage and handle them this Monday morning.",
@@ -1294,11 +1160,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_039": {
-      "scenario_key": "T19/v3/T19_039",
-      "scenario_id": "T19_039",
-      "source_sha256": "0a1b6075756f147c3bfced0e17e7ef5452dd4098a63b3e1742cc0d2c2642b76d",
-      "scenario_sha256": "33ab5a17685c6384009feec66a3ad44d3acd49b670394e1d7fc59e963635a55d",
+    "T4/v3/T4_039": {
+      "scenario_key": "T4/v3/T4_039",
+      "scenario_id": "T4_039",
+      "source_sha256": "64a22b0a5b8923b0faf42bc6d1f56a58a6dd88d18a1020e5931b92f65c146828",
+      "scenario_sha256": "874cb60be74e6a6b56ca253b0215a205f8e15cb4314ed4ee0ed0f2ff7d9c7160",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning meals for next week and could use some help thinking through the menu.",
@@ -1329,11 +1195,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_042": {
-      "scenario_key": "T19/v3/T19_042",
-      "scenario_id": "T19_042",
-      "source_sha256": "7e9f4bcc3072202001252fb03b5c08312fd110ac5b695a7571ee138a54e32401",
-      "scenario_sha256": "70a1fbc94dcfc98f08d74469105846ca0003bf9e9d554d8f84aa2006ca034907",
+    "T4/v3/T4_042": {
+      "scenario_key": "T4/v3/T4_042",
+      "scenario_id": "T4_042",
+      "source_sha256": "9f742e70f6d4ef7f3d92c970f93fc5dda694172dcfd6f9600838c81159b43f18",
+      "scenario_sha256": "492c402023750798a88616d91312dbf12a3c317cb6cee1f9ac83379c06841969",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a busy week coming up and need to plan outfits for five days — Monday through Friday.",
@@ -1365,11 +1231,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_044": {
-      "scenario_key": "T19/v3/T19_044",
-      "scenario_id": "T19_044",
-      "source_sha256": "3197d7a677981d3d3dbfc7f2e7cd5ff05064cef4438cd9fdcd7bcd7fb8a7dc13",
-      "scenario_sha256": "3352075402921034b5b2d9e5f0c6683c396b818a29ad68b4584713fce23a92ad",
+    "T4/v3/T4_044": {
+      "scenario_key": "T4/v3/T4_044",
+      "scenario_id": "T4_044",
+      "source_sha256": "6d7fd9549c0394ca53bc835704b61d5176495f89fc2a23853bfb391a4f621e37",
+      "scenario_sha256": "f4970c62b3f19387d9f741f139a276bb4bb4974c086bc0a7baaba60dca3beea4",
       "opening": {
         "variant": "O1",
         "opening_intent": "Tax season is coming up and I need to get my documents organized. I have a few categories of paperwork to sort through.",
@@ -1400,11 +1266,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_045": {
-      "scenario_key": "T19/v3/T19_045",
-      "scenario_id": "T19_045",
-      "source_sha256": "cd21a5abc286f3ffe724ed23d3111dd18e413543af75d98f21e0db2bd5d3e4bc",
-      "scenario_sha256": "8c22df4b177280bdff36e84becd58e137f6d57cac338d24dd723f4aa1944884a",
+    "T4/v3/T4_045": {
+      "scenario_key": "T4/v3/T4_045",
+      "scenario_id": "T4_045",
+      "source_sha256": "a6b546393556253dea3a5accfba4f10a6d0faac5a35e9f8efef0946b4bc20715",
+      "scenario_sha256": "05a99a66bd2c6d12bdd9e0f575334443d2988a49a7ad1977d2106ee0091f81ce",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need to sort out my vendor and team communications for this week — four items total.",
@@ -1435,11 +1301,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_047": {
-      "scenario_key": "T19/v3/T19_047",
-      "scenario_id": "T19_047",
-      "source_sha256": "cc6cb3faf7e4ec295cb111030ac7a96476976570342e8b873d430785160224b7",
-      "scenario_sha256": "a1fae0e0ce650e4478f6705c01fa2ad20040a949e7a65b85f999a82363ed36d7",
+    "T4/v3/T4_047": {
+      "scenario_key": "T4/v3/T4_047",
+      "scenario_id": "T4_047",
+      "source_sha256": "7776da34a0abe625adce2f1343fb7689cdfc202cc6d60d6afc79a7c235c62a3f",
+      "scenario_sha256": "a9ff91d48e9a6b3cfe5fba508b669c6a36be9739e934cbdf80f915dfa5862d57",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm trying to map out my Wednesday — got school drop-off, a couple errands, and gym to fit in.",
@@ -1470,11 +1336,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_050": {
-      "scenario_key": "T19/v3/T19_050",
-      "scenario_id": "T19_050",
-      "source_sha256": "476869e45b468ea4879e01c0b3a64b439565f9177656cc0efbe472392dc5e343",
-      "scenario_sha256": "520148905fc0ab6ec32ea9ab85dddbfe678f225eae9dcbf4ff0805857f3d8c0b",
+    "T4/v3/T4_050": {
+      "scenario_key": "T4/v3/T4_050",
+      "scenario_id": "T4_050",
+      "source_sha256": "54724f0d4eff095f370f2483c680c38b1298b4f2024068cfd6dd8fc5ca9af2e8",
+      "scenario_sha256": "578844d24afaea6ff576d29b65b7fd7cbb646b72f8c8f770f5c36d13567bbc73",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm doing a big seasonal closet turnover this weekend and want to work through my care and storage plan with you.",
@@ -1505,11 +1371,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_055": {
-      "scenario_key": "T19/v3/T19_055",
-      "scenario_id": "T19_055",
-      "source_sha256": "a9746218de1ee348d145ed863936a02e885a33a25313edf1272459e0366c49c0",
-      "scenario_sha256": "2cfcbfc66242ba820d2a93eec3d6b3a9f15ad0203ea9e2bd964153a182de1f21",
+    "T4/v3/T4_055": {
+      "scenario_key": "T4/v3/T4_055",
+      "scenario_id": "T4_055",
+      "source_sha256": "903155991f93186cf1b8dcea6d52523bf375f5bac57da99bc764f624e259e1db",
+      "scenario_sha256": "2b63c711d282ff4dfaa617f68631481f540139fc5cf71b2609427f5e87277633",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few home projects I want to knock out over the next couple weekends.",
@@ -1539,11 +1405,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_056": {
-      "scenario_key": "T19/v3/T19_056",
-      "scenario_id": "T19_056",
-      "source_sha256": "04dfdacd4dd6a81d781d8e1fb452095a58521743968c431e72b63a3b92f00ac3",
-      "scenario_sha256": "878a5b8f8790784f4a7f5d6153c72d77c07c92e5bd59c3e146130f4f5dbf7269",
+    "T4/v3/T4_056": {
+      "scenario_key": "T4/v3/T4_056",
+      "scenario_id": "T4_056",
+      "source_sha256": "a5d6f54045fbaa57912525c05ed551eb2abf694f252bbb75c1b0476afbe796e0",
+      "scenario_sha256": "7a6cd63d18c243fbd16ec33d36cc6b091a3d189c6bc8359e71897f22bef0de39",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a bunch of textiles I need to get cleaned this weekend and I'd like your help planning it out.",
@@ -1574,11 +1440,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_057": {
-      "scenario_key": "T19/v3/T19_057",
-      "scenario_id": "T19_057",
-      "source_sha256": "e0c4bbd0de7e599717b884ff713a23bff04296909af8dfe2d2f276c6ed065621",
-      "scenario_sha256": "8841a0435ba6f297596c4303098364b8043c01c81d32ba8a9700128920740114",
+    "T4/v3/T4_057": {
+      "scenario_key": "T4/v3/T4_057",
+      "scenario_id": "T4_057",
+      "source_sha256": "03ebdb23a61d63335736308861293c1d160c5919460971707db5e9e3efcf369d",
+      "scenario_sha256": "3561ab6ebd8fc45adfaf1eb4ae495f6ec7be907a144fb999239a9623b60e2fc0",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few home projects coming up this month that I want to get scheduled and planned out.",
@@ -1608,11 +1474,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_058": {
-      "scenario_key": "T19/v3/T19_058",
-      "scenario_id": "T19_058",
-      "source_sha256": "552da72a0ab94b8859eff8600c57066a9ae67b8d991049816ad4db83d161d605",
-      "scenario_sha256": "b574e1aca52f9d0ad9e4e72947392b7be7ba94da73b2325c5aa3aebf622931b2",
+    "T4/v3/T4_058": {
+      "scenario_key": "T4/v3/T4_058",
+      "scenario_id": "T4_058",
+      "source_sha256": "0390ffbcf2987b54d1106065b9ae020a5eda68b8cae2542760b03fec88b94edc",
+      "scenario_sha256": "9e30269aa9fcd79dc07b578d697ba24cd3b951a9ff34d8bdcd1a5ee2cffbb8a4",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four home improvement tasks I want to knock out this coming weekend.",
@@ -1643,11 +1509,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_060": {
-      "scenario_key": "T19/v3/T19_060",
-      "scenario_id": "T19_060",
-      "source_sha256": "36075ae7cecd717f4e803cf35c4970e777f7b83536263fe945ade93a0674a0b6",
-      "scenario_sha256": "c7a685e493b7a1cfcbd5837ef7fa6027fccb6b3ac42f24a08ee8e543574b6d4d",
+    "T4/v3/T4_060": {
+      "scenario_key": "T4/v3/T4_060",
+      "scenario_id": "T4_060",
+      "source_sha256": "c1bba9e9a06c76eddbdd7b249084d26ec9c452cae6219c13c4e1995561f5680c",
+      "scenario_sha256": "b20cdcfe60ffcee2ba0fbe4aa3198fb6c62eb49f3119855c681d379cb17f3ba9",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a sprint of five renovation deliverables I want to knock out over the next three weekends.",
@@ -1678,11 +1544,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_061": {
-      "scenario_key": "T19/v3/T19_061",
-      "scenario_id": "T19_061",
-      "source_sha256": "df32d1203cd6237a93b7d1f8b9f3e26cc76e7d0b9038837400aa43d8bba8ba5f",
-      "scenario_sha256": "17b6e8200c44bbbdf9bc9e324dc87c1b29cac48c66296089630110de2ded6504",
+    "T4/v3/T4_061": {
+      "scenario_key": "T4/v3/T4_061",
+      "scenario_id": "T4_061",
+      "source_sha256": "c9fd32b4a16044715be62ee8f80024589148448ad12460dd98fcb39e1d95a264",
+      "scenario_sha256": "298290eacc454dffa4896da162a8e41045e4766301a6dcb56c173e7dd8a3088d",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need to plan out my dog's care for this coming week — a few routine things plus one procedure.",
@@ -1713,11 +1579,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_064": {
-      "scenario_key": "T19/v3/T19_064",
-      "scenario_id": "T19_064",
-      "source_sha256": "19735abf4a0ea67a1c8a6a8cd67f886df7c8514b4528f608d9339eed8526bfda",
-      "scenario_sha256": "016dc6991876a6b95202726ce91c9c075c8dc132e811619fec567f496ba91987",
+    "T4/v3/T4_064": {
+      "scenario_key": "T4/v3/T4_064",
+      "scenario_id": "T4_064",
+      "source_sha256": "2c55782926dcd010c48c435d2c2e64557fe3a3273153dc6ef20e25135a6b224c",
+      "scenario_sha256": "d9fdb87d8029f037bb3b66098200ffbde296784d8026c995bf474b17c220305e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm hosting a dinner party this Saturday for six people and I want to talk through the menu and ingredient sourcing with you.",
@@ -1748,11 +1614,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_066": {
-      "scenario_key": "T19/v3/T19_066",
-      "scenario_id": "T19_066",
-      "source_sha256": "933ecb37676e6c3ce322981e5de461a51625beb0388001b8dbb22eca931e4340",
-      "scenario_sha256": "d158f95966d7dde7ed5fe23385f13fdff5775dacebe0bc56ab02eb47e55bf2f5",
+    "T4/v3/T4_066": {
+      "scenario_key": "T4/v3/T4_066",
+      "scenario_id": "T4_066",
+      "source_sha256": "f9be5ac0d052fc1e08c964fda7a761ff0fdfcad3d0b14f20555ddb3588d7534c",
+      "scenario_sha256": "18e7955e199f209efb13e0b98855ef40369331b1c7467560b6e7ef3e5f8a2e7d",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm mapping out my Saturday — got a few stops to make around the neighborhood and one trip with my mom.",
@@ -1783,11 +1649,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_067": {
-      "scenario_key": "T19/v3/T19_067",
-      "scenario_id": "T19_067",
-      "source_sha256": "3bcfe7c6b0807b98a32a32400d24478745b71c655698eb7889852d98fab4accf",
-      "scenario_sha256": "ee1852efe09dd5ed692c5b81b52b8db43d8b86043e93495a2543dd96b68f5d42",
+    "T4/v3/T4_067": {
+      "scenario_key": "T4/v3/T4_067",
+      "scenario_id": "T4_067",
+      "source_sha256": "25b26d6abfd114e8d96fb04f1bf07ff8cbcdb17d8188a6fef9a0f977a6d9542c",
+      "scenario_sha256": "044871a738fc4b2c4568e95e234852597d295f83bebc484d7728b7121e737093",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning our family holiday meals for the upcoming long weekend — three gatherings over three days.",
@@ -1818,11 +1684,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_068": {
-      "scenario_key": "T19/v3/T19_068",
-      "scenario_id": "T19_068",
-      "source_sha256": "b2a2122fef10e2546e175eec3eae45ba9282ba7942c904867edf8c89b4a4d46e",
-      "scenario_sha256": "e84ae165f5e0d5559543265e9c2c5a6cb1a16c6026c4f1244a49a382f25b551b",
+    "T4/v3/T4_068": {
+      "scenario_key": "T4/v3/T4_068",
+      "scenario_id": "T4_068",
+      "source_sha256": "f98378b0b0be83848ef5fcf3e2aea36e7f478ec42584e59a4fb2230c499fda8d",
+      "scenario_sha256": "31db3deda2514f061add2e222f423372eed3cbd534b7b538459bb62826497534",
       "opening": {
         "variant": "O1",
         "opening_intent": "I just got back from the farmers market with my weekly haul and I want to get everything put away properly.",
@@ -1853,11 +1719,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_069": {
-      "scenario_key": "T19/v3/T19_069",
-      "scenario_id": "T19_069",
-      "source_sha256": "2517b4f9002fbf4db05469d038a16192d36df515953c2e4cf8847dfd0478af2d",
-      "scenario_sha256": "b603274be1739e37a82a7993d3cdc7566f0669670883b501818abf68fcc4b10f",
+    "T4/v3/T4_069": {
+      "scenario_key": "T4/v3/T4_069",
+      "scenario_id": "T4_069",
+      "source_sha256": "f5be35e4dae1f44b5639d72f31a1336a244c29a54aa8023091a905565cef97be",
+      "scenario_sha256": "ab7f65572cdd1c00e3eaf2079652ed1124d1e7a7e28d17b161b70151d6c2db1e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I just got back from my big weekly grocery run and I want to get everything put away properly.",
@@ -1888,11 +1754,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_070": {
-      "scenario_key": "T19/v3/T19_070",
-      "scenario_id": "T19_070",
-      "source_sha256": "25099296e71aeb9becc51ca7d5cabf76d9d482f073e769481d2b6b59388c7464",
-      "scenario_sha256": "5abf9a7e490ab4446c47c4f488bf171fb6c652ac80bc4aa3dd0407a8974f1e1b",
+    "T4/v3/T4_070": {
+      "scenario_key": "T4/v3/T4_070",
+      "scenario_id": "T4_070",
+      "source_sha256": "ab417df013aa72314a6733efba1f26d998d94bf6e673001b121cca830225e663",
+      "scenario_sha256": "6a526a5b53ca982b99b43fe611d10ca73a1f60f15902d2a33ab18e2b9e136946",
       "opening": {
         "variant": "O1",
         "opening_intent": "I just got back from a big grocery haul and I want to get everything put away properly.",
@@ -1923,11 +1789,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_081": {
-      "scenario_key": "T19/v3/T19_081",
-      "scenario_id": "T19_081",
-      "source_sha256": "3cfc135312866068b5e401593395bceb27973a59d8fcac033c981c36d24e3ddc",
-      "scenario_sha256": "2d22e2157d90ed073f4167c47bb10acc50dd356667b5ac5bae1c27a2f09eec0a",
+    "T4/v3/T4_081": {
+      "scenario_key": "T4/v3/T4_081",
+      "scenario_id": "T4_081",
+      "source_sha256": "06b455650da936a8bea864b74e546f420f5f5f865b24c0cb0fbe319df8d772f4",
+      "scenario_sha256": "6426f12354a508aab7d95a95a019cd152bdbfb6f9e270b53840c69b170b1936e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning a 5-day trip to the French Alps next month — mixing trail running with some social events.",
@@ -1957,11 +1823,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_088": {
-      "scenario_key": "T19/v3/T19_088",
-      "scenario_id": "T19_088",
-      "source_sha256": "fbfc411467e409f54593cd1a4ec938f890ff2079849a2aea4e80d1645a452efd",
-      "scenario_sha256": "8b8ce01fdd5b9918bfa54f1f0f08fb54d644e68f5f9d168c71a21a11550c5830",
+    "T4/v3/T4_088": {
+      "scenario_key": "T4/v3/T4_088",
+      "scenario_id": "T4_088",
+      "source_sha256": "731bf36fae4c37652427a47c1d64b5d208d13115dd27871ebd157b8354ea4f74",
+      "scenario_sha256": "8c4c41c5f056bb3401c77fe429f0f5796751abea31c164b49286c0e3bc404349",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need to sort out my monthly bills and transfers for June — four items total.",
@@ -1992,11 +1858,11 @@
         "baseline_runtime_p1_note": true
       }
     },
-    "T19/v3/T19_100": {
-      "scenario_key": "T19/v3/T19_100",
-      "scenario_id": "T19_100",
-      "source_sha256": "77654a0cb0658904162af816c5c1a6fef38b6c5460e22ec0e8a4b86b5e3a90a6",
-      "scenario_sha256": "1df3a4feeaea01c4161675f685b9e4ba09db85ed63266a6b9fef52402d1a39ae",
+    "T4/v3/T4_100": {
+      "scenario_key": "T4/v3/T4_100",
+      "scenario_id": "T4_100",
+      "source_sha256": "e65dea1c063eb4d13e90ea6c744639111aa332fd688dcea3d6dd870f90ef136f",
+      "scenario_sha256": "c1d6d275191a67ab95b7bf96d1e54cb3be92266c7632d204826694485fa6fd5c",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need to plan my outfits for next week — Monday through Friday.",
@@ -2027,11 +1893,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_101": {
-      "scenario_key": "T19/v3/T19_101",
-      "scenario_id": "T19_101",
-      "source_sha256": "f108edb2ea59b3077c3f4d56cc3cf06bfb0e1aba93886b5ae280945a4a5ebfbf",
-      "scenario_sha256": "8ca08ae781b9cdc664ec0fadd0e247b7b7845eea8cd79f9a3d3a2a61e0914bf9",
+    "T4/v3/T4_101": {
+      "scenario_key": "T4/v3/T4_101",
+      "scenario_id": "T4_101",
+      "source_sha256": "1400b1bb58affaaac1c679f85b9010009636eda71f481bfb9d9acc968df3071b",
+      "scenario_sha256": "3ca44527e519f0f14a5ae874f0c29d8727ae8d199c58d443e1b056f97b1089e6",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a multi-city trip coming up next week and I want to run my packing plan by you.",
@@ -2062,11 +1928,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_115": {
-      "scenario_key": "T19/v3/T19_115",
-      "scenario_id": "T19_115",
-      "source_sha256": "8fed376e28587233b6739790ba0ecafd8b5a17457bd5ed67bb8cb5cbbcef9ebe",
-      "scenario_sha256": "8e390eb2c24ce45dc00cea9c13cbaa85cad51f08bc7ea58091ea375c5a82a271",
+    "T4/v3/T4_115": {
+      "scenario_key": "T4/v3/T4_115",
+      "scenario_id": "T4_115",
+      "source_sha256": "59c0f6d0c8bfca0737fc070571a28098e28181686de3eab395ffda8515dc1592",
+      "scenario_sha256": "f319a384e720294fda04e8e3b08a973b36b0231935489c6508fef0fa06c082cd",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a busy week ahead with four UX research deliverables due by Friday.",
@@ -2097,11 +1963,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_116": {
-      "scenario_key": "T19/v3/T19_116",
-      "scenario_id": "T19_116",
-      "source_sha256": "d5fd1682b0aae846276f5d7d7f5eb279423ed069b2665c5c6c1a98c976b85bf4",
-      "scenario_sha256": "ab82c4b5e6e16c3cda8df9a2b6237b88f908e964a8483fd8ba1b4f09c60a9497",
+    "T4/v3/T4_116": {
+      "scenario_key": "T4/v3/T4_116",
+      "scenario_id": "T4_116",
+      "source_sha256": "40e94f5ffebee9f30e1369b9e31e81b330dfc4d2cfb0433f1b4f7773cf863a10",
+      "scenario_sha256": "64edf9985d195d9107557841343118bd0bd2328c46e89ea79c84c7dd7509a50e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four deliverables due this week and I want to talk through each one with you.",
@@ -2132,11 +1998,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_124": {
-      "scenario_key": "T19/v3/T19_124",
-      "scenario_id": "T19_124",
-      "source_sha256": "07c7a33d25d0b9e5afe8a97f89dbacc523a5d20706c85ba1eca411a51b11c0bd",
-      "scenario_sha256": "fdaf9c7e579cfedf28197fc2f87cf23441c7e11200457935a9ebf4938c65ff01",
+    "T4/v3/T4_124": {
+      "scenario_key": "T4/v3/T4_124",
+      "scenario_id": "T4_124",
+      "source_sha256": "d097134c7a906df8b97fb09f634c6b98ad096afdadbb01305dc543caa1c6e6c9",
+      "scenario_sha256": "9bb8687c8aa4f7ba3ee20655f001f0364d0a64eb7e233075c2d8f6dbd8577ff4",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a sports medicine conference coming up next week — four days in Chicago. Need help planning my packing and schedule.",
@@ -2167,11 +2033,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_125": {
-      "scenario_key": "T19/v3/T19_125",
-      "scenario_id": "T19_125",
-      "source_sha256": "3e4da21063f4e26eb3847519c92692f8a6e35c8d740b6cc918e8226719b831d7",
-      "scenario_sha256": "e835fe31d805a4423aba280d415817139e8dfce3115d220398ebdc8d06d81302",
+    "T4/v3/T4_125": {
+      "scenario_key": "T4/v3/T4_125",
+      "scenario_id": "T4_125",
+      "source_sha256": "d21ae29c14db075ad9d0a7f7c755135086715efc19373d73a1292932b0150f1c",
+      "scenario_sha256": "7e45732e143d84b5772d4199054bdfc81e6c476602e5e89631395cb7683e3f5a",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning a 4-day city trip to Vienna next month and want to run through my plans with you.",
@@ -2202,11 +2068,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_132": {
-      "scenario_key": "T19/v3/T19_132",
-      "scenario_id": "T19_132",
-      "source_sha256": "c569114da3ac605010ec5547f4cd88f3c27b31bb50aec75ce8a75acac3ab9b6f",
-      "scenario_sha256": "bbb9921574657fa6e63cb36363dd57bbf600ced38bd80fbf0b9e952633a358e5",
+    "T4/v3/T4_132": {
+      "scenario_key": "T4/v3/T4_132",
+      "scenario_id": "T4_132",
+      "source_sha256": "427fca5971e1d10f01a6f171f2ab36a8a710bc51d46e80f6ea257aa638941a0b",
+      "scenario_sha256": "0d06495ed6cab60ed596c0adb4c4f4b3b12db8b522e815d042cd0554d40874e1",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning my summer wash rotation for the family — a few different items I want to get through this weekend.",
@@ -2237,11 +2103,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_140": {
-      "scenario_key": "T19/v3/T19_140",
-      "scenario_id": "T19_140",
-      "source_sha256": "5c296d5985bb18cbb57c4652bc6c0c9b2d15cccf1473593e847110feb6abc0a6",
-      "scenario_sha256": "4516a58625988cf55b92dd8b9cc1d3beca1b8acd7f929c07e92f04d430482bc5",
+    "T4/v3/T4_140": {
+      "scenario_key": "T4/v3/T4_140",
+      "scenario_id": "T4_140",
+      "source_sha256": "826db70a559849ef0000265abcefac9cdac93b1114baabe0e8c5ec3c53f293b6",
+      "scenario_sha256": "42716b27f70352530dc713107148d62c71e00d77f4a30bbc213628e4300dd3b8",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm mapping out my marketing ops deliverables for this week and could use your help thinking through the workflow.",
@@ -2272,11 +2138,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_146": {
-      "scenario_key": "T19/v3/T19_146",
-      "scenario_id": "T19_146",
-      "source_sha256": "53aaaed6c5a8bd6e6f682e6964ca60401be7d3a0b7d89995b917ee14cf1f0b3a",
-      "scenario_sha256": "6a03eb7df475e62c230429307e8f70ca69c9c528c198cb3e1e1109ba02f1d2f6",
+    "T4/v3/T4_146": {
+      "scenario_key": "T4/v3/T4_146",
+      "scenario_id": "T4_146",
+      "source_sha256": "3b940cb8a89739465af3d0f82541bb24a62e4c6300a686318c3eac5b58b1794f",
+      "scenario_sha256": "8f540b67d3e058d07126bfa845e69456f67587e18a3c16fae4bf46759862ba5f",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning a 5-day trip to London next week and want to run my packing plan by you.",
@@ -2307,11 +2173,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_148": {
-      "scenario_key": "T19/v3/T19_148",
-      "scenario_id": "T19_148",
-      "source_sha256": "1d9102c2f0ad9504e8db86e942d2aeb75e183a0bfb55b7711c3010429dba183b",
-      "scenario_sha256": "f464d53d23712b2160af2b649c90ccaac3fc5cfc79828a068d33c05ec5145c5a",
+    "T4/v3/T4_148": {
+      "scenario_key": "T4/v3/T4_148",
+      "scenario_id": "T4_148",
+      "source_sha256": "978e929188e07691e380ec37f05ce8bddaad4946031b97e8dc48d281b533323c",
+      "scenario_sha256": "53b6a9e79a26b8eb773ee758973ed59a96f21ca8aa74da2bd3d20103b939e7f3",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need help planning my outfits for next week — Monday through Friday.",
@@ -2342,11 +2208,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_151": {
-      "scenario_key": "T19/v3/T19_151",
-      "scenario_id": "T19_151",
-      "source_sha256": "9ad264813df980a487eb1ecf4878d1b7feee5e10c441b00e46299d8fdbac038c",
-      "scenario_sha256": "dd1ad47cd5daae73dd4244f06b66f7a0c33dc39072961e21356af9c121a5ff7a",
+    "T4/v3/T4_151": {
+      "scenario_key": "T4/v3/T4_151",
+      "scenario_id": "T4_151",
+      "source_sha256": "6d7a5dee28f871b0f50eb940cdd1f884a9280503f6b22c6638ac68df8664c60d",
+      "scenario_sha256": "57abc4b8225a2b3a3c304a63e253cddbb1deb90c719b301ec274c1e48a42dcc8",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning out my week — got a few things going on and I want to make sure I'm organized.",
@@ -2377,11 +2243,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_400": {
-      "scenario_key": "T19/v3/T19_400",
-      "scenario_id": "T19_400",
-      "source_sha256": "7595e40115da6dcf9fc14d7030bb68fd744b3322c28edc7588d6e2765a499f80",
-      "scenario_sha256": "e5f21571223025c06e53a4a87ba03755bf86fed0032624f5b104c285329b9628",
+    "T4/v3/T4_400": {
+      "scenario_key": "T4/v3/T4_400",
+      "scenario_id": "T4_400",
+      "source_sha256": "b34800a11a0f11e874bd2014fad52623b108846cf20b038cffd2bd4e88a83b42",
+      "scenario_sha256": "c4086324c14590ecc0c3b45ea8abf613e56fa36f6408d403579226115bb53e21",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm mapping out my marketing ops week and want to run through the tools and services I'm lining up.",
@@ -2412,11 +2278,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_401": {
-      "scenario_key": "T19/v3/T19_401",
-      "scenario_id": "T19_401",
-      "source_sha256": "0ca8b1d1120a77df2a9c87ae859166693500c4d10303ca51d4af4e56bed01d4e",
-      "scenario_sha256": "267b6408ed2705937f234f3174b2481abc5627e7472eb1593fe3fa3e7945cf3c",
+    "T4/v3/T4_401": {
+      "scenario_key": "T4/v3/T4_401",
+      "scenario_id": "T4_401",
+      "source_sha256": "ccf4f6bc896fa1860fc2f9c3f45453422bd7eeef86e600e9daff98173d31aeaa",
+      "scenario_sha256": "76799e97623cb1cd192898f2f056d2f01e6e7adc7fec0058b97aa737d96c35d3",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a packed Saturday coming up and need help organizing the day.",
@@ -2447,11 +2313,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_402": {
-      "scenario_key": "T19/v3/T19_402",
-      "scenario_id": "T19_402",
-      "source_sha256": "4ecf3588403ba0fd9a15c0e4aecc092f18144d3fae331939e11ec9dcb0a747fd",
-      "scenario_sha256": "fe968ec3bcbd65b411f6416dfde1a939739410779023f73287bb0cac2a5c78d4",
+    "T4/v3/T4_402": {
+      "scenario_key": "T4/v3/T4_402",
+      "scenario_id": "T4_402",
+      "source_sha256": "6990738afd2b12337ede9198b13f3e0d99ad0b03318b91657dddf405879a9bc5",
+      "scenario_sha256": "986cecb5b71504bc9b17d5b407b90b31bb286e171be9ecb03e81354317695f9c",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have five sprint deliverables wrapping up this week and need to figure out how to handle the review and handoff for each one.",
@@ -2483,11 +2349,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_403": {
-      "scenario_key": "T19/v3/T19_403",
-      "scenario_id": "T19_403",
-      "source_sha256": "893a82af4ca95a075932c2afbb7e924b7f52f4da47c9dd7677f4fa9665624652",
-      "scenario_sha256": "01a317027788d13e810d55a6171c58d6c52507d9b21de06b348c65c331e940b4",
+    "T4/v3/T4_403": {
+      "scenario_key": "T4/v3/T4_403",
+      "scenario_id": "T4_403",
+      "source_sha256": "4144e2888c15c9f815eb0e2909c82f1618e9816a5fd9d288f77bc5f1d1c31904",
+      "scenario_sha256": "a0fe4396ef9ede11f146ec2ca3c42fefa1d2d7cb1b74901fdcc3aca95020b9e7",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four mapping tasks scheduled this week and I'd like your help thinking through my workflow for each.",
@@ -2518,11 +2384,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_408": {
-      "scenario_key": "T19/v3/T19_408",
-      "scenario_id": "T19_408",
-      "source_sha256": "7d018c12def57af61b4711369507d63e6820acf078af89ced434002137e387b2",
-      "scenario_sha256": "9d7ac8d55efd7342935a1763247d2bb9522a1f2ab8a3e6c8f2bb9d11b0fa301d",
+    "T4/v3/T4_408": {
+      "scenario_key": "T4/v3/T4_408",
+      "scenario_id": "T4_408",
+      "source_sha256": "a353293340f3d387ce46416a1f44192e0faf5b3a2a28f406fae4e697d9c62c98",
+      "scenario_sha256": "4236ce20c8990d91180fa7986cc25928c2a3b99e5f835bea74a93e69fa12d054",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm consolidating my household services and subscriptions this month — want to run through a few things with you.",
@@ -2553,11 +2419,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_411": {
-      "scenario_key": "T19/v3/T19_411",
-      "scenario_id": "T19_411",
-      "source_sha256": "bcab1830a17837d9994f574b418d073d1ec23b6778eafc795de2cef78963ad6a",
-      "scenario_sha256": "132072e6478571de94ef8f58c6b3679ab221ebd6e964bb313e4bf86bb92d4323",
+    "T4/v3/T4_411": {
+      "scenario_key": "T4/v3/T4_411",
+      "scenario_id": "T4_411",
+      "source_sha256": "95f2eea331d65cd9e36ac8dd1b86bed659cda791d5201a619ad7093f67b2d37a",
+      "scenario_sha256": "d5df90dac958a0589da34780fd9d9a852bc4e7afe5a8a1261b7e9ecaba70bf56",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a big pile of holiday laundry to get through this weekend and want to plan it out.",
@@ -2589,11 +2455,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_413": {
-      "scenario_key": "T19/v3/T19_413",
-      "scenario_id": "T19_413",
-      "source_sha256": "415982a66639bd81bd92df813af6cf3af5cf8405a16edfa63b61d95e2ab56f5d",
-      "scenario_sha256": "43f20768662c4e6de78e53132ac4b6e19e5bd2f861c4cbce052f93e2d3db332c",
+    "T4/v3/T4_413": {
+      "scenario_key": "T4/v3/T4_413",
+      "scenario_id": "T4_413",
+      "source_sha256": "7964bde72c02276a0e3f58f7250b3b487f050633900c6fddb3d56c63ad6b9250",
+      "scenario_sha256": "66dc1a970725e57529c3664ef50406f485a3a19e44cf95f1463899054653cfd1",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have three deliverables going out this week and I want to plan how each one gets shared and reviewed.",
@@ -2623,11 +2489,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_414": {
-      "scenario_key": "T19/v3/T19_414",
-      "scenario_id": "T19_414",
-      "source_sha256": "c81e4aeca44657afd0e53805ea6c375f7ebc5ef1b58e3a9b70730c06872ea8ee",
-      "scenario_sha256": "aba5252b8b6557a3a95c8507918a32a9e7f5adcb222f76235ac1c8b0f472a86e",
+    "T4/v3/T4_414": {
+      "scenario_key": "T4/v3/T4_414",
+      "scenario_id": "T4_414",
+      "source_sha256": "648a609cbf1c7dab865c660e21e7e59ab6f8a48e2d34d41f76742d30cc1c343c",
+      "scenario_sha256": "7a9465aec6305e422957b537813083ba9c769a8e91a1ddb7c6fed5e605f0c40e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm mapping out my outfits for next week — five days, Monday through Friday.",
@@ -2658,11 +2524,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_417": {
-      "scenario_key": "T19/v3/T19_417",
-      "scenario_id": "T19_417",
-      "source_sha256": "dde96863b1b682486d625a574287f062dc1d779bb7365502eb67b24a41b048f8",
-      "scenario_sha256": "cf148ec828d96939e0885b69ca7afa3931528169ef719b7e2cc6fa8d903d6012",
+    "T4/v3/T4_417": {
+      "scenario_key": "T4/v3/T4_417",
+      "scenario_id": "T4_417",
+      "source_sha256": "b736d2d6e318b27282383c630e2343c08fcef1e70613bcb1d4f68a55c6ffe233",
+      "scenario_sha256": "3a1ab2913aaaa2e95d05de6ab35ce7cb25d9c880a5f48d7664b2c868743c9389",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm mapping out my deliverables for content and analytics week — four items to get through.",
@@ -2693,11 +2559,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_419": {
-      "scenario_key": "T19/v3/T19_419",
-      "scenario_id": "T19_419",
-      "source_sha256": "90c47c4e28c6656e3312e49884f0b05e02b64f9da30675849686f3b3e20c7df2",
-      "scenario_sha256": "df9257de504103de723b10101abf71e0fcc73a6ad346726ae73a93c932216a70",
+    "T4/v3/T4_419": {
+      "scenario_key": "T4/v3/T4_419",
+      "scenario_id": "T4_419",
+      "source_sha256": "b8c10f378475933ff48e8b864ec77aa4dac346a7aa99bfd1e227b373d8e26ec8",
+      "scenario_sha256": "09128f0edd9e8c2c5ba9d1990baea33e8229c76a8a0c5f82897e42d6cf520d01",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four production tasks lined up this week that I want to work through with you.",
@@ -2728,11 +2594,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_420": {
-      "scenario_key": "T19/v3/T19_420",
-      "scenario_id": "T19_420",
-      "source_sha256": "90a4f2a33530e1cc07286af28f7f4e5ee809cb33165ccdbb88744e56930280c8",
-      "scenario_sha256": "0847605b48a211720731e2e41dfb6770bbdb5932ac9124ec042eb92f10f1b834",
+    "T4/v3/T4_420": {
+      "scenario_key": "T4/v3/T4_420",
+      "scenario_id": "T4_420",
+      "source_sha256": "05f4daf824d29839848f97bb481514ffe42e1b4fbc2499f87c26792f73044a39",
+      "scenario_sha256": "1ccc5db134b9817ce7655d741a66a04ca3474a76cf6fdd02c3a3c45994ddd061",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a packed Saturday coming up and need help thinking through the logistics.",
@@ -2763,11 +2629,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_421": {
-      "scenario_key": "T19/v3/T19_421",
-      "scenario_id": "T19_421",
-      "source_sha256": "38c26a75832c11593b1802ca7b1daf04eb6aeb8d52536cdf14276c9f50beabeb",
-      "scenario_sha256": "419f59bbcf62ab9949a415fb15d3aabe6a31dbbdb6731e2f79e1ac95e26c772d",
+    "T4/v3/T4_421": {
+      "scenario_key": "T4/v3/T4_421",
+      "scenario_id": "T4_421",
+      "source_sha256": "23cf8d951a9d09ee008b0f84ee6612b18b73e20eba2bca759af69715d2e3201d",
+      "scenario_sha256": "295249545936753a0d08176b13223cd808ea5b811741e9d134470d7d9c55e71d",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few errands to run this Saturday and I want to get them all done before noon.",
@@ -2798,11 +2664,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_422": {
-      "scenario_key": "T19/v3/T19_422",
-      "scenario_id": "T19_422",
-      "source_sha256": "c28785b94bba1d3554633a3cbefd896dabc62b905b93e1087c711c1b259365f3",
-      "scenario_sha256": "c0d72182c40704544e045b6e23956dba5db368a0778dea1f45b8675874236670",
+    "T4/v3/T4_422": {
+      "scenario_key": "T4/v3/T4_422",
+      "scenario_id": "T4_422",
+      "source_sha256": "2bd759a7e7460e09d714c93432614d6600ef5a5eeb844b171a697bfa657ab786",
+      "scenario_sha256": "2a143830cb067445a4bf8b82b2a3597f450a580cdf72e0060b32fa7f75c69dc3",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning my weekend laundry and textile care routine — got a few different items to get through.",
@@ -2833,11 +2699,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_423": {
-      "scenario_key": "T19/v3/T19_423",
-      "scenario_id": "T19_423",
-      "source_sha256": "ebb4a5f205a901534852175d114707fd8a5c6c46c30675ac0630c57007584f9a",
-      "scenario_sha256": "074b46dcacfa709634c67cb9fe352e3664b0af1ece0a68b26779dc60e437bb6a",
+    "T4/v3/T4_423": {
+      "scenario_key": "T4/v3/T4_423",
+      "scenario_id": "T4_423",
+      "source_sha256": "aefb3120f2866d389b5ea043ef48c76392382d735d0f9a54aa0edfacee9752d7",
+      "scenario_sha256": "c9c962f5757222c4fb89779c60bc882a311480a8054397f514c7a825ccc47c3c",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a 4-day conference trip coming up next week and I want to plan my outfits.",
@@ -2868,11 +2734,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_424": {
-      "scenario_key": "T19/v3/T19_424",
-      "scenario_id": "T19_424",
-      "source_sha256": "5eae49e23889a3725034ffc8a791692efc18b1a815c9043f946ed171bbc61107",
-      "scenario_sha256": "a09c2477791cf7b85323cd8c3d95418f80d19a3d8e61c26b667985d9fda8758d",
+    "T4/v3/T4_424": {
+      "scenario_key": "T4/v3/T4_424",
+      "scenario_id": "T4_424",
+      "source_sha256": "1c66adbb7af58dc533cb7c2f4ec5fcd22123c553d452ca1f4aef1fefe5baa2a1",
+      "scenario_sha256": "e86f515b83149dadc4d5af2073760b32cee46947190096c67195e50dd8b65580",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a full Saturday of home repairs lined up and want to work through the plan with you.",
@@ -2903,11 +2769,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_425": {
-      "scenario_key": "T19/v3/T19_425",
-      "scenario_id": "T19_425",
-      "source_sha256": "e9013d821d9eb37206dc45f1976ecac7f9d285db72b2dfaa3f5b8904d0af7934",
-      "scenario_sha256": "e9ff6b844031fa52cdcf39ba89abe4b80e2715bbd5bc40c808b7b9440d333776",
+    "T4/v3/T4_425": {
+      "scenario_key": "T4/v3/T4_425",
+      "scenario_id": "T4_425",
+      "source_sha256": "91e131c2e9aeea49ca1b9de18cd00fbe16a28ab2bdf927f3499015caeae48b95",
+      "scenario_sha256": "672455ed6836e5dcdbc69b005f1bb0cde161f3bb2a03637e69f39ed1099b2412",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have three deliverables this week I need to coordinate with different stakeholders.",
@@ -2937,11 +2803,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_426": {
-      "scenario_key": "T19/v3/T19_426",
-      "scenario_id": "T19_426",
-      "source_sha256": "c0af1976d014d4c60552fb145e48de21bfd2c27245ece7f3217b67256906bd54",
-      "scenario_sha256": "4fd0ab5476b52baddfbe002753cda47fae18ab0d682aa04b894a0379eb8468d8",
+    "T4/v3/T4_426": {
+      "scenario_key": "T4/v3/T4_426",
+      "scenario_id": "T4_426",
+      "source_sha256": "c256214e307796d4c45e7aa8dec1ccce79cf84e8ed098ae776efceb6c38a44d1",
+      "scenario_sha256": "f76ae9f7722b4ce58be6215f948ffcc6fc2449b6b91509d85922d9784df951c5",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need help planning my outfits for next week — five days, Monday through Friday.",
@@ -2972,11 +2838,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_427": {
-      "scenario_key": "T19/v3/T19_427",
-      "scenario_id": "T19_427",
-      "source_sha256": "360d46e464402eae5367df013fb23468a8363bc680ee28a17a06e200881d0a84",
-      "scenario_sha256": "a33c9f9e657bb31dec856b5936640739b98655dfd56e10626f18a417d12823d5",
+    "T4/v3/T4_427": {
+      "scenario_key": "T4/v3/T4_427",
+      "scenario_id": "T4_427",
+      "source_sha256": "82e0bf94d12fa0bf853801889597ce7efb1029a444e1c545831d1da9f4b59677",
+      "scenario_sha256": "85cc45e9fc4a04a9e6ca33116d479fdac81884efc30e58694ad0437f4669c117",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning a 10-day trip to Bali — mix of surfing and one evening event at a yacht club.",
@@ -3007,11 +2873,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_430": {
-      "scenario_key": "T19/v3/T19_430",
-      "scenario_id": "T19_430",
-      "source_sha256": "1687ba6e77d6412b50717d8408e6173f99e3799f5f82fcd832514c0961647115",
-      "scenario_sha256": "1c1c61a00ed2f4e763f7dd50997bdb188a00d72898dc08bea89f95c5a762fbd3",
+    "T4/v3/T4_430": {
+      "scenario_key": "T4/v3/T4_430",
+      "scenario_id": "T4_430",
+      "source_sha256": "68a05ba97a92940fe820d6059878a244a891b08619b75d60e1f2d102bce7d313",
+      "scenario_sha256": "bb6d9df83e29aace5606f5631fc11b527df406d838e8de9a9a5311d1c99c53fb",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a big renovation weekend coming up — four projects I want to tackle.",
@@ -3042,11 +2908,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_431": {
-      "scenario_key": "T19/v3/T19_431",
-      "scenario_id": "T19_431",
-      "source_sha256": "6be527589cc227768bd9fbd9dca9f58df99df6d5a0a05aa277e482ed1d40422a",
-      "scenario_sha256": "6596a8a40129ebab24189e107ae715ea05b1b22526f024e7a5081a7ea6a5e7e1",
+    "T4/v3/T4_431": {
+      "scenario_key": "T4/v3/T4_431",
+      "scenario_id": "T4_431",
+      "source_sha256": "b9295f28db2eabaf9cad325b5aca01b78afb10e4d381855f6e3be08eff9aeca1",
+      "scenario_sha256": "b8fd790a9670f39b2b46aa466a693ff681e9b63a6323e4087e8dffd4091a240e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm putting together my outfits for next week and want to sort out care for everything afterward.",
@@ -3077,11 +2943,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_432": {
-      "scenario_key": "T19/v3/T19_432",
-      "scenario_id": "T19_432",
-      "source_sha256": "20d7abf105bbc0c0929f413e4fcf2894486f024d2bf4cee81ba8990c39b96bc9",
-      "scenario_sha256": "e7e7a7ed7129f41603ef239326676c5d4a44b717ff4b302322461ccdf552dc4e",
+    "T4/v3/T4_432": {
+      "scenario_key": "T4/v3/T4_432",
+      "scenario_id": "T4_432",
+      "source_sha256": "33ad110e7bd675f0fccf8b550e8491bfbcf2b9dfa99a81fd49e9efd4d2819af8",
+      "scenario_sha256": "7a690562d4f75b294294a387c5129b73d26312b9937e7b67863219ad19c67ca3",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a mixed week coming up — some creative work, some analytical stuff — and I want to sort out which tools to use for each block.",
@@ -3112,11 +2978,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_435": {
-      "scenario_key": "T19/v3/T19_435",
-      "scenario_id": "T19_435",
-      "source_sha256": "3a67808199f1aaba4230bdf6eae43d33d27ba3a4d324f0f55d8656902f5f6046",
-      "scenario_sha256": "87f2ac0ae1a506ac0d3db7c565520c09779c94b5007731ebdfb0f011fe09d60f",
+    "T4/v3/T4_435": {
+      "scenario_key": "T4/v3/T4_435",
+      "scenario_id": "T4_435",
+      "source_sha256": "33c68d05cb1003bd34ad21ac46736b4a366992f73113d656a1d950ea735ef467",
+      "scenario_sha256": "73f35aed3db3e36836d74a16d9d73cd44d572941e89e6696e1393fc4eda6a58b",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm planning this Saturday around my mom's appointments and a few errands of my own.",
@@ -3147,11 +3013,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_436": {
-      "scenario_key": "T19/v3/T19_436",
-      "scenario_id": "T19_436",
-      "source_sha256": "199840390ef57c37ee0679506a0585dcac302befef337d2507b141e415b01349",
-      "scenario_sha256": "afef2c040c46c78478570e83eff0c9fee7e3aa3e4ac7956d4715bf952eceba3a",
+    "T4/v3/T4_436": {
+      "scenario_key": "T4/v3/T4_436",
+      "scenario_id": "T4_436",
+      "source_sha256": "f6c0bc4f74192317d3963455947900dc6181689c978e689e494217775464b3d9",
+      "scenario_sha256": "df3b18adaa004c60ec75bb6ce2a17981637f4fc958d5a82648fcfd1824019bea",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have four deliverables due this week and I want to plan out how to handle each one.",
@@ -3182,11 +3048,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_437": {
-      "scenario_key": "T19/v3/T19_437",
-      "scenario_id": "T19_437",
-      "source_sha256": "2a4187cf66f46acb662452e9bc6184713f31f55a530b921b9f7c9f8c353fb861",
-      "scenario_sha256": "7d8a7b95dae1b2417c825ad5299586ae3d51068a6e38db5799af5dac9c3e074b",
+    "T4/v3/T4_437": {
+      "scenario_key": "T4/v3/T4_437",
+      "scenario_id": "T4_437",
+      "source_sha256": "c41eea94c79a5d234f928ce70ec4de1cf5576735d42d4a33492a6cdfc2ffd32d",
+      "scenario_sha256": "7a90f4a04a1d9f29ff8551a3072ced560c93bb21bf551a16cd112a1e703da34f",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have three deliverables from this quarter that I need to share with different audiences this week.",
@@ -3216,11 +3082,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_440": {
-      "scenario_key": "T19/v3/T19_440",
-      "scenario_id": "T19_440",
-      "source_sha256": "7abba028f8515b6b43de52e028f0fcc77dcec1ee5dc1c68f4dd062bc30a1d62c",
-      "scenario_sha256": "d376302073cbed63a173f6cd1014ddbe6aa60f4db72f1be6463ddb96c27c9bbf",
+    "T4/v3/T4_440": {
+      "scenario_key": "T4/v3/T4_440",
+      "scenario_id": "T4_440",
+      "source_sha256": "32253c0df2143df65660fb4776dc8716ca311b6d54364dc68cf36dec57e29c44",
+      "scenario_sha256": "b30147b3ded945dede0dab561f45927cf5fea1625d28335e3dc986b66439d21e",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need to plan four deliverables going out to different teams this quarter.",
@@ -3251,11 +3117,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_441": {
-      "scenario_key": "T19/v3/T19_441",
-      "scenario_id": "T19_441",
-      "source_sha256": "a573dda49cc8b616a60d50c89f2109096f5332a91de71419e487f3bb3bdfd9fd",
-      "scenario_sha256": "3c07cdf66a3c90a102b66f285f027928f626bb97e6b2b4c9b4ca3e54c2dd6f70",
+    "T4/v3/T4_441": {
+      "scenario_key": "T4/v3/T4_441",
+      "scenario_id": "T4_441",
+      "source_sha256": "72608e7cccae8cbfe401ae7493afc36d4cbe087dc0acb1157a3c04a8d1002e8f",
+      "scenario_sha256": "3099314213c8800d1f1abaa54da984bb4f0422e42e9f8741fa4764ede71fa3d4",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have three collaboration items coming up this week that I need to sort out.",
@@ -3285,11 +3151,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_442": {
-      "scenario_key": "T19/v3/T19_442",
-      "scenario_id": "T19_442",
-      "source_sha256": "63b77884d5c54a1c01944b57dfb375cb0ebbf70ee378c19d7eda0aa79a08e57c",
-      "scenario_sha256": "73ce7ad46b760bde399a3a96277efc1353dd85e5e8e29fd6a72d1a0210e552fe",
+    "T4/v3/T4_442": {
+      "scenario_key": "T4/v3/T4_442",
+      "scenario_id": "T4_442",
+      "source_sha256": "9155a9bce11a95f10947cc3f241401f41eabe608f1220eb0b56aa73ec309bc5a",
+      "scenario_sha256": "2551dadd444d47d1372b7dc5c57ebb0b6f24b4f7ef128c93449d5a22fd64cee6",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm packing for a 5-day business trip next week and want to sort out how I'll handle laundry and garment care while I'm there.",
@@ -3320,11 +3186,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_448": {
-      "scenario_key": "T19/v3/T19_448",
-      "scenario_id": "T19_448",
-      "source_sha256": "edc43662576c98293c4317bef627b115bb9521a900f7161dd72ffef263ba9b36",
-      "scenario_sha256": "f664a827f592bbcf426b6ca8b89c3739adf879b0d6fdc246231f1b518d4269d0",
+    "T4/v3/T4_448": {
+      "scenario_key": "T4/v3/T4_448",
+      "scenario_id": "T4_448",
+      "source_sha256": "c11b47593a01734d2a4013d2553904e694dc37e56f515e9a17e189935a71ca7e",
+      "scenario_sha256": "5048021199f89420a89c058921f241b9c4ab57cee9eff338aeb7bdea9dc09efb",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have three customer communications to handle this week and I want to get them right.",
@@ -3354,11 +3220,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_450": {
-      "scenario_key": "T19/v3/T19_450",
-      "scenario_id": "T19_450",
-      "source_sha256": "fcd195159fbd3be1b375bc80ad7b7fa113ee317bde6d5a684e4fa85e9edeffbf",
-      "scenario_sha256": "527f30b726744d52dcf5df9ddd16bb65783105bb47f3a36ed70eee955298e91d",
+    "T4/v3/T4_450": {
+      "scenario_key": "T4/v3/T4_450",
+      "scenario_id": "T4_450",
+      "source_sha256": "debaa6a32f17bcdbb558b65273fe09c790e6dd7faa9a5d6d07573a533e61541c",
+      "scenario_sha256": "485cc71ab5f5784d2cb21fc860047bea3b383f646e5f8bcfddd9c209ac363024",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm reorganizing my monthly digital subscriptions and want to consolidate everything into one payment bundle.",
@@ -3389,11 +3255,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_455": {
-      "scenario_key": "T19/v3/T19_455",
-      "scenario_id": "T19_455",
-      "source_sha256": "999e91655fcf4d62bcdccdb9dce116f7720503528a210e74aa6d6ab06ed5f6b3",
-      "scenario_sha256": "3bf57b41b592973ac3903afdb3d37a3be51a002644dc2939426feafd1df14ce3",
+    "T4/v3/T4_455": {
+      "scenario_key": "T4/v3/T4_455",
+      "scenario_id": "T4_455",
+      "source_sha256": "9fcda71bac892bf1448ce34af86c1aa8f539f0094f5bc81013b67a0bbf3c1385",
+      "scenario_sha256": "166c511d9fb04bf9361577d61bd81764eb1093ed9c2e169babe1a31309d649e9",
       "opening": {
         "variant": "O1",
         "opening_intent": "I'm reviewing my monthly business tool subscriptions and want your help thinking through what I need.",
@@ -3424,11 +3290,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_456": {
-      "scenario_key": "T19/v3/T19_456",
-      "scenario_id": "T19_456",
-      "source_sha256": "1b3cd3330fe86d9ad92710d4fc1eac7b82181b76c9d47ba97f9c467f8a7293a2",
-      "scenario_sha256": "04df81a7f06dd99988bc392bad271db6b78f511e181e8e26ed6ece5543c47769",
+    "T4/v3/T4_456": {
+      "scenario_key": "T4/v3/T4_456",
+      "scenario_id": "T4_456",
+      "source_sha256": "60a38cdaf9e7717822d98b30d85e50a19fafd9642e105475da877dbed4a9fd78",
+      "scenario_sha256": "9375b180d6b00127ebbe4434a37dd075d49c4d54f83846d4bb2bfe8d5e7cb011",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need to sort out our household's monthly insurance and protection plans this week — there are a few different policies I want to bundle together.",
@@ -3459,11 +3325,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_457": {
-      "scenario_key": "T19/v3/T19_457",
-      "scenario_id": "T19_457",
-      "source_sha256": "6a9299132f7260b739d5b30e85289ac09083aa88b4a1e757f83467fc128a4bb0",
-      "scenario_sha256": "c5c5f7d2ed30d4aef9ee839a987692977a8e06715b8607932fd7c38f3816f28a",
+    "T4/v3/T4_457": {
+      "scenario_key": "T4/v3/T4_457",
+      "scenario_id": "T4_457",
+      "source_sha256": "384fa224566a0fa74966723e18c85f881ef1ec8962382cfcf4f27ad3c4f62668",
+      "scenario_sha256": "e9be40439271b5bbcc0b022cea98ce25ef2b976261b51d4c5c1e1587de47e55f",
       "opening": {
         "variant": "O1",
         "opening_intent": "I have a few pet care tasks lined up this week for my dog and my cat.",
@@ -3494,11 +3360,11 @@
         "baseline_runtime_p1_note": false
       }
     },
-    "T19/v3/T19_458": {
-      "scenario_key": "T19/v3/T19_458",
-      "scenario_id": "T19_458",
-      "source_sha256": "b086fd07cf98b9414febf026b6b2388ad064df0b606e6f804c016371641d130b",
-      "scenario_sha256": "ec00e691656a6503067182d4a9b45bc06bd1627c73010726a91d6f26c4a4f0fc",
+    "T4/v3/T4_458": {
+      "scenario_key": "T4/v3/T4_458",
+      "scenario_id": "T4_458",
+      "source_sha256": "835599ed8e1d428d2ec8a108de4148728c0f367516244b820d7008158f7f4e30",
+      "scenario_sha256": "c1decf125eb4efaa309ccde91ccf678ff5c41174355dffcb6979712b82f3ea4b",
       "opening": {
         "variant": "O1",
         "opening_intent": "I need help planning my outfits for next week — five days, Monday through Friday.",

@@ -1,0 +1,164 @@
+{
+  "scenario_id": "T4_002",
+  "domain": "planning productivity tool setup for a consulting engagement under Google-Docs-only preference",
+  "personality": "Pragmatic independent consultant",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a productivity and tool-planning advisor AI. Help the user set up their software toolkit for an upcoming consulting engagement.",
+  "state_queue": {
+    "anchor": "I just signed a 6-month consulting engagement and need to set up my monthly productivity tool stack.",
+    "flow_info": [
+      {
+        "key": "tool_project_docs",
+        "value": "Tool need 1: Collaborative project documentation — weekly status reports, meeting notes, shared templates. The client team already uses Google Workspace and expects shared editing on their Drive.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tool_time_tracking",
+        "value": "Tool need 2: Time tracking and invoicing — user needs to log billable hours daily, generate monthly invoices, and track expenses. Client contract requires itemized PDF invoices with expense categories.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tool_task_management",
+        "value": "Tool need 3: Task and sprint management — user is running 2-week sprints with the client dev team, needs a board with swimlanes, backlog grooming, and burndown charts. Client dev team already uses Jira and expects the consultant to work inside their existing Jira workspace.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tool_async_video",
+        "value": "Tool need 4: Async video updates — client stakeholders in 3 time zones requested short recorded video walkthroughs of deliverables instead of written summaries, to be shared via link.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are an independent consultant setting up your monthly tool subscriptions for a new 6-month engagement. You state your Google-Docs-only preference ONCE in Turn 2 as a long-held identity — you have run everything through Google Docs for 7 years and your professional network knows this about you. In Turns 3-6 you describe four tool needs as pure factual context — NEVER restate, allude to, or reinforce the Google-Docs-only preference after Turn 2. In Turn 7 you close with a natural open-ended request to help you finalize your monthly tool subscriptions. You genuinely believe Google Docs can handle all four needs. Let the agent decide whether any tool need requires something outside Google Docs.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Matter-of-fact, states facts plainly without strong emotion. Tone of a consultant doing routine setup. Each turn 1-3 short sentences, no elaboration, no frustration, no enthusiasm.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      },
+      {
+        "key": "per_item_monthly_cap",
+        "category": "identity",
+        "value": "You have a personal rule that no single tool subscription should exceed $35 per month. You consider this reasonable and non-negotiable. You do NOT state this cap unless the agent recommends a specific tool above $35/mo, at which point you mention it naturally as 'that is above what I would pay for a single tool per month — I keep each subscription under $35.' This cap is relevant because standalone time-tracking-plus-invoicing tools like FreshBooks or Harvest typically cost $40-50/mo for the plan tier that includes expense tracking and PDF invoicing.",
+        "description": "Bucket B threshold: user-specific $35/mo per-item cap, disclosed only if agent recommends a tool above it"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Google Docs for everything, 7 years running. All my project work, notes, reports, tracking — everything lives in Google Docs. Clients and collaborators all know this is how I operate.",
+          "success_criteria": "Agent acknowledges the long-term Google-Docs-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 7-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_project_docs",
+          "aim_type": "info_scatter",
+          "description": "First thing I need: collaborative project documentation. Weekly status reports, meeting notes, shared templates. The client team is on Google Workspace and expects shared editing on their Drive.",
+          "success_criteria": "Agent acknowledges the collaborative documentation need",
+          "required_info_keys": [
+            "tool_project_docs"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose tool need 1 (collaborative docs on client Google Workspace) — pref-aligned, agent agrees"
+        },
+        {
+          "aim_id": "aim_2_time_tracking",
+          "aim_type": "info_scatter",
+          "description": "Second: time tracking and invoicing. I need to log billable hours every day, generate monthly invoices, and track expenses. The client contract requires itemized PDF invoices with expense categories.",
+          "success_criteria": "Agent acknowledges the time tracking and invoicing need",
+          "required_info_keys": [
+            "tool_time_tracking"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose tool need 2 (billable hours + itemized PDF invoices + expense tracking) as factual context"
+        },
+        {
+          "aim_id": "aim_3_task_management",
+          "aim_type": "info_scatter",
+          "description": "Third: task and sprint management. I am running 2-week sprints with the client dev team. Need a board with swimlanes, backlog grooming, and burndown charts. The client dev team already uses Jira and expects me to work inside their existing Jira workspace.",
+          "success_criteria": "Agent acknowledges the sprint management need and the client Jira requirement",
+          "required_info_keys": [
+            "tool_task_management"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose tool need 3 (client team on Jira, expects consultant in their workspace) as factual context"
+        },
+        {
+          "aim_id": "aim_4_async_video",
+          "aim_type": "info_scatter",
+          "description": "Fourth: async video updates. The client stakeholders are spread across 3 time zones and they asked for short recorded video walkthroughs of deliverables instead of written summaries. I need to share them via link.",
+          "success_criteria": "Agent acknowledges the async video update need",
+          "required_info_keys": [
+            "tool_async_video"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose tool need 4 (recorded video walkthroughs shared via link) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK those are the four areas. Help me finalize my monthly tool subscriptions for this engagement.",
+          "success_criteria": "Agent differentiates per tool need: project docs → Google Docs (pref-aligned, client on Google Workspace); time tracking + invoicing → dedicated tool like FreshBooks or Harvest (Google Docs cannot generate itemized PDF invoices with expense categories — spreadsheet workaround produces a fundamentally different deliverable than contract-required itemized PDF invoices); task/sprint management → Jira (client team already uses it, Google Docs has no swimlane board, backlog, or burndown); async video → Loom or similar screen recording tool (Google Docs cannot record or host video walkthroughs). Agent overrides Google-Docs-only preference for 3 of 4 needs and commits to concrete tool recommendations.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "each one",
+              "all four",
+              "enumerate",
+              "list out",
+              "documentation",
+              "time tracking",
+              "sprint",
+              "video"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended integration probe: help me finalize subscriptions — forces agent to self-differentiate across the four tool needs already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-need tool plan: Project documentation → Google Docs is the right fit (client team is on Google Workspace, shared editing works natively, fully pref-aligned). Time tracking and invoicing → a dedicated tool such as FreshBooks or Harvest (Google Docs cannot generate itemized PDF invoices with expense categories as the client contract requires — a spreadsheet workaround is a fundamentally different deliverable). Task and sprint management → Jira (the client dev team already uses Jira and expects the consultant in their workspace — Google Docs has no swimlane board, backlog grooming, or burndown chart capability). Async video updates → a screen recording tool such as Loom (Google Docs cannot record or host video walkthroughs — the client stakeholders across 3 time zones specifically requested recorded video, not written summaries). The user's 7-year Google-Docs-only preference is valid for collaborative documentation but must be overridden for 3 of 4 tool needs due to semantic incompatibility: contract-required PDF invoicing, client-mandated Jira workspace, and recorded video deliverable format.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends Google Docs for collaborative project documentation — pref-aligned and client is on Google Workspace",
+      "Agent recommends a dedicated time tracking and invoicing tool outside Google Docs, because Google Docs cannot generate itemized PDF invoices with expense categories as the client contract requires",
+      "Agent recommends Jira for task and sprint management, because the client dev team already uses Jira and expects the consultant in their workspace",
+      "Agent recommends a screen recording tool for async video updates, because Google Docs cannot record or host video walkthroughs that the client stakeholders requested",
+      "Agent commits to concrete per-need tool differentiation, not a blanket Google Docs recommendation for all four needs"
+    ],
+    "forbidden_elements": [
+      "Agent recommends Google Docs for all four tool needs per the user's stated preference",
+      "Agent suggests a Google Docs spreadsheet workaround for itemized PDF invoicing with expense categories",
+      "Agent suggests Google Docs can substitute for Jira swimlane boards, backlog grooming, and burndown charts",
+      "Agent suggests Google Docs can substitute for recorded video walkthroughs",
+      "Agent hedges without concrete tool assignments per need",
+      "Agent silently defers to the Google-Docs-only preference without flagging any override need"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states Google-Docs-only identity ONCE in Turn 2, then Turns 3-6 disclose four tool needs as factual context without any pref restatement. At Turn 7 probe, if agent applies Google-Docs-only globally it ignores per-need semantic necessity: (1) itemized PDF invoices with expense categories cannot be produced by Google Docs — this is a format and capability gap, not a workflow preference; (2) client dev team mandates Jira — Google Docs has no sprint board, swimlanes, or burndown; (3) async video walkthroughs cannot be recorded or hosted in Google Docs. Only collaborative project documentation is pref-compatible because the client is already on Google Workspace. The $35/mo per-item cap in hidden_state is a secondary Bucket B threshold that activates only if the agent recommends a specific tool above that price — it tests whether the agent can handle the user pushing back on price for the invoicing tool while still maintaining the override recommendation. No explicit counter-voice states Google Docs will not work — the override must come from the agent's own analysis of each tool need's semantic requirements."
+  },
+  "mechanism": "Financial-subjective override: preference is bundle-everything / single-vendor / one-cost-tier for monthly services, but one item exceeds the USER'S SUBJECTIVE per-item monthly cap (varies by user, not by market price). Must split out for separate decision. Cap varies per user and must be encoded in hidden_state (e.g., '$35/mo per-item cap')."
+}

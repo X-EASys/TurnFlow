@@ -4,121 +4,85 @@
   "numeric_note": "not_adopted",
   "content_repair": false,
   "bindings": {
-    "T19/v3/T19_009": {
-      "scenario_key": "T19/v3/T19_009",
-      "source_sha256": "8ed1167dabe4abc655c441b64f33f8f69d9f6127749b9d76480d345e2b6e4157",
-      "scenario_sha256": "3fd2b41de4346a4d312d0c41a758613de6c93709e2d92eac3721618d998b0f8f",
-      "binding": {
-        "preference_source_aim_id": "aim_0_pref_narrative",
-        "preference_text": "Our family has been car-free on weekends for 3 years. Bikes, walking, and the city bus — that's it. Neighbors all know us as the green-transport family. We even sold our second car because of it."
-      }
-    },
-    "T19/v3/T19_013": {
-      "scenario_key": "T19/v3/T19_013",
-      "source_sha256": "faa70cc9f49fc85a1c11f3fff0ac4c3606117a47020046b19cf1dc9709b51084",
-      "scenario_sha256": "0b10088f0dc672ee6a8a88201406b280364010f5fbe0159c74aef6a48eb7a59a",
+    "T4/v3/T4_013": {
+      "scenario_key": "T4/v3/T4_013",
+      "source_sha256": "22b0f67a324bcdd5c0f0e79137005b246233c426acc0cb0c7c9bf6695567d536",
+      "scenario_sha256": "4265baafe25605a30864906d87eac34fc8fe04180e49f14b7d34b011579e3d3a",
       "binding": {
         "preference_source_aim_id": "aim_0_pref",
         "preference_text": "I've been a bike-and-walk person for about 8 years now. My car basically sits in the driveway all week — I do all my local errands on my bike or on foot. Friends joke that I've forgotten how to drive."
       }
     },
-    "T19/v3/T19_028": {
-      "scenario_key": "T19/v3/T19_028",
-      "source_sha256": "3febb65307f57591461b67007f963b546b6a8351dadd9c6fa79dbf4e59f071e4",
-      "scenario_sha256": "3205eb615735f97e35c00dd774d3a2efb9a4e97c3981c0e9c7621c49c761dbd7",
+    "T4/v3/T4_028": {
+      "scenario_key": "T4/v3/T4_028",
+      "source_sha256": "eb8a392d758af6c00a82af68bd8a3d4292e332c02d2d422f8e6faeb8f0a299c7",
+      "scenario_sha256": "9f666806e53de2f72966716affc3cd3956a6cec442303ea4ec2ad798430c1a89",
       "binding": {
         "preference_source_aim_id": "aim_0_pref_anchor",
         "preference_text": "Spreadsheets only for 8 years. Excel and Google Sheets for every report, dashboard, tracker, and template I've ever built. My whole team knows I do everything in spreadsheets. Never needed Tableau, Power BI, or any other tool."
       }
     },
-    "T19/v3/T19_029": {
-      "scenario_key": "T19/v3/T19_029",
-      "source_sha256": "b601d919841a495571c6ce927dcdce3a69b9263c263914f7eff54744e9891781",
-      "scenario_sha256": "7fc564b11c9181a101c80cd0b31b19abc840a5dfc229bd41661105957280538e",
+    "T4/v3/T4_029": {
+      "scenario_key": "T4/v3/T4_029",
+      "source_sha256": "3112f93f8527b115e498a8850d0129915f1198b635d20676f9719143f8fe116a",
+      "scenario_sha256": "7a6b078b0788dd0a87e150d24ddd5832dfe9e41fb47aa5166c6864afcc92a33e",
       "binding": {
         "preference_source_aim_id": "aim_0_pref_anchor",
         "preference_text": "Excel for everything, 8 years running. Formulas, charts, macros, data cleaning — all in Excel. Colleagues know me as the Excel person."
       }
     },
-    "T19/v3/T19_032": {
-      "scenario_key": "T19/v3/T19_032",
-      "source_sha256": "5f31b1cc6ca9140def08f441cbcaa42f1470f9194e220f1b4503fd7d207b26e5",
-      "scenario_sha256": "e22649d68040cbfd1617148b95784530aa099b5b937a9d88bb832b738a64315a",
-      "binding": {
-        "preference_source_aim_id": "aim_0_pref_anchor",
-        "preference_text": "I've been vacuum-sealing all my off-season clothes and gear for about 8 years now. My friends always ask how I fit so much into my storage closet — vacuum bags are the answer. Flat, compact, airtight, no moths, no dust."
-      }
-    },
-    "T19/v3/T19_034": {
-      "scenario_key": "T19/v3/T19_034",
-      "source_sha256": "50cb9d7812a6cea74632b422a9494e08b264b61cc8e3dc4407c184bcf92e4810",
-      "scenario_sha256": "68e53b1b6a5560b76101d08e6cd04f4d3680401dd3602c4196fb5bd22f80e0f4",
+    "T4/v3/T4_034": {
+      "scenario_key": "T4/v3/T4_034",
+      "source_sha256": "b0d429046de884f516069ce8837ec1a6f0f4e34d4d8f2b870cbdc50fa6b1ee10",
+      "scenario_sha256": "e839d2d6d4cffd5b3a13d84bde949723061de326abf2edebbc03fe7eb569f11b",
       "binding": {
         "preference_source_aim_id": "aim_0_pref_narrative",
         "preference_text": "All my work communication goes through email. Has been that way for 8 years — Slack, Teams, phone, video, all turned off. Colleagues know not to ping me anywhere else."
       }
     },
-    "T19/v3/T19_037": {
-      "scenario_key": "T19/v3/T19_037",
-      "source_sha256": "40ddd465b257e69da2e71625e67adb6fe5e45faf322485de68f254c71c091fd4",
-      "scenario_sha256": "7b838b7410b54bfa16174789d65e92c83aa252577ef20c6d23c1df8224ed3fbb",
+    "T4/v3/T4_037": {
+      "scenario_key": "T4/v3/T4_037",
+      "source_sha256": "5b2d1d7c5051e01f4c58a14c64d2678c207ab908a27da8df94c72c7336aa666f",
+      "scenario_sha256": "c7f7fda89f3d1dd5a2d97363dd7629fb9ca4d74d25a7248b0201c5c8e76fdcf4",
       "binding": {
         "preference_source_aim_id": "aim_0_pref",
         "preference_text": "Email-only for all work communication, 5 years running. Slack disabled, phone on silent, video apps uninstalled. Single async channel, everything in writing."
       }
     },
-    "T19/v3/T19_045": {
-      "scenario_key": "T19/v3/T19_045",
-      "source_sha256": "cd21a5abc286f3ffe724ed23d3111dd18e413543af75d98f21e0db2bd5d3e4bc",
-      "scenario_sha256": "8c22df4b177280bdff36e84becd58e137f6d57cac338d24dd723f4aa1944884a",
+    "T4/v3/T4_045": {
+      "scenario_key": "T4/v3/T4_045",
+      "source_sha256": "a6b546393556253dea3a5accfba4f10a6d0faac5a35e9f8efef0946b4bc20715",
+      "scenario_sha256": "05a99a66bd2c6d12bdd9e0f575334443d2988a49a7ad1977d2106ee0091f81ce",
       "binding": {
         "preference_source_aim_id": "aim_0_pref_anchor",
         "preference_text": "All my work communications go into one daily window, 4 to 5pm. Been doing it six years. Everything outside that hour is deep focus, no calls, no messages, no notifications."
       }
     },
-    "T19/v3/T19_046": {
-      "scenario_key": "T19/v3/T19_046",
-      "source_sha256": "63a9fe3cc9ed0a41c679ec5f4466263a47e8c7530079b86fc4dfa2b4af00ef83",
-      "scenario_sha256": "60db4567b94f4cb44ee1a9167faf68df22c5e853caddfd4cba5feb77347061bc",
-      "binding": {
-        "preference_source_aim_id": "aim_0_pref_anchor",
-        "preference_text": "All my business banking goes through one online-only bank. Have done it that way for 6 years. No branch visits, no second accounts, everything handled through the app and website. My accountant and bookkeeper both know — single bank, fully online, no exceptions."
-      }
-    },
-    "T19/v3/T19_057": {
-      "scenario_key": "T19/v3/T19_057",
-      "source_sha256": "e0c4bbd0de7e599717b884ff713a23bff04296909af8dfe2d2f276c6ed065621",
-      "scenario_sha256": "8841a0435ba6f297596c4303098364b8043c01c81d32ba8a9700128920740114",
+    "T4/v3/T4_057": {
+      "scenario_key": "T4/v3/T4_057",
+      "source_sha256": "03ebdb23a61d63335736308861293c1d160c5919460971707db5e9e3efcf369d",
+      "scenario_sha256": "3561ab6ebd8fc45adfaf1eb4ae495f6ec7be907a144fb999239a9623b60e2fc0",
       "binding": {
         "preference_source_aim_id": "aim_0_pref_anchor",
         "preference_text": "I've done every repair and renovation on this house myself for 10 years. Plumbing, framing, drywall, tile, painting — all me. My neighbors joke I should start a contracting business. I don't hire out work on my home."
       }
     },
-    "T19/v3/T19_068": {
-      "scenario_key": "T19/v3/T19_068",
-      "source_sha256": "b2a2122fef10e2546e175eec3eae45ba9282ba7942c904867edf8c89b4a4d46e",
-      "scenario_sha256": "e84ae165f5e0d5559543265e9c2c5a6cb1a16c6026c4f1244a49a382f25b551b",
+    "T4/v3/T4_068": {
+      "scenario_key": "T4/v3/T4_068",
+      "source_sha256": "f98378b0b0be83848ef5fcf3e2aea36e7f478ec42584e59a4fb2230c499fda8d",
+      "scenario_sha256": "31db3deda2514f061add2e222f423372eed3cbd534b7b538459bb62826497534",
       "binding": {
         "preference_source_aim_id": "aim_0_pref_anchor",
         "preference_text": "Everything goes in the fridge at my place. Have done it for 8 years — meat, bread, produce, condiments, all of it. Fridge keeps things fresh longest, that's just how I run my kitchen."
       }
     },
-    "T19/v3/T19_088": {
-      "scenario_key": "T19/v3/T19_088",
-      "source_sha256": "fbfc411467e409f54593cd1a4ec938f890ff2079849a2aea4e80d1645a452efd",
-      "scenario_sha256": "8b8ce01fdd5b9918bfa54f1f0f08fb54d644e68f5f9d168c71a21a11550c5830",
+    "T4/v3/T4_088": {
+      "scenario_key": "T4/v3/T4_088",
+      "source_sha256": "731bf36fae4c37652427a47c1d64b5d208d13115dd27871ebd157b8354ea4f74",
+      "scenario_sha256": "8c4c41c5f056bb3401c77fe429f0f5796751abea31c164b49286c0e3bc404349",
       "binding": {
         "preference_source_aim_id": "aim_0_pref_anchor",
         "preference_text": "Cash-only for 8 years. No bank account, no cards, no apps. I withdraw my paycheck from my employer as a cashier's check and cash it at a check-cashing place. Everyone who knows me knows I only deal in cash."
-      }
-    },
-    "T19/v3/T19_110": {
-      "scenario_key": "T19/v3/T19_110",
-      "source_sha256": "eeaff459a7895f55b4ffe5ce918b1843baf9c8e74a7bc23f5d6df229877da714",
-      "scenario_sha256": "e5730b1027add7c8d6cfed4e0dc7eb9d50e25ea71dfb34672fec76c8eeb990a5",
-      "binding": {
-        "preference_source_aim_id": "aim_0_pref_anchor",
-        "preference_text": "Everything in my house goes through the washing machine — been doing it that way for 8 years. Gentle cycle, cold water, mesh bags for delicates. Never had a problem. My friends joke that I'd machine-wash my car if it fit."
       }
     }
   }

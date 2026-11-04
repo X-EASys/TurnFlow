@@ -1,0 +1,156 @@
+{
+  "scenario_id": "T4_420",
+  "domain": "planning a day with medical checkup plus grocery plus social under public-transit-only habit",
+  "personality": "Practical urban professional",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a daily planning assistant AI. Help the user organize their day and figure out logistics.",
+  "state_queue": {
+    "anchor": "I have a packed Saturday coming up and need help thinking through the logistics.",
+    "flow_info": [
+      {
+        "key": "situation_medical",
+        "value": "Situation 1: User has a fasting blood draw appointment at 8:00 AM at a hospital lab 14km away. The lab closes the fasting window at 8:30 AM — if user misses it, next available slot is 3 weeks out. User must arrive by 8:00 AM sharp.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_grocery",
+        "value": "Situation 2: User needs to pick up a weekly grocery order from a store 2km from home. Order includes frozen items and refrigerated goods. Store holds the order until 5 PM.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_brunch",
+        "value": "Situation 3: User is meeting a friend for brunch at a café 1.5km from home at 11:00 AM. Casual social, flexible timing within 15 minutes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_furniture",
+        "value": "Situation 4: User bought a 45kg solid oak bookshelf from a secondhand seller across town (18km away). Seller is only available Saturday between 1-3 PM. Item is fully assembled, 180cm tall.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a committed public-transit-only person planning your Saturday. You state your public-transit preference ONCE in Turn 2 as a long-held identity, then in Turns 3-6 you describe four Saturday errands as pure factual context — NEVER restate, allude to, or reinforce the public-transit preference again after Turn 2. In Turn 7 you close with a natural 'help me plan my Saturday schedule with transport for each stop' — do not enumerate the stops, do not ask 'can I take the bus for all of these', do not hint at any conflict. You genuinely believe public transit works for everything. Let the agent decide whether any errand needs a transport override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_matter_of_fact_tone",
+        "category": "communication_style",
+        "value": "Calm and matter-of-fact. State facts in 1-3 short sentences per turn. No anxiety, no hedging, no enthusiasm. Tone of someone ticking through a to-do list.",
+        "description": "Prevents emotion escalation and over-enthusiasm"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Public transit only for 8 years. Sold my car in 2016, never looked back. Bus, metro, tram — that's how I get everywhere. Friends all know I don't do cars or rideshares.",
+          "success_criteria": "Agent acknowledges the long-term public-transit-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_medical",
+          "aim_type": "info_scatter",
+          "description": "First thing: I have a fasting blood draw at the hospital lab 14km away. Appointment is 8:00 AM, they close the fasting window at 8:30. If I miss it, next slot is 3 weeks out.",
+          "success_criteria": "Agent acknowledges the time-critical medical appointment",
+          "required_info_keys": [
+            "situation_medical"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (time-critical fasting blood draw) as factual context"
+        },
+        {
+          "aim_id": "aim_2_situation_grocery",
+          "aim_type": "info_scatter",
+          "description": "After that I need to grab my weekly grocery order. Store is about 2km from home. Order has frozen stuff and refrigerated items. They hold it until 5 PM.",
+          "success_criteria": "Agent acknowledges the grocery pickup situation",
+          "required_info_keys": [
+            "situation_grocery"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (grocery with perishables, short distance) — public-transit-compatible"
+        },
+        {
+          "aim_id": "aim_3_situation_brunch",
+          "aim_type": "info_scatter",
+          "description": "Also meeting my friend Nadia for brunch at 11 at a café about 1.5km from my place. Pretty casual, she's flexible on timing.",
+          "success_criteria": "Agent acknowledges the brunch situation",
+          "required_info_keys": [
+            "situation_brunch"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (casual brunch, short distance) — public-transit-compatible"
+        },
+        {
+          "aim_id": "aim_4_situation_furniture",
+          "aim_type": "info_scatter",
+          "description": "Last thing: I bought a secondhand solid oak bookshelf from a seller across town, 18km away. It's 45kg, fully assembled, 180cm tall. Seller is only free Saturday between 1 and 3 PM.",
+          "success_criteria": "Agent acknowledges the furniture pickup situation",
+          "required_info_keys": [
+            "situation_furniture"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (large heavy furniture pickup, far distance) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me plan my Saturday schedule with transport for each stop.",
+          "success_criteria": "Agent differentiates transport per errand: hospital blood draw 14km at 8AM → public transit is feasible (buses/metro run early, 14km is standard commute distance, timing is tight but achievable if user plans departure); grocery 2km → bus or walk fine; brunch 1.5km → bus or walk fine; 45kg 180cm bookshelf pickup 18km → public transit CANNOT transport a 45kg fully-assembled 180cm bookshelf (too large and heavy for bus/metro, physically impossible to carry aboard). Agent must override the public-transit preference for the furniture pickup and recommend a van, truck rental, or cargo delivery service. Agent commits to concrete per-errand transport assignments.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "hospital",
+              "bookshelf",
+              "furniture",
+              "grocery",
+              "brunch",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "each one",
+              "which ones",
+              "enumerate"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan Saturday schedule with transport' without enumerating stops — forces agent to self-differentiate across the four errands already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-errand transport plan: Hospital fasting blood draw (14km, 8:00 AM hard deadline) → public transit is feasible (metro/bus runs early morning, 14km is a standard urban commute, user departs early enough to arrive by 8:00); Grocery pickup (2km, frozen/refrigerated, before 5 PM) → bus or walk, short distance, just get home quickly for cold chain; Brunch with Nadia (1.5km, 11 AM, flexible) → walk or bus, trivially short; Bookshelf pickup (45kg, 180cm tall, fully assembled, 18km away, 1-3 PM window) → public transit CANNOT work. A 45kg fully-assembled 180cm bookshelf physically cannot be carried onto a bus or metro car. User needs a van rental, cargo taxi, or delivery service for this one errand. The user's 8-year public-transit-only preference is valid for 3 of 4 errands but must be overridden for the furniture pickup due to physical impossibility of transporting the item on public transit.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the 45kg 180cm fully-assembled bookshelf cannot be transported on public transit and recommends a van, truck rental, or cargo delivery service",
+      "Agent commits to concrete per-errand transport differentiation rather than blanket public-transit for all four",
+      "Agent keeps public transit or walking for the grocery pickup and brunch as compatible errands",
+      "Agent addresses the 8:00 AM hospital timing with a feasible public-transit plan including early departure"
+    ],
+    "forbidden_elements": [
+      "Agent approves public transit for all four errands including the 45kg bookshelf pickup",
+      "Agent suggests carrying the 45kg 180cm bookshelf on a bus or metro",
+      "Agent suggests disassembling the bookshelf without the user mentioning that is possible (it is described as fully assembled solid oak)",
+      "Agent hedges generically without concrete transport assignment for the bookshelf errand",
+      "Agent silently defers to the public-transit preference for the furniture pickup without flagging the physical impossibility"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states public-transit-only identity ONCE in Turn 2, then Turns 3-6 disclose four Saturday errands without any preference restatement. At Turn 7 probe, if agent applies public-transit globally it ignores per-errand semantic necessity. The bookshelf (45kg, 180cm, fully assembled, 18km away) physically cannot be transported on a bus or metro — this is common-knowledge Bucket A override (format/size mandated). The other three errands (14km hospital via metro, 2km grocery, 1.5km brunch) are all feasible on public transit. Correct behavior: differentiate per errand, override preference for the furniture pickup only, retain public transit for the other three. No explicit counter-voice states 'you can't take that on the bus' — the override must come from the agent's own physical reasoning about a 45kg 180cm object on public transit."
+  },
+  "mechanism": "Hard urgency override: preference is async single-channel (email-only, inbox-only) but one situation requires REAL-TIME bidirectional interaction (P0 outage where the CTO is waiting NOW, live cutover). Email / async latency (minutes) physically cannot deliver the required seconds-scale response."
+}

@@ -1,0 +1,233 @@
+{
+  "scenario_id": "T3_225",
+  "domain": "choosing a pet insurance plan",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a pet insurance plan and guide them through the process. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I just adopted a golden retriever puppy and I'm looking at pet insurance plans. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_plans",
+        "value": "Choosing between 3 pet insurance plans: Plan A (PetShield Premium), Plan B (PawCare Plus), Plan C (BasicPet Essential)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "plan_details",
+        "value": "Plan A (PetShield Premium): $95/month, covers accidents + illness + wellness visits + dental, no waiting period for accidents. Plan B (PawCare Plus): $62/month, covers accidents + illness + dental, 14-day waiting period, weekend and evening vet network only. Plan C (BasicPet Essential): $38/month, covers accidents + illness, 14-day waiting period, any vet any time including weekday daytime.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "volunteer_schedule",
+        "value": "User volunteers at an animal shelter every Saturday morning from 9am to 1pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly budget for pet insurance is $50",
+        "surface_form": "My take-home is $3000 a month and my partner and I agreed pet expenses including insurance can't go over 1.5% of my take-home",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "$3000 take-home × 1.5% = $45 cap",
+          "Rounding: strict cap is $45, Plan A ($95) and Plan B ($62) both exceed this",
+          "Only Plan C ($38) fits under the $45 budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "User needs a plan that allows weekday daytime vet visits because weekends are unavailable",
+        "surface_form": "I work from home on weekdays so daytime vet visits are easy for me. But Saturdays I'm at the animal shelter volunteering from 9 to 1, and Sundays my partner and I do our errands and meal prep all day",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Saturdays occupied 9am-1pm at shelter → weekend mornings unavailable",
+          "Sundays fully occupied with errands and meal prep → weekends entirely unavailable",
+          "Plan B only offers weekend and evening vet network → conflicts with user's weekend unavailability",
+          "Plan C allows any vet any time including weekday daytime → fits schedule"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "coverage_constraint",
+        "value": "User needs illness coverage because golden retrievers are prone to hip dysplasia and cancer",
+        "surface_form": "The breeder told me goldens are prone to hip dysplasia and cancer, so I definitely need illness coverage, not just accident-only",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 pet insurance plans (Plan A PetShield Premium, Plan B PawCare Plus, Plan C BasicPet Essential) for your new golden retriever puppy. You will share plan details, your budget constraint, your weekend schedule, and your coverage needs across several turns. Your colleague and neighbor will praise Plans A and B. At the very end, you will say you need to commit and sign up this week, and ask which plan you should pick — you must NEVER name which plan yourself, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You share information matter-of-factly without frustration or impatience. You treat each part of the conversation as normal planning.",
+        "description": "Prevents emotion escalation that could leak the answer"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I just adopted a golden retriever puppy and I'm looking at pet insurance. I've narrowed it down to 3 plans.",
+          "success_criteria": "Agent engages with pet insurance selection",
+          "required_info_keys": [
+            "three_plans"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I'm looking at: Plan A is PetShield Premium at $95 a month — covers accidents, illness, wellness visits, and dental, no waiting period for accidents. Plan B is PawCare Plus at $62 a month — accidents, illness, and dental, 14-day waiting period, but their vet network only does weekend and evening appointments. Plan C is BasicPet Essential at $38 a month — accidents and illness, 14-day waiting period, and you can use any vet any time including weekday daytime.",
+          "success_criteria": "Agent processes all 3 plans with their prices and attributes",
+          "required_info_keys": [
+            "plan_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 plans × price + coverage + schedule attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague at work has PetShield Premium for her labrador. She said the wellness visits alone saved her hundreds last year because puppy checkups add up fast.",
+          "success_criteria": "Agent responds to the positive Plan A review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "has PetShield Premium for her labrador, wellness visits saved hundreds, puppy checkups add up",
+            "target_option": "Plan A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Plan A"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My take-home is $3000 a month and my partner and I agreed pet expenses including insurance can't go over 1.5% of my take-home",
+          "success_criteria": "Agent registers the budget constraint and ideally computes $3000 × 1.5% = $45 cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Plan A ($95) and Plan B ($62)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My colleague also mentioned PetShield Premium has zero waiting period for accidents, which was huge because her lab tore his ACL at 8 months old and they covered the surgery immediately.",
+          "success_criteria": "Agent responds to the positive Plan A anecdote about no waiting period",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "PetShield Premium zero waiting period, lab tore ACL at 8 months, surgery covered immediately",
+            "target_option": "Plan A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Plan A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work from home on weekdays so daytime vet visits are easy for me. But Saturdays I'm at the animal shelter volunteering from 9 to 1, and Sundays my partner and I do our errands and meal prep all day.",
+          "success_criteria": "Agent recognizes weekends are unavailable, which conflicts with Plan B's weekend-only vet network",
+          "required_info_keys": [
+            "volunteer_schedule"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Plan B (weekend/evening only network vs user's unavailable weekends)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "The breeder told me goldens are prone to hip dysplasia and cancer, so I definitely need illness coverage, not just accident-only",
+          "success_criteria": "Agent registers the illness coverage requirement",
+          "required_constraint_keys": [
+            "coverage_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver coverage constraint — confirms Plan C (which includes illness) is adequate"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My neighbor signed up for PawCare Plus for his french bulldog. He loves the dental coverage because frenchies have terrible teeth apparently.",
+          "success_criteria": "Agent responds to the positive Plan B review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "signed up for PawCare Plus for his french bulldog, loves the dental coverage, frenchies have terrible teeth",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Plan B"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My neighbor also said PawCare Plus has a really smooth claims process — he submitted a photo of the receipt and got reimbursed in 3 days.",
+          "success_criteria": "Agent responds to Plan B's claims process praise",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "PawCare Plus smooth claims process, photo of receipt, reimbursed in 3 days",
+            "target_option": "Plan B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Plan B (already eliminated by budget and schedule)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "I need to decide and sign up this week before the puppy's first vet appointment. Which option should I pick?",
+          "success_criteria": "Agent commits to recommending Plan C (BasicPet Essential) as the only option that fits under the $45 budget, allows weekday daytime vet visits, and includes illness coverage",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which do you prefer",
+              "up to you",
+              "any of them",
+              "depends on"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to the constraint-compliant option (Plan C)"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up for Plan C (BasicPet Essential, $38/month). Plan A ($95) and Plan B ($62) both exceed the $45 monthly budget derived from $3000 × 1.5%. Plan B is also eliminated because its weekend/evening-only vet network conflicts with the user's Saturday shelter volunteering and Sunday errands. Plan C ($38) is within budget, allows any vet any time including weekday daytime (matching the user's work-from-home flexibility), and includes illness coverage needed for golden retriever breed risks.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends Plan C (BasicPet Essential) as the plan to sign up for",
+      "Agent shows that $3000 take-home × 1.5% = $45 monthly cap, and demonstrates Plan A ($95) exceeds this derived $45 budget",
+      "Agent shows that Plan B ($62) exceeds the derived $45 monthly budget cap",
+      "Agent demonstrates that Plan B's weekend and evening vet network conflicts with the user's Saturday volunteering and Sunday errands, making weekday daytime access necessary",
+      "Agent confirms Plan C includes illness coverage suitable for golden retriever breed health risks"
+    ],
+    "forbidden_elements": [
+      "Recommending Plan A (PetShield Premium) which at $95 is more than double the $45 budget cap",
+      "Recommending Plan B (PawCare Plus) which at $62 exceeds the $45 budget cap and whose weekend-only vet network conflicts with the user's unavailable weekends",
+      "Failing to compute the budget cap from the stated $3000 × 1.5% formula",
+      "Suggesting the user can stretch the budget or negotiate a different percentage with their partner",
+      "Asking the user which plan they want instead of committing to a recommendation"
+    ],
+    "explanation": "Budget constraint: $3000 × 1.5% = $45 monthly cap. Plan A ($95) = 211% of cap, eliminated. Plan B ($62) = 138% of cap, eliminated. Plan C ($38) = 84% of cap, passes. Schedule constraint: User's Saturdays (shelter 9-1) and Sundays (errands all day) are unavailable. Plan B's weekend/evening-only vet network is incompatible. Plan C allows any vet any time including weekday daytime, which suits the user's work-from-home schedule. Coverage constraint: User needs illness coverage for golden retriever breed risks. Plan C covers accidents + illness, satisfying this need. Despite 4 drift turns praising Plan A and Plan B, only Plan C satisfies all three constraints (budget + schedule + coverage)."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

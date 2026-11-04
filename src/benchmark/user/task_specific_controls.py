@@ -1,26 +1,28 @@
 """
 Task-Specific User Simulator Controls
 
-This module implements specialized behavior controls for different task types (T1-T9).
+This module implements specialized behavior controls for legacy scenario controls.
+These control names are separate from the released T1–T5 task IDs.
+The released scenarios do not activate these legacy controllers.
 Each task type has unique requirements for how the User Simulator should behave
 to properly test specific LLM agent capabilities.
 
 Task Categories:
-- Retention (T1, T7, T8): Memory of conversation history
-- Manipulation (T2, T5, T9): State and constraint management  
-- Reasoning (T3, T4, T6): Proactive inference and conflict detection
+- Retention (LEGACY_SELF_REFERENCE, LEGACY_DRIP_FEED, LEGACY_REFERENCE_RESOLUTION): Memory of conversation history
+- Manipulation (LEGACY_STATE_UPDATE, LEGACY_NEGATIVE_CONSTRAINT, LEGACY_VERSION_REVERSION): State and constraint management
+- Reasoning (LEGACY_PROACTIVITY, LEGACY_CONFLICT_DETECTION, LEGACY_AMBIGUITY_RESOLUTION): Proactive inference and conflict detection
 
 Implementation Status:
-✅ T1 (Self-Reference) - Vanilla prompt OK, with history validation
-✅ T3 (Proactivity) - INFORMATION_HIDING: Only reveal info when explicitly asked
-✅ T5 (Negative Constraint) - Vanilla prompt OK, with constraint detection
-✅ T6 (Ambiguity Resolution) - HIDDEN_INTENT_LOCK: Hidden true intent
-✅ T8 (Reference Resolution) - ENTITY_MASKING: Use references instead of names
+✅ LEGACY_SELF_REFERENCE (Self-Reference) - Vanilla prompt OK, with history validation
+✅ LEGACY_PROACTIVITY (Proactivity) - INFORMATION_HIDING: Only reveal info when explicitly asked
+✅ LEGACY_NEGATIVE_CONSTRAINT (Negative Constraint) - Vanilla prompt OK, with constraint detection
+✅ LEGACY_AMBIGUITY_RESOLUTION (Ambiguity Resolution) - HIDDEN_INTENT_LOCK: Hidden true intent
+✅ LEGACY_REFERENCE_RESOLUTION (Reference Resolution) - ENTITY_MASKING: Use references instead of names
 
-🔲 T2 (State Update) - STATE_ANCHORING: Timing control for pivot
-🔲 T4 (Conflict Detection) - IGNORANCE_MAINTENANCE: Pretend not to know conflict
-🔲 T7 (Drip-Feed) - INSTRUCTION_QUEUE: One constraint per turn
-🔲 T9 (Version Reversion) - VERSION_TAGGING: Track content versions
+🔲 LEGACY_STATE_UPDATE (State Update) - STATE_ANCHORING: Timing control for pivot
+🔲 LEGACY_CONFLICT_DETECTION (Conflict Detection) - IGNORANCE_MAINTENANCE: Pretend not to know conflict
+🔲 LEGACY_DRIP_FEED (Drip-Feed) - INSTRUCTION_QUEUE: One constraint per turn
+🔲 LEGACY_VERSION_REVERSION (Version Reversion) - VERSION_TAGGING: Track content versions
 
 Author: Auto-generated for tau2-bench
 """
@@ -39,32 +41,32 @@ except ImportError:
     HiddenStateCategory = None
 
 
-class TaskType(str, Enum):
+class LegacyTaskType(str, Enum):
     """Task type identifiers"""
-    T1_SELF_REFERENCE = "T1"
-    T2_STATE_UPDATE = "T2"
-    T3_PROACTIVITY = "T3"
-    T4_CONFLICT_DETECTION = "T4"
-    T5_NEGATIVE_CONSTRAINT = "T5"
-    T6_AMBIGUITY_RESOLUTION = "T6"
-    T7_DRIP_FEED = "T7"
-    T8_REFERENCE_RESOLUTION = "T8"
-    T9_VERSION_REVERSION = "T9"
+    SELF_REFERENCE = "LEGACY_SELF_REFERENCE"
+    STATE_UPDATE = "LEGACY_STATE_UPDATE"
+    PROACTIVITY = "LEGACY_PROACTIVITY"
+    CONFLICT_DETECTION = "LEGACY_CONFLICT_DETECTION"
+    NEGATIVE_CONSTRAINT = "LEGACY_NEGATIVE_CONSTRAINT"
+    AMBIGUITY_RESOLUTION = "LEGACY_AMBIGUITY_RESOLUTION"
+    DRIP_FEED = "LEGACY_DRIP_FEED"
+    REFERENCE_RESOLUTION = "LEGACY_REFERENCE_RESOLUTION"
+    VERSION_REVERSION = "LEGACY_VERSION_REVERSION"
 
 
 class SimulatorControlType(str, Enum):
     """Types of simulator control mechanisms"""
-    GLOBAL_HISTORY_LOCK = "global_history_lock"       # T1: Validate history before callback
-    INFORMATION_HIDING = "information_hiding"         # T3: Only reveal when asked
-    NEGATIVE_LOGIC_FILTER = "negative_logic_filter"   # T5: Focus on absence
-    HIDDEN_INTENT_LOCK = "hidden_intent_lock"         # T6: Hidden true intent
-    ENTITY_MASKING = "entity_masking"                 # T8: Use references not names
+    GLOBAL_HISTORY_LOCK = "global_history_lock"       # LEGACY_SELF_REFERENCE: Validate history before callback
+    INFORMATION_HIDING = "information_hiding"         # LEGACY_PROACTIVITY: Only reveal when asked
+    NEGATIVE_LOGIC_FILTER = "negative_logic_filter"   # LEGACY_NEGATIVE_CONSTRAINT: Focus on absence
+    HIDDEN_INTENT_LOCK = "hidden_intent_lock"         # LEGACY_AMBIGUITY_RESOLUTION: Hidden true intent
+    ENTITY_MASKING = "entity_masking"                 # LEGACY_REFERENCE_RESOLUTION: Use references not names
     
     # Not yet implemented
-    STATE_ANCHORING = "state_anchoring"               # T2: Track state before pivot
-    IGNORANCE_MAINTENANCE = "ignorance_maintenance"   # T4: Pretend not to know
-    INSTRUCTION_QUEUE = "instruction_queue"           # T7: Pop one per turn
-    VERSION_TAGGING = "version_tagging"               # T9: Track versions
+    STATE_ANCHORING = "state_anchoring"               # LEGACY_STATE_UPDATE: Track state before pivot
+    IGNORANCE_MAINTENANCE = "ignorance_maintenance"   # LEGACY_CONFLICT_DETECTION: Pretend not to know
+    INSTRUCTION_QUEUE = "instruction_queue"           # LEGACY_DRIP_FEED: Pop one per turn
+    VERSION_TAGGING = "version_tagging"               # LEGACY_VERSION_REVERSION: Track versions
 
 
 @dataclass
@@ -73,51 +75,51 @@ class TaskControlConfig:
     task_type: str
     control_type: SimulatorControlType
     
-    # T3: Information hiding config
+    # LEGACY_PROACTIVITY: Information hiding config
     hidden_info: Dict[str, str] = field(default_factory=dict)  # keyword -> info to reveal
     reveal_keywords: List[str] = field(default_factory=list)   # keywords that trigger reveal
     
-    # T5: Negative constraint config  
+    # LEGACY_NEGATIVE_CONSTRAINT: Negative constraint config
     negative_constraints: List[str] = field(default_factory=list)  # things to exclude
     forbidden_patterns: List[str] = field(default_factory=list)    # regex patterns to detect violation
     
-    # T6: Ambiguity resolution config
+    # LEGACY_AMBIGUITY_RESOLUTION: Ambiguity resolution config
     true_intent: str = ""
     false_intents: List[str] = field(default_factory=list)
     ambiguous_instruction: str = ""
     
-    # T8: Entity masking config
+    # LEGACY_REFERENCE_RESOLUTION: Entity masking config
     entity_registry: Dict[str, Dict[str, str]] = field(default_factory=dict)  # entity_id -> {name, attributes}
     forbidden_entity_names: List[str] = field(default_factory=list)
     
-    # T1: Self-reference config (for validation)
+    # LEGACY_SELF_REFERENCE: Self-reference config (for validation)
     tracked_agent_outputs: List[str] = field(default_factory=list)
     
     # =========================================================================
-    # NEW: T2, T4, T7, T9 Configuration Fields
+    # NEW: LEGACY_STATE_UPDATE, LEGACY_CONFLICT_DETECTION, LEGACY_DRIP_FEED, LEGACY_VERSION_REVERSION Configuration Fields
     # =========================================================================
     
-    # T2: State update config
+    # LEGACY_STATE_UPDATE: State update config
     state_a: Dict[str, Any] = field(default_factory=dict)  # Initial state content
     state_b: Dict[str, Any] = field(default_factory=dict)  # New state content
     pivot_turn: int = 0  # Turn number for pivot
     pivot_trigger: str = ""  # Trigger phrase for pivot
     contamination_keywords: List[str] = field(default_factory=list)  # Old state keywords to detect
     
-    # T4: Conflict detection config
+    # LEGACY_CONFLICT_DETECTION: Conflict detection config
     agent_stated_fact: str = ""  # Fact the agent stated earlier
     user_conflicting_plan: str = ""  # User's plan that conflicts
     conflict_explanation: str = ""  # Explanation of the conflict
     acknowledgment_script: str = ""  # Script when agent catches conflict
     conflict_detection_keywords: List[str] = field(default_factory=list)
     
-    # T7: Drip-feed config
+    # LEGACY_DRIP_FEED: Drip-feed config
     constraint_queue: List[str] = field(default_factory=list)  # Constraints to drip
     current_queue_index: int = 0  # Current position in queue
     final_aggregation_trigger: str = ""  # Trigger for final request
     drip_behavior: Dict[str, bool] = field(default_factory=dict)  # Behavior flags
     
-    # T9: Version reversion config
+    # LEGACY_VERSION_REVERSION: Version reversion config
     version_registry: Dict[str, Dict[str, Any]] = field(default_factory=dict)  # v1, v2, v3 -> content/characteristics
     target_version: str = ""  # Version to revert to
     forbidden_version_terms: List[str] = field(default_factory=list)  # Terms not allowed
@@ -236,9 +238,9 @@ class TaskSpecificController:
         """
         Set hidden state items from the scenario for task-specific integration.
         
-        For T3 tasks: HIDDEN_LATENT items are merged into hidden_info for 
+        For LEGACY_PROACTIVITY tasks: HIDDEN_LATENT items are merged into hidden_info for
         INFORMATION_HIDING behavior.
-        For T6 tasks: HIDDEN_KNOWLEDGE items reinforce HIDDEN_INTENT_LOCK behavior.
+        For LEGACY_AMBIGUITY_RESOLUTION tasks: HIDDEN_KNOWLEDGE items reinforce HIDDEN_INTENT_LOCK behavior.
         
         Args:
             hidden_state_items: List of HiddenStateItem instances
@@ -250,26 +252,26 @@ class TaskSpecificController:
         
         task_type = self.config.task_type.upper()
         
-        if task_type == "T3" and HiddenStateCategory is not None:
-            # Merge HIDDEN_LATENT / PREFERENCE items into T3's hidden_info dict
+        if task_type == "LEGACY_PROACTIVITY" and HiddenStateCategory is not None:
+            # Merge HIDDEN_LATENT / PREFERENCE items into LEGACY_PROACTIVITY's hidden_info dict
             for item in self._hidden_state_items:
                 if item.category.is_preference:
                     if item.key not in self.config.hidden_info:
                         self.config.hidden_info[item.key] = item.value
-                        logger.debug(f"T3: Merged latent preference '{item.key}' into hidden_info")
+                        logger.debug(f"LEGACY_PROACTIVITY: Merged latent preference '{item.key}' into hidden_info")
                     # Also add trigger keywords to reveal_keywords
                     if item.trigger_condition:
                         trigger_words = [w for w in item.trigger_condition.split() if len(w) > 3]
                         self.config.reveal_keywords.extend(trigger_words)
         
-        elif task_type == "T6" and HiddenStateCategory is not None:
-            # Merge INTERNAL_KNOWLEDGE items into T6's intent config
+        elif task_type == "LEGACY_AMBIGUITY_RESOLUTION" and HiddenStateCategory is not None:
+            # Merge INTERNAL_KNOWLEDGE items into LEGACY_AMBIGUITY_RESOLUTION's intent config
             for item in self._hidden_state_items:
                 if item.category.is_knowledge:
                     # Reinforce the hidden intent with internal knowledge
                     if not self.config.true_intent and item.value:
                         self.config.true_intent = item.value
-                        logger.debug(f"T6: Set true_intent from internal knowledge '{item.key}'")
+                        logger.debug(f"LEGACY_AMBIGUITY_RESOLUTION: Set true_intent from internal knowledge '{item.key}'")
     
     def get_hidden_state_items(self) -> List[Any]:
         """Get the current hidden state items."""
@@ -300,7 +302,7 @@ class TaskSpecificController:
         if not self.config:
             return hint
         
-        # v2.4: Apply filtering to ALL task types (removed T1/T5 restriction)
+        # v2.4: Apply filtering to ALL task types (removed LEGACY_SELF_REFERENCE/LEGACY_NEGATIVE_CONSTRAINT restriction)
         # Real users don't repeat themselves regardless of task type
         
         # Common reminder phrases that should be removed
@@ -356,7 +358,7 @@ class TaskSpecificController:
         return keywords
     
     # =========================================================================
-    # T1: Self-Reference - GLOBAL_HISTORY_LOCK
+    # LEGACY_SELF_REFERENCE: Self-Reference - GLOBAL_HISTORY_LOCK
     # =========================================================================
     
     def t1_validate_callback_possible(
@@ -365,7 +367,7 @@ class TaskSpecificController:
         target_info: str
     ) -> bool:
         """
-        T1: Validate that target information exists in conversation history
+        LEGACY_SELF_REFERENCE: Validate that target information exists in conversation history
         before allowing a callback question.
         
         This prevents the simulator from asking about data that was never stated.
@@ -394,7 +396,7 @@ class TaskSpecificController:
     
     def t1_get_prompt_additions(self) -> str:
         """
-        T1: Get additional prompt content for self-reference task.
+        LEGACY_SELF_REFERENCE: Get additional prompt content for self-reference task.
         
         The user asks about something, gets an answer, then after DISTRACTIONS
         asks the agent to recall what it said earlier WITHOUT repeating the context.
@@ -416,7 +418,7 @@ A normal human would NOT repeat them - they assume the agent remembers.
 """
         
         return f"""
-## T1: Self-Reference Memory Test - BE REALISTIC
+## LEGACY_SELF_REFERENCE: Self-Reference Memory Test - BE REALISTIC
 
 You are testing the agent's ability to remember its OWN earlier outputs.
 
@@ -473,7 +475,7 @@ The callback and recommendations should test if the agent tracks conversation co
 """
 
     # =========================================================================
-    # T3: Proactivity - INFORMATION_HIDING
+    # LEGACY_PROACTIVITY: Proactivity - INFORMATION_HIDING
     # =========================================================================
     
     def t3_should_reveal_info(
@@ -482,7 +484,7 @@ The callback and recommendations should test if the agent tracks conversation co
         info_key: str
     ) -> bool:
         """
-        T3: Check if agent's question triggers information reveal.
+        LEGACY_PROACTIVITY: Check if agent's question triggers information reveal.
         
         Information is ONLY revealed if the agent explicitly asks about it.
         The user is passive and doesn't volunteer information.
@@ -528,7 +530,7 @@ The callback and recommendations should test if the agent tracks conversation co
     
     def t3_get_prompt_additions(self) -> str:
         """
-        T3: Get additional prompt content for proactivity task.
+        LEGACY_PROACTIVITY: Get additional prompt content for proactivity task.
         
         User is PASSIVE and doesn't volunteer information.
         """
@@ -553,7 +555,7 @@ The callback and recommendations should test if the agent tracks conversation co
         forbidden_str = ", ".join(set(forbidden_values)) if forbidden_values else "N/A"
         
         return f"""
-## T3: Proactivity Test - BE PASSIVE AND UNHELPFUL
+## LEGACY_PROACTIVITY: Proactivity Test - BE PASSIVE AND UNHELPFUL
 
 You are testing the agent's ability to ASK QUESTIONS before giving recommendations.
 
@@ -592,12 +594,12 @@ Remember: You are TESTING if the agent is smart enough to ASK questions!
 """
 
     # =========================================================================
-    # T5: Negative Constraint - NEGATIVE_LOGIC_FILTER
+    # LEGACY_NEGATIVE_CONSTRAINT: Negative Constraint - NEGATIVE_LOGIC_FILTER
     # =========================================================================
     
     def t5_check_constraint_violated(self, agent_response: str) -> Tuple[bool, List[str]]:
         """
-        T5: Check if agent's response violates any negative constraints.
+        LEGACY_NEGATIVE_CONSTRAINT: Check if agent's response violates any negative constraints.
         
         Args:
             agent_response: The agent's response to check
@@ -623,7 +625,7 @@ Remember: You are TESTING if the agent is smart enough to ASK questions!
     
     def t5_get_prompt_additions(self) -> str:
         """
-        T5: Get additional prompt content for negative constraint task.
+        LEGACY_NEGATIVE_CONSTRAINT: Get additional prompt content for negative constraint task.
         
         User mentions what they DON'T want ONCE at the start, then moves on
         to other topics WITHOUT repeating the constraint. The challenge is
@@ -658,7 +660,7 @@ The ENTIRE POINT of this test is to see if the agent remembers WITHOUT reminders
 """
         
         return f"""
-## T5: Negative Constraint Test - BE REALISTIC
+## LEGACY_NEGATIVE_CONSTRAINT: Negative Constraint Test - BE REALISTIC
 
 You are testing the agent's ability to REMEMBER constraints mentioned earlier.
 
@@ -720,12 +722,12 @@ This creates a realistic "memory trap" where the agent must track earlier info.
 """
 
     # =========================================================================
-    # T6: Ambiguity Resolution - HIDDEN_INTENT_LOCK
+    # LEGACY_AMBIGUITY_RESOLUTION: Ambiguity Resolution - HIDDEN_INTENT_LOCK
     # =========================================================================
     
     def t6_check_agent_clarifies(self, agent_message: str) -> bool:
         """
-        T6: Check if agent is asking for clarification.
+        LEGACY_AMBIGUITY_RESOLUTION: Check if agent is asking for clarification.
         
         Args:
             agent_message: The agent's message
@@ -752,7 +754,7 @@ This creates a realistic "memory trap" where the agent must track earlier info.
     
     def t6_should_reveal_intent(self, agent_message: str) -> bool:
         """
-        T6: Determine if user should reveal true intent.
+        LEGACY_AMBIGUITY_RESOLUTION: Determine if user should reveal true intent.
         
         Only reveal if agent asks for clarification.
         """
@@ -760,7 +762,7 @@ This creates a realistic "memory trap" where the agent must track earlier info.
     
     def t6_get_prompt_additions(self) -> str:
         """
-        T6: Get additional prompt content for ambiguity resolution task.
+        LEGACY_AMBIGUITY_RESOLUTION: Get additional prompt content for ambiguity resolution task.
         """
         true_intent = self.config.true_intent if self.config else ""
         false_intents = self.config.false_intents if self.config else []
@@ -769,7 +771,7 @@ This creates a realistic "memory trap" where the agent must track earlier info.
         false_list = "\n".join([f"- {fi}" for fi in false_intents])
         
         return f"""
-## T6: Ambiguity Resolution Test
+## LEGACY_AMBIGUITY_RESOLUTION: Ambiguity Resolution Test
 
 You are testing the agent's ability to DETECT AMBIGUITY and ASK for clarification.
 
@@ -799,12 +801,12 @@ EXAMPLE RESPONSES:
 """
 
     # =========================================================================
-    # T8: Reference Resolution - ENTITY_MASKING
+    # LEGACY_REFERENCE_RESOLUTION: Reference Resolution - ENTITY_MASKING
     # =========================================================================
     
     def t8_mask_entity_name(self, entity_name: str, position: int = 0) -> str:
         """
-        T8: Generate a reference expression instead of using entity name.
+        LEGACY_REFERENCE_RESOLUTION: Generate a reference expression instead of using entity name.
         
         Args:
             entity_name: The entity name to mask
@@ -842,7 +844,7 @@ EXAMPLE RESPONSES:
         reference_type: str = "positional"
     ) -> str:
         """
-        T8: Generate appropriate reference for an entity.
+        LEGACY_REFERENCE_RESOLUTION: Generate appropriate reference for an entity.
         
         Args:
             entity_name: The entity to reference
@@ -876,7 +878,7 @@ EXAMPLE RESPONSES:
     
     def t8_is_forbidden_name(self, text: str) -> bool:
         """
-        T8: Check if text contains forbidden entity names.
+        LEGACY_REFERENCE_RESOLUTION: Check if text contains forbidden entity names.
         """
         if not self.config:
             return False
@@ -889,7 +891,7 @@ EXAMPLE RESPONSES:
     
     def t8_get_prompt_additions(self) -> str:
         """
-        T8: Get additional prompt content for reference resolution task.
+        LEGACY_REFERENCE_RESOLUTION: Get additional prompt content for reference resolution task.
         """
         if not self.config:
             return ""
@@ -901,7 +903,7 @@ EXAMPLE RESPONSES:
         ])
         
         return f"""
-## T8: Reference Resolution Test - NEVER USE FULL NAMES
+## LEGACY_REFERENCE_RESOLUTION: Reference Resolution Test - NEVER USE FULL NAMES
 
 You are testing the agent's ability to track WHAT you're referring to.
 
@@ -931,12 +933,12 @@ You: "Compare it to the cheap one" [referring to Motel 6 by attribute]
 """
 
     # =========================================================================
-    # T2: State Update - STATE_ANCHORING
+    # LEGACY_STATE_UPDATE: State Update - STATE_ANCHORING
     # =========================================================================
     
     def t2_get_current_phase(self) -> str:
         """
-        T2: Determine if we're in pre-pivot or post-pivot phase.
+        LEGACY_STATE_UPDATE: Determine if we're in pre-pivot or post-pivot phase.
         
         Returns:
             "pre_pivot" or "post_pivot"
@@ -951,7 +953,7 @@ You: "Compare it to the cheap one" [referring to Motel 6 by attribute]
     
     def t2_should_pivot(self) -> bool:
         """
-        T2: Check if it's time to pivot to the new state.
+        LEGACY_STATE_UPDATE: Check if it's time to pivot to the new state.
         """
         if not self.config:
             return False
@@ -959,7 +961,7 @@ You: "Compare it to the cheap one" [referring to Motel 6 by attribute]
     
     def t2_check_contamination(self, agent_response: str) -> Tuple[bool, List[str]]:
         """
-        T2: Check if agent's response contains contamination from old state.
+        LEGACY_STATE_UPDATE: Check if agent's response contains contamination from old state.
         
         Args:
             agent_response: The agent's response to check
@@ -981,7 +983,7 @@ You: "Compare it to the cheap one" [referring to Motel 6 by attribute]
     
     def t2_get_prompt_additions(self) -> str:
         """
-        T2: Get additional prompt content for state update task.
+        LEGACY_STATE_UPDATE: Get additional prompt content for state update task.
         """
         if not self.config:
             return ""
@@ -994,7 +996,7 @@ You: "Compare it to the cheap one" [referring to Motel 6 by attribute]
         
         if phase == "pre_pivot":
             return f"""
-## T2: State Update Test - PRE-PIVOT PHASE
+## LEGACY_STATE_UPDATE: State Update Test - PRE-PIVOT PHASE
 
 You are in the INITIAL STATE (State A). Your requirements are:
 {state_a_str}
@@ -1013,7 +1015,7 @@ DO NOT mention anything about State B yet!
 """
         else:
             return f"""
-## T2: State Update Test - POST-PIVOT PHASE
+## LEGACY_STATE_UPDATE: State Update Test - POST-PIVOT PHASE
 
 ⚠️⚠️⚠️ CRITICAL: You have COMPLETELY CHANGED YOUR MIND ⚠️⚠️⚠️
 
@@ -1047,12 +1049,12 @@ YOUR PERSONA: "The Fickle Boss"
 """
 
     # =========================================================================
-    # T4: Conflict Detection - IGNORANCE_MAINTENANCE
+    # LEGACY_CONFLICT_DETECTION: Conflict Detection - IGNORANCE_MAINTENANCE
     # =========================================================================
     
     def t4_detect_agent_catches_conflict(self, agent_message: str) -> bool:
         """
-        T4: Check if the agent has caught the conflict.
+        LEGACY_CONFLICT_DETECTION: Check if the agent has caught the conflict.
         
         Args:
             agent_message: The agent's message
@@ -1088,7 +1090,7 @@ YOUR PERSONA: "The Fickle Boss"
     
     def t4_get_acknowledgment_response(self) -> str:
         """
-        T4: Get the acknowledgment script when agent catches conflict.
+        LEGACY_CONFLICT_DETECTION: Get the acknowledgment script when agent catches conflict.
         """
         if not self.config or not self.config.acknowledgment_script:
             return "Oh! I completely forgot about that. Thanks for catching it!"
@@ -1096,7 +1098,7 @@ YOUR PERSONA: "The Fickle Boss"
     
     def t4_get_prompt_additions(self) -> str:
         """
-        T4: Get additional prompt content for conflict detection task.
+        LEGACY_CONFLICT_DETECTION: Get additional prompt content for conflict detection task.
         """
         if not self.config:
             return ""
@@ -1106,7 +1108,7 @@ YOUR PERSONA: "The Fickle Boss"
         acknowledgment = self.config.acknowledgment_script
         
         return f"""
-## T4: Conflict Detection Test - MAINTAIN IGNORANCE
+## LEGACY_CONFLICT_DETECTION: Conflict Detection Test - MAINTAIN IGNORANCE
 
 You are testing the agent's ability to CATCH CONFLICTS proactively.
 
@@ -1157,12 +1159,12 @@ EXAMPLE GOOD BEHAVIOR:
 """
 
     # =========================================================================
-    # T7: Drip-Feed Accumulation - INSTRUCTION_QUEUE
+    # LEGACY_DRIP_FEED: Drip-Feed Accumulation - INSTRUCTION_QUEUE
     # =========================================================================
     
     def t7_get_next_constraint(self) -> Optional[str]:
         """
-        T7: Get the next constraint from the queue.
+        LEGACY_DRIP_FEED: Get the next constraint from the queue.
         
         Returns:
             The next constraint to reveal, or None if queue is exhausted
@@ -1179,7 +1181,7 @@ EXAMPLE GOOD BEHAVIOR:
     
     def t7_get_queue_status(self) -> Dict[str, Any]:
         """
-        T7: Get current queue status.
+        LEGACY_DRIP_FEED: Get current queue status.
         """
         if not self.config:
             return {"total": 0, "revealed": 0, "remaining": 0}
@@ -1195,14 +1197,14 @@ EXAMPLE GOOD BEHAVIOR:
     
     def t7_is_final_request_turn(self) -> bool:
         """
-        T7: Check if all constraints have been revealed (time for final request).
+        LEGACY_DRIP_FEED: Check if all constraints have been revealed (time for final request).
         """
         status = self.t7_get_queue_status()
         return status.get("all_revealed", False)
     
     def t7_get_prompt_additions(self) -> str:
         """
-        T7: Get additional prompt content for drip-feed task.
+        LEGACY_DRIP_FEED: Get additional prompt content for drip-feed task.
         """
         if not self.config:
             return ""
@@ -1224,7 +1226,7 @@ EXAMPLE GOOD BEHAVIOR:
         
         if remaining > 0:
             return f"""
-## T7: Drip-Feed Test - REVEAL ONE CONSTRAINT AT A TIME
+## LEGACY_DRIP_FEED: Drip-Feed Test - REVEAL ONE CONSTRAINT AT A TIME
 
 You are testing the agent's ability to ACCUMULATE constraints revealed across turns.
 
@@ -1265,7 +1267,7 @@ Turn 4: "Also, my friend has a nut allergy." (ONE more, no repeat)
 """
         else:
             return f"""
-## T7: Drip-Feed Test - FINAL REQUEST (ALL CONSTRAINTS DISCLOSED)
+## LEGACY_DRIP_FEED: Drip-Feed Test - FINAL REQUEST (ALL CONSTRAINTS DISCLOSED)
 
 All {total} constraints have been revealed across previous turns:
 {revealed_str}
@@ -1297,12 +1299,12 @@ YOUR PERSONA: "The Expectant User"
 """
 
     # =========================================================================
-    # T9: Version Reversion - VERSION_TAGGING
+    # LEGACY_VERSION_REVERSION: Version Reversion - VERSION_TAGGING
     # =========================================================================
     
     def t9_get_version_reference(self, version_id: str) -> str:
         """
-        T9: Generate a characteristic-based reference for a version.
+        LEGACY_VERSION_REVERSION: Generate a characteristic-based reference for a version.
         
         Args:
             version_id: The version to reference (e.g., "v1")
@@ -1331,7 +1333,7 @@ YOUR PERSONA: "The Expectant User"
     
     def t9_is_forbidden_term(self, text: str) -> bool:
         """
-        T9: Check if text contains forbidden version terms.
+        LEGACY_VERSION_REVERSION: Check if text contains forbidden version terms.
         """
         if not self.config:
             return False
@@ -1344,7 +1346,7 @@ YOUR PERSONA: "The Expectant User"
     
     def t9_get_prompt_additions(self) -> str:
         """
-        T9: Get additional prompt content for version reversion task.
+        LEGACY_VERSION_REVERSION: Get additional prompt content for version reversion task.
         """
         if not self.config:
             return ""
@@ -1367,7 +1369,7 @@ YOUR PERSONA: "The Expectant User"
         ])
         
         return f"""
-## T9: Version Reversion Test - REFER BY CHARACTERISTICS
+## LEGACY_VERSION_REVERSION: Version Reversion Test - REFER BY CHARACTERISTICS
 
 You are testing the agent's ability to identify versions by CHARACTERISTICS, not numbers.
 
@@ -1411,7 +1413,7 @@ YOUR PERSONA: "The Regretful User"
         """
         Get a universal prompt addition that prevents constraint repetition.
         
-        v2.4: This applies to ALL task types, not just T1/T5.
+        v2.4: This applies to ALL task types, not just LEGACY_SELF_REFERENCE/LEGACY_NEGATIVE_CONSTRAINT.
         Real users don't repeat themselves - they expect agents to remember.
         The prompt explicitly lists disclosed constraints and instructs
         the simulator not to repeat them.
@@ -1424,7 +1426,7 @@ YOUR PERSONA: "The Regretful User"
         
         task_type = self.config.task_type.upper() if self.config else ""
         
-        # v2.4: Apply to ALL task types (removed T1/T5 restriction)
+        # v2.4: Apply to ALL task types (removed LEGACY_SELF_REFERENCE/LEGACY_NEGATIVE_CONSTRAINT restriction)
         # Real users don't repeat themselves regardless of task type
         
         return f"""
@@ -1477,23 +1479,23 @@ If you keep reminding the agent, you're defeating the purpose of the test!
         
         # Get the base task-specific prompt
         base_prompt = ""
-        if task_type == "T1":
+        if task_type == "LEGACY_SELF_REFERENCE":
             base_prompt = self.t1_get_prompt_additions()
-        elif task_type == "T2":
+        elif task_type == "LEGACY_STATE_UPDATE":
             base_prompt = self.t2_get_prompt_additions()
-        elif task_type == "T3":
+        elif task_type == "LEGACY_PROACTIVITY":
             base_prompt = self.t3_get_prompt_additions()
-        elif task_type == "T4":
+        elif task_type == "LEGACY_CONFLICT_DETECTION":
             base_prompt = self.t4_get_prompt_additions()
-        elif task_type == "T5":
+        elif task_type == "LEGACY_NEGATIVE_CONSTRAINT":
             base_prompt = self.t5_get_prompt_additions()
-        elif task_type == "T6":
+        elif task_type == "LEGACY_AMBIGUITY_RESOLUTION":
             base_prompt = self.t6_get_prompt_additions()
-        elif task_type == "T7":
+        elif task_type == "LEGACY_DRIP_FEED":
             base_prompt = self.t7_get_prompt_additions()
-        elif task_type == "T8":
+        elif task_type == "LEGACY_REFERENCE_RESOLUTION":
             base_prompt = self.t8_get_prompt_additions()
-        elif task_type == "T9":
+        elif task_type == "LEGACY_VERSION_REVERSION":
             base_prompt = self.t9_get_prompt_additions()
         else:
             logger.warning(f"Task type {task_type} not yet implemented")
@@ -1526,11 +1528,11 @@ If you keep reminding the agent, you're defeating the purpose of the test!
             
         task_type = self.config.task_type.upper()
         
-        if task_type == "T3":
-            # T3: Only reveal if agent asks
+        if task_type == "LEGACY_PROACTIVITY":
+            # LEGACY_PROACTIVITY: Only reveal if agent asks
             return self.t3_should_reveal_info(agent_message, info_key)
-        elif task_type == "T6":
-            # T6: Reveal true intent only if agent clarifies
+        elif task_type == "LEGACY_AMBIGUITY_RESOLUTION":
+            # LEGACY_AMBIGUITY_RESOLUTION: Reveal true intent only if agent clarifies
             if "true_intent" in info_key.lower():
                 return self.t6_should_reveal_intent(agent_message)
         
@@ -1563,13 +1565,13 @@ If you keep reminding the agent, you're defeating the purpose of the test!
         task_type = self.config.task_type.upper()
         processed = generated_message
         
-        # v2.4: Remove constraint reminders for ALL task types (not just T1/T5)
+        # v2.4: Remove constraint reminders for ALL task types (not just LEGACY_SELF_REFERENCE/LEGACY_NEGATIVE_CONSTRAINT)
         # Real users don't repeat themselves - this creates more realistic simulation
         if self._current_turn > 1:
             processed = self._remove_constraint_reminders(processed)
         
-        if task_type == "T8":
-            # T8: Replace any forbidden entity names with references
+        if task_type == "LEGACY_REFERENCE_RESOLUTION":
+            # LEGACY_REFERENCE_RESOLUTION: Replace any forbidden entity names with references
             for name in self.config.forbidden_entity_names:
                 if name.lower() in processed.lower():
                     # Find position of this entity
@@ -1582,7 +1584,7 @@ If you keep reminding the agent, you're defeating the purpose of the test!
                     # Case-insensitive replacement
                     pattern = re.compile(re.escape(name), re.IGNORECASE)
                     processed = pattern.sub(reference, processed)
-                    logger.debug(f"T8: Masked '{name}' -> '{reference}'")
+                    logger.debug(f"LEGACY_REFERENCE_RESOLUTION: Masked '{name}' -> '{reference}'")
             return processed
         
         return processed
@@ -1688,32 +1690,32 @@ def create_controller_from_scenario(scenario: Any) -> Optional[TaskSpecificContr
     )
     
     # Extract task-specific configuration
-    if task_type == "T3":
+    if task_type == "LEGACY_PROACTIVITY":
         config.control_type = SimulatorControlType.INFORMATION_HIDING
         config.hidden_info = task_config.get("hidden_info", {})
         config.reveal_keywords = task_config.get("reveal_keywords", [])
         
-    elif task_type == "T5":
+    elif task_type == "LEGACY_NEGATIVE_CONSTRAINT":
         config.control_type = SimulatorControlType.NEGATIVE_LOGIC_FILTER
         config.negative_constraints = task_config.get("negative_constraints", [])
         config.forbidden_patterns = task_config.get("forbidden_patterns", [])
         
-    elif task_type == "T6":
+    elif task_type == "LEGACY_AMBIGUITY_RESOLUTION":
         config.control_type = SimulatorControlType.HIDDEN_INTENT_LOCK
         config.true_intent = task_config.get("true_intent", "")
         config.false_intents = task_config.get("false_intents", [])
         config.ambiguous_instruction = task_config.get("ambiguous_instruction", "")
         
-    elif task_type == "T8":
+    elif task_type == "LEGACY_REFERENCE_RESOLUTION":
         config.control_type = SimulatorControlType.ENTITY_MASKING
         config.entity_registry = task_config.get("entity_registry", {})
         config.forbidden_entity_names = task_config.get("forbidden_entity_names", [])
     
     # =========================================================================
-    # NEW: T2, T4, T7, T9 Configuration Parsing
+    # NEW: LEGACY_STATE_UPDATE, LEGACY_CONFLICT_DETECTION, LEGACY_DRIP_FEED, LEGACY_VERSION_REVERSION Configuration Parsing
     # =========================================================================
     
-    elif task_type == "T2":
+    elif task_type == "LEGACY_STATE_UPDATE":
         config.control_type = SimulatorControlType.STATE_ANCHORING
         config.state_a = task_config.get("state_a", {})
         config.state_b = task_config.get("state_b", {})
@@ -1721,7 +1723,7 @@ def create_controller_from_scenario(scenario: Any) -> Optional[TaskSpecificContr
         config.pivot_trigger = task_config.get("pivot_trigger", "I've changed my mind")
         config.contamination_keywords = task_config.get("contamination_keywords", [])
         
-    elif task_type == "T4":
+    elif task_type == "LEGACY_CONFLICT_DETECTION":
         config.control_type = SimulatorControlType.IGNORANCE_MAINTENANCE
         config.agent_stated_fact = task_config.get("agent_stated_fact", "")
         config.user_conflicting_plan = task_config.get("user_conflicting_plan", "")
@@ -1729,14 +1731,14 @@ def create_controller_from_scenario(scenario: Any) -> Optional[TaskSpecificContr
         config.acknowledgment_script = task_config.get("acknowledgment_script", "")
         config.conflict_detection_keywords = task_config.get("conflict_detection_keywords", [])
         
-    elif task_type == "T7":
+    elif task_type == "LEGACY_DRIP_FEED":
         config.control_type = SimulatorControlType.INSTRUCTION_QUEUE
         config.constraint_queue = task_config.get("constraint_queue", [])
         config.current_queue_index = 0  # Always start at 0
         config.final_aggregation_trigger = task_config.get("final_aggregation_trigger", "")
         config.drip_behavior = task_config.get("drip_behavior", {})
         
-    elif task_type == "T9":
+    elif task_type == "LEGACY_VERSION_REVERSION":
         config.control_type = SimulatorControlType.VERSION_TAGGING
         config.version_registry = task_config.get("version_registry", {})
         config.target_version = task_config.get("target_version", "")

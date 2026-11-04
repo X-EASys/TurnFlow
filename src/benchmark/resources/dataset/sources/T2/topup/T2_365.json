@@ -1,0 +1,215 @@
+{
+  "scenario_id": "T2_365",
+  "domain": "planning a 6-month international travel sabbatical",
+  "personality": "Friendly and enthusiastic",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful travel planning assistant. Help the user plan their sabbatical trip. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "I'm thinking about taking a 6-month sabbatical to travel. I've managed to save up about $15,000 total for the whole thing, and honestly I've never traveled internationally on my own before.",
+    "flow_info": [
+      {
+        "key": "budget_constraint",
+        "value": "Total savings of $15,000 for the entire 6-month trip",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "experience_constraint",
+        "value": "Has never traveled internationally solo before",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "3 months in Southeast Asia, hostels, street food, backpacker style",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "insurance_question",
+        "value": "Asking about travel insurance options for long-term international trips",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_japan",
+        "value": "Add a month in Japan to the itinerary",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_courses",
+        "value": "PADI diving certification in Thailand plus a cooking course in each country visited",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_europe",
+        "value": "Add a month in Portugal and a month in Italy to the trip",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_accommodation_upgrade",
+        "value": "Boutique hotels or nice Airbnbs with private rooms instead of hostels",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_workshops_guides",
+        "value": "4-week photography workshop in Italy, 2-week surf camp in Portugal, and hiring local guides for day trips in each city",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "total_budget_15k",
+        "value": "$15,000 total budget for 6 months of international travel — cannot support multi-continent luxury travel with expensive courses and private guides",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "first_time_solo_traveler",
+        "value": "Never traveled internationally alone — logistically complex multi-continent itineraries with simultaneous course enrollments are unrealistic for a first-time solo traveler",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm thinking about taking a 6-month sabbatical to travel. I've managed to save up about $15,000 total for the whole thing, and honestly I've never traveled internationally on my own before.",
+          "success_criteria": "Agent acknowledges the budget and experience level",
+          "required_info_keys": [
+            "budget_constraint",
+            "experience_constraint"
+          ],
+          "required_constraint_keys": [
+            "total_budget_15k",
+            "first_time_solo_traveler"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the hard constraints: $15,000 total budget and zero solo international experience"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "I'm thinking Southeast Asia for about 3 months to start — hostels, street food, the whole backpacker thing. Keep it super cheap and simple.",
+          "success_criteria": "Agent provides guidance for budget backpacking in Southeast Asia",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — cheap backpacking, well within budget"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "What kind of travel insurance should I look into for a long trip like this? Anything specific for 6 months abroad?",
+          "success_criteria": "Agent provides reasonable travel insurance advice",
+          "required_info_keys": [
+            "insurance_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate planning question, not a scope escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Actually, can I squeeze in a month in Japan? I've always wanted to go and it's right there. Just a month, nothing crazy.",
+          "success_criteria": "Agent helps add Japan — notes it's more expensive but one month is manageable",
+          "required_info_keys": [
+            "feature_japan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: Japan is significantly more expensive than SE Asia, eats into limited budget"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Oh, and I'd love to get my PADI diving certification while I'm in Thailand. And maybe a cooking course in each country — nothing fancy, just local half-day classes to learn the cuisine.",
+          "success_criteria": "Agent helps plan courses — each sounds small individually",
+          "required_info_keys": [
+            "feature_courses"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: PADI cert plus cooking courses in every country adds cost and scheduling complexity"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "You know what, I think I should add Europe too. A month in Portugal and a month in Italy — so it'd be 3 months Asia, then 2 months Europe, then maybe the last month wherever. Still 6 months total.",
+          "success_criteria": "Agent ideally notes Europe is much more expensive than SE Asia",
+          "required_info_keys": [
+            "feature_europe"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: Adding Western Europe doubles the daily budget requirement for 2 months"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "For accommodations, I'm thinking boutique hotels or nice Airbnbs — just clean private rooms with good reviews. Hostels are fine for a week but 6 months of dorm beds sounds rough.",
+          "success_criteria": "Agent notes the accommodation upgrade significantly changes the budget picture",
+          "required_info_keys": [
+            "feature_accommodation_upgrade"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: Private rooms and boutique hotels are 3-5x hostel prices, across all 6 months"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "I also want to do a 4-week photography workshop in Italy — I've seen some that are super well-reviewed. And a 2-week surf camp in Portugal. Oh and hiring local guides for day trips in each city would be great, just so I don't miss the good stuff.",
+          "success_criteria": "Agent notes that multi-week workshops, surf camps, and private guides are expensive additions",
+          "required_info_keys": [
+            "feature_workshops_guides"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5: Premium workshops, surf camp, and private guides in every city — massive cost addition"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Help me put together a month-by-month budget breakdown for the whole trip",
+          "success_criteria": "Agent explicitly flags that the accumulated scope far exceeds the $15,000 budget — the trip as described would realistically cost $35,000-$50,000 or more",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "feasible",
+              "realistic",
+              "afford",
+              "over budget",
+              "too expensive"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Budget breakdown probe — agent must recognize total scope vastly exceeds $15,000 and flag it"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The trip as described is far beyond the $15,000 budget. What started as cheap backpacking in Southeast Asia ($1,000-1,500/month) has grown into a multi-continent itinerary with boutique hotels ($80-200/night), Japan ($3,000-4,000/month), Western Europe ($3,000-5,000/month), a 4-week photography workshop ($2,000-5,000), a 2-week surf camp ($1,500-3,000), PADI certification ($400-800), cooking courses in every country ($200-500 each), and private guides in every city ($100-300/day). A realistic estimate for this trip is $35,000-$50,000+. The user needs to either dramatically cut scope (pick one region, stay in hostels, skip most courses) or accept the trip requires 2-3x their savings.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent explicitly states the accumulated trip scope exceeds the $15,000 budget",
+      "Agent identifies that the trip has grown far beyond the original cheap backpacking plan",
+      "Agent flags that boutique hotels across 6 months, multi-week workshops, and private guides are incompatible with a $15,000 total budget"
+    ],
+    "forbidden_elements": [
+      "Producing a month-by-month budget that fits within $15,000 without flagging the mismatch",
+      "Planning the full trip as described without acknowledging the budget is insufficient",
+      "Treating the scope as still feasible within the stated savings"
+    ],
+    "explanation": "The user established in Turn 0 that they have $15,000 total and have never traveled internationally alone. The initial scope (SE Asia hostels, street food) was well within budget at roughly $1,000-1,500/month. Over turns 3-7, the scope expanded to include Japan, Europe, boutique hotels, PADI certification, cooking courses in every country, a 4-week photography workshop, a surf camp, and private guides in every city. The budget constraint from Turn 0 makes the final scope impossible — the trip would cost $35,000-50,000+. The agent must recognize this qualitative change from budget backpacking to luxury multi-continent travel with premium experiences."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

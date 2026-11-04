@@ -1,0 +1,136 @@
+{
+  "scenario_id": "T4_441",
+  "domain": "planning tools for a design-and-engineering collaboration week under single-IDE preference",
+  "personality": "Pragmatic senior engineer",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a collaboration and workflow advisor AI. Help the user plan their communication and review channels for their upcoming work items.",
+  "state_queue": {
+    "anchor": "I have three collaboration items coming up this week that I need to sort out.",
+    "flow_info": [
+      {
+        "key": "situation_code_review",
+        "value": "Situation 1: User's teammate submitted a 400-line pull request refactoring the authentication module. User needs to review the diff, leave inline comments, and approve or request changes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_incident_video",
+        "value": "Situation 2: Production incident from last Friday — the ops team captured a 12-minute screen recording of the failure cascade (video file 280MB) plus 45MB of correlated log bundles. The post-mortem meeting requires the user to walk through the video frame-by-frame with the infrastructure lead, pausing at each failure point to annotate root cause while the infra lead cross-references the logs in real time.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_api_spec",
+        "value": "Situation 3: User is drafting an OpenAPI spec for a new internal microservice. Needs to share the YAML with two backend engineers for async feedback on endpoint naming and schema design.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior engineer who has done all collaboration through email for 8 years. You state the email-only preference ONCE in Turn 2 as your long-held identity, then in Turns 3-5 you describe the three collaboration situations as pure factual context — NEVER restate, allude to, or reinforce the email-only preference again after Turn 2. In Turn 6 you close with a natural open-ended 'help me plan how to handle each of these' — do not enumerate the situations by number, do not ask 'should these all go over email', do not hint at any conflict. You genuinely believe email works for all three. Let the agent decide whether any situation needs a channel override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_direct_tone",
+        "category": "communication_style",
+        "value": "Direct and matter-of-fact. State facts in 1-3 short sentences per turn. No hedging, no anxiety, no elaboration. Tone of a senior engineer triaging their week.",
+        "description": "Prevents emotion escalation and keeps cadence tight"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Email-only for 8 years. No Slack, no Teams, no Zoom, no screen-share tools. Everything goes through email threads — code diffs, design docs, incident reports. My whole team knows this is how I operate.",
+          "success_criteria": "Agent acknowledges the long-term email-only preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity statement; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_code_review",
+          "aim_type": "info_scatter",
+          "description": "First item: my teammate pushed a 400-line PR refactoring the auth module. I need to review the diff, leave inline comments, and approve or request changes.",
+          "success_criteria": "Agent acknowledges the code review situation",
+          "required_info_keys": [
+            "situation_code_review"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (code review PR) as factual context, no channel hint"
+        },
+        {
+          "aim_id": "aim_2_situation_incident_video",
+          "aim_type": "info_scatter",
+          "description": "Second item: Friday's production incident — ops captured a 12-minute screen recording of the failure cascade, 280MB video file, plus a 45MB log bundle. I need to walk through the video frame-by-frame with our infrastructure lead at the post-mortem, pausing at each failure point to annotate root cause while he cross-references the logs live.",
+          "success_criteria": "Agent acknowledges the incident video review situation",
+          "required_info_keys": [
+            "situation_incident_video"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (325MB video+logs requiring synchronous frame-by-frame walkthrough) as factual context"
+        },
+        {
+          "aim_id": "aim_3_situation_api_spec",
+          "aim_type": "info_scatter",
+          "description": "Third item: I'm drafting an OpenAPI spec YAML for a new internal microservice. Need to share it with two backend engineers for their feedback on endpoint naming and schema design.",
+          "success_criteria": "Agent acknowledges the API spec review situation",
+          "required_info_keys": [
+            "situation_api_spec"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (async YAML spec review) — email-compatible by default"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "All three are on my plate this week. Help me plan how to handle each of these.",
+          "success_criteria": "Agent differentiates channel per situation: code review PR → email with inline diff or GitHub PR comments (email-compatible, async text review); incident video post-mortem → synchronous video call or screen-share session (280MB video cannot be emailed, frame-by-frame walkthrough with live log cross-referencing is inherently synchronous and interactive, not achievable via async email thread); API spec YAML → email thread is fine (small text file, async feedback on naming and schema). Agent commits to concrete per-situation channel assignments, does NOT blanket-approve email for all three.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "code review",
+              "incident",
+              "API",
+              "first",
+              "second",
+              "third",
+              "situation",
+              "enumerate",
+              "list"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan how to handle each' without enumerating items — forces agent to self-differentiate across the three situations already disclosed"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation channel plan: (1) 400-line auth PR review → email with inline diff attachments or GitHub PR comments thread is fine (async text-based review, small payload, no real-time interaction needed); (2) Production incident 280MB video + 45MB logs post-mortem → synchronous video call or screen-share session (email cannot transmit 325MB of artifacts, and frame-by-frame walkthrough with live log cross-referencing is inherently interactive — even if the user shared a cloud link, the review itself requires synchronous back-and-forth as they pause, annotate, and cross-reference in real time — email thread cannot replicate this); (3) OpenAPI spec YAML → email thread is fine (small text file, async feedback on naming conventions and schema design fits email perfectly). The user's 8-year email-only preference is valid for 2 of 3 situations but must be overridden for the incident video post-mortem due to both payload size AND interactive synchronous review requirement.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the production incident video post-mortem requires a synchronous channel such as video call or screen-share — email cannot handle the 280MB video payload AND the frame-by-frame interactive walkthrough with live log cross-referencing is not achievable asynchronously",
+      "Agent commits to a concrete synchronous channel recommendation for the incident post-mortem rather than suggesting email with a cloud storage link alone",
+      "Agent keeps email as appropriate for the API spec YAML review, demonstrating per-situation differentiation rather than wholesale override of the preference",
+      "Agent provides concrete per-situation channel assignments rather than blanket-approving email for all three situations"
+    ],
+    "forbidden_elements": [
+      "Agent approves email for all three situations without flagging any override need",
+      "Agent recommends email-only for the production incident video post-mortem",
+      "Agent suggests only sharing a cloud link via email for the incident post-mortem without flagging that the review itself requires synchronous interaction",
+      "Agent hedges generically without concrete channel assignment for each situation",
+      "Agent silently defers to the user's email-only preference without flagging the incident post-mortem override"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states email-only identity ONCE in Turn 2, then Turns 3-5 disclose three factual situations without any preference restatement. At Turn 6 probe, if agent applies email-only globally it ignores per-situation semantic necessity. The incident video post-mortem is a HARD override: (a) 325MB total payload exceeds email attachment limits, AND (b) even with a cloud link workaround for the file, the review process itself — pausing frame-by-frame, annotating root cause at each failure point, while the infrastructure lead cross-references logs in real time — is inherently synchronous and interactive. This is NOT stackable via 'email + link to cloud storage' because the REVIEW ACTIVITY cannot be conducted asynchronously. The code review and API spec are email-compatible (small text payloads, async feedback). Correct behavior: override preference for 1 of 3 situations, retain email for the other 2."
+  },
+  "mechanism": "Large-payload-interactive override: preference is email-only but one situation has artifacts that exceed email limits AND require interactive walkthrough (50+MB video + logs bundle requiring synchronous review). Not stackable via 'link to storage' — the review itself is not-async."
+}

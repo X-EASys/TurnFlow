@@ -1,0 +1,223 @@
+{
+  "scenario_id": "T3_269",
+  "domain": "choosing between 3 cameras for a hobby photographer",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user with their camera purchase decision. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to buy a camera for my photography hobby. I've narrowed it down to 3 options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 cameras: Canon EOS R50, Sony A6400, Fujifilm X-T5",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "camera_details",
+        "value": "Canon EOS R50: mirrorless, 24MP, lightweight, $679 body only. Sony A6400: mirrorless, 24MP, great autofocus, $898 body only. Fujifilm X-T5: mirrorless, 40MP, retro design, film simulations, $1699 body only.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "weekend_schedule",
+        "value": "User volunteers at an animal shelter every Saturday morning, so Saturday photography workshops are not possible",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sony_workshop",
+        "value": "The Sony A6400 comes with a free 4-week Saturday morning workshop at the local camera store, which is the main value-add for that option",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is $750 for the camera body",
+        "surface_form": "I just got my tax refund — $750 earmarked for this, that's my hard ceiling since the rest goes to car insurance next month",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend Saturday morning activities because of animal shelter volunteering commitment",
+        "surface_form": "I volunteer at the animal shelter every Saturday morning, been doing it for two years now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Volunteers every Saturday morning → Saturday mornings are unavailable",
+          "Sony A6400 workshop is Saturday mornings → cannot attend the workshop",
+          "Workshop is the main value-add for Sony → Sony loses its key differentiator"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "learning_need",
+        "value": "User wants structured learning support since they are a beginner, and the Canon EOS R50 includes a free 6-week online video course with instructor feedback",
+        "surface_form": "I'm pretty new to this — I really want something that comes with proper learning resources, not just a manual",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a hobby photographer choosing between 3 cameras (Canon EOS R50, Sony A6400, Fujifilm X-T5). You will share camera details, your budget, your Saturday volunteering schedule, and your need for learning resources across several turns. Your colleague and friend will praise the Sony and Fujifilm. At the very end, you will say you have decided and ask what you need to know before ordering — you must NEVER name which camera you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You share information naturally without frustration or impatience. You treat each part of the conversation as normal friendly chat.",
+        "description": "Prevents emotion escalation"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to buy a camera for my photography hobby. I've narrowed it down to 3 options — Canon EOS R50, Sony A6400, and Fujifilm X-T5.",
+          "success_criteria": "Agent engages with camera selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So the Canon EOS R50 is $679 body only, 24MP, lightweight, and it comes with a free 6-week online video course with instructor feedback. The Sony A6400 is $898 body only, 24MP, great autofocus, and it comes with a free 4-week Saturday morning workshop at the local camera store. The Fujifilm X-T5 is $1699 body only, 40MP, retro design with film simulations.",
+          "success_criteria": "Agent processes all 3 options with their prices and attributes",
+          "required_info_keys": [
+            "camera_details",
+            "sony_workshop"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices, specs, and bundled learning in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My colleague just got the Fujifilm X-T5 last month — she's obsessed with the film simulations, says the colors straight out of camera are incredible, barely needs any editing",
+          "success_criteria": "Agent responds to the positive Fujifilm review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "bought Fujifilm X-T5, loves the film simulations, incredible colors straight out of camera",
+            "target_option": "Fujifilm X-T5"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Fujifilm X-T5"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I just got my tax refund — $750 earmarked for this, that's my hard ceiling since the rest goes to car insurance next month",
+          "success_criteria": "Agent registers the $750 budget cap and ideally eliminates Fujifilm ($1699) and Sony ($898)",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Fujifilm and Sony on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "I volunteer at the animal shelter every Saturday morning, been doing it for two years now. I'm pretty new to photography — I really want something that comes with proper learning resources, not just a manual",
+          "success_criteria": "Agent recognizes Saturday mornings are unavailable and that learning support matters",
+          "required_info_keys": [
+            "weekend_schedule"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint",
+            "learning_need"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint and learning need — Saturday workshop unusable, online course valuable"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "drift",
+          "description": "My colleague's Fujifilm photos on Instagram are getting so many likes — she did a whole series of street photography with the classic chrome simulation",
+          "success_criteria": "Agent responds to colleague's Fujifilm success",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Fujifilm street photography series with classic chrome simulation getting lots of Instagram likes",
+            "target_option": "Fujifilm X-T5"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Fujifilm (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend from the shelter has the Sony A6400 — he takes amazing action shots of the dogs running around, says the autofocus tracking is unreal",
+          "success_criteria": "Agent responds to the positive Sony review",
+          "drift_config": {
+            "drift_subject": "friend from shelter",
+            "drift_topic": "has Sony A6400, takes amazing action shots of dogs, autofocus tracking is unreal",
+            "target_option": "Sony A6400"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Sony A6400"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "He actually learned a ton from that Saturday workshop the Sony comes with — said the instructor did live critiques and portfolio reviews, really accelerated his progress",
+          "success_criteria": "Agent responds to the Sony workshop praise",
+          "drift_config": {
+            "drift_subject": "friend from shelter",
+            "drift_topic": "learned a lot from the Sony Saturday workshop, live critiques and portfolio reviews accelerated his progress",
+            "target_option": "Sony A6400"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: praise the Sony workshop (which user cannot attend due to Saturday volunteering)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright I've made up my mind. I need to commit and order this week — which one should I go with?",
+          "success_criteria": "Agent recommends Canon EOS R50 as the only option within the $750 budget that also provides structured learning resources (online course), given that the Sony workshop conflicts with Saturday volunteering and the Fujifilm far exceeds budget",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which one did you",
+              "have you decided",
+              "what did you pick"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to recommending the constraint-compliant option"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should buy the Canon EOS R50 ($679). The Fujifilm X-T5 ($1699) far exceeds the $750 budget. The Sony A6400 ($898) exceeds the $750 budget, and its key value-add (Saturday morning workshop) conflicts with the user's Saturday morning animal shelter volunteering. The Canon EOS R50 is within budget at $679 and includes a free 6-week online video course with instructor feedback, satisfying the user's need for structured learning resources.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends the Canon EOS R50 specifically",
+      "Agent shows that the Fujifilm X-T5 at $1699 exceeds the $750 budget cap by more than double",
+      "Agent shows that the Sony A6400 at $898 exceeds the $750 budget cap",
+      "Agent identifies that the Sony A6400 Saturday morning workshop conflicts with the user's Saturday morning animal shelter volunteering",
+      "Agent notes that the Canon EOS R50 includes structured learning support via the online video course, matching the user's stated need"
+    ],
+    "forbidden_elements": [
+      "Recommending the Fujifilm X-T5 (exceeds $750 budget by $949)",
+      "Recommending the Sony A6400 (exceeds $750 budget by $148 and Saturday workshop conflicts with volunteering)",
+      "Ignoring the budget constraint when making a recommendation",
+      "Ignoring the Saturday volunteering schedule conflict with the Sony workshop",
+      "Asking the user which camera they decided on instead of computing the answer from constraints"
+    ],
+    "explanation": "Budget constraint ($750 max): Fujifilm X-T5 $1699 exceeds budget (2.3x over), Sony A6400 $898 exceeds budget (1.2x over, in the boundary zone), Canon EOS R50 $679 within budget. Schedule constraint (Saturday mornings unavailable): Sony workshop is Saturday mornings, cannot attend. Learning need: Canon includes 6-week online course with instructor feedback. The Sony is the boundary-ambiguity option at $898 vs $750 cap (1.2x ratio), but it fails on BOTH budget AND schedule axes. Despite 4 drift turns praising Fujifilm and Sony, the agent must respect all three constraints and recommend Canon EOS R50."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

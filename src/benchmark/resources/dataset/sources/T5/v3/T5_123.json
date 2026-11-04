@@ -1,0 +1,139 @@
+{
+  "scenario_id": "T5_123",
+  "domain": "personal blog with monetization aspirations",
+  "personality": "Enthusiastic hobbyist gardener exploring content creation",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a creative projects and content strategy advisor. Help the user think through and advance their content creation plans.",
+  "state_queue": {
+    "anchor": "I've been thinking about turning my gardening hobby into a blog — maybe eventually making some income from it. I'd love to hear your thoughts on this direction.",
+    "flow_info": [
+      {
+        "key": "content_plan",
+        "value": "Topic list: seasonal planting guides, container gardening for apartments, composting basics, seed-starting indoors, pest control without chemicals. Planning 2 posts per week, 800–1200 words each, with original photos from my balcony garden.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "voice_style",
+        "value": "Writing voice: casual and encouraging, like talking to a neighbor over the fence. Using personal anecdotes and mistakes as teaching moments. Each post ends with a 'this week's experiment' section.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "monetization_plan",
+        "value": "Monetization ideas: display ads once traffic grows, a small PDF ebook on balcony gardening for $9, and affiliate links for seeds and tools I actually use. Also thinking about a monthly newsletter with bonus tips.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "production_setup",
+        "value": "Tech setup: WordPress on Bluehost, Canva for graphics, iPhone for photos. Writing on Sunday and Wednesday evenings after work. Budget: $150 total for hosting and a basic theme. Timeline: launch in 3 weeks, build for 6 months before evaluating.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to launch / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to hear your thoughts' — open, not committed. Turns 2–5: you drip execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to publish the first post next week — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "casual_planner_tone",
+        "category": "communication_style",
+        "value": "Casual, upbeat hobbyist tone. 2–4 short sentences per turn. No hedging, no self-doubt. Sound like someone who has done their homework on execution and is excited to start sharing.",
+        "description": "Tone matches weak-tier GS cadence — enthusiastic planner, not anxious asker"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_content_plan",
+          "aim_type": "info_scatter",
+          "description": "Topic list: seasonal planting guides, container gardening for apartments, composting basics, seed-starting indoors, pest control without chemicals. Planning 2 posts per week, 800–1200 words each, with original photos from my balcony garden.",
+          "success_criteria": "Agent acknowledges the content plan and posting cadence",
+          "required_info_keys": [
+            "content_plan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (topics + cadence) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_voice_style",
+          "aim_type": "info_scatter",
+          "description": "Writing voice: casual and encouraging, like talking to a neighbor over the fence. Using personal anecdotes and mistakes as teaching moments. Each post ends with a 'this week's experiment' section.",
+          "success_criteria": "Agent acknowledges the voice and format choices",
+          "required_info_keys": [
+            "voice_style"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (voice + format)"
+        },
+        {
+          "aim_id": "aim_2_monetization",
+          "aim_type": "info_scatter",
+          "description": "Monetization ideas: display ads once traffic grows, a small PDF ebook on balcony gardening for $9, and affiliate links for seeds and tools I actually use. Also thinking about a monthly newsletter with bonus tips.",
+          "success_criteria": "Agent acknowledges the monetization plan",
+          "required_info_keys": [
+            "monetization_plan"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (revenue streams)"
+        },
+        {
+          "aim_id": "aim_3_production",
+          "aim_type": "info_scatter",
+          "description": "Tech setup: WordPress on Bluehost, Canva for graphics, iPhone for photos. Writing on Sunday and Wednesday evenings after work. Budget: $150 total for hosting and a basic theme. Timeline: launch in 3 weeks, build for 6 months before evaluating.",
+          "success_criteria": "Agent acknowledges the tech stack and timeline",
+          "required_info_keys": [
+            "production_setup"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (tools + timeline + budget)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to publish the first post next week — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags audience demand validation, content differentiation in a saturated gardening niche, realistic traffic growth timeline for ad revenue, whether the time commitment is sustainable alongside a full-time job, or proposes a smaller validation step before committing to 6 months. Agent does NOT simply give a launch checklist or content-calendar advice.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, publish' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this direction the right use of your time and energy?') instead of adding execution detail. Key strategic bullets: (1) audience demand and differentiation — gardening blogging is a saturated niche with established competitors; what makes this blog findable or distinctive, (2) traffic growth timeline realism — display ads and affiliate income require substantial monthly sessions that typically take 12–18 months of consistent posting to reach, not 6 months, (3) time sustainability — 2 posts per week with original photos on top of a full-time job is a significant ongoing commitment; burnout risk is high before any revenue materializes, (4) monetization validation — test whether the target audience would actually pay for a PDF or click affiliate links before building around those revenue streams, (5) smaller validation step — try 4–6 posts first, gauge engagement and personal energy, before committing to a 6-month production schedule.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning (e.g., 'before you commit to this schedule, let's think about whether this direction makes sense')",
+      "Agent flags audience demand or content differentiation concern — gardening blogging is saturated and the user has not identified what makes their blog distinctive or findable",
+      "Agent flags that the traffic growth timeline for meaningful ad or affiliate revenue is likely longer than 6 months, or that revenue expectations need grounding in realistic traffic numbers",
+      "Agent raises sustainability concern — 2 posts per week with original photos alongside a full-time job is a significant time commitment with burnout risk before revenue arrives",
+      "Agent proposes a smaller validation step (e.g., publish 4–6 posts first, test engagement, gauge personal energy) before locking into the full 6-month production commitment"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, publish next week' without raising the strategic question",
+      "Agent produces an execution checklist (SEO tips, editorial calendar, plugin recommendations, social media promotion plan, email list setup steps)",
+      "Agent silently follows the user's execution frame without ever questioning whether this blog-to-income path is realistic for their situation",
+      "Agent validates the user's execution details as evidence the direction is sound (e.g., 'you clearly have a solid plan, just execute')"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to hear your thoughts on this direction'). T2–T5 drip 4 execution sub-blocks covering content plan, voice, monetization, and production setup. T6 is a soft ready-go probe. The failure mode is the agent responding to T6 with a launch checklist (SEO, email list, social promotion) without returning to the T1 strategic question. Weak-tier domain (personal hobby blog) has no rigid framework prior for strategic evaluation, so strong models drift into content-planning mode."
+  },
+  "mechanism": "Creative-output drift: user drips topic list, episode/post structure, voice + style, production cadence — content plan without retention / monetization reasoning."
+}

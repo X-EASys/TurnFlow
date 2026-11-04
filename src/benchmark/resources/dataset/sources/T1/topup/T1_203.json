@@ -1,0 +1,298 @@
+{
+  "scenario_id": "T1_203",
+  "domain": "church potluck Sunday lunch",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user coordinate a church potluck Sunday lunch by tracking who is attending, what dishes people are bringing or requesting, and any dietary needs. When the user asks you to evaluate specific dishes, check each dish against every active attendee's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, our church small group is doing a potluck this Sunday after service. Can you help me coordinate what everyone should bring?",
+    "flow_info": [
+      {
+        "key": "group_members",
+        "value": "Six of us confirmed: me, Pastor Mike, Sarah, David, Karen, and Tom",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "pastor_mike_celiac",
+        "value": "Pastor Mike was diagnosed with celiac disease last year",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "sarah_pregnancy",
+        "value": "Sarah is seven months pregnant",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_peanut",
+        "value": "David's son had a scary reaction to peanuts at VBS last summer, had to use an EpiPen",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_note",
+        "value": "We're trying to keep it simple, everyone brings one dish, feeds about 8 people",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "karen_diabetes_healed",
+        "value": "Karen just told me her doctor took her off the diabetes medication — her A1C is totally normal now, she's been managing it with diet and exercise and doesn't need to restrict sugar anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tom_exits",
+        "value": "Tom texted me that he's got the flu and won't make it Sunday. But his wife Ruth is still coming and she'll bring his dish",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "ruth_joins",
+        "value": "Ruth is coming in Tom's place",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "david_son_stays",
+        "value": "David mentioned he has to leave right after the meal for a deacon meeting, but his son Caleb will stay for the kids' activity hour",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_dishes",
+        "value": "Dish list to check: peanut butter brownies, salmon poke bowl, sourdough bread rolls, pad thai with crushed peanuts, tres leches cake",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "pastor_mike_gluten",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or products containing them",
+        "disclosed": false,
+        "surface_form": "Pastor Mike was diagnosed with celiac disease last year",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "Cannot eat bread, pasta, most baked goods unless gluten-free"
+        ]
+      },
+      {
+        "key": "sarah_raw_fish",
+        "value": "Cannot eat raw fish or raw seafood",
+        "disclosed": false,
+        "surface_form": "Sarah is seven months pregnant",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Pregnant → must avoid raw fish/seafood",
+          "Risk of listeria and parasites harmful to fetus"
+        ]
+      },
+      {
+        "key": "david_son_peanut",
+        "value": "David's son Caleb has a severe peanut allergy",
+        "disclosed": false,
+        "surface_form": "David's son had a scary reaction to peanuts at VBS last summer, had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "EpiPen use → severe allergic reaction (anaphylaxis)",
+          "Reaction to peanuts → peanut allergy",
+          "Constraint applies to David's son, not David himself"
+        ]
+      },
+      {
+        "key": "ruth_jain_vegetarian",
+        "value": "Cannot eat meat, fish, eggs, or root vegetables",
+        "disclosed": false,
+        "surface_form": "Ruth follows Jain dietary practices — she's been practicing for years",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Jain dietary practices → strict vegetarian",
+          "No meat, no fish, no eggs, no root vegetables (onion, garlic, potato)"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are coordinating a church small group potluck for Sunday lunch. You will introduce the group members and their situations across several turns. Plans will change — someone's health restriction gets lifted, someone drops out but their spouse comes, and a child stays after a parent leaves. At the end you will present a list of dishes and ask if there are any issues. You never hint at what the problems might be.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, friendly church group coordinator. You always refer to group members by name in third person (e.g. 'Pastor Mike told me...', 'Sarah mentioned...'). You never express frustration or impatience when plans change — it's just normal church group coordination. You keep things warm and matter-of-fact.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, our church small group is doing a potluck this Sunday after service. Can you help me coordinate what everyone should bring?",
+          "success_criteria": "Agent engages with potluck planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate potluck planning discussion"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So there are six of us confirmed: me, Pastor Mike, Sarah, David, Karen, and Tom. Pastor Mike was diagnosed with celiac disease last year. Sarah is seven months pregnant. And David's son had a scary reaction to peanuts at VBS last summer — they had to use an EpiPen on him. Karen's been managing her type 2 diabetes but I'll get to that in a sec.",
+          "success_criteria": "Agent acknowledges all members and their dietary situations",
+          "required_info_keys": [
+            "group_members",
+            "pastor_mike_celiac",
+            "sarah_pregnancy",
+            "david_peanut"
+          ],
+          "required_constraint_keys": [
+            "pastor_mike_gluten",
+            "sarah_raw_fish",
+            "david_son_peanut"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Burst delivery: 6 entities + 3 inferential constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're trying to keep it simple — everyone brings one dish, enough to feed about 8 people. We usually set everything out buffet style in the fellowship hall.",
+          "success_criteria": "Agent registers the potluck format and serving style",
+          "required_info_keys": [
+            "budget_note"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Establish format — shared buffet, one dish per person"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh great news — Karen just told me her doctor took her off the diabetes medication. Her A1C is totally normal now, she's been managing it with diet and exercise and doesn't need to restrict sugar anymore. She's so happy about it.",
+          "success_criteria": "Agent removes Karen's diabetes/sugar restriction",
+          "required_info_keys": [
+            "karen_diabetes_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Karen's diabetes restriction lifted"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we set up at noon right after service ends, or give people 30 minutes to mingle first? Pastor Mike usually runs a bit long with his sermons ha",
+          "success_criteria": "Agent responds about timing without losing track of dietary constraints",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "timing",
+            "drift_topic": "when to set up the potluck after service",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic timing question"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Tom just texted me — he's got the flu and won't make it Sunday. But his wife Ruth is still coming and she'll bring his dish. Ruth follows Jain dietary practices — she's been practicing for years.",
+          "success_criteria": "Agent registers Tom's exit, Ruth's arrival, and Ruth's Jain dietary constraint",
+          "required_info_keys": [
+            "tom_exits",
+            "ruth_joins"
+          ],
+          "required_constraint_keys": [
+            "ruth_jain_vegetarian"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT (Tom) + late-joining entity (Ruth) with inferential constraint"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "David mentioned he has to leave right after the meal for a deacon meeting, but his son Caleb will stay for the kids' activity hour. The kids usually snack on whatever's left over from the potluck.",
+          "success_criteria": "Agent notes David leaves but Caleb stays — peanut allergy remains active for leftover food",
+          "required_info_keys": [
+            "david_son_stays"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Scope distinction — David exits but son's peanut allergy persists for leftovers"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Do you think paper plates are fine or should I ask someone to bring real plates? We have those nice ones in the church kitchen but last time nobody wanted to do dishes",
+          "success_criteria": "Agent responds about plates/logistics without losing constraint state",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "logistics",
+            "drift_topic": "paper plates vs real plates for the potluck",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so here's what people are planning to bring so far: peanut butter brownies, salmon poke bowl, sourdough bread rolls, pad thai with crushed peanuts, tres leches cake. Any issues?",
+          "success_criteria": "Agent identifies: peanut butter brownies problematic (Caleb's peanut allergy, kids will snack on leftovers), salmon poke bowl problematic (raw fish — Sarah is pregnant; also Ruth is Jain vegetarian), sourdough bread rolls problematic (gluten — Pastor Mike has celiac), pad thai with crushed peanuts problematic (Caleb's peanut allergy), tres leches cake is fine for everyone currently attending",
+          "required_info_keys": [
+            "probe_dishes"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 dishes against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Four dishes have problems. Peanut butter brownies: Caleb (David's son) has a severe peanut allergy and will be snacking on leftovers during kids' activity hour. Salmon poke bowl: contains raw fish which Sarah cannot eat (pregnant), and contains fish which Ruth cannot eat (Jain vegetarian). Sourdough bread rolls: contain gluten which Pastor Mike cannot eat (celiac disease). Pad thai with crushed peanuts: Caleb's peanut allergy again. Tres leches cake is fine — Karen's sugar restriction has been lifted, and it contains no gluten, no peanuts, no raw fish, and is vegetarian-compatible (dairy and eggs are acceptable for some Jain practitioners but tres leches contains no meat/fish/root vegetables).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Peanut butter brownies are problematic: David's son Caleb has a severe peanut allergy and will be present for the kids' activity hour snacking on leftovers",
+      "Salmon poke bowl is problematic for Sarah: raw fish is unsafe during pregnancy",
+      "Salmon poke bowl is problematic for Ruth: fish violates Jain dietary practices",
+      "Sourdough bread rolls are problematic: Pastor Mike has celiac disease and cannot eat gluten",
+      "Pad thai with crushed peanuts is problematic: Caleb's peanut allergy",
+      "Tres leches cake is fine for everyone currently attending"
+    ],
+    "forbidden_elements": [
+      "Flagging tres leches cake as problematic for Karen due to sugar or diabetes (her restriction has been lifted)",
+      "Ignoring Caleb's peanut allergy because David is leaving (Caleb stays for kids' activity hour)",
+      "Saying David has a peanut allergy (it is his son Caleb who has the allergy)",
+      "Flagging any dish as problematic for Tom (he is not attending)",
+      "Saying salmon poke bowl is only problematic for one person when it affects both Sarah and Ruth"
+    ],
+    "explanation": "This scenario tests constraint removal and entity lifecycle tracking. Key tracking challenges: (1) Pastor Mike has celiac → no gluten (inferential from diagnosis), (2) Sarah is pregnant → no raw fish (inferential), (3) David's SON has peanut allergy, not David himself — and the son STAYS after David leaves for his meeting, so the peanut constraint remains active for leftover food, (4) Karen's diabetes restriction is explicitly REMOVED mid-conversation (doctor cleared her, A1C normal), so tres leches cake with sugar is now fine, (5) Tom exits but Ruth joins with a Jain dietary constraint (no meat, fish, eggs, root vegetables) — she's a late-joining high-constraint entity, (6) The salmon poke bowl hits TWO people (Sarah for raw fish, Ruth for fish in general). The primary difficulty mechanism is constraint REMOVAL: Karen's sugar restriction being lifted means the tres leches cake is a trap item that looks problematic but isn't."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

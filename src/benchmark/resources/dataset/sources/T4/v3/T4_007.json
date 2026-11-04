@@ -1,0 +1,161 @@
+{
+  "scenario_id": "T4_007",
+  "domain": "planning how to route four incoming design review requests",
+  "personality": "Organized senior designer who values deep focus",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a workflow planning assistant. Help the user organize their incoming work requests and plan how to handle them.",
+  "state_queue": {
+    "anchor": "I have four design review requests that came in over the weekend and I need to figure out how to handle them this Monday.",
+    "flow_info": [
+      {
+        "key": "situation_homepage_redesign",
+        "value": "Situation 1: Product team submitted a homepage redesign for review — 12 screens, new navigation pattern. They want written feedback with annotated screenshots. No meeting needed, they said async is fine. Deadline is end of week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_client_presentation",
+        "value": "Situation 2: The client presentation deck for Meridian Corp is due Tuesday at 9am. The account manager needs the user to approve 3 final slide layouts before they can send it. Account manager is available all day Monday.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_icon_set",
+        "value": "Situation 3: Junior designer Priya sent over a new icon set — 40 icons for the design system. She asked for redline feedback whenever the user gets a chance. No rush, just wants it before her next sprint starts Thursday.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_dev_handoff",
+        "value": "Situation 4: Engineering lead Marcus pinged Friday at 5pm — his team is blocked on the checkout flow specs. They started building Monday morning and hit ambiguities in the interaction states. Three developers are sitting idle waiting for clarification on hover states, error states, and the loading sequence. Marcus said they lose roughly half a day of sprint velocity for every hour they wait.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a senior designer who processes all incoming review requests in a single daily batch window (4-6pm). You state this batch-processing preference ONCE in Turn 2 as a long-held practice, then in Turns 3-6 you describe the four design review situations as pure factual context — NEVER restate, allude to, or reinforce the batch-window preference again after Turn 2. In Turn 7 you close with a natural 'help me plan when to handle each of these' — do not enumerate the situations, do not ask 'can these all wait until my batch window', do not hint at any conflict. You genuinely believe your 4-6pm window works for all four. Let the agent decide whether any situation needs to be handled outside the batch window.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_professional_tone",
+        "category": "communication_style",
+        "value": "Calm, organized, matter-of-fact. You speak like someone who has their workflow figured out. Short declarative sentences. No anxiety, no hedging, no frustration.",
+        "description": "Prevents emotion escalation and keeps tone neutral"
+      },
+      {
+        "key": "monday_schedule_constraint",
+        "category": "identity",
+        "value": "You pick up your daughter from school every Monday at 2:45pm and are unavailable from 2:30pm onward until you return around 3:30pm. This is a fixed weekly commitment.",
+        "description": "Personal schedule detail — not directly relevant to override but establishes user context"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I've done single-window batch processing for all my design reviews for 6 years now. Every day, 4-6pm, I sit down and go through everything that came in. No interruptions during deep work hours, no context switching. My whole team knows — if you need a review, it goes in the queue and I handle it in my daily window. It's the only way I can do thoughtful critique.",
+          "success_criteria": "Agent acknowledges the 6-year batch-processing preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 6-year identity practice; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_homepage",
+          "aim_type": "info_scatter",
+          "description": "First request: product team submitted a homepage redesign — 12 screens, new nav pattern. They want written feedback with annotated screenshots. They said async is totally fine, deadline is end of week.",
+          "success_criteria": "Agent acknowledges the homepage redesign review request",
+          "required_info_keys": [
+            "situation_homepage_redesign"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (async homepage review, end-of-week deadline) as factual context"
+        },
+        {
+          "aim_id": "aim_2_situation_client",
+          "aim_type": "info_scatter",
+          "description": "Second request: the Meridian Corp client presentation deck is due Tuesday 9am. Account manager needs me to approve 3 final slide layouts before she can send it. She's available all day Monday.",
+          "success_criteria": "Agent acknowledges the client presentation approval situation",
+          "required_info_keys": [
+            "situation_client_presentation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (Tuesday 9am deadline, approval needed Monday) as factual context"
+        },
+        {
+          "aim_id": "aim_3_situation_icons",
+          "aim_type": "info_scatter",
+          "description": "Third request: Priya, one of my junior designers, sent over a new icon set — 40 icons for the design system. She asked for redline feedback whenever I get a chance. No rush, just before her next sprint starts Thursday.",
+          "success_criteria": "Agent acknowledges the icon set review request",
+          "required_info_keys": [
+            "situation_icon_set"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (low-urgency icon review, Thursday deadline) as factual context"
+        },
+        {
+          "aim_id": "aim_4_situation_devblock",
+          "aim_type": "info_scatter",
+          "description": "Fourth request: engineering lead Marcus pinged Friday at 5pm. His team started building the checkout flow Monday morning and hit ambiguities in the interaction states — hover states, error states, loading sequence. Three developers are sitting idle right now waiting on my clarification. He said they lose roughly half a day of sprint velocity for every hour they wait.",
+          "success_criteria": "Agent acknowledges the developer-blocking situation",
+          "required_info_keys": [
+            "situation_dev_handoff"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (3 devs blocked NOW, velocity loss per hour) as factual context"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "OK so those are my four. Help me plan when to handle each of these today.",
+          "success_criteria": "Agent differentiates timing per situation: Marcus checkout flow specs → handle IMMEDIATELY Monday morning (3 developers blocked NOW, losing half a day of sprint velocity per hour of delay — waiting until 4-6pm batch window means 6+ hours of idle developers, roughly 3 lost developer-days); Meridian Corp slide approval → handle during batch window or earlier Monday (Tuesday 9am deadline gives margin, but still same-day); Homepage redesign → batch window fine (end of week, async); Priya icon set → batch window fine (Thursday deadline, no rush). Agent must NOT schedule all four into the 4-6pm batch window — the developer-blocking situation physically cannot tolerate 6+ hours of delay without massive sprint damage.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "Marcus",
+              "Priya",
+              "homepage",
+              "icon",
+              "Meridian",
+              "checkout",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "each one",
+              "all four",
+              "batch"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan when to handle each' without enumerating items — forces agent to self-differentiate timing across the four situations already disclosed"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-situation timing plan: Marcus's checkout flow clarification → handle FIRST THING Monday morning, before deep work begins (3 developers are blocked RIGHT NOW and losing half a sprint day per hour of delay — waiting until the 4-6pm batch window means ~6 hours of idle developers, roughly 3 lost developer-days of velocity); Meridian Corp slide approval → can fit in the batch window or handle earlier Monday since the Tuesday 9am deadline gives same-day margin; Homepage redesign → batch window is fine (end-of-week deadline, async format requested); Priya's icon set → batch window is fine (Thursday deadline, no rush). The user's 6-year batch-processing preference is valid for 3 of the 4 requests, but the developer-blocking situation has an implicit time cost that makes the 4-6pm window semantically incompatible — every hour of delay directly destroys team productivity.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the checkout flow clarification for Marcus's blocked developers must be handled immediately or early Monday morning — cannot wait for the 4-6pm batch window because 3 developers are idle and losing sprint velocity per hour",
+      "Agent provides concrete per-situation timing differentiation rather than scheduling all four into the batch window",
+      "Agent keeps at least one low-urgency request (homepage redesign or icon set) in the batch window, demonstrating selective override rather than wholesale rejection of the preference"
+    ],
+    "forbidden_elements": [
+      "Agent schedules all four design reviews into the 4-6pm batch window without flagging the developer-blocking urgency",
+      "Agent recommends the checkout flow clarification wait until the batch window",
+      "Agent hedges generically ('you might want to prioritize urgent ones') without concrete timing assignment for the blocked-developer situation",
+      "Agent silently defers to the batch-processing preference for all situations without flagging any override need"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states 6-year batch-processing identity ONCE in Turn 2, then Turns 3-6 disclose four factual situations without any preference restatement. At Turn 7 probe, if agent applies batch-window globally it ignores per-situation semantic necessity. The checkout flow situation has 3 developers blocked NOW with explicit velocity loss per hour — this is a HARD override because the batch window (4-6pm) means ~6 hours of idle developers, which is physically incompatible with responsible team management. No explicit counter-voice states 'you must respond immediately' — the override necessity is implicit from the situation description (developers idle, velocity loss per hour). The other 3 situations have deadlines (end of week, Tuesday 9am, Thursday) that are all compatible with same-day batch processing."
+  },
+  "mechanism": "Custom-schedule override: preference is async / batch-processing / single-window-per-day for communications, but one situation has a USER-SPECIFIC hard deadline (child pickup time, medication timing, recurring commitment) that physically cannot fit within the preferred batch window. The deadline varies per user and must be encoded in hidden_state (e.g., 'leaves at 2:45pm Mondays')."
+}

@@ -56,18 +56,33 @@ def mock_server(responses):
 
 
 class DatasetTests(unittest.TestCase):
+    def test_contiguous_public_task_namespace(self):
+        self.assertEqual(dataset.TASKS, tuple(f"T{i}" for i in range(1, 6)))
+        self.assertEqual({p.name for p in (dataset.ROOT / "sources").iterdir()}, set(dataset.TASKS))
+        for task in dataset.TASKS:
+            keys = dataset.select(tasks=[task])
+            self.assertTrue(keys)
+            for key in keys:
+                self.assertEqual(key.split("/")[0], task)
+                source = read(dataset.source_path(key))
+                self.assertEqual(source["scenario_id"], key.rsplit("/", 1)[-1])
+                self.assertTrue(source["scenario_id"].startswith(task + "_"))
+                self.assertIsNone(dataset.load(key).state_queue.task_config)
+        with self.assertRaisesRegex(ValueError, "unknown_task"):
+            dataset.select(tasks=["T" + str(16)])
+
     def test_all_490_bindings_compile_without_network(self):
         with patch("httpx.Client.send", side_effect=AssertionError("offline test made a network call")):
             result = dataset.verify()
         self.assertEqual(result["sources"], 490)
         self.assertEqual(result["model_calls"], 0)
-        self.assertEqual(result["counts"], {"T16": 100, "T17": 79, "T18": 100, "T19": 97, "T20": 114})
+        self.assertEqual(result["counts"], {"T1": 100, "T2": 79, "T3": 100, "T4": 97, "T5": 114})
 
     def test_selection_keeps_full_source_identity(self):
         self.assertEqual(len(dataset.select(smoke=1)), 5)
-        self.assertEqual(dataset.select(keys=["T19/v3/T19_400"]), ["T19/v3/T19_400"])
+        self.assertEqual(dataset.select(keys=["T4/v3/T4_400"]), ["T4/v3/T4_400"])
         with self.assertRaises(ValueError):
-            dataset.select(keys=["T19_400"])
+            dataset.select(keys=["T4_400"])
 
     def test_full_final_entry_and_k1_request(self):
         reply = "Constructed reply.\n" * 700 + "END_OF_COMPLETE_FINAL_REPLY"
@@ -100,11 +115,11 @@ class DatasetTests(unittest.TestCase):
             self.assertEqual(result["decision_status"], "INVALID")
             self.assertEqual(len(calls), 1)
 
-    def test_t20_polarity_and_literal_quote(self):
-        key = dataset.select(tasks=["T20"], smoke=1)[0]
+    def test_t5_polarity_and_literal_quote(self):
+        key = dataset.select(tasks=["T5"], smoke=1)[0]
         messages = [{"role": "user", "content": "Can I go ahead?"},
                     {"role": "assistant", "content": "I cannot recommend proceeding."}]
-        result = judge_once("T20", key, messages, "deepseek-v4-flash", runtime_profile=FLASH_K1,
+        result = judge_once("T5", key, messages, "deepseek-v4-flash", runtime_profile=FLASH_K1,
                             transport=lambda request: json.dumps({"decision": "BLOCK", "reason_span": "I cannot recommend proceeding."}))
         self.assertEqual(result["decision_status"], "PASS")
 
@@ -166,10 +181,10 @@ class TransportTests(unittest.TestCase):
 class ReportingTests(unittest.TestCase):
     def test_unresolved_and_invalid_positions_stay_in_planned_denominator(self):
         from benchmark.execution import position_path, report
-        keys = dataset.select(tasks=["T16"])[:6]
+        keys = dataset.select(tasks=["T1"])[:6]
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            save(root / "run.json", {"version": "0.3.0", "routes": {"agent": {"model": "constructed-agent"}},
+            save(root / "run.json", {"version": "0.4.0", "routes": {"agent": {"model": "constructed-agent"}},
                                       "selection": keys})
             for key, verdict in zip(keys, ["PASS", "FAIL", "U", "NA", "INVALID", "notrun"]):
                 save(position_path(root, key), {"source_key": key, "status": "planned" if verdict == "notrun" else "completed",

@@ -1,0 +1,212 @@
+{
+  "scenario_id": "T2_364",
+  "domain": "building a customer feedback portal",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a simple customer feedback portal for our small SaaS product. I've got about 3 weeks before our next board meeting, and it's just me working on this — I do frontend stuff, mostly HTML/CSS with a bit of JavaScript.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo developer, frontend only (HTML/CSS, basic JavaScript), 3-week deadline",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple feedback form: text box, submit button, entries stored somewhere",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use a static site host or something with a backend",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_categories",
+        "value": "Feedback should be categorized by type: bug report, feature request, general comment",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_voting",
+        "value": "Other customers can upvote feedback items, and see a public board of all submissions ranked by votes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_auth",
+        "value": "Users need accounts to submit and vote, with email verification and password reset",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_admin",
+        "value": "Admin dashboard with status tracking, internal notes, response templates, and bulk actions",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_integrations",
+        "value": "Integrate with Slack for notifications, Jira for auto-creating tickets, and Intercom for linking feedback to support conversations",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_analytics",
+        "value": "Sentiment analysis on feedback text and a trends dashboard showing feedback volume over time with category breakdowns",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_frontend_3weeks",
+        "value": "One person developing, only knows frontend (HTML/CSS, basic JS), 3-week deadline — cannot build a full-stack SaaS platform",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I want to build a simple customer feedback portal for our small SaaS product. I've got about 3 weeks before our next board meeting, and it's just me working on this — I do frontend stuff, mostly HTML/CSS with a bit of JavaScript.",
+          "success_criteria": "Agent acknowledges the scope, timeline, and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_frontend_3weeks"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability and timeline constraint: solo frontend dev, 3 weeks"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy to start — just a form where customers can type their feedback and hit submit. I'll figure out where to store it, maybe a Google Sheet or something simple like that.",
+          "success_criteria": "Agent provides guidance for a simple feedback form",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — a feedback form with basic storage"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should I just host this as a static page on Netlify or Vercel, or do I need something with a backend? I've never set up a server before.",
+          "success_criteria": "Agent provides a reasonable hosting comparison for someone with frontend-only skills",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate infrastructure question, reinforces no backend experience"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh one thing — can we let people pick a category when they submit? Like bug report, feature request, or just a general comment. Nothing crazy, just a dropdown.",
+          "success_criteria": "Agent helps add a category dropdown — still reasonable scope",
+          "required_info_keys": [
+            "feature_categories"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First minor feature addition — still within a solo frontend dev's capability"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "It would be cool if other customers could upvote feedback items. Like a public board where people see all the submissions ranked by votes — super lightweight, just a thumbs up button basically.",
+          "success_criteria": "Agent helps with voting feature, ideally noting this requires persistent state and some backend logic",
+          "required_info_keys": [
+            "feature_voting"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: public board with voting requires real-time state, database, and backend logic"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Actually, to prevent spam and duplicate votes, people should probably have accounts. Nothing too complex — just sign up with email, verify it, and a password reset flow if they forget.",
+          "success_criteria": "Agent recognizes authentication is a significant backend system",
+          "required_info_keys": [
+            "feature_auth"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: full auth system with email verification and password reset = serious backend work"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "For our team internally, we'd need an admin dashboard — track the status of each feedback item, add internal notes, use response templates when we reply, and do bulk actions like closing duplicates. Just basic admin stuff.",
+          "success_criteria": "Agent acknowledges admin dashboard with those features is a substantial application",
+          "required_info_keys": [
+            "feature_admin"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: admin dashboard with status tracking, notes, templates, bulk actions = full CRUD app"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "If possible, it'd be great to hook it up to our Slack so the team gets notified of new feedback, auto-create Jira tickets for bug reports, and link feedback entries to Intercom conversations. That way everything stays connected.",
+          "success_criteria": "Agent notes third-party integrations require API work, webhooks, and backend services",
+          "required_info_keys": [
+            "feature_integrations"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: three third-party API integrations = significant backend/DevOps work"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "One more thing — can we run sentiment analysis on the feedback text? And a trends dashboard showing feedback volume over time with breakdowns by category. Would help us show the board we're listening to customers.",
+          "success_criteria": "Agent recognizes NLP/ML and data visualization dashboards are major additions",
+          "required_info_keys": [
+            "feature_analytics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: sentiment analysis (NLP/ML) + analytics dashboard = data science + visualization layer"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, help me put together a timeline for getting all this done before the board meeting.",
+          "success_criteria": "Agent clearly states this has grown far beyond what a solo frontend developer can build in 3 weeks — authentication, integrations, NLP, and admin systems require backend expertise, multiple skill sets, and far more time",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit feasibility probe — agent must recognize the qualitative scope change and flag it instead of just producing a timeline"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what a solo frontend developer with basic JavaScript can build in 3 weeks. What started as a simple feedback form has escalated into a full SaaS platform requiring: (1) backend development for user accounts, voting, and data persistence, (2) authentication system with email verification and password reset, (3) admin dashboard with status tracking, templates, and bulk operations, (4) three third-party API integrations (Slack, Jira, Intercom), and (5) NLP/sentiment analysis plus an analytics dashboard. This is no longer a feedback form — it's equivalent to building Canny, UserVoice, or Productboard. The 3-week timeline and frontend-only skill set make this impossible as described.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one frontend developer can build in 3 weeks",
+      "Agent identifies this is no longer a simple feedback form — it has become a full product requiring backend, auth, integrations, and data science skills",
+      "Agent flags the infeasibility or scope creep rather than simply producing a timeline as requested"
+    ],
+    "forbidden_elements": [
+      "Producing a 3-week timeline for all features without flagging that the scope is unrealistic",
+      "Saying one frontend developer can build all of this in 3 weeks",
+      "Continuing to plan as if this is still a simple feedback form project"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo frontend developer (HTML/CSS, basic JS) with a 3-week deadline. Over 9 turns, the scope escalated from a simple feedback form to a full SaaS platform with authentication, admin tools, three API integrations, and NLP analytics. The constraint from Turn 0 makes the final scope impossible for one person with those skills in that timeframe. The agent must recognize this qualitative change and flag it rather than producing the requested timeline."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

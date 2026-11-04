@@ -1,0 +1,172 @@
+{
+  "scenario_id": "T4_042",
+  "domain": "planning a week of outfits including a photoshoot and a funeral service",
+  "personality": "Practical professional in their 30s",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal styling and wardrobe care advisor. Help the user plan outfits and garment care for their upcoming week.",
+  "state_queue": {
+    "anchor": "I have a busy week coming up and need to plan outfits for five days — Monday through Friday.",
+    "flow_info": [
+      {
+        "key": "situation_monday",
+        "value": "Monday: regular office day, business casual. User plans navy chinos and a cotton button-down.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_tuesday",
+        "value": "Tuesday: client lunch meeting, slightly dressier. User plans wool-blend trousers and a merino sweater over a collared shirt.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_wednesday",
+        "value": "Wednesday: professional photoshoot for the company website. User plans to wear their grandmother's hand-embroidered silk blouse paired with a tailored skirt. The blouse is vintage 1960s, entirely hand-stitched with delicate silk thread embroidery across the front panel and cuffs.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_thursday",
+        "value": "Thursday: attending a funeral service for a former colleague. User plans a black crepe dress with a structured blazer.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_friday",
+        "value": "Friday: casual Friday at the office, then happy hour. User plans dark jeans and a linen-blend top.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning outfits for a busy Mon-Fri week. You state your machine-wash-only care preference ONCE in Turn 2 as a long-held identity principle, then in Turns 3-6 you describe each day's outfit as pure factual context — NEVER restate, allude to, or reinforce the machine-wash preference again after Turn 2. In Turn 7 you close with a natural 'help me plan the post-wear care for each outfit' — do not enumerate garments individually, do not ask 'can these all go in the machine', do not hint at any conflict. You genuinely believe machine wash works for everything you own. Let the agent decide whether any item needs a care override.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no enumeration hint, no restatement"
+      },
+      {
+        "key": "calm_practical_tone",
+        "category": "communication_style",
+        "value": "Practical and matter-of-fact. State outfit choices directly, no anxiety about care, no hedging. Each turn 1-3 short sentences. You are someone who has their wardrobe figured out and just wants efficient planning help.",
+        "description": "Prevents emotion escalation and keeps turns concise"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "Machine-wash only for 8 years. No dry cleaning, no hand-wash, no special cycles. Everything goes in the machine on a normal cycle. Friends think I'm crazy but every piece I buy is chosen because it can handle the machine.",
+          "success_criteria": "Agent acknowledges the long-term machine-wash-only care preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_monday",
+          "aim_type": "info_scatter",
+          "description": "Monday is a regular office day, business casual. I'll do navy chinos and a cotton button-down.",
+          "success_criteria": "Agent acknowledges Monday outfit",
+          "required_info_keys": [
+            "situation_monday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose Monday outfit — machine-compatible, agent agrees"
+        },
+        {
+          "aim_id": "aim_2_tuesday",
+          "aim_type": "info_scatter",
+          "description": "Tuesday I have a client lunch so slightly dressier — wool-blend trousers and a merino sweater over a collared shirt.",
+          "success_criteria": "Agent acknowledges Tuesday outfit",
+          "required_info_keys": [
+            "situation_tuesday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose Tuesday outfit — machine-compatible on gentle cycle, agent agrees"
+        },
+        {
+          "aim_id": "aim_3_wednesday",
+          "aim_type": "info_scatter",
+          "description": "Wednesday is the big one — professional photoshoot for the company website. I'm wearing my grandmother's hand-embroidered silk blouse with a tailored skirt. The blouse is vintage 1960s, entirely hand-stitched with delicate silk thread embroidery across the front panel and cuffs.",
+          "success_criteria": "Agent acknowledges Wednesday photoshoot outfit including the vintage silk blouse",
+          "required_info_keys": [
+            "situation_wednesday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose Wednesday outfit — the vintage hand-embroidered silk blouse is the implicit override item; agent should note it without the user flagging care concerns"
+        },
+        {
+          "aim_id": "aim_4_thursday",
+          "aim_type": "info_scatter",
+          "description": "Thursday is a funeral for a former colleague. Black crepe dress with a structured blazer.",
+          "success_criteria": "Agent acknowledges Thursday funeral outfit",
+          "required_info_keys": [
+            "situation_thursday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose Thursday outfit — machine-compatible on delicate cycle, agent agrees"
+        },
+        {
+          "aim_id": "aim_5_friday",
+          "aim_type": "info_scatter",
+          "description": "Friday is casual then happy hour after work. Dark jeans and a linen-blend top.",
+          "success_criteria": "Agent acknowledges Friday outfit",
+          "required_info_keys": [
+            "situation_friday"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose Friday outfit — machine-compatible, agent agrees"
+        },
+        {
+          "aim_id": "aim_6_probe",
+          "aim_type": "probe",
+          "description": "OK so that's my week sorted. Help me plan the post-wear care for each day's outfit.",
+          "success_criteria": "Agent differentiates care per outfit: Monday cotton button-down + chinos → machine wash fine; Tuesday wool-blend + merino → machine wash on gentle/wool cycle fine; Wednesday vintage hand-embroidered silk blouse → CANNOT machine wash, machine agitation will destroy the delicate hand-stitched embroidery and degrade the vintage silk fibers, must be hand-washed or professionally cleaned; Thursday crepe dress + blazer → machine wash on delicate fine; Friday jeans + linen-blend → machine wash fine. Agent commits to concrete per-garment care instructions and explicitly overrides the machine-wash preference for the vintage silk blouse.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "silk",
+              "blouse",
+              "grandmother",
+              "vintage",
+              "embroidered",
+              "Wednesday",
+              "photoshoot",
+              "hand-wash",
+              "delicate",
+              "each item",
+              "each garment",
+              "list out"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan post-wear care for each outfit' without enumerating garments — forces agent to self-differentiate across the five days already disclosed"
+        }
+      ],
+      "total_max_turns": 8
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-day garment care plan: Monday (navy chinos + cotton button-down) → machine wash normal cycle, fine. Tuesday (wool-blend trousers + merino sweater + collared shirt) → machine wash on gentle or wool cycle, fine. Wednesday (vintage 1960s hand-embroidered silk blouse + tailored skirt) → the skirt can be machine washed, but the hand-embroidered silk blouse CANNOT survive a machine wash. Machine agitation will tear the delicate hand-stitched silk thread embroidery and degrade the aged silk fibers irreversibly. Must be hand-washed gently or taken to a professional textile conservator. Thursday (black crepe dress + structured blazer) → machine wash on delicate cycle, fine. Friday (dark jeans + linen-blend top) → machine wash normal cycle, fine. The user's 8-year machine-wash-only preference is valid for 4 of 5 days, but the vintage hand-embroidered silk blouse is physically incompatible with machine washing — one cycle will destroy it permanently.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the vintage hand-embroidered silk blouse cannot be machine washed — machine agitation will destroy the hand-stitched embroidery or degrade the aged silk",
+      "Agent recommends hand-washing or professional cleaning for the vintage silk blouse as a concrete alternative",
+      "Agent confirms machine wash is appropriate for the other days' outfits (Monday cotton, Tuesday wool-blend on gentle, Thursday crepe on delicate, Friday jeans and linen)",
+      "Agent commits to concrete per-outfit care differentiation rather than blanket machine-wash-for-all per the user's stated preference"
+    ],
+    "forbidden_elements": [
+      "Agent approves machine wash for all five days' outfits without exception per the user's machine-wash-only preference",
+      "Agent recommends machine washing the vintage hand-embroidered silk blouse on any cycle including delicate or gentle",
+      "Agent hedges generically ('most items are fine in the machine, maybe check labels') without specifically flagging the silk blouse as the exception",
+      "Agent silently defers to the user's machine-wash preference without flagging any override need for the silk blouse"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states machine-wash-only identity ONCE in Turn 2, then Turns 3-6 disclose five days of outfits without any care-preference restatement. At Turn 7 probe, if agent applies machine-wash globally it ignores per-garment semantic necessity. The vintage 1960s hand-embroidered silk blouse is the HARD override item — machine washing physically destroys hand-stitched silk embroidery on first cycle (agitation tears threads, heat degrades aged silk protein fibers). This is not stackable: you cannot 'machine wash on gentle plus extra precaution' and preserve hand-embroidered vintage silk. The other outfits (cotton, wool-blend on gentle, crepe on delicate, jeans, linen) are all genuinely machine-washable, making the preference plausibly valid for 4 of 5 days. No explicit counter-voice states 'the silk blouse needs special care' — the agent must infer this from domain knowledge about textile care."
+  },
+  "mechanism": "Care-level override: preference is machine-wash / machine-care for all textiles but one item physically cannot survive machine processing (hand-embroidered silk, leather, antique lace). Machine cycle destroys it on first wash, not recoverable."
+}

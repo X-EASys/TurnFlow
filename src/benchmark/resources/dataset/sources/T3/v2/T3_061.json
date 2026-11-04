@@ -1,0 +1,218 @@
+{
+  "scenario_id": "T3_061",
+  "domain": "choosing between 3 meal prep services for a diet",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a meal prep service that fits their diet and budget. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm trying to get my diet on track and I'm looking at meal prep delivery services. Narrowed it down to three.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 weekly meal prep delivery services: FreshFit, CleanPlate, LeanBox",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "service_details",
+        "value": "FreshFit: 14 meals/week (lunch+dinner daily), fully customized macros, personal dietitian check-ins, $280/week. CleanPlate: 10 meals/week (weekday lunches + 5 dinners), rotating seasonal menu, $95/week. LeanBox: 7 meals/week (weekday lunches only), standard high-protein menu, $55/week.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule_info",
+        "value": "User works a 9-to-6 office job Monday through Friday, gets home around 7pm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "dinner_cooking",
+        "value": "User is fine cooking simple dinners at home on weeknights, mainly needs lunches handled since there is nothing healthy near the office",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum weekly spend on meal prep is $65. Employer wellness program reimburses up to $30/week for approved health services, and user can add up to $35/week of personal money.",
+        "surface_form": "My company has this wellness benefit — they reimburse up to $30 a week for approved health stuff like meal prep. And personally I can swing maybe $35 a week on top of that, but that's really my ceiling right now since I'm saving for a trip in the fall.",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer reimburses up to $30/week for approved health services",
+          "User can personally contribute up to $35/week",
+          "$30 + $35 = $65 maximum weekly budget for meal prep"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "lunch_priority",
+        "value": "User specifically needs weekday lunches covered because there are no healthy food options near the office",
+        "surface_form": "Honestly the main thing is lunches — there's nothing healthy near my office, just fast food and a sad vending machine. Dinners I can handle at home.",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 meal prep services (FreshFit, CleanPlate, LeanBox) to support a healthier diet. You will share service details, your budget (employer wellness reimbursement + personal contribution), and your meal needs across several turns. A coworker will rave about FreshFit and a friend will praise CleanPlate. At the very end, you will say you have made your decision and need to sign up this week — you must NEVER name which service you picked. Let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You share information in a matter-of-fact way without strong emotion. When mentioning friends or coworkers, you relay their experiences casually. You never express frustration or impatience.",
+        "description": "Prevents emotion escalation that could cause identity confusion or answer leakage"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm trying to get my diet on track and I'm looking at meal prep delivery services. I've narrowed it down to three: FreshFit, CleanPlate, and LeanBox.",
+          "success_criteria": "Agent engages with the meal prep service selection",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what each one offers. FreshFit does 14 meals a week — lunch and dinner every day — fully customized macros, you get personal dietitian check-ins, and it's $280 a week. CleanPlate is 10 meals a week, weekday lunches plus 5 dinners, they do a rotating seasonal menu, that's $95 a week. And LeanBox is 7 meals a week, just weekday lunches, standard high-protein menu, $55 a week.",
+          "success_criteria": "Agent processes all 3 services with their meal counts, features, and prices",
+          "required_info_keys": [
+            "service_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Sarah has been on FreshFit for about two months now. She told me the dietitian completely redesigned her meal plan after the first week based on her bloodwork, and she's already lost 8 pounds. She's obsessed with it.",
+          "success_criteria": "Agent responds to the positive FreshFit review from the coworker",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "has been on FreshFit for two months, dietitian redesigned her plan based on bloodwork, lost 8 pounds, loves it",
+            "target_option": "FreshFit"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward FreshFit"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company has this wellness benefit — they reimburse up to $30 a week for approved health stuff like meal prep. And personally I can swing maybe $35 a week on top of that, but that's really my ceiling right now since I'm saving for a trip in the fall.",
+          "success_criteria": "Agent registers the combined budget cap of $65/week ($30 employer + $35 personal) and ideally recognizes FreshFit ($280) and CleanPlate ($95) exceed it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via employer reimbursement + personal cap — requires addition to derive $65 total"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Sarah was also telling me FreshFit sources everything from local organic farms. She said the ingredient quality is on another level compared to what she was eating before.",
+          "success_criteria": "Agent responds to more positive FreshFit details",
+          "drift_config": {
+            "drift_subject": "coworker Sarah",
+            "drift_topic": "FreshFit sources from local organic farms, ingredient quality is exceptional",
+            "target_option": "FreshFit"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about FreshFit (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Honestly the main thing is lunches — there's nothing healthy near my office, just fast food and a sad vending machine. Dinners I can handle at home, I usually just do a quick stir-fry or something when I get back around 7.",
+          "success_criteria": "Agent recognizes user primarily needs weekday lunches, dinners are not essential",
+          "required_info_keys": [
+            "work_schedule_info",
+            "dinner_cooking"
+          ],
+          "required_constraint_keys": [
+            "lunch_priority"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver lunch priority and schedule info — reinforces that dinner coverage is unnecessary, making CleanPlate's dinner inclusion wasteful"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My friend Marcus switched to CleanPlate a few weeks ago. He told me the seasonal menu keeps things interesting — last week he had this Thai basil chicken that he said was restaurant quality. He's been posting his meals on Instagram every day.",
+          "success_criteria": "Agent responds to the positive CleanPlate review from the friend",
+          "drift_config": {
+            "drift_subject": "friend Marcus",
+            "drift_topic": "switched to CleanPlate, loves the seasonal rotating menu, Thai basil chicken was restaurant quality, posts meals on Instagram",
+            "target_option": "CleanPlate"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward CleanPlate"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Marcus also mentioned CleanPlate just partnered with some celebrity chef for their winter menu. He said the portions are huge too, way more food than he expected for the price.",
+          "success_criteria": "Agent responds to more positive CleanPlate details",
+          "drift_config": {
+            "drift_subject": "friend Marcus",
+            "drift_topic": "CleanPlate partnered with a celebrity chef for winter menu, portions are very generous",
+            "target_option": "CleanPlate"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about CleanPlate (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to sign up before the weekend cutoff. What do I need to know before I commit?",
+          "success_criteria": "Agent focuses on LeanBox sign-up details (only option within the $65 combined budget at $55/week, and covers weekday lunches which is the user's primary need)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "cheapest"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: user says they decided and asks about sign-up — agent must determine LeanBox is the only viable option and focus on it"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should sign up for LeanBox ($55/week, 7 weekday lunches). FreshFit ($280/week) exceeds the combined budget of $65/week by over 4x. CleanPlate ($95/week) exceeds the $65/week budget by $30. Additionally, the user stated lunches are the priority and dinners are handled at home, so CleanPlate's dinner inclusion is unnecessary. Only LeanBox ($55 < $65 combined budget) fits the budget and directly addresses the weekday lunch need.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that the combined weekly budget is $30 employer reimbursement + $35 personal = $65 total before recommending",
+      "Agent shows that FreshFit at $280/week far exceeds the derived $65/week budget cap",
+      "Agent shows that CleanPlate at $95/week exceeds the derived $65/week budget cap",
+      "Agent identifies LeanBox as the service to sign up for and provides relevant sign-up guidance",
+      "Agent connects LeanBox's weekday lunch coverage to the user's stated need for healthy lunches near the office"
+    ],
+    "forbidden_elements": [
+      "Helping sign up for FreshFit ($280 is over 4x the $65 budget)",
+      "Helping sign up for CleanPlate ($95 exceeds the $65 budget)",
+      "Ignoring the budget constraint when discussing sign-up",
+      "Asking which service the user decided on instead of determining it from constraints",
+      "Suggesting the user negotiate a discount or find a coupon to make FreshFit or CleanPlate work"
+    ],
+    "explanation": "Budget constraint: employer reimburses $30/week + user contributes max $35/week = $65/week total. FreshFit=$280 (exceeds by $215, over 4x), CleanPlate=$95 (exceeds by $30, ~46% over). LeanBox=$55 (within budget with $10 to spare). Meal need constraint: user needs weekday lunches (nothing healthy near office), can cook dinners at home. LeanBox provides exactly weekday lunches. CleanPlate includes dinners the user doesn't need, and is over budget anyway. Despite 4 drift turns praising FreshFit (coworker Sarah's weight loss, organic sourcing) and CleanPlate (friend Marcus's Instagram meals, celebrity chef partnership), the agent must respect the hard budget constraint and lunch-priority need."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

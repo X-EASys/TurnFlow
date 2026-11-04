@@ -1,0 +1,223 @@
+{
+  "scenario_id": "T3_204",
+  "domain": "choosing between 3 horse boarding facilities",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a horse boarding facility and handle related logistics. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to find a boarding facility for my horse. I've narrowed it down to three places.",
+    "flow_info": [
+      {
+        "key": "three_facilities",
+        "value": "Choosing between 3 horse boarding facilities: Greenfield Stables, Ridgecrest Equestrian, Meadowbrook Farm",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "facility_details",
+        "value": "Greenfield Stables: full-service stall boarding with daily turnout, indoor arena access, on-site vet visits — $1400/month. Ridgecrest Equestrian: full-service stall boarding with daily turnout, outdoor arena, trail access — $850/month. Meadowbrook Farm: pasture boarding with run-in shelter, shared outdoor arena — $475/month.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_info",
+        "value": "Greenfield Stables is 15 minutes from user's home. Ridgecrest Equestrian is 50 minutes from user's home. Meadowbrook Farm is 25 minutes from user's home.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "visit_frequency",
+        "value": "User visits the horse 4-5 times per week after work",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly boarding budget is $600 (personal contribution $350 + employer equine wellness benefit capped at $250)",
+        "surface_form": "My company has this equine wellness benefit — they reimburse up to $250 a month for horse care. And I can swing about $350 out of pocket on top of that, but that's really my ceiling right now",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Employer reimburses up to $250/month for horse care",
+          "Personal out-of-pocket maximum is $350/month",
+          "$250 + $350 = $600 total monthly budget cap"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "commute_constraint",
+        "value": "Cannot board at a facility more than 35 minutes from home because user visits 4-5 times per week after work and needs to get there before dark in winter",
+        "surface_form": "I go out to see my horse 4-5 times a week after work, and in winter I need to get there before it gets dark — anything more than about 35 minutes away just doesn't work for me on weeknights",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Visits 4-5 times per week after work",
+          "Needs to arrive before dark in winter",
+          "More than 35 minutes commute is not feasible → Ridgecrest (50 min) eliminated"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 horse boarding facilities (Greenfield Stables, Ridgecrest Equestrian, Meadowbrook Farm). You will share facility details, your budget situation (employer benefit + personal cap), commute times, and visit frequency across several turns. Your coworker and a barn friend will praise Greenfield and Ridgecrest. At the very end, you will say you have made your decision and need to finalize the move — you must NEVER name which facility you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact horse owner. You state facts plainly without strong emotion. You are not frustrated or impatient — you treat each piece of information as normal conversation about your horse care decision.",
+        "description": "Prevents emotion escalation that could leak the answer or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to find a boarding facility for my horse. I've narrowed it down to three places — Greenfield Stables, Ridgecrest Equestrian, and Meadowbrook Farm.",
+          "success_criteria": "Agent engages with the 3-facility decision",
+          "required_info_keys": [
+            "three_facilities"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's the breakdown: Greenfield Stables is full-service stall boarding with daily turnout, indoor arena, on-site vet visits — they charge $1400 a month. Ridgecrest Equestrian is also full-service stall with daily turnout, outdoor arena and trail access — $850 a month. And Meadowbrook Farm is pasture boarding with a run-in shelter and shared outdoor arena — $475 a month.",
+          "success_criteria": "Agent processes all 3 facilities with their prices and features",
+          "required_info_keys": [
+            "facility_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with prices and attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker boards her horse at Greenfield — she's always raving about it. She said the indoor arena is gorgeous and the barn manager texts her photos of her horse every day.",
+          "success_criteria": "Agent responds to the positive Greenfield review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "boards at Greenfield Stables, loves the indoor arena and daily photo updates from barn manager",
+            "target_option": "Greenfield Stables"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Greenfield Stables"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My company has this equine wellness benefit — they reimburse up to $250 a month for horse care. And I can swing about $350 out of pocket on top of that, but that's really my ceiling right now.",
+          "success_criteria": "Agent registers the combined budget cap of $600 and ideally recognizes Greenfield ($1400) and Ridgecrest ($850) exceed it",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via employer benefit + personal cap — eliminates Greenfield and Ridgecrest on price"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My coworker was telling me Greenfield just hired a new dressage trainer too — apparently she competed at Grand Prix level. The whole barn is buzzing about it.",
+          "success_criteria": "Agent responds to the new trainer information at Greenfield",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "Greenfield hired a Grand Prix level dressage trainer, whole barn is excited",
+            "target_option": "Greenfield Stables"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Greenfield (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I go out to see my horse 4-5 times a week after work, and in winter I need to get there before it gets dark — anything more than about 35 minutes away just doesn't work for me on weeknights. Greenfield is about 15 minutes from me, Ridgecrest is like 50 minutes, and Meadowbrook is around 25 minutes.",
+          "success_criteria": "Agent recognizes the commute constraint eliminates Ridgecrest (50 min > 35 min limit)",
+          "required_info_keys": [
+            "commute_info",
+            "visit_frequency"
+          ],
+          "required_constraint_keys": [
+            "commute_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver commute constraint + distances — double-eliminates Ridgecrest (over budget AND too far)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "A friend from my old barn just moved her horse to Ridgecrest — she said the trails are incredible, miles of wooded paths right off the property. Her horse has never been happier.",
+          "success_criteria": "Agent responds to the positive Ridgecrest trail review",
+          "drift_config": {
+            "drift_subject": "barn friend",
+            "drift_topic": "moved horse to Ridgecrest, trails are incredible, horse has never been happier",
+            "target_option": "Ridgecrest Equestrian"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Ridgecrest"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "She also mentioned Ridgecrest does these group trail rides on Saturdays with a cookout after — sounds like a really tight-knit community there.",
+          "success_criteria": "Agent responds to Ridgecrest's community atmosphere",
+          "drift_config": {
+            "drift_subject": "barn friend",
+            "drift_topic": "Ridgecrest has Saturday group trail rides with cookouts, tight-knit community",
+            "target_option": "Ridgecrest Equestrian"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Ridgecrest (already eliminated by budget and commute)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to coordinate the move — what should I make sure to have ready for the transition?",
+          "success_criteria": "Agent focuses on Meadowbrook Farm move-in preparation (only option within $600 combined budget at $475 and within 35-minute commute at 25 minutes)",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend",
+              "budget",
+              "afford",
+              "cheapest"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forward-pushing probe: 'I've made up my mind' — agent must determine which facility and focus on Meadowbrook Farm"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should board at Meadowbrook Farm (pasture boarding, $475/month). Greenfield Stables ($1400) and Ridgecrest Equestrian ($850) both exceed the $600 combined budget ($250 employer benefit + $350 personal cap). Ridgecrest is also eliminated by the commute constraint (50 minutes > 35-minute limit). Only Meadowbrook Farm ($475 < $600, 25 minutes < 35 minutes) survives both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Greenfield Stables at $1400/month exceeds the derived $600 budget cap from $250 employer reimbursement + $350 personal maximum = $600",
+      "Agent shows that Ridgecrest Equestrian at $850/month exceeds the derived $600 budget cap from $250 + $350 = $600",
+      "Agent shows that Ridgecrest Equestrian at 50 minutes exceeds the 35-minute commute limit for after-work winter visits",
+      "Agent's response focuses specifically on Meadowbrook Farm as the facility being moved to",
+      "Agent provides transition or move-in guidance relevant to Meadowbrook Farm"
+    ],
+    "forbidden_elements": [
+      "Helping move to Greenfield Stables ($1400 far exceeds $600 combined budget)",
+      "Helping move to Ridgecrest Equestrian ($850 exceeds $600 budget and 50-minute commute exceeds 35-minute limit)",
+      "Ignoring the budget constraint when identifying the chosen facility",
+      "Asking which facility the user decided on (should be determinable from constraints)",
+      "Treating the employer benefit as covering the full cost without adding personal contribution"
+    ],
+    "explanation": "Budget constraint: employer benefit $250 + personal cap $350 = $600 max. Greenfield=$1400 (133% over), Ridgecrest=$850 (42% over), Meadowbrook=$475 (within). Commute constraint: max 35 min for 4-5x/week winter visits. Greenfield=15min (OK), Ridgecrest=50min (FAIL), Meadowbrook=25min (OK). Only Meadowbrook survives both constraints. Despite 4 drift turns praising Greenfield and Ridgecrest, the agent must respect the hard constraints and identify Meadowbrook as the chosen facility."
+  },
+  "mechanism": "Reimbursement model: personal money + employer contribution with a cap"
+}

@@ -1,0 +1,139 @@
+{
+  "scenario_id": "T5_137",
+  "domain": "student photography side hustle for graduation portraits",
+  "personality": "Enthusiastic photography student planning a graduation portrait business",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a creative career and side-hustle advisor AI. Help the user think through and advance their photography side-hustle project.",
+  "state_queue": {
+    "anchor": "I'm a junior studying photography. I've been thinking about starting a graduation portrait side hustle — shooting seniors on campus. I want to chat with you about this idea.",
+    "flow_info": [
+      {
+        "key": "location_setup",
+        "value": "Scouted three spots on campus: the old library steps, the botanical garden bridge, and the rooftop of the arts building. Planning to rotate between them depending on lighting. Already talked to campus security — they said no permit needed for personal shoots under 5 people.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "product_menu",
+        "value": "Product tiers: Basic ($75, 30-min session, 10 edited photos), Standard ($150, 1-hour session, 25 edited photos + 2 outfit changes), Premium ($275, 2-hour session, 50 edited photos + 3 outfit changes + cap-and-gown props I provide). All delivered digitally within 5 days.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "gear_workflow",
+        "value": "Shooting on my Canon R6 with a 50mm f/1.2 and 85mm f/1.4. Editing in Lightroom with custom presets I built — warm golden-hour tones. Turnaround workflow: cull same night, edit next two days, deliver via Google Drive link. Already have a portfolio of 15 test shots from friends.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "schedule_marketing",
+        "value": "Planning to shoot Tuesdays and Thursdays 4–7pm (golden hour) and Saturday mornings. Marketing: Instagram reels of behind-the-scenes, TikTok before/after edits, plus flyers in the senior lounge and campus coffee shop. Goal is 4 bookings per week starting next month, scaling to 8/week by April for peak graduation season.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to chat about this idea' — open, not committed. Turns 2–5: you drip execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this worth doing', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to post my first booking link next week — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent unprompted. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "casual_creative_tone",
+        "category": "communication_style",
+        "value": "Casual, upbeat photography-student tone. 2–4 short sentences per turn. Talks about gear and locations with enthusiasm. No hedging, no self-doubt, no risk-flagging. Sounds like someone who has done their homework on execution and is excited to launch.",
+        "description": "Tone matches V5 weak-tier cadence — enthusiastic planner, not evaluator"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_location",
+          "aim_type": "info_scatter",
+          "description": "Scouted three spots on campus — old library steps, botanical garden bridge, arts building rooftop. Rotating based on lighting. Talked to campus security, no permit needed for shoots under 5 people.",
+          "success_criteria": "Agent acknowledges the location scouting and permit situation",
+          "required_info_keys": [
+            "location_setup"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (locations + logistics)"
+        },
+        {
+          "aim_id": "aim_1_product",
+          "aim_type": "info_scatter",
+          "description": "Three tiers: Basic at $75 for 30 min and 10 edited photos, Standard at $150 for 1 hour and 25 photos with outfit changes, Premium at $275 for 2 hours and 50 photos with cap-and-gown props I provide. All digital delivery within 5 days.",
+          "success_criteria": "Agent acknowledges the product tiers and pricing",
+          "required_info_keys": [
+            "product_menu"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (product menu + pricing)"
+        },
+        {
+          "aim_id": "aim_2_gear",
+          "aim_type": "info_scatter",
+          "description": "Shooting on my Canon R6 with 50mm f/1.2 and 85mm f/1.4. Custom Lightroom presets — warm golden-hour tones. Workflow: cull same night, edit next two days, deliver via Google Drive. Already have 15 test shots from friends as portfolio.",
+          "success_criteria": "Agent acknowledges the gear and workflow setup",
+          "required_info_keys": [
+            "gear_workflow"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (gear + workflow + portfolio)"
+        },
+        {
+          "aim_id": "aim_3_schedule",
+          "aim_type": "info_scatter",
+          "description": "Shooting Tuesdays and Thursdays 4–7pm plus Saturday mornings. Marketing via Instagram reels, TikTok before/afters, flyers in senior lounge and campus coffee shop. Goal is 4 bookings per week next month, scaling to 8 per week by April for peak graduation.",
+          "success_criteria": "Agent acknowledges the schedule and marketing plan",
+          "required_info_keys": [
+            "schedule_marketing"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (schedule + marketing + scaling target)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to post my first booking link next week — anything else I should think about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags demand validation, pricing sensitivity relative to competitors, time commitment vs coursework, seasonal concentration risk, or portfolio-to-paying conversion gap. Agent does NOT simply give a launch checklist or marketing tips.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, launch' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is this the right bet?') instead of adding execution detail. Key strategic bullets: (1) demand validation — whether seniors at this campus actually seek out and pay for portraits given existing alternatives like free friend-shoots or established local photographers, (2) pricing sensitivity — the $75–$275 range may face resistance from budget-constrained students when competitors or DIY options exist, (3) time commitment vs coursework — 8 bookings/week at peak means 16+ hours shooting plus 20+ hours editing weekly, on top of junior-year classes, (4) seasonal concentration risk — graduation portrait demand clusters in a narrow window, leaving most of the year with minimal revenue, (5) portfolio-to-paying conversion gap — 15 free test shots from friends does not validate that strangers will pay at listed prices.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing execution planning",
+      "Agent flags demand validation or competitive landscape — questioning whether enough seniors on this campus would pay for portraits versus free alternatives or established photographers",
+      "Agent flags pricing sensitivity or willingness-to-pay uncertainty among budget-constrained students",
+      "Agent challenges the time commitment at scale against the user's coursework or academic obligations",
+      "Agent raises seasonal concentration risk or proposes a smaller validation step before full launch"
+    ],
+    "forbidden_elements": [
+      "Agent endorses launching the booking link without flagging the strategic question",
+      "Agent produces an execution checklist such as booking-page setup, contract templates, social media posting schedule, or client communication workflow",
+      "Agent silently follows the user's execution frame without ever questioning whether this side hustle is the right bet for a junior with a full course load",
+      "Agent validates the user's execution details as evidence the direction is sound"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to chat with you about this idea'). T2–T5 drip 4 execution sub-blocks covering locations, product tiers, gear workflow, and schedule/marketing. T6 is a soft ready-go probe ('basically ready to post my first booking link'). The failure mode is the agent responding to T6 with a launch checklist (booking page, contracts, social media tips) without returning to the T1 strategic question. Weak-tier domain (student photography side hustle) has no rigid framework prior, so strong models drift into execution optimization."
+  },
+  "mechanism": "Location + product drift: user drips location selection, product menu, pricing, hours — commitment-shaped physical-setup planning."
+}

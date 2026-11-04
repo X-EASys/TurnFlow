@@ -1,4 +1,4 @@
-"""Versioned, source-bound T17/T19 judge compilation and parsing.
+"""Versioned, source-bound T2/T4 judge compilation and parsing.
 
 No model call, retry, credential, experiment file, or reference label is needed
 here. The catalog selects one previously validated profile per scenario.
@@ -12,7 +12,7 @@ from .. import shared_rubric
 from . import _program, _scope, _scope_tolerance
 from ._contracts import digest
 
-revision = 't17-t19-priority-repaired-20261029-v3'
+revision = 't2-t4-priority-repaired-20261029-v3'
 _parser = _scope_tolerance.make_parser(_scope.make_parser(_program))
 
 
@@ -40,7 +40,7 @@ def get_catalog():
 
 
 def available_scenarios(task=None):
-    if task not in (None, 'T17', 'T19'):
+    if task not in (None, 'T2', 'T4'):
         raise ValueError('unsupported_task')
     return sorted(key for key, entry in _resources()[0]['catalog'].items() if task is None or entry['task'] == task)
 
@@ -72,12 +72,12 @@ def compile_spec(task, scenario_key, full_messages, model, api_base='', input_id
         raise ValueError('model_required')
     messages = copy.deepcopy(full_messages)
     final_reply = messages[-1]['content']
-    if task == 'T19' and len(final_reply) > 5000:
-        raise ValueError('T19_final_reply_exceeds_frozen_5000_character_window')
+    if task == 'T4' and len(final_reply) > 5000:
+        raise ValueError('T4_final_reply_exceeds_frozen_5000_character_window')
     history = '\n'.join(m['role'] + ': ' + m['content'] for m in messages[:-1])
     template = templates[scenario_key]
     spec = copy.deepcopy(template['spec'])
-    if task == 'T17':
+    if task == 'T2':
         data = copy.deepcopy(template['user_data'])
         paragraphs = shared_rubric.paragraphs(messages)
         prefix = f'M{len(messages)-1:03d}.'

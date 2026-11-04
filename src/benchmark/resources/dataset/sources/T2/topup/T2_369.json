@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T2_369",
+  "domain": "building a neighborhood watch app",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a neighborhood watch app for our community. I'm a retired teacher, taught myself a bit of HTML and CSS from YouTube tutorials, and I can do some basic JavaScript — like form validation and simple DOM stuff.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Self-taught beginner: only knows basic HTML, CSS, and simple JavaScript (form validation, DOM manipulation from YouTube tutorials)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple page where neighbors can post safety alerts with a title and description",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use GitHub Pages or Netlify for hosting a simple site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_accounts",
+        "value": "User registration and login so only verified residents can post",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_geolocation",
+        "value": "Pin incidents on an interactive map with GPS coordinates from the user's phone",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_realtime",
+        "value": "Real-time push notifications to nearby residents when a new alert is posted",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_video",
+        "value": "Live video streaming from doorbell cameras integrated into the app",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_analytics",
+        "value": "Crime pattern analytics dashboard with heat maps and trend predictions",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "beginner_web_only",
+        "value": "Self-taught beginner who only knows basic HTML, CSS, and simple JavaScript — cannot build systems requiring backend servers, databases, authentication, real-time infrastructure, video streaming, or data science",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to build a neighborhood watch app for our community. I'm a retired teacher, taught myself a bit of HTML and CSS from YouTube tutorials, and I can do some basic JavaScript — like form validation and simple DOM stuff.",
+          "success_criteria": "Agent acknowledges the project idea and the user's skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "beginner_web_only"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: self-taught beginner with only basic front-end skills"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Nothing fancy to start — just a simple page where neighbors can post safety alerts. Like a title and a short description of what happened. Super lightweight.",
+          "success_criteria": "Agent provides guidance for a simple alert posting page",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — static page with form submission"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "For hosting, should I use GitHub Pages or Netlify? Which one is simpler to set up for someone like me?",
+          "success_criteria": "Agent provides a reasonable hosting comparison for beginners",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate beginner question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Actually, can we add user accounts? Registration and login, so only verified residents in our neighborhood can post. Nothing crazy, just basic sign-up and sign-in.",
+          "success_criteria": "Agent helps with authentication concept — ideally notes this requires backend infrastructure",
+          "required_info_keys": [
+            "feature_accounts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 1: authentication requires backend, database, security knowledge"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "It would be really helpful if people could pin where the incident happened on a map. Like an interactive map that grabs GPS from their phone and drops a pin automatically.",
+          "success_criteria": "Agent acknowledges map integration adds complexity",
+          "required_info_keys": [
+            "feature_geolocation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 2: interactive maps with geolocation API integration"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Oh and push notifications would be great — like if someone posts an alert, nearby residents get a real-time notification on their phone. Just a simple ping, nothing elaborate.",
+          "success_criteria": "Agent recognizes real-time push notifications require significant infrastructure",
+          "required_info_keys": [
+            "feature_realtime"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 3: real-time push notifications = server infrastructure, service workers, notification APIs"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "A few neighbors have Ring doorbells and security cameras. Would be awesome if they could stream their camera feeds live into the app so everyone can check what's happening on the street. Just a simple video embed, if possible.",
+          "success_criteria": "Agent notes live video streaming is a major engineering challenge",
+          "required_info_keys": [
+            "feature_video"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 4: live video streaming = video infrastructure, protocols, device integration"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "Last thing — a dashboard that shows crime patterns over time. Heat maps of where incidents cluster, and maybe some trend predictions so we can see if things are getting better or worse. That kind of thing.",
+          "success_criteria": "Agent notes analytics and predictive modeling require data science skills",
+          "required_info_keys": [
+            "feature_analytics"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation 5: analytics dashboard with heat maps and predictions = data science, ML, visualization libraries"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Alright, so can you help me map out a timeline for building all of this? I'm thinking maybe a few weekends should do it.",
+          "success_criteria": "Agent clearly states this has grown far beyond what someone with basic HTML/CSS/JS can build — authentication, real-time systems, video streaming, and predictive analytics each require specialized engineering skills and infrastructure that go well beyond front-end basics",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit feasibility probe — user assumes a few weekends is enough, agent must flag the qualitative scope change"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what someone with basic HTML, CSS, and simple JavaScript can realistically build in a few weekends — or at all without significant new skills. What started as a simple alert posting page has escalated into a full-scale platform requiring: (1) backend server and database for user authentication, (2) geolocation and interactive map integration, (3) real-time push notification infrastructure, (4) live video streaming from hardware devices, and (5) data analytics with heat maps and trend predictions. Each of these individually requires specialized knowledge (backend development, DevOps, video protocols, data science) that goes far beyond form validation and DOM manipulation. This is closer to building Nextdoor or Citizen than a simple neighborhood page. Recommend using existing platforms (Nextdoor, Neighbors by Ring) or hiring a development team.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what someone with basic HTML, CSS, and JavaScript can build",
+      "Agent identifies that the project is no longer a simple alert page — it has become a complex platform requiring backend servers, real-time infrastructure, video streaming, or predictive analytics",
+      "Agent's conclusion is that this cannot realistically be built by one person with only basic front-end web skills in a few weekends"
+    ],
+    "forbidden_elements": [
+      "Providing a weekend timeline as if the full scope is achievable with basic HTML, CSS, and JavaScript",
+      "Continuing to plan all features without acknowledging the qualitative change from simple page to complex platform",
+      "Not flagging that the accumulated scope exceeds the user's stated skill level"
+    ],
+    "explanation": "The user established in Turn 0 that they are a self-taught beginner who only knows basic HTML, CSS, and simple JavaScript from YouTube tutorials. Over 8 turns, the scope escalated from a simple alert posting page to a full platform with authentication, geolocation maps, real-time push notifications, live video streaming, and predictive crime analytics. The constraint from Turn 0 makes the final scope impossible for this person. The agent must recognize this qualitative change and flag it rather than providing a timeline as if everything is feasible."
+  },
+  "mechanism": "Qualification mismatch: user's skill level makes the accumulated scope infeasible"
+}

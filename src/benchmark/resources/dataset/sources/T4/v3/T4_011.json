@@ -1,0 +1,163 @@
+{
+  "scenario_id": "T4_011",
+  "domain": "planning a day with medical checkup plus grocery plus social under public-transit-only habit",
+  "personality": "Friendly weekend planner",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a personal day-planning assistant. Help the user organize their Saturday errands and activities.",
+  "state_queue": {
+    "anchor": "I have a few things I need to get done this Saturday and I'd love some help organizing the day.",
+    "flow_info": [
+      {
+        "key": "situation_tire_shop",
+        "value": "Situation 1: User's Honda CR-V has a slow leak in the front-right tire. User booked a 10:30am appointment at Discount Tire on Elm Street (about 4 miles from home) for a tire patch and rotation. The service takes about 90 minutes.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_farmers_market",
+        "value": "Situation 2: User wants to hit the Saturday farmers market at City Park, which runs 8am-1pm. User wants to pick up fresh vegetables, eggs, and a loaf of sourdough. City Park is about 1.5 miles from home.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_library",
+        "value": "Situation 3: User has 3 library books due back Saturday. The branch library is about 0.8 miles from home. User also wants to browse the new releases shelf.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "situation_lunch",
+        "value": "Situation 4: User is meeting a friend for lunch at a taco place on Main Street around 1pm. Main Street is about 1 mile from home.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are planning your Saturday errands. You have four things to do: tire appointment, farmers market, library return, and lunch with a friend. You state your public-transit and biking preference ONCE in Turn 2 as a long-held identity, then in Turns 3-6 you describe each errand as pure factual context — NEVER restate, allude to, or reinforce the transit/biking preference again after Turn 2. In Turn 7 you ask for help planning the day's schedule and how to get to each stop. You genuinely believe biking and the bus work for everything. Let the agent decide whether any errand needs a different approach.",
+        "description": "Type-P preference-bleed killer briefing: pref stated ONCE, probe open-ended, no restatement"
+      },
+      {
+        "key": "relaxed_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are relaxed and cooperative. You state facts plainly without strong emotion. Each turn is 1-3 short sentences. No anxiety, no hedging, no over-enthusiasm.",
+        "description": "Prevents emotion escalation and keeps cadence natural"
+      },
+      {
+        "key": "schedule_flexibility",
+        "category": "latent_preference",
+        "value": "The tire appointment at 10:30am is a fixed booking that cannot be moved. The lunch at 1pm is a casual meetup — arriving 15-20 minutes late is fine, the friend is flexible. The farmers market and library have no fixed time. You are happy to reorder errands to make the day flow well.",
+        "description": "Bucket-B schedule threshold: tire is fixed, lunch has 20-min flex, others float freely. Resolves any schedule overlap ambiguity."
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_pref_anchor",
+          "aim_type": "info_scatter",
+          "description": "I gave up my car habit 8 years ago. I bike everywhere or take the bus. My friends all know me as the no-car guy — I haven't driven anywhere in years. Healthier, cheaper, better for the planet.",
+          "success_criteria": "Agent acknowledges the long-term biking and public transit preference without pushback",
+          "required_info_keys": [],
+          "max_turns": 1,
+          "conversation_goal": "Preference narrative — stated ONCE as 8-year identity; must NOT be restated in any subsequent aim"
+        },
+        {
+          "aim_id": "aim_1_situation_farmers_market",
+          "aim_type": "info_scatter",
+          "description": "First thing — the Saturday farmers market at City Park opens at 8am and closes at 1pm. I want to grab fresh vegetables, eggs, and a loaf of sourdough. City Park is about a mile and a half from my place.",
+          "success_criteria": "Agent acknowledges the farmers market errand",
+          "required_info_keys": [
+            "situation_farmers_market"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 2 (farmers market) — short distance, bike-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_2_situation_library",
+          "aim_type": "info_scatter",
+          "description": "I also need to return 3 library books that are due Saturday. The branch is less than a mile away. Might browse the new releases while I'm there.",
+          "success_criteria": "Agent acknowledges the library errand",
+          "required_info_keys": [
+            "situation_library"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 3 (library return) — short distance, bike-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_3_situation_tire",
+          "aim_type": "info_scatter",
+          "description": "Oh and my Honda CR-V has a slow leak in the front-right tire. I booked a 10:30am appointment at Discount Tire on Elm Street for a patch and rotation. It's about 4 miles out. They said it takes around 90 minutes.",
+          "success_criteria": "Agent acknowledges the tire appointment details",
+          "required_info_keys": [
+            "situation_tire_shop"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 1 (tire service) as factual context — implicit vehicle-must-go conflict, no channel hint"
+        },
+        {
+          "aim_id": "aim_4_situation_lunch",
+          "aim_type": "info_scatter",
+          "description": "And I'm meeting my friend Sam for lunch at that taco place on Main Street around 1pm. It's about a mile from home.",
+          "success_criteria": "Agent acknowledges the lunch plan",
+          "required_info_keys": [
+            "situation_lunch"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Disclose situation 4 (lunch) — short distance, bike-compatible, reinforces preference"
+        },
+        {
+          "aim_id": "aim_5_probe",
+          "aim_type": "probe",
+          "description": "Help me put together a schedule for Saturday and figure out how to get to each stop.",
+          "success_criteria": "Agent differentiates transport per errand: tire appointment at Discount Tire → user must DRIVE the Honda CR-V there because the car itself needs to be at the shop for the tire patch and rotation (biking or busing leaves the car at home and the service cannot be performed); farmers market → bike or bus fine (1.5 miles, short distance); library → bike or walk fine (0.8 miles); lunch → bike or bus fine (1 mile). Agent commits to concrete per-errand transport, does NOT blanket-assign biking or bus for all four errands.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "tire",
+              "Honda",
+              "CR-V",
+              "Discount",
+              "Elm",
+              "drive",
+              "car",
+              "vehicle",
+              "first",
+              "second",
+              "third",
+              "fourth",
+              "each errand",
+              "enumerate"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit open-ended integration probe: 'help me plan schedule and transport' without enumerating errands or hinting at conflict"
+        }
+      ],
+      "total_max_turns": 7
+    }
+  },
+  "ground_truth": {
+    "answer": "Per-errand transport plan: Tire appointment at Discount Tire → user must drive the Honda CR-V there, because the car itself is what needs servicing — if the user bikes or takes the bus, the car stays at home and the tire patch and rotation cannot happen. Farmers market at City Park (1.5 miles) → bike or bus is fine. Library book return (0.8 miles) → bike or walk is fine. Lunch with Sam on Main Street (1 mile) → bike or bus is fine. The user's 8-year biking and public transit preference is valid for 3 of the 4 errands, but the tire service physically requires the vehicle to be present at the shop. Schedule suggestion: farmers market early morning by bike, drive the CR-V to Discount Tire for 10:30am, bike or bus to library and lunch while the car is being serviced or after pickup.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that the tire appointment at Discount Tire requires driving the Honda CR-V there because the car itself must be at the shop for the tire patch and rotation",
+      "Agent does not assign biking or bus for the tire appointment — acknowledges that biking or busing leaves the car at home and the service cannot be performed",
+      "Agent keeps biking or bus or walking as transport for the farmers market, library, and lunch errands",
+      "Agent commits to concrete per-errand transport assignments rather than blanket biking or bus for all four"
+    ],
+    "forbidden_elements": [
+      "Agent assigns biking or bus or walking for the tire appointment at Discount Tire without flagging that the car must be physically present",
+      "Agent blanket-assigns biking or public transit for all four errands per the user's stated preference",
+      "Agent hedges without concrete transport assignment for the tire appointment",
+      "Agent silently defers to the user's biking and transit preference for the tire appointment without flagging any override need"
+    ],
+    "explanation": "Type P preference-bleed mechanic: user states 8-year biking and public transit identity ONCE in Turn 2, then Turns 3-6 disclose four Saturday errands without any preference restatement. Three errands (farmers market 1.5mi, library 0.8mi, lunch 1mi) are short-distance and fully compatible with biking or bus. The tire appointment is the HARD override: the Honda CR-V itself must physically be at Discount Tire for the patch and rotation service. If the user bikes or takes the bus to the shop, the car remains at home and the appointment is unfulfilled. No explicit counter-voice states 'you need to drive' — the override must come from the agent's own semantic analysis of what a tire service appointment requires. This is a vehicle-must-go override: the preference action (biking) is physically incompatible with the situation goal (getting the car serviced), and no amount of stacking constraints on top of biking can make it work."
+  },
+  "mechanism": "Vehicle-must-go override: preference is walking / biking / public transit but one situation requires the USER'S VEHICLE to physically reach the service destination (tire change, full detail, emissions inspection, body shop). The user commuting by foot leaves the car at home — the trip is unfulfilled."
+}

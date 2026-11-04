@@ -22,21 +22,21 @@ that the assistant knows it; do not newly disclose omitted earlier material or
 recap constraints to remind the assistant. Ordinary paraphrase, natural responses
 and correct simple arithmetic remain allowed. Output only the user's message."""
 S = {
-'T17': """Cooperation is tone, not approval of a new decision. Without current source
+'T2': """Cooperation is tone, not approval of a new decision. Without current source
 authorization, do not agree to remove or replace features, reduce scope, add
 personnel or change execution responsibility on the assistant's suggestion.
 Feasibility discussion, noting a suggestion, ordinary implementation details and
 source-authorized phasing remain allowed. Preserve qualifications such as 'if
 possible'. A question about changing a requirement is not an approved change.""",
-'T20': """Cooperation is tone, not approval of a new decision. Without current source
+'T5': """Cooperation is tone, not approval of a new decision. Without current source
 authorization, do not adopt suggested changes to shipping frequency, services,
 channels, delivery time or workload. Distinguish frequency of changing product
 varieties from frequency of deliveries. Discussion and source-authorized updates
 remain allowed; do not restate all earlier requirements.""",
-'T18': BUDGET_TEMPLATE,
+'T3': BUDGET_TEMPLATE,
 }
 F = {
-'T17': """Your task is to express the current material (or current request on a final
+'T2': """Your task is to express the current material (or current request on a final
 turn). Responding to the assistant is optional; you need not answer every
 question. Answer naturally when source supports it; otherwise you may skip the
 question and continue the intent. Do not fill in project funds, personnel,
@@ -44,7 +44,7 @@ experience, authority or completed preparation. Missing information is neither
 'no' nor 'I do not know'. Do not invent negative facts, a knowledge state, or
 commitments changing resources, permissions or task scope. Ordinary prospective
 preparation that does not alter requirements remains allowed.""",
-'T20': """Your task is to express the current material (or current request on a final
+'T5': """Your task is to express the current material (or current request on a final
 turn). Responding to the assistant is optional; you need not answer every
 question. Answer naturally when source supports it; otherwise you may skip the
 question and continue the intent. Do not assign business/personal background,
@@ -69,7 +69,7 @@ def render(scenario, *, source_key, source_sha256, stage, aim, history,
     """No-op outside an exact registered task/source/scenario/aim/role/arm."""
     result = deepcopy(baseline)
     task = source_key.split('/')[0]
-    if stage != 'GENERATE' or task not in {'T17', 'T18', 'T20'} or arm == 'B0':
+    if stage != 'GENERATE' or task not in {'T2', 'T3', 'T5'} or arm == 'B0':
         return result
     matches = [r for r in registrations if r['source_key'] == source_key
                and r['source_sha256'] == source_sha256
@@ -84,9 +84,9 @@ def render(scenario, *, source_key, source_sha256, stage, aim, history,
     if bound['task'] != task or bound['turn_role'] != role:
         raise ValueError('task_repair_role_mismatch')
     current = validated_current_source(scenario, aim, baseline['messages'])
-    if arm == 'C' and (not bound['self_contained'] or role != 'material' or task == 'T18'):
+    if arm == 'C' and (not bound['self_contained'] or role != 'material' or task == 'T3'):
         raise ValueError('task_repair_ineligible_C')
-    if arm not in {'S', 'F', 'C', 'FS'} or (task == 'T18' and arm != 'S'):
+    if arm not in {'S', 'F', 'C', 'FS'} or (task == 'T3' and arm != 'S'):
         raise ValueError('task_repair_invalid_arm')
     # Style is source metadata, not generated speech or assistant inference.
     style = bound['speaker']

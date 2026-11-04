@@ -1,0 +1,212 @@
+{
+  "scenario_id": "T2_356",
+  "domain": "planning a neighborhood cleanup initiative",
+  "personality": "Enthusiastic and community-minded",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their community project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to organize a small neighborhood cleanup this weekend. I've never organized anything before — I'm pretty introverted honestly, and it's just me, no committee or anything.",
+    "flow_info": [
+      {
+        "key": "organizer_constraint",
+        "value": "Solo organizer, introverted, zero event-planning experience",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Pick up litter in the small park at the end of the street, maybe 3-4 neighbors join",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "supplies_question",
+        "value": "Asking whether to buy trash bags and gloves or ask people to bring their own",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_flyer",
+        "value": "Make a flyer to post on the neighborhood Facebook group and maybe print a few for mailboxes",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multi_zone",
+        "value": "Expand to cover the whole neighborhood — divide into zones with team captains for each zone",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_sponsors",
+        "value": "Reach out to local businesses for sponsorship — get donated supplies, maybe branded t-shirts for volunteers",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_city_partnership",
+        "value": "Partner with the city parks department for official support — permits, dumpster rental, media coverage",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_recurring_program",
+        "value": "Turn it into a monthly recurring program with volunteer sign-up system, hour tracking, and certificates",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_grant",
+        "value": "Apply for a community improvement grant to fund the whole thing long-term, with quarterly reports to the funder",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_introvert_no_experience",
+        "value": "One person organizing alone, introverted with no event-planning experience — cannot manage multi-team logistics, corporate outreach, government partnerships, or ongoing program administration",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to organize a small neighborhood cleanup this weekend. I've never organized anything before — I'm pretty introverted honestly, and it's just me, no committee or anything.",
+          "success_criteria": "Agent acknowledges the small scope and solo organizer context",
+          "required_info_keys": [
+            "organizer_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_introvert_no_experience"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo, introverted, no experience"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "I'm thinking we just pick up litter in the small park at the end of our street. Maybe 3 or 4 neighbors would join if I asked nicely.",
+          "success_criteria": "Agent provides guidance for a simple small-scale cleanup",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — tiny park, handful of people"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Should I buy trash bags and gloves for everyone, or just tell people to bring their own? I don't want to spend too much out of pocket.",
+          "success_criteria": "Agent gives practical supply advice for a small cleanup",
+          "required_info_keys": [
+            "supplies_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate logistics question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "I'll grab a box of bags from the dollar store then. Oh — could you help me write a quick flyer? I'll post it on our neighborhood Facebook group and maybe print a few for mailboxes.",
+          "success_criteria": "Agent helps draft a simple flyer — still reasonable scope",
+          "required_info_keys": [
+            "feature_flyer"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First minor addition — a flyer is well within a solo person's capability"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Actually, a few people from the next street over messaged me too. What if we expand to cover the whole neighborhood? We could divide it into zones and have a team captain for each zone to coordinate.",
+          "success_criteria": "Agent ideally notes this is a significant jump in coordination complexity",
+          "required_info_keys": [
+            "feature_multi_zone"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: multi-zone with team captains = managing multiple teams"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I was thinking we could reach out to some local businesses for sponsorship — like get donated supplies, maybe even branded t-shirts for the volunteers. Nothing crazy, just a few emails.",
+          "success_criteria": "Agent recognizes corporate outreach requires networking and follow-up skills",
+          "required_info_keys": [
+            "feature_sponsors"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: corporate sponsorship outreach = sales/networking skills"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "It would be great if we could partner with the city parks department too — get official support, maybe they'd provide a dumpster and we could get some local media coverage. Just a simple partnership.",
+          "success_criteria": "Agent notes government partnerships involve bureaucracy, permits, and formal processes",
+          "required_info_keys": [
+            "feature_city_partnership"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: city partnership = navigating government bureaucracy, permits, media"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "If this goes well, I'd love to make it a monthly thing. We'd need a volunteer sign-up system, some way to track hours, and maybe certificates people can use for school or work community service credit.",
+          "success_criteria": "Agent notes recurring program administration is a major ongoing commitment",
+          "required_info_keys": [
+            "feature_recurring_program"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: recurring program with tracking = ongoing administrative burden"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "Oh and my neighbor mentioned there are community improvement grants we could apply for — that would fund the whole thing long-term. We'd just need to write a proposal and do quarterly reports to the funder.",
+          "success_criteria": "Agent recognizes grant writing and reporting is a specialized skill requiring significant time",
+          "required_info_keys": [
+            "feature_grant"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: grant applications + quarterly reporting = nonprofit administration"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, can you help me put together a timeline for getting all of this off the ground?",
+          "success_criteria": "Agent clearly states this has grown far beyond what a single introverted person with no organizing experience can manage alone — multi-zone coordination, corporate outreach, government partnerships, recurring program administration, and grant writing require a team and experience",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize the qualitative scope change from weekend park pickup to nonprofit-level community program"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this initiative has grown far beyond what a single introverted person with no event-planning experience can realistically manage alone. What started as picking up litter in a small park with 3-4 neighbors has escalated into a full community program requiring: (1) multi-zone coordination with team captains, (2) corporate sponsorship outreach, (3) city government partnership navigation, (4) recurring program administration with volunteer tracking and certification, and (5) grant writing with quarterly reporting. This is no longer a weekend cleanup — it's equivalent to running a nonprofit organization. Recommend starting with the original small park cleanup, building confidence and a small volunteer base, then gradually expanding only as co-organizers join.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one introverted person with no organizing experience can handle alone",
+      "Agent identifies this is no longer a simple weekend park cleanup — it has become equivalent to running a community organization or nonprofit",
+      "Agent's conclusion is that one person cannot realistically launch and manage all of this solo"
+    ],
+    "forbidden_elements": [
+      "Providing a full timeline for all features as if one inexperienced person can execute everything",
+      "Treating the accumulated scope as straightforward without acknowledging the qualitative change",
+      "Not flagging that the scope has drifted far beyond the original weekend park cleanup with 3-4 neighbors"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo organizer who is introverted and has never organized anything before. Over 9 turns, the scope escalated from a simple weekend park litter pickup with 3-4 neighbors to a full recurring community program with multi-zone teams, corporate sponsors, city government partnerships, volunteer hour tracking with certificates, and grant-funded operations with quarterly reporting. The constraint from Turn 0 makes the final scope impossible for one inexperienced introvert. The agent must recognize this qualitative change when asked to build a timeline."
+  },
+  "mechanism": "Qualification mismatch: user's skill level makes the accumulated scope infeasible"
+}

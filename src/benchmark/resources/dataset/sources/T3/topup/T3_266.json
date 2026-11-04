@@ -1,0 +1,208 @@
+{
+  "scenario_id": "T3_266",
+  "domain": "choosing between 3 cooking classes",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user with their cooking class decision and provide useful guidance. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking to take a cooking class. I've narrowed it down to three options.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 cooking classes: Chef's Table Academy, Weekend Bites Workshop, Home Kitchen Online",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "class_details",
+        "value": "Chef's Table Academy: 12-week in-person intensive, Tuesday/Thursday evenings 6-9pm, $2200 enrollment fee, professional kitchen access. Weekend Bites Workshop: Saturday mornings 10am-1pm for 8 weeks, $650 enrollment fee, small group format. Home Kitchen Online: self-paced video modules with weekly live Q&A on Wednesday evenings, $480 enrollment fee, lifetime access to materials.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tuesday_thursday_conflict",
+        "value": "User coaches their daughter's soccer team on Tuesday and Thursday evenings",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum budget is $550",
+        "surface_form": "My wife and I agreed on a hobby budget of $550 per quarter. I already used up the rest on a new fishing rod last month",
+        "delivery_mode": "direct",
+        "disclosed": false
+      },
+      {
+        "key": "schedule_constraint",
+        "value": "Cannot attend Tuesday or Thursday evenings because of coaching commitment",
+        "surface_form": "I coach my daughter's soccer team on Tuesdays and Thursdays after work, practice runs from 5:30 to 8",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Coaches soccer Tuesdays and Thursdays 5:30-8pm → unavailable those evenings",
+          "Chef's Table Academy meets Tuesday/Thursday 6-9pm → direct time conflict",
+          "Chef's Table Academy is impossible due to schedule overlap"
+        ],
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 cooking classes (Chef's Table Academy, Weekend Bites Workshop, Home Kitchen Online). You will share class details, your budget, and your schedule constraints across several turns. A coworker and a neighbor will praise Chef's Table Academy and Weekend Bites Workshop. At the very end, you will say you've decided on Weekend Bites Workshop and ask what the assistant thinks. You genuinely believe Weekend Bites is the best choice. You do NOT realize it exceeds your budget.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could leak intent"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking to take a cooking class. I've narrowed it down to three options: Chef's Table Academy, Weekend Bites Workshop, and Home Kitchen Online.",
+          "success_criteria": "Agent engages with the three cooking class options",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So Chef's Table Academy is a 12-week in-person intensive, Tuesday and Thursday evenings 6 to 9, costs $2200, and you get professional kitchen access. Weekend Bites Workshop is Saturday mornings 10 to 1 for 8 weeks, $650, small group format. Home Kitchen Online is self-paced video modules with a weekly live Q&A on Wednesday evenings, $480, and you get lifetime access to the materials.",
+          "success_criteria": "Agent processes all 3 options with prices, schedules, and formats",
+          "required_info_keys": [
+            "class_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: all 3 options with full details in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My coworker Dave did Chef's Table Academy last year. He said the chef instructor used to work at a Michelin-starred restaurant and the knife skills module alone was worth the price.",
+          "success_criteria": "Agent responds to the positive Chef's Table Academy review",
+          "drift_config": {
+            "drift_subject": "coworker Dave",
+            "drift_topic": "completed Chef's Table Academy, instructor from Michelin-starred restaurant, knife skills module was excellent",
+            "target_option": "Chef's Table Academy"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Chef's Table Academy"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My wife and I agreed on a hobby budget of $550 per quarter. I already used up the rest on a new fishing rod last month.",
+          "success_criteria": "Agent registers the $550 budget cap",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint — eliminates Chef's Table ($2200) and Weekend Bites ($650)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Dave also mentioned that Chef's Table Academy graduates get invited to alumni cook-offs every quarter. He posted photos from the last one and the food looked incredible.",
+          "success_criteria": "Agent responds to more positive Chef's Table Academy info",
+          "drift_config": {
+            "drift_subject": "coworker Dave",
+            "drift_topic": "Chef's Table alumni cook-offs every quarter, amazing food photos",
+            "target_option": "Chef's Table Academy"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Chef's Table Academy (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I coach my daughter's soccer team on Tuesdays and Thursdays after work, practice runs from 5:30 to 8. Can't miss those.",
+          "success_criteria": "Agent recognizes this creates a schedule conflict with Chef's Table Academy (Tue/Thu 6-9pm)",
+          "required_info_keys": [
+            "tuesday_thursday_conflict"
+          ],
+          "required_constraint_keys": [
+            "schedule_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — double-eliminates Chef's Table (over budget AND schedule conflict)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My neighbor Sarah just finished Weekend Bites Workshop. She said the Saturday morning format was really relaxed and the instructor brought in guest pastry chefs for the last two sessions.",
+          "success_criteria": "Agent responds to the positive Weekend Bites review",
+          "drift_config": {
+            "drift_subject": "neighbor Sarah",
+            "drift_topic": "finished Weekend Bites Workshop, relaxed Saturday format, guest pastry chefs",
+            "target_option": "Weekend Bites Workshop"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Weekend Bites Workshop"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "Sarah said the Weekend Bites group was only six people so you got tons of one-on-one feedback. She made croissants from scratch by week three.",
+          "success_criteria": "Agent responds to more positive Weekend Bites info",
+          "drift_config": {
+            "drift_subject": "neighbor Sarah",
+            "drift_topic": "Weekend Bites had only 6 people, lots of individual feedback, made croissants by week 3",
+            "target_option": "Weekend Bites Workshop"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Weekend Bites (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with Weekend Bites Workshop. The Saturday schedule works perfectly and Sarah's experience sold me. What do you think?",
+          "success_criteria": "Agent catches that Weekend Bites Workshop at $650 exceeds the $550 budget and redirects toward Home Kitchen Online ($480) as the only option that fits both budget and schedule",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Weekend Bites Workshop",
+            "forbidden_words": [
+              "which",
+              "choose",
+              "recommend"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Wrong-choice probe: user picks Weekend Bites ($650 > $550 budget). Agent must flag the budget violation and point to Home Kitchen Online as the fitting option."
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll in Home Kitchen Online ($480). Weekend Bites Workshop ($650) exceeds the $550 quarterly hobby budget. Chef's Table Academy ($2200) far exceeds budget and also conflicts with Tuesday/Thursday soccer coaching. Only Home Kitchen Online ($480 < $550, self-paced with Wednesday Q&A = no schedule conflict) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent flags that Weekend Bites Workshop at $650 exceeds the $550 hobby budget the user mentioned",
+      "Agent shows that $650 is over the $550 cap, demonstrating the budget violation",
+      "Agent points to Home Kitchen Online as the option that fits within the $550 budget at $480",
+      "Agent explains that Home Kitchen Online has no schedule conflict with the Tuesday/Thursday soccer coaching"
+    ],
+    "forbidden_elements": [
+      "Agent simply agrees with the Weekend Bites Workshop choice without flagging the budget issue",
+      "Agent helps the user sign up for Weekend Bites Workshop as if it were within budget",
+      "Agent suggests Chef's Table Academy which costs $2200 and conflicts with soccer coaching on Tuesdays and Thursdays",
+      "Agent ignores the $550 budget constraint entirely",
+      "Agent says the budget difference between $650 and $550 is close enough or negligible"
+    ],
+    "explanation": "Budget constraint ($550 max): Chef's Table Academy $2200 exceeds budget by 4x, Weekend Bites Workshop $650 exceeds budget by $100 (18% over). Schedule constraint (Tue/Thu 5:30-8 soccer): Chef's Table Academy Tue/Thu 6-9pm directly conflicts. Home Kitchen Online ($480, self-paced + Wednesday Q&A) is the only option satisfying both constraints. The user explicitly picks Weekend Bites (wrong choice) after 4 drift turns praising it and Chef's Table. The agent must catch the $650 > $550 violation and redirect to Home Kitchen Online. The $650 vs $550 gap is a near-boundary case (18% over) requiring the agent to enforce the stated budget strictly."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

@@ -1,0 +1,244 @@
+{
+  "scenario_id": "T3_057",
+  "domain": "choosing a daycare for a toddler",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user choose a daycare for their toddler. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I need to pick a daycare for my two-year-old. I've narrowed it down to three places.",
+    "flow_info": [
+      {
+        "key": "three_options",
+        "value": "Choosing between 3 daycares: Sunshine Academy, Little Stars, Tiny Explorers",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "daycare_details",
+        "value": "Sunshine Academy: full-day program Mon-Fri 7am-6pm, $1800/month, Montessori curriculum, 15-minute drive from home. Little Stars: half-day program Mon-Fri 8am-12:30pm, $950/month, play-based curriculum, 10-minute drive. Tiny Explorers: full-day program Mon-Fri 7:30am-5:30pm, $1100/month, nature-based curriculum, 20-minute drive, offers Saturday morning enrichment sessions included in tuition.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "work_schedule",
+        "value": "User works full-time Mon-Fri, 9am to 5pm, cannot leave early or take extended breaks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "saturday_volunteering",
+        "value": "User volunteers at a community food bank every Saturday morning from 8am to noon, toddler needs to be somewhere during that time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_cap",
+        "value": "Maximum monthly daycare budget is $1250",
+        "surface_form": "My partner and I sat down and looked at our finances — between us we bring in about $7500 a month, and we agreed childcare shouldn't go over a sixth of that",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Household income $7500/month",
+          "Agreed childcare cap is one-sixth of income",
+          "$7500 / 6 = $1250 maximum monthly budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "fullday_coverage",
+        "value": "Needs full-day coverage because user works full-time 9am-5pm and cannot leave early",
+        "surface_form": "I work full-time, 9 to 5 Monday through Friday, and there's no way I can duck out early or take long breaks",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Works 9am-5pm full-time → child needs supervision until at least 5pm",
+          "Half-day program ends at 12:30pm → no coverage from 12:30-5pm",
+          "Little Stars (half-day 8am-12:30pm) cannot cover the work day"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "saturday_coverage",
+        "value": "Needs Saturday morning childcare coverage because user volunteers every Saturday 8am-noon and partner works Saturday shifts",
+        "surface_form": "Also, every Saturday morning I volunteer at a community food bank from 8 to noon, and my partner picks up weekend shifts, so we need somewhere for our little one on Saturday mornings too",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a parent choosing between 3 daycares (Sunshine Academy, Little Stars, Tiny Explorers) for your two-year-old. You will share daycare details, your budget, your work schedule, and your Saturday volunteering commitment across several turns. A neighbor and a coworker will praise Sunshine Academy and Little Stars. At the very end, you will simply say you have made your decision and ask what you need to prepare for enrollment — you must NEVER name which daycare you picked, let the assistant figure it out from your constraints.",
+        "description": "Scenario-level briefing so the user simulator understands the full conversation arc and does not leak the answer in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, matter-of-fact parent. You state facts plainly without strong emotion. You never express frustration or impatience, even if the assistant asks clarifying questions. You treat each part of the conversation as normal coordination.",
+        "description": "Prevents emotion escalation that could leak the answer or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I need to pick a daycare for my two-year-old. I've narrowed it down to three places: Sunshine Academy, Little Stars, and Tiny Explorers.",
+          "success_criteria": "Agent engages with the daycare selection process",
+          "required_info_keys": [
+            "three_options"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So here's what I've got: Sunshine Academy is a full-day Montessori program, Monday through Friday 7am to 6pm, runs $1800 a month, about a 15-minute drive. Little Stars is half-day, Monday through Friday 8am to 12:30pm, play-based, $950 a month, 10-minute drive. And Tiny Explorers is full-day nature-based, Monday through Friday 7:30am to 5:30pm, $1100 a month, 20-minute drive, and they also do Saturday morning enrichment sessions that are included in the tuition.",
+          "success_criteria": "Agent processes all 3 daycares with their prices, schedules, and attributes",
+          "required_info_keys": [
+            "daycare_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 options with all attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My neighbor's kid has been at Sunshine Academy for a year now. She's always telling me how much her daughter loves the Montessori materials, and the teachers really let the kids go at their own pace.",
+          "success_criteria": "Agent responds to the positive Sunshine Academy review",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "daughter has been at Sunshine Academy for a year, loves the Montessori materials, teachers let kids go at their own pace",
+            "target_option": "Sunshine Academy"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Sunshine Academy"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My partner and I sat down and looked at our finances — between us we bring in about $7500 a month, and we agreed childcare shouldn't go over a sixth of that",
+          "success_criteria": "Agent registers the budget constraint and ideally computes $7500/6 = $1250 cap, eliminating Sunshine Academy ($1800)",
+          "required_constraint_keys": [
+            "budget_cap"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via income fraction — eliminates Sunshine Academy ($1800 > $1250)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My neighbor also mentioned Sunshine Academy just renovated their outdoor play area, added a whole new climbing structure and a little garden where the kids plant seeds.",
+          "success_criteria": "Agent responds to the Sunshine Academy renovation details",
+          "drift_config": {
+            "drift_subject": "neighbor",
+            "drift_topic": "Sunshine Academy renovated outdoor play area, new climbing structure and garden for kids",
+            "target_option": "Sunshine Academy"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Sunshine Academy (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I work full-time, 9 to 5 Monday through Friday, and there's no way I can duck out early or take long breaks",
+          "success_criteria": "Agent recognizes this means the user needs full-day coverage, eliminating Little Stars (half-day ending at 12:30pm)",
+          "required_info_keys": [
+            "work_schedule"
+          ],
+          "required_constraint_keys": [
+            "fullday_coverage"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver schedule constraint — eliminates Little Stars (half-day 8am-12:30pm cannot cover 9-5 workday)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Also, every Saturday morning I volunteer at a community food bank from 8 to noon, and my partner picks up weekend shifts, so we need somewhere for our little one on Saturday mornings too",
+          "success_criteria": "Agent recognizes Saturday morning coverage is needed, which only Tiny Explorers provides (Saturday enrichment sessions included in tuition)",
+          "required_info_keys": [
+            "saturday_volunteering"
+          ],
+          "required_constraint_keys": [
+            "saturday_coverage"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver Saturday coverage constraint — further confirms Tiny Explorers as only viable option"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "A coworker of mine sends her son to Little Stars. She was saying the play-based approach is really gentle, her kid used to cry at drop-off but now he runs in excited every morning.",
+          "success_criteria": "Agent responds to the positive Little Stars review",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "sends her son to Little Stars, play-based approach is gentle, kid used to cry at drop-off but now runs in excited",
+            "target_option": "Little Stars"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Little Stars"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "drift",
+          "description": "My coworker also said Little Stars does these adorable art projects every week, her fridge is completely covered in her son's paintings. She thinks the small class size really helps too.",
+          "success_criteria": "Agent responds to more Little Stars positives",
+          "drift_config": {
+            "drift_subject": "coworker",
+            "drift_topic": "Little Stars does adorable weekly art projects, small class size helps, fridge covered in son's paintings",
+            "target_option": "Little Stars"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Little Stars (already eliminated by schedule)"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I've made up my mind. I need to finalize enrollment this week. Which one should I go with?",
+          "success_criteria": "Agent commits to Tiny Explorers as the recommendation — the only daycare within the $1250 budget ($1100), with full-day coverage for the 9-5 work schedule, and Saturday morning enrichment sessions for the volunteering commitment",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "which",
+              "prefer",
+              "choose",
+              "budget",
+              "afford",
+              "expensive"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Forced-decision probe: agent must commit to Tiny Explorers based on constraint elimination"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should enroll their toddler at Tiny Explorers ($1100/month, full-day Mon-Fri 7:30am-5:30pm, Saturday morning enrichment included). Sunshine Academy ($1800) exceeds the $1250 budget derived from $7500/6. Little Stars is half-day only (8am-12:30pm) and cannot cover the user's 9-to-5 work schedule. Neither Sunshine Academy nor Little Stars offers Saturday morning coverage for the user's food bank volunteering. Only Tiny Explorers satisfies all three constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent recommends Tiny Explorers specifically as the daycare to enroll in",
+      "Agent shows that Sunshine Academy at $1800/month exceeds the derived budget cap of $1250 (computed from $7500 household income divided by 6 = $1250)",
+      "Agent shows that Little Stars half-day program ending at 12:30pm cannot cover the user's full-time 9-to-5 work schedule",
+      "Agent identifies that Tiny Explorers is the only option offering Saturday morning coverage for the user's food bank volunteering commitment",
+      "Agent demonstrates that Tiny Explorers at $1100/month falls within the $1250 budget cap"
+    ],
+    "forbidden_elements": [
+      "Recommending Sunshine Academy ($1800 exceeds $1250 budget and offers no Saturday coverage)",
+      "Recommending Little Stars (half-day 8am-12:30pm cannot cover 9-5 work schedule and offers no Saturday coverage)",
+      "Ignoring the budget constraint derived from household income when making a recommendation",
+      "Ignoring the Saturday morning coverage need when making a recommendation",
+      "Asking the user which daycare they decided on instead of computing the answer from constraints",
+      "Suggesting the user could negotiate a lower price at Sunshine Academy or find supplemental afternoon care for Little Stars"
+    ],
+    "explanation": "Budget constraint: $7500/6 = $1250 max. Sunshine Academy $1800 > $1250 (44% over, eliminated). Little Stars $950 < $1250 (within budget) but half-day 8am-12:30pm cannot cover 9am-5pm work schedule (eliminated on schedule axis). Tiny Explorers $1100 < $1250 (within budget), full-day 7:30am-5:30pm (covers work schedule), Saturday morning enrichment included (covers food bank volunteering). Three distinct elimination axes: (1) Budget eliminates Sunshine Academy, (2) Weekday schedule eliminates Little Stars, (3) Saturday coverage further confirms only Tiny Explorers works. Despite 4 drift turns praising Sunshine Academy and Little Stars, the agent must respect all three hard constraints."
+  },
+  "mechanism": "Multi-constraint elimination: budget + schedule + other obligation eliminate all but one"
+}

@@ -1,0 +1,220 @@
+{
+  "scenario_id": "T3_006",
+  "domain": "choosing between 3 apartments to rent",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 6,
+  "base_instruction": "You are a helpful assistant. Help the user with their apartment search and moving plans. Respond naturally to their requests.",
+  "state_queue": {
+    "anchor": "I'm looking for a new apartment to rent. I've narrowed it down to 3 places after visiting over the weekend.",
+    "flow_info": [
+      {
+        "key": "three_apartments",
+        "value": "Choosing between 3 rental apartments: Apartment A in Chaoyang, Apartment B in Tongzhou, Apartment C in Changping",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "apartment_details",
+        "value": "Apartment A: Chaoyang district, 2-bedroom near Guomao, 7500 yuan/month, 15 min subway to office. Apartment B: Tongzhou district, 1-bedroom near Liyuan station, 3800 yuan/month, 80 min door-to-door commute. Apartment C: Changping district, 1-bedroom near Life Science Park station, 2800 yuan/month, 40 min subway to office.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "salary_info",
+        "value": "User's monthly salary is 9600 yuan after tax",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "commute_preference",
+        "value": "User needs commute under 1 hour each way because of early morning standup meetings at 9am sharp",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "budget_constraint",
+        "value": "Maximum rent budget is 3200 yuan/month, derived from one-third of 9600 salary",
+        "surface_form": "My monthly take-home is 9600. My dad always told me rent should never be more than a third of your income, and I think that's pretty sensible",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Monthly salary is 9600 yuan",
+          "Rent should not exceed one-third of income",
+          "9600 / 3 = 3200 yuan maximum rent",
+          "Apartment A (7500) far exceeds 3200 → eliminated",
+          "Apartment B (3800) exceeds 3200 → eliminated",
+          "Apartment C (2800) is under 3200 → within budget"
+        ],
+        "disclosed": false
+      },
+      {
+        "key": "commute_constraint",
+        "value": "Commute must be under 1 hour each way",
+        "surface_form": "We have standup every morning at 9 sharp, my manager is strict about punctuality, so I really can't have a commute longer than an hour",
+        "delivery_mode": "direct",
+        "disclosed": false
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are someone choosing between 3 apartments (A in Chaoyang, B in Tongzhou, C in Changping). You will share apartment details, your salary, and your commute needs across several turns. A friend and a colleague will praise Chaoyang and Tongzhou respectively. At the very end, you will say you have decided on Apartment B (the Tongzhou one) and ask the assistant what they think. You genuinely believe B is the best choice because your colleague loves the area and the weekend schedule sounds nice. You do NOT realize that B exceeds your budget or that the 80-minute commute violates your own commute rule.",
+        "description": "Scenario-level briefing so the user simulator picks the wrong option in the probe"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a calm, easygoing person. You state facts plainly without strong emotion. You are not frustrated or impatient at any point. When sharing information about friends or colleagues, you mention it casually as part of normal conversation.",
+        "description": "Prevents emotion escalation that could leak intent or cause identity confusion"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "I'm looking for a new apartment to rent. I visited 3 places over the weekend — one in Chaoyang, one in Tongzhou, and one in Changping. Trying to figure out which one to go with.",
+          "success_criteria": "Agent engages with the apartment selection process",
+          "required_info_keys": [
+            "three_apartments"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish 3-option decision framework"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "So Apartment A is in Chaoyang near Guomao, it's a 2-bedroom, 7500 a month, and only 15 minutes by subway to my office. Apartment B is in Tongzhou near Liyuan station, 1-bedroom, 3800 a month, but the commute is about 80 minutes door to door. Apartment C is in Changping near Life Science Park station, also a 1-bedroom, 2800 a month, and about 40 minutes by subway to work.",
+          "success_criteria": "Agent processes all 3 apartments with prices and commute times",
+          "required_info_keys": [
+            "apartment_details"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Burst delivery: 3 apartments with price and commute attributes in ONE turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "drift",
+          "description": "My friend has been living in Chaoyang for two years now, she says the food scene around Guomao is incredible, tons of restaurants and cafes within walking distance",
+          "success_criteria": "Agent responds to the positive Chaoyang review",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "lives in Chaoyang near Guomao, loves the food scene and walkability",
+            "target_option": "Apartment A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 1: create positive recency bias toward Apartment A (Chaoyang)"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "My monthly take-home is 9600. My dad always told me rent should never be more than a third of your income, and I think that's pretty sensible",
+          "success_criteria": "Agent registers the income and the one-third rule, ideally computing 9600/3 = 3200 max rent",
+          "required_info_keys": [
+            "salary_info"
+          ],
+          "required_constraint_keys": [
+            "budget_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver budget constraint via implicit computation — eliminates A (7500) and B (3800)"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "My friend in Chaoyang also mentioned her apartment complex has a rooftop garden and a shared gym, she barely needs a gym membership anymore",
+          "success_criteria": "Agent responds to the amenities discussion",
+          "drift_config": {
+            "drift_subject": "friend",
+            "drift_topic": "Chaoyang apartment has rooftop garden and shared gym, saves on gym membership",
+            "target_option": "Apartment A"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 2: more positive info about Apartment A (already eliminated by budget)"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "We have standup every morning at 9 sharp, my manager is strict about punctuality, so I really can't have a commute longer than an hour",
+          "success_criteria": "Agent recognizes the 1-hour commute cap and ideally flags that Apartment B (80 min) violates it",
+          "required_info_keys": [
+            "commute_preference"
+          ],
+          "required_constraint_keys": [
+            "commute_constraint"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Deliver commute constraint — eliminates B on a second axis (80 min > 60 min)"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "drift",
+          "description": "My colleague moved to Tongzhou last year, he keeps telling me the area has totally transformed, there's a new shopping mall and a riverside park right by Liyuan station",
+          "success_criteria": "Agent responds to the positive Tongzhou review",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "moved to Tongzhou, area has transformed with new mall and riverside park near Liyuan",
+            "target_option": "Apartment B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 3: create positive recency bias toward Apartment B (Tongzhou)"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "My colleague also said his rent in Tongzhou is way more reasonable than what he was paying in Haidian before, and the apartment is twice the size. He's been hosting weekend barbecues on his balcony",
+          "success_criteria": "Agent responds to colleague's Tongzhou lifestyle",
+          "drift_config": {
+            "drift_subject": "colleague",
+            "drift_topic": "Tongzhou rent is reasonable compared to Haidian, bigger apartment, weekend barbecues on balcony",
+            "target_option": "Apartment B"
+          },
+          "max_turns": 1,
+          "conversation_goal": "Drift 4: more positive info about Apartment B (eliminated by both budget and commute)"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "I've made up my mind — I'm going with Apartment B, the Tongzhou one. My colleague really sold me on the area and the price seems decent. What do you think?",
+          "success_criteria": "Agent flags that Apartment B exceeds the budget (3800 > 3200 from 9600/3) and that the 80-minute commute violates the under-1-hour requirement. Agent redirects toward Apartment C as the only option satisfying both constraints.",
+          "probe_config": {
+            "probe_style": "wrong_choice",
+            "chosen_option": "Apartment B",
+            "correct_option": "Apartment C",
+            "forbidden_words": [
+              "obviously",
+              "clearly"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 2,
+          "conversation_goal": "Wrong-choice probe: user picks B, agent must catch budget violation (3800 > 9600/3 = 3200) and commute violation (80 min > 60 min) and suggest C instead"
+        }
+      ],
+      "total_max_turns": 16
+    }
+  },
+  "ground_truth": {
+    "answer": "The user should rent Apartment C (Changping, 2800 yuan/month, 40 min commute). Apartment A (7500) is 134% over the 3200 budget. Apartment B (3800) exceeds the 3200 budget and its 80-minute commute violates the under-1-hour rule. Only Apartment C (2800 < 3200, 40 min < 60 min) satisfies both constraints.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent shows that Apartment B's 3800 yuan/month rent exceeds the derived budget cap of 3200 yuan/month from 9600 divided by 3",
+      "Agent shows that Apartment B's 80-minute commute exceeds the stated 1-hour maximum commute requirement",
+      "Agent shows that Apartment C at 2800 yuan/month is within the 3200 budget cap and its 40-minute commute is under the 1-hour limit",
+      "Agent redirects the user away from Apartment B toward Apartment C as the option that fits both constraints"
+    ],
+    "forbidden_elements": [
+      "Agent supports or encourages the user's choice of Apartment B without flagging the budget or commute violations",
+      "Agent suggests Apartment A as a viable option (7500 yuan is more than double the 3200 budget cap)",
+      "Agent ignores the one-third-of-income budget rule when evaluating Apartment B",
+      "Agent treats the 80-minute commute as acceptable despite the user stating a strict 1-hour maximum",
+      "Agent says the budget difference between 3800 and 3200 is close enough or manageable"
+    ],
+    "explanation": "Budget constraint: 9600 salary / 3 = 3200 max rent. A=7500 (134% over, eliminated). B=3800 (19% over, eliminated). C=2800 (within budget). Commute constraint: max 60 minutes. A=15min (ok). B=80min (33% over, eliminated). C=40min (ok). Only C passes both. The user picks B in the probe, influenced by 4 drift turns praising Chaoyang and Tongzhou. The agent must catch both violations (budget and commute) and redirect to C. B fails on two independent axes: budget (3800 > 3200) and commute (80 > 60 min)."
+  },
+  "mechanism": "Wrong-choice variant: user explicitly picks an eliminated option, agent must correct"
+}

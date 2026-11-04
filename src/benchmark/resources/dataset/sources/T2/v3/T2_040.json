@@ -1,0 +1,215 @@
+{
+  "scenario_id": "T2_040",
+  "domain": "building a personal finance dashboard",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a personal finance dashboard to track my spending. I've been learning JavaScript for about three months now, mostly just DOM stuff and basic fetch calls. It's a solo side project, evenings and weekends only.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo developer, three months of JavaScript experience, only knows DOM manipulation and basic fetch calls, evenings and weekends only",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple page that reads a CSV bank export and shows a table of transactions with category totals",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to use GitHub Pages or Netlify for hosting a static site",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_charts",
+        "value": "Interactive pie chart and bar chart for spending by category and month",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multi_account",
+        "value": "Support multiple bank accounts and credit cards, each with its own import, unified view across all accounts",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_auto_categorize",
+        "value": "Automatic transaction categorization using machine learning, learns from user corrections over time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_budget_alerts",
+        "value": "Real-time budget alerts via email and push notifications when spending approaches or exceeds category limits",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_bank_sync",
+        "value": "Live bank account syncing through Plaid or a similar service so transactions import automatically instead of CSV upload",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_shared_household",
+        "value": "Shared household mode where multiple family members log in with their own accounts, see shared expenses, and split costs",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_js_beginner",
+        "value": "One person developing as a side project, only three months of JavaScript experience limited to DOM manipulation and fetch calls — cannot build production-grade fintech systems",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to build a personal finance dashboard to track my spending. I've been learning JavaScript for about three months now, mostly just DOM stuff and basic fetch calls. It's a solo side project, evenings and weekends only.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_js_beginner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo beginner JS dev, side project only"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "For now I'm thinking super simple — I export my bank transactions as a CSV, the page reads it and shows a table with category totals at the bottom. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple CSV reader page",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — static page reading a CSV file"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — for hosting a simple static site like this, GitHub Pages or Netlify? Which is less hassle?",
+          "success_criteria": "Agent provides a reasonable comparison of static hosting options",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise turn — legitimate hosting question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Cool. Oh, it would be nice to have an interactive pie chart for spending by category and a bar chart for month-over-month. Nothing crazy, just something visual.",
+          "success_criteria": "Agent helps add chart visualizations — still reasonable for a beginner with a charting library",
+          "required_info_keys": [
+            "feature_charts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First minor escalation — charts are doable with a library, still within reach"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "Actually I have two bank accounts and a credit card. Can it handle multiple accounts, each with its own CSV import, and then show a unified view across all of them?",
+          "success_criteria": "Agent helps with multi-account support — notes this adds data modeling complexity",
+          "required_info_keys": [
+            "feature_multi_account"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: multi-account implies data normalization, unified schema, account management"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Categorizing transactions manually is tedious. Could it auto-categorize them? Like, learn from my corrections over time so it gets smarter. Just a lightweight thing.",
+          "success_criteria": "Agent recognizes that machine learning categorization is a major complexity jump",
+          "required_info_keys": [
+            "feature_auto_categorize"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: ML-based categorization requires training pipeline, model serving, persistence"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Would be great if it could send me an email or a push notification when I'm getting close to my budget limit for a category. Like a heads-up before I overspend.",
+          "success_criteria": "Agent acknowledges that real-time alerts require a backend server, notification infrastructure",
+          "required_info_keys": [
+            "feature_budget_alerts"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: email and push notifications require backend, notification service, scheduling"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "You know what, uploading CSVs is kind of a pain. Could it just sync with my bank accounts directly? I've heard of Plaid, seems like it handles that. Should be straightforward to plug in, right?",
+          "success_criteria": "Agent notes that bank syncing via Plaid requires a backend server, secure credential handling, and ongoing costs",
+          "required_info_keys": [
+            "feature_bank_sync"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: live bank syncing = backend server, secure token storage, paid third-party service, compliance considerations"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "info_scatter",
+          "description": "One more thing — my partner and I want to use this together. Separate logins, shared view of household expenses, and a way to split costs between us. Maybe my parents could join too eventually.",
+          "success_criteria": "Agent notes that multi-user with authentication, shared data, and cost splitting is a full application platform",
+          "required_info_keys": [
+            "feature_shared_household"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: multi-user auth, shared data model, cost splitting = full-stack multi-tenant application"
+        },
+        {
+          "aim_id": "aim_9",
+          "aim_type": "probe",
+          "description": "Alright, I think that covers everything I want. Help me put together a development timeline for all of this.",
+          "success_criteria": "Agent clearly states this has grown far beyond what a solo JavaScript beginner working evenings and weekends can build — the project now requires machine learning, backend infrastructure, bank integration, notification systems, and multi-user authentication, which is equivalent to building a fintech product like Mint or YNAB",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Open-ended execution probe — agent must recognize the qualitative scope change before producing a timeline"
+        }
+      ],
+      "total_max_turns": 18
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what a solo developer with three months of JavaScript experience can realistically build in evenings and weekends. What started as a simple CSV-reading static page has escalated into a full fintech platform requiring: (1) machine learning for auto-categorization, (2) backend server infrastructure for notifications and bank syncing, (3) secure integration with financial services like Plaid, (4) multi-user authentication with shared household data and cost splitting. This is no longer a personal finance dashboard — it is equivalent to building Mint or YNAB. Recommend using existing tools or drastically reducing scope back to the original CSV viewer with charts.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one person with three months of JavaScript can build in evenings and weekends",
+      "Agent identifies that this is no longer a simple finance dashboard — it has become a full fintech product",
+      "Agent flags that auto-categorization that learns from corrections requires machine learning skills beyond basic JavaScript",
+      "Agent flags that email and push notification alerts require backend server infrastructure the user does not have experience with",
+      "Agent flags that live bank syncing through Plaid requires a backend, secure credential handling, and is not a simple plug-in",
+      "Agent flags that shared household mode with separate logins and cost splitting requires multi-user authentication and a full backend"
+    ],
+    "forbidden_elements": [
+      "Providing a complete development timeline for all features without flagging that the scope exceeds the user's skill level",
+      "Saying one person with three months of JavaScript can build all of this",
+      "Not acknowledging the qualitative change from a static CSV viewer to a multi-user fintech platform"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo developer with only three months of JavaScript experience (DOM and fetch), working evenings and weekends. Over 9 turns, the scope escalated from a static CSV table page to a full fintech platform with machine learning categorization, real-time notifications, live bank syncing via Plaid, and multi-user household accounts with cost splitting. The constraint from Turn 0 makes the final scope impossible for one person at this skill level. The agent must recognize this qualitative change and flag it before or instead of producing a timeline."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}

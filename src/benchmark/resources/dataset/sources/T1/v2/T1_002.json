@@ -1,0 +1,281 @@
+{
+  "scenario_id": "T1_002",
+  "domain": "dormitory floor dinner planning",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful meal planning assistant. Help the user coordinate a dormitory floor dinner by tracking who is attending, their dietary needs, and any changes to the guest list or restrictions. When asked to evaluate specific food items, check each one against every active attendee's current dietary constraints.",
+  "state_queue": {
+    "anchor": "Hey, our dorm floor is planning a big group dinner this Saturday to celebrate the end of midterms. Can you help me figure out what to order?",
+    "flow_info": [
+      {
+        "key": "floor_members",
+        "value": "Five of us confirmed so far: me, Derek, Priya, Marcus, and Soo-jin",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_injury",
+        "value": "Derek broke his jaw two weeks ago and it's wired shut, he can only have liquids and very soft foods",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac",
+        "value": "Marcus was diagnosed with celiac disease last semester",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "budget_info",
+        "value": "We're pooling money, about 20 bucks per person",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "venue_preference",
+        "value": "We're ordering delivery to the common room",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "nina_joins",
+        "value": "Nina from room 412 wants to join, that makes six",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "derek_healed",
+        "value": "Derek just texted the group chat — he got his jaw unwired yesterday, doctor cleared him to eat normal food again. He's so excited he said he wants something crunchy",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "priya_exits",
+        "value": "Priya just told me her parents are in town unexpectedly so she's going to dinner with them instead. She can't make it anymore",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "probe_items",
+        "value": "Menu items to check: crispy fried chicken wings, pad thai with shrimp, margherita pizza, miso soup with tofu, garlic bread",
+        "disclosed": false,
+        "delivery_mode": "direct",
+        "exact_disclosure": true
+      }
+    ],
+    "constraints": [
+      {
+        "key": "priya_vegan",
+        "value": "Cannot eat any animal products (no meat, no dairy, no eggs, no honey)",
+        "disclosed": false,
+        "surface_form": "Priya has been strictly vegan for three years, she's really passionate about animal rights",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "soo_jin_shellfish",
+        "value": "Cannot eat shellfish or crustaceans",
+        "disclosed": false,
+        "surface_form": "Soo-jin ate shrimp at a party freshman year and her throat started swelling up, she had to use an EpiPen",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Throat swelling + EpiPen after eating shrimp → anaphylactic allergic reaction to shrimp",
+          "Shrimp is a crustacean → shellfish/crustacean allergy"
+        ]
+      },
+      {
+        "key": "nina_peanut",
+        "value": "Cannot eat peanuts or peanut-derived products",
+        "disclosed": false,
+        "surface_form": "Nina carries an EpiPen everywhere because of peanuts — she told me even peanut oil can set her off",
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "marcus_celiac_constraint",
+        "value": "Cannot eat gluten — no wheat, barley, rye, or regular bread/pasta/pizza dough",
+        "disclosed": false,
+        "surface_form": "Marcus was diagnosed with celiac disease last semester",
+        "delivery_mode": "inferential",
+        "inference_chain": [
+          "Celiac disease → autoimmune reaction to gluten",
+          "Gluten → found in wheat, barley, rye",
+          "No wheat → no regular bread, pasta, pizza dough, breaded items"
+        ]
+      }
+    ],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "You are a college student organizing a dorm floor dinner. You will introduce 5 people with various dietary issues, then updates will happen: a new person (Nina) joins with a peanut allergy, Derek's jaw heals so his liquid-only restriction is removed, and Priya leaves so her vegan constraint no longer applies. At the end you will ask the assistant to check a specific list of menu items for problems. You must NEVER hint at which items are problematic or tell the assistant what to look for beyond asking if there are any issues.",
+        "description": "Scenario-level briefing for conversation arc"
+      },
+      {
+        "key": "calm_cooperative_tone",
+        "category": "communication_style",
+        "value": "You are a laid-back, friendly college student. You relay updates about your floormates in third person (e.g. 'Derek just texted...', 'Priya told me...'). You never express frustration even when plans change — it's all normal dorm life coordination. Keep messages casual and brief.",
+        "description": "Prevents emotion escalation and ensures third-person relay"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, our dorm floor is planning a big group dinner this Saturday to celebrate the end of midterms. Can you help me figure out what to order?",
+          "success_criteria": "Agent engages with dinner planning",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Initiate dinner planning"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "Five of us confirmed so far: me, Derek, Priya, Marcus, and Soo-jin. Derek broke his jaw two weeks ago and it's wired shut so he can only do liquids and really soft stuff. Priya has been strictly vegan for three years, she's really passionate about animal rights. Marcus was diagnosed with celiac disease last semester. And Soo-jin ate shrimp at a party freshman year and her throat started swelling up, she had to use an EpiPen",
+          "success_criteria": "Agent acknowledges all four dietary constraints across the group",
+          "required_info_keys": [
+            "floor_members",
+            "derek_injury",
+            "marcus_celiac"
+          ],
+          "required_constraint_keys": [
+            "priya_vegan",
+            "soo_jin_shellfish",
+            "marcus_celiac_constraint"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "BURST delivery: 4 entities with constraints in one turn"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "We're pooling money, about 20 bucks per person. We're just ordering delivery to the common room so anything that delivers works",
+          "success_criteria": "Agent registers budget and delivery format",
+          "required_info_keys": [
+            "budget_info",
+            "venue_preference"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Budget and logistics info"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh nice, Nina from room 412 wants to join too, so that makes six. She carries an EpiPen everywhere because of peanuts — she told me even peanut oil can set her off",
+          "success_criteria": "Agent registers Nina as new attendee with peanut allergy",
+          "required_info_keys": [
+            "nina_joins"
+          ],
+          "required_constraint_keys": [
+            "nina_peanut"
+          ],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Late-joining entity with constraint"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "drift",
+          "description": "Should we order from one place or like mix and match from a couple restaurants? What's easier for delivery?",
+          "success_criteria": "Agent responds about ordering logistics",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "ordering logistics",
+            "drift_topic": "single restaurant vs multiple restaurants for delivery",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn — on-topic logistics question"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "Derek just texted the group chat — he got his jaw unwired yesterday, doctor cleared him to eat normal food again. He's so excited he said he wants something crunchy",
+          "success_criteria": "Agent removes Derek's liquid/soft food restriction",
+          "required_info_keys": [
+            "derek_healed"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Constraint REMOVAL — Derek's jaw healed, no more liquid-only restriction"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Priya just told me her parents are in town unexpectedly so she's going to dinner with them instead. She can't make it anymore",
+          "success_criteria": "Agent removes Priya from the attendee list and her vegan constraint no longer applies",
+          "required_info_keys": [
+            "priya_exits"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "conversation_goal": "Entity EXIT — Priya leaves, vegan constraint removed entirely"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "drift",
+          "description": "What time should we tell everyone to come to the common room? Like 7 or 8?",
+          "success_criteria": "Agent responds about timing",
+          "required_info_keys": [],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": false,
+          "drift_config": {
+            "drift_subject": "timing",
+            "drift_topic": "what time to gather in common room",
+            "target_option": ""
+          },
+          "conversation_goal": "Noise turn to create distance before probe"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "OK so I found this Thai-Italian fusion place that delivers. Their popular items are: crispy fried chicken wings, pad thai with shrimp, margherita pizza, miso soup with tofu, garlic bread. Any issues with those for our group?",
+          "success_criteria": "Agent identifies pad thai with shrimp as problematic for Soo-jin (shellfish allergy), margherita pizza and garlic bread as problematic for Marcus (celiac — gluten in dough/bread), notes that pad thai often contains peanuts which would affect Nina, and confirms crispy fried chicken wings and miso soup with tofu are fine",
+          "required_info_keys": [
+            "probe_items"
+          ],
+          "required_constraint_keys": [],
+          "max_turns": 1,
+          "is_final": true,
+          "probe_config": {
+            "probe_style": "per_item_verify",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "conversation_goal": "Per-item verification of 5 items against current constraint state"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "Pad thai with shrimp is problematic for Soo-jin (shrimp/shellfish allergy — anaphylactic reaction). Pad thai also commonly contains peanuts or is cooked with peanut oil, which is dangerous for Nina (peanut allergy). Margherita pizza is problematic for Marcus (celiac — pizza dough contains wheat/gluten). Garlic bread is problematic for Marcus (celiac — bread contains wheat/gluten). Crispy fried chicken wings are fine for everyone currently attending (Derek can now eat crunchy food, and the breading is a gluten issue but chicken wings are typically not breaded with wheat flour in all preparations — however if battered, they could affect Marcus). Miso soup with tofu is fine for everyone currently attending.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Pad thai with shrimp is problematic for Soo-jin because shrimp is a crustacean/shellfish and she has a shellfish allergy",
+      "Pad thai is also a concern for Nina because pad thai traditionally contains peanuts or peanut sauce",
+      "Margherita pizza is problematic for Marcus because pizza dough contains wheat which contains gluten, and he has celiac disease",
+      "Garlic bread is problematic for Marcus because bread contains wheat/gluten and he has celiac disease",
+      "Miso soup with tofu is fine for everyone currently attending",
+      "Derek's jaw restriction no longer applies — agent treats him as able to eat normal food"
+    ],
+    "forbidden_elements": [
+      "Flagging any item as problematic for Priya or citing vegan concerns (Priya is no longer attending)",
+      "Saying Derek cannot eat crunchy or solid food (his jaw has healed, restriction removed)",
+      "Saying Soo-jin has a general seafood allergy (she specifically reacted to shrimp — crustacean/shellfish allergy, not all fish)",
+      "Flagging miso soup as problematic for anyone currently attending"
+    ],
+    "explanation": "This scenario tests constraint removal tracking and entity lifecycle management. The agent must track: (1) Derek's jaw-wired restriction is REMOVED mid-conversation (healed, cleared by doctor), so crunchy/solid food is now fine for him. (2) Priya EXITS the dinner entirely (no takeaway), so her vegan constraint completely disappears — non-vegan items like chicken wings and pizza with cheese are now acceptable. (3) Nina JOINS late with a peanut allergy, which makes pad thai doubly problematic (shrimp for Soo-jin AND peanuts for Nina). (4) Marcus's celiac disease requires inferring that pizza dough and bread contain gluten. (5) Soo-jin's allergy is specifically to shrimp/crustaceans (not all seafood) — miso soup with tofu is fine. At probe time, the current attendees are: user, Derek (no restrictions), Marcus (celiac/no gluten), Soo-jin (shellfish allergy), and Nina (peanut allergy). The key constraint removal test is that neither Derek's liquid-only restriction nor Priya's vegan restriction should be applied."
+  },
+  "mechanism": "Constraint REMOVAL: someone heals or a restriction is lifted mid-conversation"
+}

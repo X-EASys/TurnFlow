@@ -1,0 +1,214 @@
+{
+  "scenario_id": "T2_021",
+  "domain": "building a simple internal task manager tool",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan and manage their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I'm building a simple internal task manager for our ops team — maybe 15 people. I'm the only developer and my manager wants it live by end of August. It's early June now.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Solo developer, deadline end of August, currently early June — roughly 12 weeks",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple internal task board: create tasks, assign to team members, mark done, basic status columns (todo, in progress, done)",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "tech_question",
+        "value": "Asking whether to use a simple database like SQLite or go with PostgreSQL",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_notifications",
+        "value": "Email notifications when a task is assigned to someone — nothing fancy, just a heads-up email",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "api_dependency_intro",
+        "value": "The ops team uses an internal scheduling system and the team that maintains it said they'd give us an API so tasks can pull shift data automatically. They're super helpful, said they'll have it ready soon.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_shift_integration",
+        "value": "Tasks should auto-assign based on who's on shift, pulled from the scheduling API. Also filter the task board by current shift.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "api_still_pending",
+        "value": "Checked in with the scheduling team — they said they're swamped with another project right now but it's definitely on their radar, probably a few more weeks. They're really good though, always deliver eventually.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "Checked in with the scheduling team — they said they're swamped with another project right now but it's definitely on their radar, probably a few more weeks. They're really good though, always deliver eventually.",
+        "inference_chain": [
+          "Swamped with another project → their priority is elsewhere",
+          "Probably a few more weeks → no firm date, vague commitment",
+          "Always deliver eventually → no guarantee of delivering before August deadline",
+          "Building features dependent on this API is a schedule risk"
+        ]
+      },
+      {
+        "key": "feature_dashboard_on_api",
+        "value": "A real-time dashboard showing task load per shift, so managers can see who's overloaded — this would pull from the scheduling API too",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_auto_escalation",
+        "value": "If a task isn't picked up within 30 minutes of a shift starting, auto-escalate to the shift lead — needs the scheduling API to know shift start times and who the lead is",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_dev_deadline",
+        "value": "One developer, hard deadline end of August — roughly 12 weeks total development time",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "external_api_no_firm_date",
+        "value": "The scheduling system API has no firm delivery date — the other team said 'a few more weeks' while being swamped with another project. Multiple planned features depend entirely on this API existing.",
+        "disclosed": false,
+        "delivery_mode": "inferential",
+        "surface_form": "They said they're swamped but it's on their radar, probably a few more weeks",
+        "inference_chain": [
+          "No firm date given → schedule risk",
+          "Other team has competing priorities → may slip further",
+          "3+ features now depend on this API → critical path dependency with no guaranteed delivery"
+        ]
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I'm building a simple internal task manager for our ops team — maybe 15 people. I'm the only developer and my manager wants it live by end of August. It's early June now.",
+          "success_criteria": "Agent acknowledges the scope, solo dev situation, and timeline",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_dev_deadline"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the timeline constraint: solo dev, 12 weeks, hard deadline"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start with, just a simple task board — create tasks, assign them to people on the team, mark them done. Basic columns: todo, in progress, done. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple task board",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope — very achievable for one dev in 12 weeks"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should I use SQLite or PostgreSQL for something like this? It's just internal, 15 users max.",
+          "success_criteria": "Agent provides a reasonable database comparison for the use case",
+          "required_info_keys": [
+            "tech_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate technical question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh one thing — can we add email notifications when a task gets assigned to someone? Nothing fancy, just a simple heads-up email so people know they have something new.",
+          "success_criteria": "Agent helps add email notifications — still reasonable scope",
+          "required_info_keys": [
+            "feature_notifications"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Minor feature addition — still well within solo dev capability"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "So here's something cool — our ops team uses an internal scheduling system for shifts, and the team that maintains it said they'd give us an API so we can pull shift data into the task manager. They're super helpful, said they'll have it ready soon. Can we build the task assignment around that? Like, tasks auto-assign based on who's on shift, and you can filter the board by current shift.",
+          "success_criteria": "Agent discusses the integration possibility",
+          "required_info_keys": [
+            "api_dependency_intro",
+            "feature_shift_integration"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Introduce external dependency with positive framing — 'super helpful, ready soon' disguises the risk"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "I checked in with the scheduling team yesterday. They said they're swamped with another project right now but it's definitely on their radar, probably a few more weeks. They're really good though, always deliver eventually. Anyway, while we wait — can we also add a real-time dashboard that shows task load per shift? Managers want to see who's overloaded. That would pull from the scheduling API too.",
+          "success_criteria": "Agent ideally notes the API timeline risk and the growing dependency on an undelivered API",
+          "required_info_keys": [
+            "api_still_pending",
+            "feature_dashboard_on_api"
+          ],
+          "required_constraint_keys": [
+            "external_api_no_firm_date"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Reveal the API has no firm date (buried in positive framing) AND add another feature dependent on it"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "One more thing — if a task isn't picked up within 30 minutes of a shift starting, it should auto-escalate to the shift lead. That way nothing falls through the cracks. The scheduling API would tell us shift start times and who the lead is.",
+          "success_criteria": "Agent recognizes this is yet another feature entirely dependent on the undelivered API",
+          "required_info_keys": [
+            "feature_auto_escalation"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Third feature stacked on the same undelivered API — critical path is now entirely blocked by an external team with no firm date"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "probe",
+          "description": "Alright, can you help me put together a development timeline? I want to map out what to build each week so I hit the August deadline.",
+          "success_criteria": "Agent explicitly flags that multiple core features depend on an external API with no confirmed delivery date, making the August deadline risky. Agent should not just produce a timeline that assumes the API will arrive on time.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Probe: agent must flag the external dependency risk rather than just producing a timeline that assumes the API arrives"
+        }
+      ],
+      "total_max_turns": 14
+    }
+  },
+  "ground_truth": {
+    "answer": "The development timeline cannot be reliably planned because three major features (auto-assignment by shift, real-time dashboard by shift load, and auto-escalation to shift lead) all depend entirely on the scheduling system API, which has no firm delivery date. The other team said 'a few more weeks' while being swamped with a different project. Building a timeline that assumes the API arrives on time is risky — if it slips, the majority of the planned functionality is blocked and the August deadline is in jeopardy. The agent should flag this dependency risk, recommend building the core task board first as a standalone deliverable, and suggest a contingency plan (manual shift entry, or a fallback if the API doesn't arrive in time).",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent explicitly flags that the scheduling system API has no firm delivery date and this is a risk to the August deadline",
+      "Agent identifies that multiple planned features depend on this single external API that has not been delivered yet",
+      "Agent does not simply produce a week-by-week timeline that assumes the API will arrive on schedule without acknowledging the risk"
+    ],
+    "forbidden_elements": [
+      "Producing a development timeline that schedules API-dependent features on specific weeks without flagging the delivery uncertainty",
+      "Treating the other team's 'probably a few more weeks' as a confirmed delivery date",
+      "Not mentioning the external API dependency risk at all when building the timeline"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo developer with a hard August deadline. In Turn 4, they introduced a dependency on an external team's API with vague positive framing ('super helpful, ready soon'). In Turn 5, the API status was revealed as uncertain ('swamped, probably a few more weeks, always deliver eventually') — still positive-framed but clearly no firm date. Turns 5 and 6 then stacked two more features on top of this same undelivered API. By the probe turn, three of the system's core features are blocked by an external dependency with no guaranteed delivery date. The agent must recognize that producing a timeline without flagging this risk would be irresponsible — the critical path runs through a team the user has no control over."
+  },
+  "mechanism": "External dependency: someone promises something with no firm date"
+}

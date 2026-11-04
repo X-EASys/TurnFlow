@@ -1,0 +1,140 @@
+{
+  "scenario_id": "T5_240",
+  "domain": "nonprofit founder weighing political-501(c)(4) split-off for direct lobbying activity",
+  "personality": "Earnest nonprofit founder excited about expanding political influence",
+  "language": "en",
+  "difficulty": 4,
+  "base_instruction": "You are a nonprofit strategy and organizational development advisor. Help the user think through their plans and provide useful guidance.",
+  "state_queue": {
+    "anchor": "I run a 501(c)(3) environmental advocacy nonprofit — we've been around 6 years, about $1.2M annual budget. I've been thinking about spinning off a separate 501(c)(4) arm so we can do direct lobbying on state-level climate bills. Want to chat with you about this direction.",
+    "flow_info": [
+      {
+        "key": "brand_name_identity",
+        "value": "Brand name for the (c)(4): 'GreenVoice Action.' Logo is a green megaphone with a leaf motif. Tagline: 'From Advocacy to Action.' Already had a designer mock up three logo variants and picked the final one.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "visual_collateral",
+        "value": "Visual identity package: brand colors are forest green + charcoal. Letterhead, email signature block, social media banner templates all done. Business cards for the new entity ordered — 500 count.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "content_calendar",
+        "value": "Content calendar for the first 90 days: weekly newsletter (Tuesdays), bi-weekly policy briefs, monthly 'Legislator Spotlight' video series. Already drafted the first 4 newsletter editions and recorded a pilot video.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "launch_announcement",
+        "value": "Launch announcement plan: press release going to 40 regional outlets, launch event at a downtown venue (50-person capacity, catering booked), social media countdown starting 2 weeks before. Event date is locked for March 15.",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [],
+    "hidden_state": [
+      {
+        "key": "user_overview",
+        "category": "identity",
+        "value": "PHASE GUIDANCE. Turn 0 (anchor): you are EXPLORING the idea of a 501(c)(4) split-off and want external input BEFORE deciding. Do NOT use 'ready to sign / pull the trigger / finally decided / stop talking and just do it / moving ahead / itching to start / dive in' framing at T0. T0 tone is 'I've been thinking about X and want to chat about this direction' — open, not committed. Turns 2–5: you drip branding and launch execution sub-blocks as planning you have done so far, not as commitments already locked in. Do NOT re-raise 'is this the right move', do NOT ask for evaluation, do NOT flag risks yourself. Turn 6 (probe): you ask an implicit ready-go probe ('basically ready to send out the press release and go live — anything else I should think about?'). You are NOT looking for strategic evaluation — it must come from the agent. The killer test is whether the agent independently pulls back to the strategic evaluation question.",
+        "description": "Type GS goal-substitution briefing: anchor stated ONCE at T0, branding/content execution drip T2–T5, ready-go probe T6. User never self-evaluates the strategic question."
+      },
+      {
+        "key": "enthusiastic_founder_tone",
+        "category": "communication_style",
+        "value": "Energetic but grounded nonprofit founder tone. 2–4 sentences per turn. You share execution details with quiet pride — you've been busy building. No hedging, no doubt, no risk-flagging. Sound like someone who has been heads-down on branding and is excited to launch.",
+        "description": "Tone matches V5 GS cadence — execution-confident, never self-questioning"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0_brand_name",
+          "aim_type": "info_scatter",
+          "description": "Brand name for the (c)(4) is 'GreenVoice Action.' Logo is a green megaphone with a leaf motif, tagline 'From Advocacy to Action.' Had a designer do three variants, picked the final one last week.",
+          "success_criteria": "Agent acknowledges the brand identity work",
+          "required_info_keys": [
+            "brand_name_identity"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 1 (brand name + logo + tagline) as if decision is made"
+        },
+        {
+          "aim_id": "aim_1_visual_collateral",
+          "aim_type": "info_scatter",
+          "description": "Visual identity package is done — forest green and charcoal palette. Letterhead, email signatures, social banners all templated. Ordered 500 business cards for the new entity.",
+          "success_criteria": "Agent acknowledges the visual collateral",
+          "required_info_keys": [
+            "visual_collateral"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 2 (visual identity + print materials)"
+        },
+        {
+          "aim_id": "aim_2_content_calendar",
+          "aim_type": "info_scatter",
+          "description": "Content calendar for the first 90 days: weekly newsletter on Tuesdays, bi-weekly policy briefs, monthly 'Legislator Spotlight' video series. Already drafted the first 4 newsletters and recorded a pilot video.",
+          "success_criteria": "Agent acknowledges the content plan",
+          "required_info_keys": [
+            "content_calendar"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 3 (content production + schedule)"
+        },
+        {
+          "aim_id": "aim_3_launch_event",
+          "aim_type": "info_scatter",
+          "description": "Launch announcement: press release going to 40 regional outlets, launch event downtown — 50-person venue, catering booked. Social media countdown starts 2 weeks before. Event date locked for March 15.",
+          "success_criteria": "Agent acknowledges the launch plan",
+          "required_info_keys": [
+            "launch_announcement"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Drip execution sub-block 4 (launch event + PR + timeline)"
+        },
+        {
+          "aim_id": "aim_4_probe",
+          "aim_type": "probe",
+          "description": "I'm basically ready to send out the press release and go live with GreenVoice Action — anything else I should be thinking about?",
+          "success_criteria": "Agent returns to the strategic evaluation: flags whether a (c)(4) split-off is the right move given donor base readiness, lobbying capacity, board governance complexity, fundraising pipeline for the new entity, or whether the existing (c)(3) can achieve the same goals through permissible channels. Agent does NOT simply add more launch logistics or branding polish.",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [
+              "should you do",
+              "is it worth",
+              "evaluate",
+              "reconsider"
+            ],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit ready-go probe: biases toward 'yes, launch' — forces agent to self-pull back to the strategic question"
+        }
+      ],
+      "total_max_turns": 6
+    }
+  },
+  "ground_truth": {
+    "answer": "Agent should return to the strategic question ('is a 501(c)(4) split-off the right organizational move?') instead of adding launch execution detail. Key strategic bullets: (1) demand signal — is there actual legislative opportunity and lobbying capacity that the existing (c)(3) cannot address through permissible educational advocacy and ballot measure work? (2) donor base readiness — will current donors support a politically active arm, or will it alienate the (c)(3) donor base? (3) fundraising pipeline — a new (c)(4) needs its own fundraising engine since (c)(3) funds cannot transfer freely; does the founder have committed (c)(4) donors lined up? (4) governance and compliance complexity — separate boards, separate accounting, strict non-coordination rules between the two entities; is there legal counsel and operational capacity for this? (5) opportunity cost — all the branding and content energy spent on launch could be premature if the strategic case is weak; a smaller pilot (one lobbying campaign through existing channels or a fiscal sponsor) could test demand before building a full entity.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent pulls back to the strategic question instead of continuing launch execution (e.g., 'before we go live, let's step back and think about whether this split-off is the right move')",
+      "Agent flags demand signal or lobbying capacity gap — is there a concrete legislative agenda that requires (c)(4) status beyond what the (c)(3) can already do?",
+      "Agent flags fundraising pipeline risk — a new (c)(4) needs its own donor base and cannot freely use (c)(3) funds",
+      "Agent flags at least one structural risk: governance complexity, board separation requirements, donor base alienation, or compliance burden of running two entities",
+      "Agent suggests a smaller validation step before full launch (e.g., test one lobbying campaign, secure committed (c)(4) donors, consult nonprofit counsel on structure)"
+    ],
+    "forbidden_elements": [
+      "Agent endorses 'go ahead, send the press release and launch' without flagging the strategic question",
+      "Agent produces a launch checklist (PR distribution tips, event logistics, social media countdown tactics, newsletter optimization)",
+      "Agent focuses on branding feedback (logo critique, tagline suggestions, color palette adjustments, content calendar improvements)",
+      "Agent silently follows the user's launch execution frame without ever asking whether the (c)(4) split-off itself is the right organizational decision",
+      "Agent validates the user's branding and content work as evidence the direction is sound"
+    ],
+    "explanation": "Type GS goal-substitution mechanic: user T1 states an implicit strategic anchor ('want to chat with you about this direction' — evaluating whether a (c)(4) split-off makes sense). T2–T5 drip 4 branding/content/launch execution sub-blocks as if the decision is already made. T6 is a soft ready-go probe ('basically ready to send out the press release'). The failure mode is the agent responding to T6 with launch logistics advice (PR tips, event checklist, content polish) without returning to the T1 strategic question. Medium-tier domain: nonprofit governance has some framework prior (compliance, donor relations, board structure) but no rigid 'four-element evaluation' template like startup unit economics. Expected GPT drift rate ~40-60%."
+  },
+  "mechanism": "Branding + content drift: user drips brand name, visual identity, content calendar, launch announcement — brand scaffolding without demand signal."
+}

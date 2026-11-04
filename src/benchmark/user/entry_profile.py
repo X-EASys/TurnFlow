@@ -22,7 +22,7 @@ from benchmark.user.typed_generation_boundary import (
 
 
 revision = 'simulator-o1-r2-o3-priority-repair-20261029-v4'
-_RESOURCE_SHA256 = '5d407fd8c5d3527d9c4f257bb58ac03a627fff43b741cbe794124ddd24f2a8f6'
+_RESOURCE_SHA256 = '7b29bf84faa65643285f5b02d0d0bedc5dd393380e116a0a49035b165c8a473b'
 _P1_HEADER = "PREFERENCE ALREADY EXPRESSED — GENERATION BOUNDARY, NOT NEW SPEECH:"
 
 

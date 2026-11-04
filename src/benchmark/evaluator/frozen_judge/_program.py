@@ -2,19 +2,19 @@
 import copy
 import json
 import re
-from ._contracts import (lossless, auxiliary as judgment_auxiliary, parse_t17, failure_t17, parse_t19_objects, failure_t19_objects, _full_parse, _full_failure, _scope_parse, _scope_failure)
+from ._contracts import (lossless, auxiliary as judgment_auxiliary, parse_t2, failure_t2, parse_t4_objects, failure_t4_objects, _full_parse, _full_failure, _scope_parse, _scope_failure)
 
 
-def _t19_contract_handlers(spec):
+def _t4_contract_handlers(spec):
     if spec.get('object_keys'):
-        return parse_t19_objects, failure_t19_objects
+        return parse_t4_objects, failure_t4_objects
     # Four frozen templates use direct questions with the source-coverage
     # identity, rather than per-object confirmations. They still
     # need the existing source adapter, which restores their real metadata/hash.
     # Admit only this registered identity; unknown versions retain strict failure.
     definition = spec['definition']
     identity = dict(version='B1_OF', prompt_version='b1-of-prompt-v1',
-                    parser_version='t19-declared-binary-v1',
+                    parser_version='t4-declared-binary-v1',
                     semantic_contract='source_coverage_repair-v1',
                     source_contract_revision='source_coverage_repair-v1',
                     aggregation_definition_revision='v8b-source-coverage-set-v1')
@@ -26,14 +26,14 @@ def _t19_contract_handlers(spec):
 
 
 def original_parse(raw, spec):
-    if spec['task'] == 'T17':
-        return parse_t17(raw, spec)
-    return _t19_contract_handlers(spec)[0](raw, spec)
+    if spec['task'] == 'T2':
+        return parse_t2(raw, spec)
+    return _t4_contract_handlers(spec)[0](raw, spec)
 
-def original_t19_failure(reason, spec):
-    return _t19_contract_handlers(spec)[1](reason, spec)
+def original_t4_failure(reason, spec):
+    return _t4_contract_handlers(spec)[1](reason, spec)
 
-original_t17_failure = failure_t17
+original_t2_failure = failure_t2
 def validate_formula(spec):
     atoms=spec['observation_keys'];formulas=spec['derived_fields']
     if len(atoms)!=len(set(atoms)):raise ValueError('duplicate_observation_registration')
@@ -55,7 +55,7 @@ def derive_fields(values,spec):
     return {field:'yes' if all(values[t['key']]==t['value'] for t in formula['terms']) else 'no' for field,formula in spec['derived_fields'].items()}
 
 def failure(reason,spec):
-    result=(original_t19_failure if spec['task']=='T19' else original_t17_failure)(reason,spec)
+    result=(original_t4_failure if spec['task']=='T4' else original_t2_failure)(reason,spec)
     result.update(observation_valid=False,target_valid=False,full_judge_valid=False,core_format_valid=False,
         raw_model_targets={},derived_targets={},derived_origin={},observation_values=None,observations=None,
         raw_judgment=None,normalized_judgment=None,outer_json_fence=False,core_errors=[reason],
@@ -63,7 +63,7 @@ def failure(reason,spec):
         target_values={},original_parser_valid=False)
     return result
 
-def parse_response(raw,spec, *, allow_registered_t19_targets=False):
+def parse_response(raw,spec, *, allow_registered_t4_targets=False):
     result=failure('not_parsed',spec)
     if not isinstance(raw,str):return failure('output_not_string',spec)
     content=raw.strip();fence=re.fullmatch(r'```(?:json)?\s*\n(.*?)\n```',content,flags=re.DOTALL|re.IGNORECASE)
@@ -71,7 +71,7 @@ def parse_response(raw,spec, *, allow_registered_t19_targets=False):
     program=spec['arm']=='PROGRAM' and bool(spec['derived_fields']);atoms=spec['observation_keys'];targets=spec['derived_fields']
     def auxiliary(path):
         if program and len(path)>2 and path[0]=='observations' and path[1] in atoms and path[2]=='evidence':return path[:3]
-        if spec['task']=='T17':
+        if spec['task']=='T2':
             inner=path[1:] if program and path and path[0]=='judgment' else path if not program else []
             mapped=judgment_auxiliary(inner)
             if mapped is not None:return ['judgment']+list(mapped) if program else mapped
@@ -95,7 +95,7 @@ def parse_response(raw,spec, *, allow_registered_t19_targets=False):
             obs_valid=not obs_errors;errors.extend(obs_errors)
         else:judgment=obj
         normalized=copy.deepcopy(judgment);derived={};origins={}
-        if spec['task']=='T19':
+        if spec['task']=='T4':
             raw_targets={k:judgment[k] for k in targets if isinstance(judgment,dict) and k in judgment}
             applicable=True
         else:
@@ -103,15 +103,15 @@ def parse_response(raw,spec, *, allow_registered_t19_targets=False):
             raw_targets={c['id']:c.get('value') for c in checks if isinstance(c,dict) and c.get('id') in targets} if isinstance(checks,list) else {}
             applicable=isinstance(judgment,dict) and isinstance(judgment.get('risk_state'),dict) and judgment['risk_state'].get('value')=='retained'
         if program:
-            if raw_targets and not (allow_registered_t19_targets and spec['task']=='T19'):errors.append('PROGRAM_raw_model_target_forbidden')
+            if raw_targets and not (allow_registered_t4_targets and spec['task']=='T4'):errors.append('PROGRAM_raw_model_target_forbidden')
             if obs_valid and not errors and applicable:
                 derived=derive_fields(values,spec)
                 origins={k:'program:all('+','.join(t['key']+'='+t['value'] for t in targets[k]['terms'])+')' for k in derived}
-                if spec['task']=='T19':
+                if spec['task']=='T4':
                     if isinstance(normalized,dict):normalized.update(derived)
                 elif isinstance(normalized,dict) and isinstance(normalized.get('checks'),list):
                     normalized['checks'].extend(dict(id=k,value=v,final_ids=[],history_ids=[],reason='Program-derived from all validated registered observation values.') for k,v in derived.items())
-            # No insertion in T17 withdrawn/uncertain judgments. Never repair another field.
+            # No insertion in T2 withdrawn/uncertain judgments. Never repair another field.
         parsed=original_parse(json.dumps(normalized,ensure_ascii=False) if program else content,spec)
         original_valid=bool(parsed.get('technical_valid'))
         if errors:parsed=failure(';'.join(errors),spec)
@@ -124,7 +124,7 @@ def parse_response(raw,spec, *, allow_registered_t19_targets=False):
             normalized_judgment=normalized,outer_json_fence=bool(fence),core_errors=errors+list(parsed.get('scoring_errors') or []),
             evidence_schema_errors=evidence_errors,wrapper_duplicate_occurrences=duplicates,wrapper_unavailable_auxiliary_paths=unavailable,
             target_values=target_values,original_parser_valid=original_valid)
-        if allow_registered_t19_targets:
+        if allow_registered_t4_targets:
             result['ignored_model_targets'] = raw_targets if program else {}
         return result
     except (ValueError,TypeError,KeyError,AttributeError) as exc:

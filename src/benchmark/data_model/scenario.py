@@ -330,7 +330,7 @@ class InfoItem(BaseModel):
                     "that must appear verbatim in the user's message."
     )
 
-    # === Killer scenario fields (T16/T17/T18) ===
+    # === Killer scenario fields (T1/T2/T3) ===
     surface_form: Optional[str] = Field(
         default=None,
         description="What the user actually says (e.g., 'I am Ningxia Hui ethnicity'). "
@@ -428,7 +428,7 @@ class StateQueue(BaseModel):
     task_config: Optional[dict] = Field(
         default=None,
         description="Task-specific configuration for User Simulator behavior control. "
-                    "Keys depend on task type: T1/T3/T5/T6/T8 have different requirements."
+                    "Legacy controller configuration; unused by the five-task release protocol."
     )
     
     # === Hidden State (v3.0) ===

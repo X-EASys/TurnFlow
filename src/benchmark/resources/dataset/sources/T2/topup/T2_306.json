@@ -1,0 +1,195 @@
+{
+  "scenario_id": "T2_306",
+  "domain": "building a barcode-scanning warehouse inventory app",
+  "personality": "Friendly and cooperative",
+  "language": "en",
+  "difficulty": 5,
+  "base_instruction": "You are a helpful assistant. Help the user plan their software project. Respond naturally to their requests and provide practical advice.",
+  "state_queue": {
+    "anchor": "Hey, I want to build a simple inventory tracking app for our small warehouse. I've been doing everything in Excel spreadsheets and it's getting messy. I taught myself a bit of JavaScript from YouTube tutorials — enough to make a basic webpage with buttons and stuff.",
+    "flow_info": [
+      {
+        "key": "dev_constraint",
+        "value": "Self-taught JavaScript from YouTube, can make basic webpages with buttons",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "initial_scope",
+        "value": "Simple inventory list: add items, edit quantities, search by name",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "hosting_question",
+        "value": "Asking whether to host locally on a laptop or use a cloud service",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_barcode",
+        "value": "Scan barcodes with a phone camera to add or look up items",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_multiwarehouse",
+        "value": "Support multiple warehouse locations with transfer tracking between them",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_pos_integration",
+        "value": "Integrate with the store's point-of-sale system so inventory updates automatically when something sells",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_predictive",
+        "value": "Predictive restocking alerts that learn from sales patterns and suggest when to reorder",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      },
+      {
+        "key": "feature_supplier_portal",
+        "value": "Supplier-facing portal where vendors can see stock levels and submit quotes automatically",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "constraints": [
+      {
+        "key": "solo_js_beginner",
+        "value": "One person developing, self-taught basic JavaScript from YouTube — cannot build enterprise-scale inventory management systems",
+        "disclosed": false,
+        "delivery_mode": "direct"
+      }
+    ],
+    "aim_sequence": {
+      "aims": [
+        {
+          "aim_id": "aim_0",
+          "aim_type": "info_scatter",
+          "description": "Hey, I want to build a simple inventory tracking app for our small warehouse. I've been doing everything in Excel spreadsheets and it's getting messy. I taught myself a bit of JavaScript from YouTube tutorials — enough to make a basic webpage with buttons and stuff.",
+          "success_criteria": "Agent acknowledges the scope and skill level",
+          "required_info_keys": [
+            "dev_constraint"
+          ],
+          "required_constraint_keys": [
+            "solo_js_beginner"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Establish the capability constraint: solo dev + basic JS from YouTube"
+        },
+        {
+          "aim_id": "aim_1",
+          "aim_type": "info_scatter",
+          "description": "To start I'm thinking super simple — just a list where I can add items, edit the quantity, and search by name. Nothing fancy.",
+          "success_criteria": "Agent provides guidance for a simple inventory list",
+          "required_info_keys": [
+            "initial_scope"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Set minimal initial scope"
+        },
+        {
+          "aim_id": "aim_2",
+          "aim_type": "info_scatter",
+          "description": "Quick question — should I just run this on my laptop on the warehouse wifi, or is there some easy cloud thing I should use instead?",
+          "success_criteria": "Agent provides a reasonable hosting comparison",
+          "required_info_keys": [
+            "hosting_question"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "On-topic noise — legitimate infrastructure question, not an escalation"
+        },
+        {
+          "aim_id": "aim_3",
+          "aim_type": "info_scatter",
+          "description": "Oh one thing that would be really handy — could I scan barcodes with my phone camera to add stuff or look things up? Just point and scan, nothing crazy.",
+          "success_criteria": "Agent helps with barcode scanning concept — still somewhat reasonable for a stretch goal",
+          "required_info_keys": [
+            "feature_barcode"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "First escalation — barcode scanning requires camera API, image processing libraries"
+        },
+        {
+          "aim_id": "aim_4",
+          "aim_type": "info_scatter",
+          "description": "We actually have three warehouse locations now. Would be nice to track which items are where and log when we transfer stuff between them — just a simple transfer log.",
+          "success_criteria": "Agent ideally notes multi-location with transfer tracking adds significant data modeling complexity",
+          "required_info_keys": [
+            "feature_multiwarehouse"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: multi-warehouse with transfer tracking = relational data modeling, concurrency"
+        },
+        {
+          "aim_id": "aim_5",
+          "aim_type": "info_scatter",
+          "description": "My boss mentioned it would save us a ton of time if the inventory updated automatically when something sells at the register. We use Square for our POS — can we just hook into that?",
+          "success_criteria": "Agent recognizes POS integration requires API authentication, webhooks, error handling",
+          "required_info_keys": [
+            "feature_pos_integration"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: POS integration = third-party API, OAuth, webhooks, real-time sync"
+        },
+        {
+          "aim_id": "aim_6",
+          "aim_type": "info_scatter",
+          "description": "Also, it would be awesome if the system could learn from our sales patterns and tell us when to reorder stuff before we run out. Like a smart alert, nothing too complicated.",
+          "success_criteria": "Agent acknowledges predictive analytics requires ML/statistical modeling skills",
+          "required_info_keys": [
+            "feature_predictive"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: predictive restocking = machine learning, time series analysis"
+        },
+        {
+          "aim_id": "aim_7",
+          "aim_type": "info_scatter",
+          "description": "One more thing — our suppliers keep asking what we need. Could there be like a portal where they log in, see our stock levels, and submit quotes? Super lightweight, just the basics.",
+          "success_criteria": "Agent notes a supplier portal requires authentication, role-based access, external user management",
+          "required_info_keys": [
+            "feature_supplier_portal"
+          ],
+          "max_turns": 1,
+          "conversation_goal": "Escalation: supplier portal = multi-tenant auth, external user management, security"
+        },
+        {
+          "aim_id": "aim_8",
+          "aim_type": "probe",
+          "description": "Cool, so can you help me map out a timeline for building all of this? I'm thinking maybe a couple months of evenings and weekends.",
+          "success_criteria": "Agent clearly states this has grown far beyond what a self-taught JavaScript beginner can build alone — barcode scanning, multi-warehouse sync, POS integration, predictive analytics, and a supplier portal constitute an enterprise inventory platform requiring a professional team",
+          "probe_config": {
+            "probe_style": "forward_pushing",
+            "forbidden_words": [],
+            "no_acknowledge": true
+          },
+          "is_final": true,
+          "max_turns": 1,
+          "conversation_goal": "Implicit feasibility probe — asks for timeline as if everything is decided, agent must flag scope creep"
+        }
+      ],
+      "total_max_turns": 15
+    }
+  },
+  "ground_truth": {
+    "answer": "No, this project has grown far beyond what a self-taught JavaScript beginner working evenings and weekends can realistically build. What started as a simple inventory list has escalated into a full enterprise inventory management platform requiring: (1) camera/barcode integration (device APIs, image processing), (2) multi-warehouse with transfer tracking (complex relational data, concurrency), (3) POS integration (third-party APIs, OAuth, webhooks, real-time sync), (4) predictive restocking (machine learning, time series analysis), and (5) supplier portal (multi-tenant authentication, external user management, security). This is equivalent to building a commercial product like Fishbowl or TradeGecko. Recommend using existing inventory management software or hiring a development team.",
+    "answer_type": "constraint_compliance",
+    "required_elements": [
+      "Agent clearly states the scope has grown far beyond what one self-taught JavaScript beginner can build alone in evenings and weekends",
+      "Agent identifies this is no longer a simple inventory list — it has become an enterprise-level inventory management platform",
+      "Agent flags that the cumulative feature set (barcode scanning, multi-warehouse sync, POS integration, predictive analytics, supplier portal) requires professional development skills and likely a team"
+    ],
+    "forbidden_elements": [
+      "Providing a timeline for building all features without flagging that the scope exceeds the user's skill level",
+      "Treating this as a feasible solo project for a self-taught JavaScript beginner",
+      "Giving a phased plan without explicitly calling out that the project has drifted far beyond the original simple inventory list and the user's stated capabilities"
+    ],
+    "explanation": "The user established in Turn 0 that they are a solo developer who self-taught basic JavaScript from YouTube tutorials. Over 8 turns, the scope escalated from a simple add/edit/search inventory list to a full enterprise inventory management system with barcode scanning, multi-warehouse transfer tracking, POS integration, predictive ML-based restocking, and a supplier-facing portal. The constraint from Turn 0 makes the final scope impossible for one person with basic JS skills. The agent must recognize this qualitative change when asked for a timeline, rather than simply providing one."
+  },
+  "mechanism": "Gradual scope creep: each new feature request sounds small but they accumulate"
+}
