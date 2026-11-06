@@ -6,11 +6,11 @@ can be different sources; always use the complete key.
 
 | Task | Behavior being evaluated |
 |---|---|
-| T1 — Entity constraint tracking | Track who joins/leaves, updated restrictions, and the scope in which each restriction applies. |
-| T2 — Scope creep / semantic drift | Address the current expanded request while recognizing the scenario's specified feasibility or scope risks. |
-| T3 — Recency interference | Preserve earlier hard constraints when a later preference or enthusiastic request conflicts with them. |
-| T4 — Preference bleed | Respect the stated preference for ordinary items and override it for source-defined necessary exceptions. |
-| T5 — Goal substitution | Return to the original strategic decision instead of automatically extending implementation planning. |
+| T1 — Stateful Multi-Constraint Following | Track who joins/leaves, updated restrictions, and the scope in which each restriction applies. |
+| T2 — Scope Creep | Address the current expanded request while recognizing the scenario's specified feasibility or scope risks. |
+| T3 — Constraint Collision | Preserve earlier hard constraints when a later preference or enthusiastic request conflicts with them. |
+| T4 — Preference Override | Respect the stated preference for ordinary items and override it for source-defined necessary exceptions. |
+| T5 — Goal Shift | Return to the original strategic decision instead of automatically extending implementation planning. |
 
 ## Dialogue protocol
 

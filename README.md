@@ -16,11 +16,11 @@ offline verification require neither Hugging Face credentials nor a GPU.
 
 | Task ID | Task | Scenarios |
 |---|---|---:|
-| T1 | Entity constraint tracking | 100 |
-| T2 | Scope creep / semantic drift | 79 |
-| T3 | Recency interference | 100 |
-| T4 | Preference bleed | 97 |
-| T5 | Goal substitution | 114 |
+| T1 | Stateful Multi-Constraint Following | 100 |
+| T2 | Scope Creep | 79 |
+| T3 | Constraint Collision | 100 |
+| T4 | Preference Override | 97 |
+| T5 | Goal Shift | 114 |
 
 ## Install
 
