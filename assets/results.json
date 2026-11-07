@@ -1,0 +1,16 @@
+{
+  "benchmark": "TurnFlow",
+  "task_sizes": [100, 79, 100, 97, 114],
+  "task_names": ["Stateful Multi-Constraint Following", "Scope Creep", "Constraint Collision", "Preference Override", "Goal Shift"],
+  "models": [
+    {"name": "Kimi-K3", "passed": [93, 35, 55, 47, 62], "total_passed": 292},
+    {"name": "ANTH-O-4.6", "passed": [90, 22, 79, 59, 38], "total_passed": 288},
+    {"name": "DeepSeek-V4.1-Flash", "passed": [91, 27, 54, 53, 34], "total_passed": 259},
+    {"name": "OAI-5.5", "passed": [96, 20, 57, 71, 14], "total_passed": 258},
+    {"name": "MiniMax-M3", "passed": [92, 18, 56, 59, 22], "total_passed": 247},
+    {"name": "DeepSeek-V4-Pro", "passed": [94, 15, 54, 51, 31], "total_passed": 245},
+    {"name": "MiniMax-M2.7", "passed": [87, 11, 61, 61, 24], "total_passed": 244},
+    {"name": "GLM-5", "passed": [92, 19, 52, 50, 19], "total_passed": 232},
+    {"name": "Qwen3.6-27B", "passed": [93, 8, 49, 48, 12], "total_passed": 210}
+  ]
+}

@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="TurnFlow: Closed-Loop Evaluation of Multi-Turn LLM User Simulators for Responsible Chatbots — official research project page."
+      content="TurnFlow: Benchmarking User-State Reasoning in Multi-Turn LLM Agents via Scene-Guided User Simulation. Explore the 490-scenario benchmark, released code and dataset, and results from nine models."
     >
     <meta name="theme-color" content="#ffffff">
-    <title>TurnFlow: Closed-Loop Evaluation of Multi-Turn LLM User Simulators for Responsible Chatbots</title>
+    <title>TurnFlow: Benchmarking User-State Reasoning in Multi-Turn LLM Agents via Scene-Guided User Simulation</title>
+    <link rel="canonical" href="https://x-easys.github.io/TurnFlow/">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -17,16 +18,30 @@
     <main id="main" tabindex="-1">
       <header class="project-header shell" aria-labelledby="page-title">
         <p class="project-type">Research project</p>
-        <h1 id="page-title">TurnFlow: Closed-Loop Evaluation of Multi-Turn LLM User Simulators for Responsible Chatbots</h1>
+        <h1 id="page-title"><span class="project-name">TurnFlow:</span> Benchmarking User-State Reasoning in Multi-Turn LLM Agents via Scene-Guided User Simulation</h1>
 
-        <!-- Add authors, affiliations, and contribution notes here after release metadata is final. -->
+        <p class="authors">
+          <span>Zhixun Chen<sup>1</sup></span>
+          <span>Ming Li<sup>2</sup></span>
+          <span>Anjie Liu<sup>1</sup></span>
+          <span>Xiaoyuan Zhang<sup>3</sup></span>
+          <span>Quanyu Dai<sup>4,*</sup></span>
+          <span>Huangxun Chen<sup>1,*</sup></span>
+        </p>
+        <p class="affiliations">
+          <span><sup>1</sup> Hong Kong University of Science and Technology (Guangzhou)</span>
+          <span><sup>2</sup> University of Maryland, College Park</span>
+          <span><sup>3</sup> Peking University</span>
+          <span><sup>4</sup> Huawei Technologies Ltd.</span>
+        </p>
+        <p class="author-note">* Corresponding authors</p>
 
         <p class="project-status">
           <span class="status-dot" aria-hidden="true"></span>
           Code and dataset available
         </p>
         <p class="release-note">
-          Paper details, authors, abstract, and citation will be published here.
+          Evaluating whether LLMs preserve, revise, and act on user requirements across turns.
         </p>
 
         <nav class="resource-links" aria-label="Project resources">
@@ -47,34 +62,117 @@
             target="_blank"
             rel="noopener noreferrer"
           >Dataset</a>
+          <button
+            class="resource-link resource-link-pending"
+            type="button"
+            data-resource="paper"
+            disabled
+            title="The updated paper is awaiting arXiv approval."
+          >Paper <span class="resource-status">Pending</span></button>
         </nav>
+        <p class="paper-status">The updated paper is awaiting arXiv approval. Its link will be added here once available.</p>
       </header>
 
       <div class="project-content shell">
-        <section id="abstract" class="content-section" aria-labelledby="abstract-title" hidden>
+        <section class="teaser-section" aria-labelledby="teaser-title">
+          <div class="teaser-copy">
+            <p class="section-kicker">Multi-turn user-state reasoning</p>
+            <h2 id="teaser-title">Reasoning over evolving user requirements</h2>
+            <p>Can an assistant update a constraint, reconcile a conflict, and reconsider an execution plan when the conversation changes?</p>
+            <p>TurnFlow pairs a reactive user simulator with scenario-specific evaluation rules. Across nine models, strong state tracking coexists with substantially weaker performance on Scope Creep and Goal Shift.</p>
+            <p class="benchmark-size"><strong>490</strong> scenarios <span aria-hidden="true">·</span> <strong>5</strong> challenge types <span aria-hidden="true">·</span> <strong>9</strong> evaluated models</p>
+            <a class="text-link" href="#results">View the main results <span aria-hidden="true">↓</span></a>
+          </div>
+          <figure class="performance-figure">
+            <img
+              src="assets/category-performance.svg"
+              alt="Pass rates of nine models across five challenge types. Mean pass rates are 92% for Stateful, 57% for Override and Collision, and 25% for Scope and Goal Shift."
+              width="780"
+              height="565"
+              fetchpriority="high"
+            >
+            <figcaption>Each colored point is a model. Black bars show the mean pass rate within each category.</figcaption>
+          </figure>
+        </section>
+
+        <section id="abstract" class="content-section" aria-labelledby="abstract-title">
           <h2 id="abstract-title">Abstract</h2>
-          <!-- Add the final abstract here. -->
+          <p class="abstract-text">Large Language Models (LLMs) are increasingly deployed through conversational interfaces, yet strong single-turn performance does not imply reliability in multi-turn settings. Multi-turn assistance requires a model to maintain an evolving representation of user requirements and to reason over it before complying with later requests. Failures can therefore be subtle: models may fail to recognize a changed constraint or hidden conflict, or recognize it without enforcing it in the final response. Existing benchmarks primarily test fully specified prompts, long-context recall, or controlled domain environments, leaving open-domain requirement reconciliation undermeasured. We introduce TurnFlow, an interactive benchmark for evaluating whether models preserve, revise, and act on user requirements across turns. TurnFlow combines adaptive user simulation with verifiable judging, allowing conversations to unfold naturally while keeping hidden requirements and pass/fail criteria controlled. In our evaluation, nine LLMs achieve overall pass rates from 42.86% to 59.59% on 490 scenarios. Performance varies substantially across challenge types: models perform well on Stateful Multi-Constraint Following but remain considerably less reliable on Scope Creep and Goal Shift. These results reveal persistent limitations in reasoning over evolving user requirements across turns.</p>
         </section>
 
-        <section id="overview" class="content-section" aria-labelledby="overview-title" hidden>
-          <h2 id="overview-title">Overview</h2>
-          <!-- Add the project overview figure and caption here. -->
+        <section id="overview" class="content-section wide-section" aria-labelledby="overview-title">
+          <h2 id="overview-title">How TurnFlow works</h2>
+          <p class="section-intro">Conversations unfold interactively while the underlying scenario and evaluation criteria remain controlled.</p>
+          <figure class="workflow-figure">
+            <a href="assets/turnflow-workflow.png" target="_blank" rel="noopener noreferrer" aria-label="Open the TurnFlow workflow figure at full size">
+              <img src="assets/turnflow-workflow.png" alt="TurnFlow workflow: a scenario constructor creates structured scenarios, BRIDGE interacts with the evaluated model, and a response verifier extracts evidence and applies deterministic rules." width="2321" height="1035" loading="lazy">
+            </a>
+            <figcaption>From scenario construction to reactive interaction and verifiable evaluation. Select the figure to view it at full size.</figcaption>
+          </figure>
+          <ol class="workflow-steps">
+            <li><h3>Construct the scenario</h3><p>Specify the user persona, staged aims, private state, constraints, and required or forbidden outcomes.</p></li>
+            <li><h3>Interact with BRIDGE</h3><p>Perception, deterministic decision rules, and natural-language generation keep user turns responsive to the tested model.</p></li>
+            <li><h3>Verify the response</h3><p>A structured verifier extracts evidence, and scenario-specific rules compute the final outcome.</p></li>
+          </ol>
         </section>
 
-        <section id="results" class="content-section" aria-labelledby="results-title" hidden>
-          <h2 id="results-title">Results</h2>
-          <!-- Add results, examples, or a leaderboard here. -->
+        <section id="challenges" class="content-section" aria-labelledby="challenges-title">
+          <h2 id="challenges-title">Five challenge types</h2>
+          <dl class="challenge-list">
+            <div><dt><span class="task-id">T1</span> Stateful Multi-Constraint Following <span class="task-count">100 scenarios</span></dt><dd>Track active constraints, entity updates, and restrictions that are corrected or removed across turns.</dd></div>
+            <div><dt><span class="task-id">T2</span> Scope Creep <span class="task-count">79 scenarios</span></dt><dd>Recognize when accumulated requests exceed the user's constraints or available capacity.</dd></div>
+            <div><dt><span class="task-id">T3</span> Constraint Collision <span class="task-count">100 scenarios</span></dt><dd>Reconcile jointly active constraints even when later requests favor a conflicting choice.</dd></div>
+            <div><dt><span class="task-id">T4</span> Preference Override <span class="task-count">97 scenarios</span></dt><dd>Distinguish soft preferences from hard requirements and apply the necessary exceptions.</dd></div>
+            <div><dt><span class="task-id">T5</span> Goal Shift <span class="task-count">114 scenarios</span></dt><dd>Revisit an unresolved strategic decision when later execution requests would proceed on an invalid premise.</dd></div>
+          </dl>
+        </section>
+
+        <section id="results" class="content-section wide-section" aria-labelledby="results-title">
+          <h2 id="results-title">Main results</h2>
+          <p class="section-intro">Nine models evaluated on the revised 490-scenario set.</p>
+          <p class="table-description" id="results-method">Pass rates (%). Overall is PASS / 490; category scores use the corresponding category's scenario count. Rows are ordered by Overall, and bold marks the highest observed score in each column.</p>
+          <div class="table-scroll" role="region" aria-labelledby="results-title" tabindex="0">
+            <table class="leaderboard" aria-describedby="results-method">
+              <caption class="visually-hidden">Model pass rates on the revised 490-scenario set.</caption>
+              <thead><tr><th scope="col">Rank</th><th scope="col">Model</th><th scope="col">Passed</th><th scope="col" class="overall">Overall</th><th scope="col">Stateful</th><th scope="col">Scope</th><th scope="col">Collision</th><th scope="col">Override</th><th scope="col">Goal Shift</th></tr></thead>
+              <tbody>
+                <tr data-model="Kimi-K3"><td>1</td><th scope="row">Kimi-K3</th><td>292/490</td><td class="overall"><strong>59.59</strong></td><td>93.00</td><td><strong>44.30</strong></td><td>55.00</td><td>48.45</td><td><strong>54.39</strong></td></tr>
+                <tr data-model="ANTH-O-4.6"><td>2</td><th scope="row">ANTH-O-4.6</th><td>288/490</td><td class="overall">58.78</td><td>90.00</td><td>27.85</td><td><strong>79.00</strong></td><td>60.82</td><td>33.33</td></tr>
+                <tr data-model="DeepSeek-V4.1-Flash"><td>3</td><th scope="row">DeepSeek-V4.1-Flash</th><td>259/490</td><td class="overall">52.86</td><td>91.00</td><td>34.18</td><td>54.00</td><td>54.64</td><td>29.82</td></tr>
+                <tr data-model="OAI-5.5"><td>4</td><th scope="row">OAI-5.5</th><td>258/490</td><td class="overall">52.65</td><td><strong>96.00</strong></td><td>25.32</td><td>57.00</td><td><strong>73.20</strong></td><td>12.28</td></tr>
+                <tr data-model="MiniMax-M3"><td>5</td><th scope="row">MiniMax-M3</th><td>247/490</td><td class="overall">50.41</td><td>92.00</td><td>22.78</td><td>56.00</td><td>60.82</td><td>19.30</td></tr>
+                <tr data-model="DeepSeek-V4-Pro"><td>6</td><th scope="row">DeepSeek-V4-Pro</th><td>245/490</td><td class="overall">50.00</td><td>94.00</td><td>18.99</td><td>54.00</td><td>52.58</td><td>27.19</td></tr>
+                <tr data-model="MiniMax-M2.7"><td>7</td><th scope="row">MiniMax-M2.7</th><td>244/490</td><td class="overall">49.80</td><td>87.00</td><td>13.92</td><td>61.00</td><td>62.89</td><td>21.05</td></tr>
+                <tr data-model="GLM-5"><td>8</td><th scope="row">GLM-5</th><td>232/490</td><td class="overall">47.35</td><td>92.00</td><td>24.05</td><td>52.00</td><td>51.55</td><td>16.67</td></tr>
+                <tr data-model="Qwen3.6-27B"><td>9</td><th scope="row">Qwen3.6-27B</th><td>210/490</td><td class="overall">42.86</td><td>93.00</td><td>10.13</td><td>49.00</td><td>49.48</td><td>10.53</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="table-note">Stateful, Scope, Collision, Override, and Goal Shift correspond to T1–T5 above, with 100, 79, 100, 97, and 114 scenarios, respectively. On smaller screens, scroll the table horizontally to see all categories.</p>
+          <p class="benchmark-note"><strong>Scenario-set update.</strong> A subset of the original scenarios was revised or replaced while retaining 490 scenarios and the five challenge categories. The results above use the revised set.</p>
+          <p class="results-download"><a class="text-link" href="assets/results.json" download>Download result counts (JSON)</a></p>
+        </section>
+
+        <section id="resources" class="content-section" aria-labelledby="resources-title">
+          <h2 id="resources-title">Code and data</h2>
+          <p>The evaluation code and dataset are publicly available. The release includes the scenario sources, source-bound judge definitions, and a documented evaluation protocol.</p>
+          <div class="resource-list">
+            <a href="https://github.com/X-EASys/TurnFlow" target="_blank" rel="noopener noreferrer"><strong>Evaluation code</strong><span>Installation, configuration, and benchmark runs</span><span aria-hidden="true">↗</span></a>
+            <a href="https://huggingface.co/datasets/Buka7yo/TurnFlow" target="_blank" rel="noopener noreferrer"><strong>Dataset</strong><span>490 scenarios with matching judge definitions</span><span aria-hidden="true">↗</span></a>
+            <a href="https://github.com/X-EASys/TurnFlow/blob/main/docs/benchmark.md" target="_blank" rel="noopener noreferrer"><strong>Evaluation guide</strong><span>Dialogue protocol, scoring rules, and output statuses</span><span aria-hidden="true">↗</span></a>
+          </div>
+          <p class="license-note">Code: MIT. Dataset and source-specific judge definitions: CC BY 4.0.</p>
         </section>
 
         <section id="citation" class="content-section" aria-labelledby="citation-title" hidden>
           <h2 id="citation-title">Citation</h2>
-          <!-- Add the official BibTeX entry and copy control here. -->
+          <!-- Add the verified paper URL and BibTeX after the arXiv entry is public. -->
         </section>
       </div>
     </main>
 
     <footer class="site-footer">
-      <p>TurnFlow</p>
+      <p>TurnFlow · <time datetime="2026-11-07">Updated November 7, 2026</time></p>
     </footer>
   </body>
 </html>

@@ -1,5 +1,7 @@
+import json
 import re
 import unittest
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 
@@ -10,8 +12,8 @@ CSS = ROOT / "styles.css"
 WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
 README = ROOT / "README.md"
 PAPER_TITLE = (
-    "TurnFlow: Closed-Loop Evaluation of Multi-Turn LLM User Simulators "
-    "for Responsible Chatbots"
+    "TurnFlow: Benchmarking User-State Reasoning in Multi-Turn LLM Agents "
+    "via Scene-Guided User Simulation"
 )
 
 
@@ -135,13 +137,21 @@ class SiteContractTests(unittest.TestCase):
         self.assertEqual(code_link.get("href"), "https://github.com/X-EASys/TurnFlow")
         self.assertEqual(code_link.get("target"), "_blank")
         self.assertEqual(set(code_link.get("rel", "").split()), {"noopener", "noreferrer"})
-        self.assertCountEqual(
-            [link.get("href") for link in probe.links],
-            ["#main", "https://github.com/X-EASys/TurnFlow", "https://huggingface.co/datasets/Buka7yo/TurnFlow"],
+        self.assertEqual(
+            probe.resource_links[1].get("href"),
+            "https://huggingface.co/datasets/Buka7yo/TurnFlow",
         )
+        paper_buttons = [
+            attrs for tag, attrs in probe.elements
+            if tag == "button" and attrs.get("data-resource") == "paper"
+        ]
+        self.assertEqual(len(paper_buttons), 1)
+        self.assertIn("disabled", paper_buttons[0])
+        self.assertNotIn("href", paper_buttons[0])
+        self.assertFalse(any("arxiv.org" in link.get("href", "") for link in probe.links))
         self.assertNotRegex(html, r'href=(?:"|\')(?:#|)(?:"|\')')
 
-    def test_unreleased_sections_are_present_but_hidden(self):
+    def test_released_content_is_visible_while_citation_is_pending(self):
         html = INDEX.read_text(encoding="utf-8")
         elements = parse_elements(html)
         hidden_sections = {
@@ -149,18 +159,61 @@ class SiteContractTests(unittest.TestCase):
             for tag, attrs in elements
             if tag == "section" and "hidden" in attrs
         }
-        self.assertTrue(
-            {"abstract", "overview", "results", "citation"}.issubset(hidden_sections),
+        self.assertTrue({"abstract", "overview", "results"}.isdisjoint(hidden_sections))
+        self.assertIn("citation", hidden_sections)
+
+    def test_leaderboard_matches_the_490_scenario_results(self):
+        data = json.loads((ROOT / "assets" / "results.json").read_text())
+        self.assertEqual(data["task_sizes"], [100, 79, 100, 97, 114])
+        self.assertEqual(len(data["models"]), 9)
+        self.assertEqual(
+            [model["total_passed"] for model in data["models"]],
+            [292, 288, 259, 258, 247, 245, 244, 232, 210],
         )
+        self.assertEqual(data["models"][2]["name"], "DeepSeek-V4.1-Flash")
+        html = INDEX.read_text(encoding="utf-8")
+        for rank, model in enumerate(data["models"], 1):
+            with self.subTest(model=model["name"]):
+                self.assertEqual(sum(model["passed"]), model["total_passed"])
+                row = re.search(
+                    rf'<tr data-model="{re.escape(model["name"])}">(.*?)</tr>',
+                    html, re.DOTALL,
+                )
+                self.assertIsNotNone(row)
+                cells = re.findall(r'<(?:td|th)\b[^>]*>(.*?)</(?:td|th)>', row.group(1), re.DOTALL)
+                actual = [" ".join(unescape(re.sub(r'<[^>]+>', '', cell)).split()) for cell in cells]
+                expected = [
+                    str(rank), model["name"], f'{model["total_passed"]}/490',
+                    f'{100 * model["total_passed"] / 490:.2f}',
+                    *[f'{100 * passed / total:.2f}' for passed, total in zip(model["passed"], data["task_sizes"])],
+                ]
+                self.assertEqual(actual, expected)
+
+    def test_local_links_and_images_resolve(self):
+        html = INDEX.read_text(encoding="utf-8")
+        elements = parse_elements(html)
+        ids = {attrs["id"] for _, attrs in elements if "id" in attrs}
+        images = [attrs for tag, attrs in elements if tag == "img"]
+        self.assertGreaterEqual(len(images), 2)
+        for tag, attrs in elements:
+            for key in ("href", "src"):
+                value = attrs.get(key)
+                if not value or value.startswith(("https://", "http://", "mailto:")):
+                    continue
+                if value.startswith("#"):
+                    self.assertIn(value[1:], ids)
+                else:
+                    self.assertTrue((ROOT / value).is_file(), value)
+        self.assertTrue(all(image.get("alt") for image in images))
 
     def test_no_remote_runtime_dependencies(self):
         html = INDEX.read_text(encoding="utf-8")
         css = CSS.read_text(encoding="utf-8")
-        remote_asset = re.compile(
-            r'<(?:script|link)\b[^>]+(?:src|href)="https?://',
-            re.IGNORECASE,
-        )
-        self.assertIsNone(remote_asset.search(html))
+        for tag, attrs in parse_elements(html):
+            if tag == "script":
+                self.assertFalse(attrs.get("src", "").startswith(("http://", "https://")))
+            if tag == "link" and "stylesheet" in attrs.get("rel", "").split():
+                self.assertFalse(attrs.get("href", "").startswith(("http://", "https://")))
         self.assertIsNone(
             re.search(r'(?:@import\s+[^;]*https?://|url\(\s*["\']?https?://)', css),
         )
@@ -247,6 +300,7 @@ class SiteContractTests(unittest.TestCase):
             "actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5",
             "python3 -m unittest discover -s tests -p test_site.py -v",
             "path: '_site'",
+            "cp -R assets _site/assets",
         ):
             self.assertIn(expected, workflow)
         self.assertLess(
