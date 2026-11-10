@@ -168,8 +168,7 @@ The offline tests use constructed inputs and local HTTP mocks. They require no
 model credentials. The static project page is `index.html` with `styles.css`;
 preview it with `python3 -m http.server 8000` at http://localhost:8000/. GitHub Pages deploys only those site
 assets. The page includes the authors, abstract, framework overview, and current
-nine-model results. The paper link and citation remain pending until the arXiv
-entry is public.
+nine-model results, with a [paper link on arXiv](https://arxiv.org/abs/2611.10412).
 
 Code is licensed under [MIT](LICENSE). The bundled source scenarios,
 source-specific judge definitions and simulator binding data are licensed under

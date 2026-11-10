@@ -130,7 +130,7 @@ class SiteContractTests(unittest.TestCase):
         probe = ElementProbe()
         probe.feed(html)
         self.assertEqual(probe.resource_nav_count, 1)
-        self.assertEqual(len(probe.resource_links), 2)
+        self.assertEqual(len(probe.resource_links), 3)
 
         code_link = probe.resource_links[0]
         self.assertEqual(code_link.get("class"), "resource-link")
@@ -141,14 +141,16 @@ class SiteContractTests(unittest.TestCase):
             probe.resource_links[1].get("href"),
             "https://huggingface.co/datasets/Buka7yo/TurnFlow",
         )
-        paper_buttons = [
+        paper_links = [
             attrs for tag, attrs in probe.elements
-            if tag == "button" and attrs.get("data-resource") == "paper"
+            if tag == "a" and attrs.get("data-resource") == "paper"
         ]
-        self.assertEqual(len(paper_buttons), 1)
-        self.assertIn("disabled", paper_buttons[0])
-        self.assertNotIn("href", paper_buttons[0])
-        self.assertFalse(any("arxiv.org" in link.get("href", "") for link in probe.links))
+        self.assertEqual(len(paper_links), 1)
+        self.assertEqual(paper_links[0].get("href"), "https://arxiv.org/abs/2611.10412")
+        self.assertNotIn("disabled", paper_links[0])
+        self.assertEqual(paper_links[0].get("target"), "_blank")
+        self.assertEqual(set(paper_links[0].get("rel", "").split()), {"noopener", "noreferrer"})
+        self.assertNotIn("awaiting arXiv approval", html)
         self.assertNotRegex(html, r'href=(?:"|\')(?:#|)(?:"|\')')
 
     def test_released_content_is_visible_while_citation_is_pending(self):
